@@ -1,0 +1,1250 @@
+<?php
+
+class UsersController extends AppController
+{
+
+    var $name = 'Users';
+    var $uses = array('User', 'Country', 'State', 'City', 'School', 'Review', 'Domain');
+    var $helpers = array('Html', 'Form', 'Javascript', 'Ajax', 'Jquery');
+    var $components = array('Email', 'Auth', 'Session', 'RequestHandler');
+    var $paginate_limit = '20';
+    var $paginate_limit_front = '10';
+    var $paginate_limit_front_compact = '10';
+    var $paginate_limit_admin = '20';
+    var $paginate = "";
+
+    function beforeFilter()
+    {
+        parent::beforeFilter();
+        $this->Auth->allow('*');
+    }
+
+    function login()
+    {
+        if ($_POST['username']) {
+            $this->autoRender = false;
+            $this->layout = null;
+        }
+        if ($_GET['mode'] == 1) {
+            // $this->layout =null;	
+        } else {
+            $this->layout = "default1";
+        }
+        $this->pageTitle = 'Login to uLink';
+
+        $this->set('currentPageHeading', 'Login to uLink');
+        if ($this->Auth->user() || ($_POST['username'] && $_POST['password'])) {
+            if (!empty($this->data)) {
+
+                if (empty($this->data['User']['remember_me'])) {
+                    $this->Cookie->del('User');
+                } else {
+                    $cookie = array();
+                    $cookie['username'] = $this->data['User']['username'];
+                    $cookie['password'] = $this->data['User']['password'];
+                    $this->Cookie->write('User', $cookie, true, '+2 weeks');
+                }
+                unset($this->data['User']['remember_me']);
+            }
+
+            $userActCheck = $this->User->find('all', array('conditions' => 'User.username="' . $_POST['username'] . '"',
+                'fields' => 'User.activation'));
+            $getInfo = $this->Auth->user();
+            if ($getInfo) {
+                $this->layout = null;
+                echo "yes";
+            } else if ($userActCheck[0]['User']['activation'] == "0") {
+                echo "std";
+            } else {
+                echo "in-valid";
+            }
+        }
+
+        $this->set('checkLogin', 'checkLogin');
+    }
+
+//ef
+
+    function logout()
+    {
+        $this->layout = "default1";
+        // $this->Session->setFlash('You have been logged out.');
+        $this->redirect($this->Auth->logout());
+    }
+
+//ef
+
+    function forgotpassword()
+    {
+        $this->pageTitle = 'Forgotten Password';
+        $this->layout = "default1";
+        $this->set('currentPageHeading', 'Forgotten Password');
+        if ($this->Auth->user()) {
+            $this->redirect($this->Auth->redirect());
+            exit();
+        }
+
+        if (!empty($this->data)) {
+
+            if (!empty($this->data['User']['email'])) {
+                $useremail = $this->data['User']['email'];
+
+                $user = $this->User->find('all', array('conditions' => 'User.email="' . $useremail . '"'));
+
+                if ($user) {
+
+                    $val1 = rand(1, 1000);
+                    $val2 = rand(1000, 5000);
+                    $val3 = rand(5000, 10000);
+                    $autopass = $val1 . "" . $val2 . "" . $val3;
+
+
+                    $this->data['User']['password2hashed'] = $this->Auth->password($autopass);
+                    $this->data['User']['password'] = $this->data['User']['password2hashed'];
+                    unset($this->data['User']['password2hashed']);
+                    $this->User->id = $user[0]['User']['id'];
+                    $this->data['User']['username'] = $user[0]['User']['username'];
+                    $this->data['User']['autopass'] = 1;
+
+                    if ($this->User->save($this->data)) {
+                        $this->Email->to = $useremail;
+                        $this->Email->subject = 'Your uLink temporary password';
+                        $this->Email->replyTo = 'noreply@theulink.com';
+                        $this->Email->from = 'uLink <noreply@theulink.com>';
+                        $this->Email->sendAs = 'html';
+                        $this->Email->template = 'forgotpassword';
+                        /* SMTP Options */
+                        $this->Email->smtpOptions = array('port' => '587',
+                            'timeout' => '30',
+                            'host' => 'mail.theulink.com',
+                            'username' => 'bennie.kingwood@theulink.com',
+                            'password' => 'iPhone1983');
+                        /* Set delivery method */
+                        $this->Email->delivery = 'smtp';
+
+                        $this->set('auto_pass', $autopass);
+                        $this->set('usersname', $this->data['User']['username']);
+                        $this->set('name', $user[0]['User']['firstname']);
+                        if ($this->Email->send()) {
+                            $this->Session->setFlash('Your new password was sent to ' . $useremail . '.');
+
+                            // TODO: here have the same page just show a panel with a green check box 
+                            // saying the message above about the new password being sent
+                            //$this->redirect(array('controller' => 'users', 'action' => 'login'));
+                        } else {
+                            $this->Session->setFlash('There was a problem sending the password mail. Please try again later.');
+                        }
+                    } else {
+                        $this->Session->setFlash('There was an issue with your account,  please try again later.');
+                        $this->data = null;
+                    }
+                } else {
+                    $this->Session->setFlash('Please enter a valid email.');
+
+                    $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
+                }
+            } else {
+                $this->Session->setFlash('Please enter your email address.');
+
+                $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
+            }
+        }
+        // end of if when data is not empty
+    }
+
+//ef
+
+    function register($id = null)
+    {
+        $this->pageTitle = 'Create your uLink account';
+        $this->layout = "default1";
+        if (isset($id)) {
+            $user_record =
+                $this->User->find('first', array(
+                    'conditions' => array('fbid' => $id),
+                    'fields' => array('User.id'),
+                ));
+
+            $this->set('id', $user_record['User']['id']);
+        }
+
+        $this->set('currentPageHeading', 'Join uLink');
+
+
+        if (!empty($this->data)) {
+
+            // check against the email here
+            if($this->emailExists($this->data['User']['email'])) {
+                $this->Session->setFlash('Email already exists in uLink.  Please submit another.');
+
+            } else {
+
+                $this->data['User']['password2hashed'] = $this->Auth->password($this->data['User']['password']);
+                $this->data['User']['activation_key'] = String::uuid();
+                $fileOK = $this->uploadFiles('img/files/users', $this->data['User']['file']);
+                if (array_key_exists('urls', $fileOK)) {
+                    // save the url in the form data
+                    $this->data['User']['image_url'] = $fileOK['urls'][0];
+                }
+
+
+                if ($this->User->save($this->data)) {
+
+                    $this->Email->to = $this->data['User']['email'];
+                    $this->Email->subject = 'uLink Account Activation';
+                    $this->Email->replyTo = 'noreply@theulink.com';
+                    $this->Email->from = 'uLink <noreply@theulink.com>';
+                    $this->Email->sendAs = 'html';
+                    $this->Email->template = 'confirmation';
+                    /* SMTP Options */
+                    $this->Email->smtpOptions = array('port' => '587',
+                        'timeout' => '30',
+                        'host' => 'mail.theulink.com',
+                        'username' => 'bennie.kingwood@theulink.com',
+                        'password' => 'iPhone1983');
+                    /* Set delivery method */
+                    $this->Email->delivery = 'smtp';
+
+                    $this->set('name', $this->data['User']['username']);
+                    $this->set('server_name', $_SERVER['SERVER_NAME']);
+                    if ($this->data['User']['id']) {
+                        $this->set('id', $this->data['User']['id']);
+                    } else {
+                        $this->set('id', $this->User->getLastInsertID());
+                    }
+                    $this->set('code', $this->data['User']['activation_key']);
+
+                    if ($this->Email->send()) {
+
+                        $this->redirect(array('controller' => 'pages', 'action' => 'success'));
+                    } else {
+                        $this->User->del($this->User->getLastInsertID());
+                        $this->Session->setFlash('There was a problem sending the confirmation mail. Please try again');
+                    }
+                } else {
+                    $this->Session->setFlash('There was an error signing up. Please, try again.');
+                    //$this->data = null;
+                }
+            }
+        }
+
+        $countries = array();
+        $schools = array();
+
+        $data_countries = $this->Country->findAll();
+        $data_schools = $this->School->findAll();
+
+
+        foreach ($data_countries as $country) {
+            $countries[$country['Country']['id']] = $country['Country']['countries_name'];
+        }
+
+        foreach ($data_schools as $school) {
+            $schools[$school['School']['id']] = $school['School']['name'];
+        }
+
+        for ($i = 1960; $i <= date("Y")+10; $i++) {
+            $years[$i] = $i;
+        }
+
+
+        $this->set('countries', $countries);
+        $this->set('years', $years);
+        $this->set('schools', $schools);
+    }
+
+//ef
+
+    function message()
+    {
+        $this->autoRender = false;
+        $this->layout = null;
+    }
+
+    function confirm($user_id = null, $code = null)
+    {
+        $this->pageTitle = 'Account confirmation';
+        $this->layout = "default1";
+
+        if (empty($user_id) || empty($code)) {
+            $this->set('confirmed', 0);
+            $this->render();
+        }
+
+        $user = $this->User->find('first', array('conditions' => array('User.id' => $user_id, 'User.activation_key' => $code)
+            )
+        );
+        if (empty($user)) {
+            $this->set('confirmed', 0);
+        } else {
+            $this->User->id = $user_id;
+            $this->User->saveField('activation', '1');
+
+            // setting it to blank so that key can be access only once
+            $this->User->saveField('activation_key', '');
+            $this->set('confirmed', 1); // represents success
+        }
+    }
+
+//ef
+
+    /**
+     * This function will check if the email exists or not
+     * @param $email
+     * @return bool
+     */
+    function emailExists($email) {
+         $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''));
+         return !empty($chkuserExist);
+    }
+
+    function index()
+    {
+
+        $this->pageTitle = 'Your college everything';
+
+        $this->layout = "default1";
+
+        if (!$this->Auth->user()) {
+            $this->Session->setFlash('Please login first');
+            $this->redirect(array('action' => 'login'));
+        }
+        $validateError = 0;
+        $sessVar = $this->Auth->user();
+        $this->set('currentPageHeading', 'Hi ' . ucwords($sessVar['User']['firstname']));
+        $this->set('currentPageHeading_last', ucwords($sessVar['User']['lastname']));
+
+
+        if (empty($this->data)) {
+
+
+            $this->data = $this->User->read('', $sessVar['User']['id']);
+
+            $countries = array();
+            $states = array();
+            $cities = array();
+            $schools = array();
+            $data_countries = $this->Country->findAll();
+            $data_states = $this->State->findAll();
+            $data_cities = $this->City->findAll();
+            $data_schools = $this->School->findAll();
+
+            foreach ($data_countries as $country) {
+                $countries[$country['Country']['id']] = $country['Country']['countries_name'];
+            }
+            foreach ($data_states as $state) {
+                $states[$state['State']['id']] = $state['State']['name'];
+            }
+            foreach ($data_cities as $city) {
+                $cities[$city['City']['id']] = $city['City']['name'];
+            }
+            foreach ($data_schools as $school) {
+                $schools[$school['School']['id']] = $school['School']['name'];
+            }
+
+            for ($i = 1960; $i <= date("Y")+10; $i++) {
+                $years[$i] = $i;
+            }
+
+            $this->set('countries', $countries);
+            $this->set('countries_id', $user['User']['country_id']);
+            $this->set('states', $states);
+            $this->set('states_id', $user['User']['state_id']);
+            $this->set('cities', $cities);
+            $this->set('cities_id', $user['User']['city_id']);
+            $this->set('schools_id', $user['School']['school_id']);
+            $this->set('schools', $schools);
+            $this->set('years_id', $user['User']['year']);
+            $this->set('years', $years);
+            $this->set('status', $user['User']['school_status']);
+            $this->set('school_status', $status);
+        } else { // user hit the "update" button
+            //------------------
+            $this->User->set($this->data);
+            $this->User->validate();
+
+            if (!empty($this->data['User']['oldpass'])) {
+
+                $cuser = $this->User->find('first', array('conditions' => 'User.id=' . $this->Auth->user('id'),
+                    'fields' => array('User.password')));
+                $this->set('CUSER', $cuser);
+
+                if ($this->Auth->password($this->data['User']['oldpass']) == $cuser['User']['password']) {
+                    $this->data['User']['password'] = $this->Auth->password($this->data['User']['newconfirmpass']);
+                    $this->data['User']['autopass'] = 0;
+                } else {
+                    $this->User->invalidate('oldpass', 'Old password does not match');
+                    $validateError++;
+                }
+            }
+
+            if (!empty($this->data['User']['newpass'])) {
+                if ($this->data['User']['newpass'] != $this->data['User']['newconfirmpass']) {
+
+                    $this->User->invalidate('newconfirmpass', "Two password doesn't match");
+                    $validateError++;
+                }
+            }
+
+
+            if (empty($this->data['User']['firstname'])) {
+                $this->User->invalidate('firstname', 'Firstname should not be empty');
+                $validateError++;
+            }
+            if (empty($this->data['User']['lastname'])) {
+                $this->User->invalidate('lastname', 'Lastname should not be empty');
+                $validateError++;
+            }
+            if (empty($this->data['User']['hometown'])) {
+                $this->User->invalidate('hometown', 'hometown should not be empty');
+                $validateError++;
+            }
+            if (empty($this->data['User']['hometown'])) {
+                $this->User->invalidate('hometown', 'hometown should not be empty');
+                $validateError++;
+            }
+            if (empty($this->data['User']['major'])) {
+                $this->User->invalidate('major', 'Major should not be empty');
+                $validateError++;
+            }
+            if (empty($this->data['User']['year'])) {
+                $this->User->invalidate('year', 'Please select year');
+                $validateError++;
+            }
+            if (empty($this->data['User']['school_status'])) {
+                $this->User->invalidate('school_status', 'Please select school status');
+                $validateError++;
+            }
+            if($this->emailExists($this->data['User']['email'])) {
+                $this->User->invalidate('email', 'Email already exists in uLink.  Please submit another.');
+                $validateError++;
+            }
+
+            //-----------
+            if (empty($this->User->validationErrors)) {
+
+                $fileOK = $this->uploadFiles('img/files/users', $this->data['User']['file']);
+                if (array_key_exists('urls', $fileOK)) {
+                    // save the url in the form data
+                    $this->data['User']['image_url'] = $fileOK['urls'][0];
+                }
+
+
+                if ($this->User->save($this->data)) {
+                    $this->Auth->login($this->User->read());
+                    $this->Session->setFlash('Your profile has been updated.');
+                    $this->redirect(array('action' => 'index'));
+                }
+            }
+            //  $this->data = $this->User->read('',$sessVar['User']['id']);
+            $countries = array();
+            $states = array();
+            $cities = array();
+            $schools = array();
+            $data_countries = $this->Country->findAll();
+            $data_states = $this->State->findAll();
+            $data_cities = $this->City->findAll();
+            $data_schools = $this->School->findAll();
+
+            foreach ($data_countries as $country) {
+                $countries[$country['Country']['id']] = $country['Country']['countries_name'];
+            }
+            foreach ($data_states as $state) {
+                $states[$state['State']['id']] = $state['State']['name'];
+            }
+            foreach ($data_cities as $city) {
+                $cities[$city['City']['id']] = $city['City']['name'];
+            }
+            foreach ($data_schools as $school) {
+                $schools[$school['School']['id']] = $school['School']['name'];
+            }
+
+            for ($i = 1960; $i <= date("Y")+10; $i++) {
+                $years[$i] = $i;
+            }
+
+            $this->set('countries', $countries);
+            $this->set('countries_id', $user['User']['country_id']);
+            $this->set('states', $states);
+            $this->set('states_id', $user['User']['state_id']);
+            $this->set('cities', $cities);
+            $this->set('cities_id', $user['User']['city_id']);
+            $this->set('schools_id', $user['School']['school_id']);
+            $this->set('schools', $schools);
+            $this->set('years_id', $user['User']['year']);
+            $this->set('years', $years);
+            $this->set('status', $user['User']['school_status']);
+            $this->set('school_status', $status);
+        }
+    }
+
+//ef
+
+    function userinfo($id = null)
+    {
+
+        if (!$this->Auth->user()) {
+            $this->Session->setFlash('Please login first');
+            $this->redirect(array('action' => 'login'));
+        }
+
+        $this->chkAutopass();
+
+
+        $this->layout = "default1";
+        $user = $this->User->find('User.id=' . $id);
+        $this->set('User', $user);
+        $this->pageTitle = $user['User']['username'] . '\'s profile';
+        $this->set('currentPageHeading', $user['User']['username']);
+    }
+
+    function admin_index()
+    {
+        $this->redirect(array('action' => 'user_index'));
+    }
+
+    function ajax_pagination()
+    {
+        $data = $this->User->findAll();
+        $this->set('user', $data);
+    }
+
+    function admin_user_index()
+    {
+
+        $this->layout = "admin_dashboard";
+
+        // set/get search to session
+
+        $this->paginate = array(
+            'limit' => $this->paginate_limit_front
+        );
+
+        if (isset($this->data['User']['searchText'])) {
+            $this->Session->write('advancedUserSearch', $this->data['User']['searchText']);
+            $searchText = $this->data['User']['searchText'];
+        } elseif ($this->Session->check('advancedUserSearch')) {
+
+            if (isset($this->params['named']['page'])) {
+                $searchText = $this->data['AdvancedSearch'] = $this->Session->read('advancedUserSearch');
+            } else {
+                $this->Session->delete('advancedUserSearch');
+                $searchText = $this->data['User']['searchText'];
+            }
+        } else {
+
+            $searchText = $this->data['User']['searchText'];
+        }
+
+        if (empty($this->data)) {
+            $this->paginate = array('order' => array('User.id DESC'));
+            $user_listing = $this->paginate('User');
+        } else {
+
+            $user_listing = $this->paginate = array('conditions' => array('or' => array(
+                'User.firstname LIKE' => '%' . $searchText . '%'
+            )
+            ),
+                'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.activation'),
+                'limit' => $this->paginate_limit_front,
+                'order' => array('User.id DESC')
+            );
+
+
+            $user_listing = $this->paginate('User');
+        }
+
+        $page_no_arr = explode(":", $_REQUEST['url']);
+        if (isset($page_no_arr[1]))
+            $this->set("page_no", $page_no_arr[1]);
+
+        $this->set('User', $user_listing);
+        $this->set("paginate_limit", $this->paginate_limit_front);
+    }
+
+    function admin_listing_ajax()
+    {
+        $this->set_paginate_limit(); // Setting Paginate Limit 
+
+        $this->setLayout = null;
+        Configure::write('debug', 0);
+        $data = $this->paginate();
+        $this->set("users", $data);
+        $this->set("paginate_limit", $this->paginate_limit);
+
+        // Finding Page No (for Sr. No.)
+        $page_no_arr = explode(":", $_REQUEST['url']);
+
+        $this->set("page_no", $page_no_arr[1]);
+    }
+
+    function set_paginate_limit()
+    {
+
+        $this->paginate = array('order' => array('User.id'), 'limit' => $this->paginate_limit);
+    }
+
+    function admin_user_add()
+    {
+
+        $this->layout = "admin_dashboard";
+        if (!empty($this->data)) {
+            $this->data['User']['password2hashed'] = $this->Auth->password($this->data['User']['password']);
+            $this->data['User']['activation_key'] = String::uuid();
+            $this->User->create();
+
+            $fileOK = $this->uploadFiles('img/files/users', $this->data['User']['file']);
+
+            if (array_key_exists('urls', $fileOK)) {
+                // save the url in the form data
+                $this->data['User']['image_url'] = $fileOK['urls'][0];
+            }
+            $this->User->set($this->data);
+            if ($this->User->validates()) {
+                $this->User->save($this->data);
+                $this->Session->setFlash('New User is added');
+                $this->redirect(array('action' => 'user_index'));
+            } else {
+                $this->Session->setFlash('There was an error Adding User. Please, try again.');
+                $this->data = null;
+            }
+        } else {
+
+        }
+        $schools = array();
+        $countries = array();
+        $states = array();
+        $cities = array();
+
+        $data_countries = $this->Country->findAll();
+        $data_states = $this->State->findAll();
+        $data_cities = $this->City->findAll();
+        $data_schools = $this->School->findAll();
+
+        foreach ($data_countries as $country) {
+            $countries[$country['Country']['id']] = $country['Country']['countries_name'];
+        }
+
+        foreach ($data_states as $state) {
+            $states[$state['State']['id']] = $state['State']['name'];
+        }
+        foreach ($data_cities as $city) {
+            $cities[$city['City']['id']] = $city['City']['name'];
+        }
+
+        foreach ($data_schools as $school) {
+            $schools [$school['School']['id']] = $school['School']['name'];
+        }
+
+        for ($i = 1960; $i <= date("Y")+10; $i++) {
+            $years[$i] = $i;
+        }
+
+        $this->set('countries', $countries);
+        $this->set('states', $states);
+        $this->set('cities', $cities);
+        $this->set('years', $years);
+        $this->set('schools', $schools);
+    }
+
+//ef
+
+    function admin_user_edit($id = null)
+    {
+        $this->layout = "admin_dashboard";
+        $user = $this->User->find('User.id=' . $id);
+
+        if (empty($this->data)) {
+            $this->data = $this->User->read('', $id);
+        } else {
+            $fileOK = $this->uploadFiles('img/files/users', $this->data['User']['file']);
+            if (array_key_exists('urls', $fileOK)) {
+                // save the url in the form data
+                $this->data['User']['image_url'] = $fileOK['urls'][0];
+            }
+            if ($this->User->save($this->data)) {
+                $this->Session->setFlash('The User has been updated.');
+                $this->redirect(array('action' => 'user_index'));
+            }
+        }
+        $countries = array();
+        $states = array();
+        $cities = array();
+        $schools = array();
+        $data_countries = $this->Country->findAll();
+        $data_states = $this->State->findAll();
+        $data_cities = $this->City->findAll();
+        $data_schools = $this->School->findAll();
+
+        foreach ($data_countries as $country) {
+            $countries[$country['Country']['id']] = $country['Country']['countries_name'];
+        }
+        foreach ($data_states as $state) {
+            $states[$state['State']['id']] = $state['State']['name'];
+        }
+        foreach ($data_cities as $city) {
+            $cities[$city['City']['id']] = $city['City']['name'];
+        }
+        foreach ($data_schools as $school) {
+            $schools[$school['School']['id']] = $school['School']['name'];
+        }
+
+        for ($i = 1960; $i <= date("Y")+10; $i++) {
+            $years[$i] = $i;
+        }
+
+        $this->set('countries', $countries);
+        $this->set('countries_id', $user['User']['country_id']);
+        $this->set('states', $states);
+        $this->set('states_id', $user['User']['state_id']);
+        $this->set('cities', $cities);
+        $this->set('cities_id', $user['User']['city_id']);
+        $this->set('years', $years);
+        $this->set('schools_id', $user['User']['school_id']);
+        $this->set('schools', $schools);
+        $this->set('years_id', $user['User']['year']);
+        $this->set('username', $user['User']['username']);
+
+        //	die('xx');
+    }
+
+//ef
+    // to delete a user from ajax
+
+    function admin_user_delete($id = null)
+    {
+
+        Configure::write('debug', 0);
+        $this->layout = null;
+        $this->autoRender = false;
+        // check id is valid
+        if ($id != null && is_numeric($id)) {
+            // get the Item
+            $data_del = $this->User->read(null, $id);
+
+            // check Item is valid
+            if (!empty($data_del)) {
+                // try deleting the item
+                if ($this->User->delete($id)) {
+                    echo "true";
+                } else {
+                    echo "false";
+                }
+            }
+        } else {
+            echo "false";
+        }
+    }
+
+//ef
+
+    function admin_user_state($id = null)
+    {
+        $this->layout = null;
+        $data_states = $this->State->find('all', array('conditions' => 'State.country_id =' . $id . '',
+                'order' => 'State.name ASC'
+            )
+        );
+
+        $country = $id;
+        foreach ($data_states as $state) {
+            $states[$state['State']['id']] = $state['State']['name'];
+        }
+        $this->set('states', $states);
+    }
+
+//ef
+
+    function admin_user_city($id = null)
+    {
+        $this->layout = null;
+        $data_cities = $this->City->find('all', array('conditions' => 'City.state_id =' . $id . '',
+                'order' => 'City.name ASC'
+            )
+        );
+
+        foreach ($data_cities as $city) {
+            $cities[$city['City']['id']] = $city['City']['name'];
+        }
+        $this->set('cities', $cities);
+    }
+
+//ef
+
+    function state($id = null)
+    {
+        $this->layout = null;
+        $data_states = $this->State->find('all', array('conditions' => 'State.country_id =' . $id . '',
+                'order' => 'State.name ASC'
+            )
+        );
+
+        $country = $id;
+        foreach ($data_states as $state) {
+            $states[$state['State']['id']] = $state['State']['name'];
+        }
+        $this->set('states', $states);
+    }
+
+//ef
+
+    function city($id = null)
+    {
+        $this->layout = null;
+
+        $data_cities = $this->City->find('all', array('conditions' => 'City.state_id =' . $id . '',
+                'order' => 'City.name ASC'
+            )
+        );
+
+        foreach ($data_cities as $city) {
+            $cities[$city['City']['id']] = $city['City']['name'];
+        }
+        $this->set('cities', $cities);
+    }
+
+//ef
+
+    function delimage($image_url = null)
+    {
+        $sessVar = $this->Auth->user();
+        $school = $this->User->find('User.id=' . $sessVar['User']['id']);
+        $data = array(
+            'User' => array(
+                'id' => $sessVar['User']['id'],
+                'username' => $sessVar['User']['username'],
+                'image_url' => ""
+            )
+        );
+
+
+        if ($this->User->save($data)) {
+            Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->layout = null;
+            unlink("" . WWW_ROOT . "/img/files/users/" . $image_url);
+            echo "true";
+        } else {
+            Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->layout = null;
+            echo "false";
+        }
+    }
+
+//ef
+
+    function admin_user_delimage($id = null, $image_url = null)
+    {
+
+        $user = $this->User->find('User.id=' . $id);
+        $user['User']['username'];
+
+        $data = array(
+            'User' => array(
+                'id' => $id,
+                'username' => $user['User']['username'],
+                'image_url' => ""
+            )
+        );
+        if ($this->User->save($data)) {
+            Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->layout = null;
+            unlink("" . WWW_ROOT . "/img/files/users/" . $image_url);
+            echo "true";
+        } else {
+            Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->layout = null;
+            echo "false";
+        }
+    }
+
+//ef
+
+    function checkuser($username = null)
+    {
+        $this->layout = null;
+        $this->autoRender = false;
+
+        $chkuser = $this->User->find('all', array('conditions' => 'User.username=' . "'$username'" . ''
+            )
+        );
+
+        if (count($chkuser) == 0) {
+            echo "1";
+        } else {
+            echo "0";
+        }
+    }
+
+//ef
+
+    function admin_checkuser($username = null)
+    {
+        $this->layout = null;
+        $this->autoRender = false;
+
+        $chkuser = $this->User->find('all', array('conditions' => 'User.username=' . "'$username'" . ''
+            )
+        );
+
+        if (count($chkuser) == 0) {
+            echo "1";
+        } else {
+            echo "0";
+        }
+    }
+
+//ef
+
+    function checkdomain()
+    {
+
+
+        $this->layout = null;
+        $this->autoRender = false;
+        $status = 0;
+
+        $email = $_POST['data']['User']['email'];
+        $schoolSelect = $_POST['school_id'];
+        $schoolStatus = $_POST['school_status'];
+       // $this->log('schoolstatus-' . $schoolStatus . '-', 'debug');
+
+
+      /*  $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''
+            )
+        );*/
+
+        /**
+         * If the user doesn't exist AND
+         * the user is not an Alumni, make
+         * sure they have an approved emails domain for the school
+         * in which they are registering.
+         */
+       // if (empty($chkuserExist)) {
+
+            if ($schoolStatus != 'Alumni') {
+                $this->log('here in checking out -', 'debug');
+                $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . $schoolSelect
+                    )
+                );
+
+                $domains = explode(',', $chkuser[0]['School']['domain']);
+                foreach ($domains as $val) { //echo $val;
+                    $lookdomain = explode('.', $lookdomain = $val);
+                    /* 	echo "<pre>";
+                      print_r($lookdomain);
+                      exit('xx'); */
+                    if ((eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@" . $lookdomain[0] . "." . $lookdomain[1] . "$", $email))) {
+
+                        $status = 1;
+                        break;
+                    } else {
+
+                        $status = 0;
+                    }
+                }
+                if ($status == 1) {
+                    echo "true";
+                } else {
+                    echo "false";
+                }
+            } else {
+                $this->log('it is an alumn, returing true', 'debug');
+                echo "true";
+            }
+      //  } else {
+       //     echo "false";
+        //}
+    }
+
+//ef
+    //function to check username
+    function checkUsername()
+    {
+        $this->setLayout = null;
+        Configure::write('debug', 0);
+
+
+        $username = $_POST['data']['User']['username'];
+
+        $userdetails = $this->User->find('count', array('conditions' => array('User.username' => $username)));
+
+
+        if ($userdetails) {
+            echo "false";
+            exit();
+        } else {
+            echo "true";
+            exit();
+        }
+    }
+
+    //
+
+    function admin_checkdomain($email = null, $schoolSelect = null)
+    {
+
+
+        $this->layout = null;
+        $this->autoRender = false;
+        $status = 0;
+
+
+        $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''
+            )
+        );
+
+
+        if (empty($chkuserExist)) {
+
+
+            $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . "'$schoolSelect'" . ''
+                )
+            );
+
+            $domains = explode(',', $chkuser[0]['School']['domain']);
+            foreach ($domains as $val) { //echo $val;
+                $lookdomain = explode('.', $lookdomain = $val);
+                if ((eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@" . $lookdomain[0] . "." . $lookdomain[1] . "$", $email))) {
+
+                    $status = 1;
+                    break;
+                } else {
+
+                    $status = 0;
+                }
+            }
+            if ($status) {
+                echo "1";
+            } else {
+                echo "0";
+            }
+        } else {
+            echo "2";
+        }
+    }
+
+//ef
+    // function to change the status of a user
+
+    function admin_user_changeStatus($id = null)
+    {
+
+        Configure::write('debug', 0);
+        $this->layout = null;
+        $this->autoRender = false;
+
+        $user = $this->User->find('first', array('conditions' => 'User.id=' . $id,
+                'fields' => array('User.id', 'User.activation')
+            )
+        );
+
+        if ($user['User']['activation']) {
+            $newStatus = "0";
+        } else {
+            $newStatus = "1";
+        }
+
+        $data = array(
+            'User' => array(
+                'id' => $id,
+                'activation' => $newStatus
+            )
+        );
+
+
+        if ($this->User->save($data)) {
+            echo $newStatus;
+        } else {
+            echo "2";
+        }
+    }
+
+//ef
+
+    function searchform()
+    { // to display the ajax loaded search form
+        $this->layout = null;
+    }
+
+// ef 
+    ########################################### to do ajax pagination  
+
+    function searchresults($page_no = '')
+    {
+        $this->layout = 'default1';
+        $this->set("page_no", $page_no);
+
+        if (isset($this->data['Map']['search'])) {
+            $search_srting = $this->data['Map']['search'];
+        } else if (isset($this->data['User']['search'])) {
+            $search_srting = $this->data['User']['search'];
+        } else if (isset($this->data['Review']['search'])) {
+            $search_srting = $this->data['Review']['search'];
+        }
+
+
+        $this->set("search_srting", $search_srting);
+        $this->set('type', 'Profiles');
+        $this->set('actionType', 'searchresults');
+        $this->set('createTypeForm', 'User');
+        $this->set('currentPageHeading', 'Search Users');
+    }
+
+// ef   
+
+    function search_ajax($search_srting = '')
+    {
+
+        $search_srting = str_replace("-", " ", $search_srting);
+        $this->set_paginate_limit_search($search_srting); // Setting Paginate Limit 
+
+        $this->layout = null;
+        Configure::write('debug', 0);
+
+        $data = $this->paginate();
+        $this->set("serchResultsUsers", $data);
+
+        $this->set("paginate_limit", $this->paginate_limit_front);
+
+        // Finding Page No (for Sr. No.)
+        $page_no_arr = explode(":", $_REQUEST['url']);
+        $this->set("page_no", $page_no_arr[1]);
+        $this->set("search_srting", $search_srting);
+    }
+
+    function set_paginate_limit_search($search_srting = '')
+    {
+
+        if ($search_srting == '') {
+            $this->paginate = array('conditions' => array('User.activation' => 1),
+                'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.image_url', 'User.school_status', 'School.id', 'School.name', 'Country.countries_name'), 'limit' => $this->paginate_limit_front);
+        } else {
+            $checkstring = array();
+
+            $checkstring = explode(" ", $search_srting);
+
+
+            if (count($checkstring) == 1) {
+
+                $checkstring = str_replace("889988", " ", $checkstring);
+
+                $this->paginate = array('conditions' => array('or' => array(
+                    'User.firstname LIKE' => '%' . $checkstring[0] . '%',
+                    'User.lastname LIKE' => '%' . $checkstring[0] . '%',
+                    'User.school_status  LIKE' => '%' . $checkstring[0] . '%'
+                ),
+                    'User.activation' => 1
+                ),
+                    'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.image_url', 'User.school_status', 'School.id', 'School.name', 'Country.countries_name'),
+                    'limit' => $this->paginate_limit_front
+                );
+            } else {
+
+
+                //$search_srting = str_replace("889988", " ", $search_srting);
+
+                $this->paginate = array('conditions' => array('and' => array(
+                    'User.firstname LIKE' => $checkstring[0],
+                    'User.lastname LIKE' => '%' . $checkstring[1] . '%'
+                ),
+                    'User.activation' => 1
+                ),
+                    'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.image_url', 'User.school_status', 'School.id', 'School.name', 'Country.countries_name'),
+                    'limit' => $this->paginate_limit_front
+                );
+            }
+        } // else ends here
+    }
+
+// ef
+
+    function admin_search($page_no = '')
+    {
+        //  print_r($this->data);exit;
+        $this->layout = "admin";
+        $search_srting = "";
+
+        if ($this->data) {
+            $search_srting .= "type=adv,";
+            $search_srting .= "firstname=" . $this->data['User']['search'];
+        }
+        $search_srting = trim($search_srting);
+
+        $search_srting = str_replace(" ", "889988", $search_srting);
+
+        $this->set("search_srting", $search_srting);
+
+        $this->set("page_no", $page_no);
+    }
+
+    function admin_all_search_ajax($search_srting = '')
+    {
+
+        $this->set_paginate_limit_front($search_srting); // Setting Paginate Limit 
+
+        $this->setLayout = null;
+
+        Configure::write('debug', 0);
+
+        $data = $this->paginate();
+
+        $this->set("users", $data);
+
+        $this->set("paginate_limit", $this->paginate_limit_front);
+
+        // Finding Page No (for Sr. No.)
+        $page_no_arr = explode(":", $_REQUEST['url']);
+
+        $this->set("page_no", $page_no_arr[1]);
+
+
+        $this->set("search_srting", $search_srting);
+    }
+
+    function set_paginate_limit_front($search_srting = '')
+    {
+        $condition = "";
+
+        if ($search_srting == '') {
+
+            //$this->paginate = array('conditions'=>'1=1', 'order'=>array('Suggestion.id desc'), 'limit' => $this->paginate_limit_front);
+        } else {
+            $search_srting = str_replace("889988", " ", $search_srting);
+
+
+            $search_srting_arr = explode(",", $search_srting);
+
+            if ($search_srting_arr[0] == "type=adv") {
+                for ($i = 1; $i <= count($search_srting_arr) - 1; $i++) { //echo $search_srting_arr[$i];exit;
+                    $search_sub_srting_arr = explode("=", $search_srting_arr[$i]);
+
+                    switch ($search_sub_srting_arr[0]) {
+                        case "firstname":
+                            if (!empty($search_sub_srting_arr[1]))
+                                $condition = $condition . " User.firstname like '%" . $search_sub_srting_arr[1] . "%'";
+
+                            break;
+                    }
+                }
+            }
+
+
+            $this->paginate = array('conditions' => $condition, 'order' => array('User.id  desc'), 'limit' => $this->paginate_limit_front);
+        }
+    }
+
+    ########################################################  
+
+    function test()
+    {
+
+        $this->layout = "default1";
+    }
+
+}
+
+?>

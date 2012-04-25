@@ -1,0 +1,69 @@
+*{ padding:0px; margin:0px;}
+body{ font-family:Verdana, Arial, Helvetica, sans-serif; font-size:11px; color:#292929;}
+img{ border:none;}
+a{ text-decoration:none; outline:none;}
+h1{ font-size:22px; font-weight:normal; font-family:Arial, Helvetica, sans-serif; padding-bottom:20px;}
+
+.left{ float:left;}
+.right{ float:right;}
+.clear{ clear:both;}
+.content{ margin:auto; width:940px;}
+.noBorder{ border:none !important;}
+
+#header{ float:left; width:100%; height:51px; background:#292929; padding:21px 0px 0px 0px;}
+#topNavigation{ float:left; font-weight:bold; font-size:16px; list-style:none;}
+#topNavigation li{ float:left; list-style:none; padding:0px 5px 0px 0px;}
+#topNavigation li a{color:#bbbbbb; height:31px; padding:0px 0px 0px 11px; line-height:31px; float:left;}
+#topNavigation li a span{ padding-right:11px; float:left; display:block; cursor:pointer;}
+#topNavigation li a:hover, #topNavigation li a.selected{ background:#3f3f3f url(../img/topLeft.gif) top left no-repeat;}
+#topNavigation li a:hover span, #topNavigation li a.selected span{ background:url(../img/topRight.gif) top right no-repeat;}
+
+#container{ width:100%;}
+
+#mainContent{ float:left; width:100%; padding:11px 0px 0px 0px;}
+#mainContent h2{ color:#0051bf; font-size:24px; padding:20px 0px 0px 0px; margin:0px; width:100%; float:left;}
+.links{ float:left; width:100%; color:#0051bf; font-weight:bold; font-family:14px;}
+.links a{ color:#0051bf;}
+
+
+/* start : logo */
+#logo{ float:left; width:100%;}
+
+#LoginContainer{ width:500px; margin:auto; padding-top:50px;}
+#innerContent{ width:940px; margin:auto;}
+#loginBox{ float:left; width:498px; border:1px solid #292929;}
+.loginHeading{ float:left; width:488px; background:#292929; font-size:18px; color:#FFFFFF; font-family:Arial, Helvetica, sans-serif; padding:5px 0px 5px 10px;}
+.login{ float:left; width:488px; padding:15px 0px 0px 10px;}
+.login label{  width:100px;}
+.login input{ float:left; border:1px solid #363636; padding:3px 0px; width:250px;}
+.buttonInput{ float:left; padding:15px 0px 5px 106px;}
+
+#leftNavigation{ float:left; width:242px;}
+#leftNavigation ul{ padding:0px; margin:0px; list-style:none; font-family:Arial, Helvetica, sans-serif;}
+#leftNavigation ul li{ padding-bottom:10px; float:left;}
+#leftNavigation ul li a{ font-weight:normal; float:left; display:block; color:#363636; font-size:14px; font-weight:bold; padding-left:20px; width:211px;}
+#leftNavigation ul li a:hover{ background:#fff; color:#000000;}
+#leftNavigation ul li.leftHeading{ font-size:18px; color:#fff; background:url(../img/leftcatHeading.gif) top left no-repeat; line-height:28px; padding-left:10px; width:221px;}
+
+#rightContent{ float:left; width:693px;}
+
+.error-message{ color:#ff0000; font-family: Arial, Helvetica, sans-serif;font-style: italic;font-size: 12px;font-weight:bold;padding-left:10px;}
+
+/* start : listing */
+
+.listing{width:99%; font-size:12px; border-top:1px solid #d6d6d6; border-left:1px solid #d6d6d6;}
+.listing td{ padding:4px; border-bottom:1px solid #d6d6d6; border-right:1px solid #d6d6d6; vertical-align:top}
+.ListHeading td{background:#292929; color:#FFFFFF; border:1px solid #292929;}
+.listing a{ color:#292929; text-decoration:underline;}
+.edit input, .edit textarea, .edit select{ width:250px; border:1px solid #000; padding:4px;}
+.radio{ width:auto !important; border:1px solid none !important; margin:0px 10px;}
+.submit input{background:url(../img/submit.gif) top left no-repeat; border:none; font-size:12px; font-weight:bold; line-height:27px; color:#FFFFFF; font-family:Verdana, Arial, Helvetica, sans-serif; width:auto; height:27px; width:84px; text-align:center; text-transform:capitalize;}
+
+
+
+/* must be added to admin css  as requred at the coding development end*/
+
+.selectToDelete{ background:#CC0000;}
+.changeStatus{ cursor:pointer;}
+
+.pageHeading { font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#FFFFFF; font-weight:bold; padding:15px 0; margin-left:40px; background:url(../img/headingArrow.gif) bottom center no-repeat; float:left;}

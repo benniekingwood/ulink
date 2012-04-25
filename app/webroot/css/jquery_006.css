@@ -1,0 +1,214 @@
+/**
+ * This <div> element is wrapped by jCarousel around the list
+ * and has the classname "jcarousel-container".
+ */
+.jcarousel-skin-widefeature .jcarousel-container { position: relative; }
+.jcarousel-skin-widefeature .jcarousel-clip {
+    z-index: 2; padding: 0; margin: 0; overflow: hidden; position: relative; width: 957px; height: 301px; 
+}
+
+.jcarousel-skin-widefeature .jcarousel-list {
+    z-index: 1;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.jcarousel-skin-widefeature .jcarousel-list li,
+.jcarousel-skin-widefeature .jcarousel-item {
+    float: left; width: 930px;
+}
+
+.jcarousel-skin-widefeature .jcarousel-next {
+    background:transparent url(../img/next.gif) right no-repeat !important;
+    color:#FFFFFF;
+    display:none;
+    height:301px;
+    left:909px;
+    position:absolute;
+    width:66px;
+    z-index:50;
+    cursor:pointer;
+}
+.jcarousel-skin-widefeature .jcarousel-next:hover{ background-position:left !important; }
+.jcarousel-skin-widefeature .jcarousel-prev {
+    z-index: 51;
+    display: none;
+    background:transparent url(../img/back.gif) no-repeat 0 0 !important;
+    color:#FFFFFF;
+    display:none;
+    height:301px;
+    position:absolute;
+    width:66px;
+    cursor:pointer;
+    left:0;
+}
+.jcarousel-skin-widefeature .jcarousel-prev:hover{ background-position:right !important; }
+.jcarousel-skin-widefeature .jcarousel-prev-disabled,
+.jcarousel-skin-widefeature .jcarousel-prev-disabled:hover,
+.jcarousel-skin-widefeature .jcarousel-prev-disabled.hover
+{ background:transparent url(../bg_features_prev_disabled.png) repeat-y scroll 0 0 !important; 
+  background:transparent url(../blank.gif) repeat scroll 0 0;
+  cursor:auto;}
+.jcarousel-skin-widefeature .jcarousel-next-disabled,
+.jcarousel-skin-widefeature .jcarousel-next-disabled:hover, 
+.jcarousel-skin-widefeature .jcarousel-next-disabled.hover 
+{ background:transparent url(../bg_features_next_disabled.png) repeat-y scroll 0 0 !important;
+  background:transparent url(../blank.gif) repeat scroll 0 0;
+  cursor:auto;}
+.jcarousel-skin-widefeature .jcarousel-control {
+    color:#000;
+    font-size:11px;
+    position:absolute;
+	margin-left:800px;
+    text-align:center;
+    top:290px;
+    width:150px;
+    z-index:1;
+}
+.jcarousel-skin-widefeature .features-control a,  .jcarousel-skin-widefeature .features-control .features-label{
+    display:inline-block;
+    padding: 5px;
+    background:transparent url(../bg_black_40.png) repeat 0 0 !important;
+    background:transparent url(../feature_indicator_bg.png) repeat 0 0;
+    height:16px;
+    line-height:16px;
+    border:0;
+    cursor:pointer;
+}
+
+.jcarousel-skin-widefeature .features-control .features-label{ width:auto; color:#fff;  cursor:auto;}
+.jcarousel-skin-widefeature .features-control .features-indicator {
+    color:#fff;
+    width:16px;
+    line-height:30px;
+    display:inline-block;
+}
+.jcarousel-skin-widefeature .features-control .features-indicator.active { 
+    color:#000;
+	background:#ebece4 !important;
+}
+
+/*======================= NARROW ----------------- */
+/**
+ * This <div> element is wrapped by jCarousel around the list
+ * and has the classname "jcarousel-container".
+ */
+.jcarousel-skin-narwfeature .jcarousel-container {
+    position: relative;
+}
+
+.jcarousel-skin-narwfeature .jcarousel-clip {
+    z-index: 2;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 615px;
+    /*height: 330px;*/
+}
+
+.jcarousel-skin-narwfeature .jcarousel-list {
+    z-index: 1;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.jcarousel-skin-narwfeature .jcarousel-list li,
+.jcarousel-skin-narwfeature .jcarousel-item {
+    float: left;
+    list-style: none;
+    /* We set the width/height explicitly. No width/height causes infinite loops. */
+    width: 615px;
+    height: 330px;
+}
+
+/**
+ * The buttons are added dynamically by jCarousel before
+ * the <ul> list (inside the <div> described above) and
+ * have the classnames "jcarousel-next" and "jcarousel-prev".
+ */
+.jcarousel-skin-narwfeature .jcarousel-next {
+    background:transparent url(../carousel_next_prev_black.png) no-repeat scroll right 0 !important;
+    background:transparent url(../carousel_next_prev_black.gif) no-repeat scroll right 0;
+    color:#FFFFFF;
+    display:none;
+    height:26px;
+    left:565px;
+    position:absolute;
+    width:26px;
+    top:304px;
+    z-index:50;
+    cursor:pointer;
+}
+.jcarousel-skin-narwfeature .jcarousel-next:hover, .jcarousel-skin-narwfeature .jcarousel-next.hover {
+    background:transparent url(../carousel_next_prev_black.png) no-repeat scroll right -26px !important;
+    background:transparent url(../carousel_next_prev_black.gif) no-repeat scroll right -26px;
+}
+
+.jcarousel-skin-narwfeature .jcarousel-prev {
+    z-index: 51;
+    display: none;
+    background:transparent url(../carousel_next_prev_black.png) no-repeat scroll left 0 !important;
+    background:transparent url(../carousel_next_prev_black.gif) no-repeat scroll left 0;
+    color:#FFFFFF;
+    display:none;
+    height:26px;
+    position:absolute;
+    width:26px;
+    cursor:pointer;
+    left:24px;
+    top:304px;
+}
+.jcarousel-skin-narwfeature .jcarousel-prev:hover, .jcarousel-skin-narwfeature .jcarousel-prev.hover {
+    background:transparent url(../carousel_next_prev_black.png) no-repeat scroll left -26px !important;
+    background:transparent url(../carousel_next_prev_black.gif) no-repeat scroll left -26px;
+}
+.jcarousel-skin-narwfeature .jcarousel-prev-disabled,
+.jcarousel-skin-narwfeature .jcarousel-prev-disabled:hover,
+.jcarousel-skin-narwfeature .jcarousel-prev-disabled.hover
+{ background:transparent url(../carousel_next_prev_black.png) no-repeat scroll left -52px !important; 
+  background:transparent url(../carousel_next_prev_black.gif) repeat scroll left -52px;
+  cursor:auto;}
+.jcarousel-skin-narwfeature .jcarousel-next-disabled,
+.jcarousel-skin-narwfeature .jcarousel-next-disabled:hover, 
+.jcarousel-skin-narwfeature .jcarousel-next-disabled.hover 
+{ background:transparent url(../carousel_next_prev_black.png) no-repeat scroll right -52px !important;
+  background:transparent url(../carousel_next_prev_black.gif) repeat scroll right -52px;
+  cursor:auto;}
+.jcarousel-skin-narwfeature .jcarousel-control {
+    color:#000 !important;
+    font-size:11px;
+    right:0 !important;
+    position:absolute;
+    text-align:center;
+    top:304px;
+    width:956px;
+}
+.jcarousel-skin-narwfeature .features-control a,  .jcarousel-skin-narwfeature .features-control .features-label{
+    display:inline-block;
+    padding: 5px 8px;
+    height:16px;
+    line-height:16px;
+    border:0;
+    cursor:pointer;
+}
+
+.jcarousel-skin-narwfeature .features-control .features-label{ width:auto; color:#fff;  cursor:auto;}
+.jcarousel-skin-narwfeature .features-control .features-indicator {
+    color:#333;
+    width:16px;
+    height:16px;
+    display:inline-block;
+}
+.jcarousel-skin-narwfeature .features-control .features-indicator.active { 
+    color:#000;
+ }

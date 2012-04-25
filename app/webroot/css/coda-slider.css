@@ -1,0 +1,16 @@
+#sliderTabsContent { width: 610px; margin: 0 auto; position: relative; float:right; }
+
+.scroll { float:left; height: 1350px; width: 450px; overflow: auto; overflow-x: hidden; position: relative; background:#f9f9f9;  border:solid 1px #ececec; }
+.scroll.scrollSolutions{ height:700px; }
+.scrollContainer div.panel { padding:10px 15px 20px 15px; height: 210px; width: 420px; text-align:justify; }
+#shade{ background: #EDEDEC url(images/shade.jpg) no-repeat 0 0; height: 50px; }
+
+ul.tabLeft { list-style: none; margin: 0; padding: 0; float:right; width:150px; }
+ul.tabLeft li { display: block; margin-bottom:5px; }
+ul.tabLeft a { padding:0 10px; height:34px; line-height:34px; display:block; color: #000; text-decoration: none; background:url(../images/tab-bg.gif) no-repeat; font-weight:bold; text-indent:15px; }
+ul.tabLeft a:hover, ul.tabLeft a.selected { background:url(../images/selected-tab.gif) no-repeat; color:#fff; }
+
+.scrollButtons { position: absolute; top: 150px; cursor: pointer; }
+.scrollButtons.left { left: -20px; }
+.scrollButtons.right { right: -20px; }
+.hide { display: none; }

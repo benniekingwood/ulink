@@ -1,0 +1,75 @@
+#suggestions .heading {
+	FONT-SIZE: 12px; COLOR:#000000; FONT-FAMILY: Verdana; TEXT-DECORATION: none; background:url( ../images/bg.jpg ); FONT-WEIGHT : bold
+}
+.heading1 {
+	FONT-SIZE: 19px; COLOR: #006699; FONT-FAMILY: Verdana; TEXT-DECORATION: none;  FONT-WEIGHT : bold
+}
+.heading2 {
+	FONT-SIZE: 12px; COLOR: #000000; FONT-FAMILY: Verdana; TEXT-DECORATION: none; background-color:#ececec; FONT-WEIGHT : bold
+}
+TABLE.cadre1 {
+	BORDER-RIGHT: #006699 1px solid; BORDER-TOP: #006699 1px solid; BORDER-LEFT: #006699 1px solid; BORDER-BOTTOM: #006699 1px solid; BORDER-COLLAPSE: collapse
+}
+TABLE.cadre {
+	BORDER-RIGHT: #ffffff 1px solid; BORDER-TOP: #ffffff 0px solid; BORDER-LEFT: #ffffff 1px solid; BORDER-BOTTOM: #006699 1px solid; BORDER-COLLAPSE: collapse
+}
+TABLE.cadre2 {
+	BORDER-RIGHT: #ffffff 0px solid; BORDER-TOP: #006699 1px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-BOTTOM: #006699 1px solid; BORDER-COLLAPSE: collapse
+}
+TABLE.cadre3 {
+	BORDER-RIGHT: #ffffff 0px solid; BORDER-TOP: #006699 0px solid; BORDER-LEFT: #ffffff 0px solid; BORDER-BOTTOM: #006699 1px solid; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: #ececec
+    
+}
+
+.tdbg {
+	BACKGROUND-COLOR: #ececec
+}
+
+.PageHeader
+ {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; TEXT-TRANSFORM: uppercase; COLOR: #004584; FONT-FAMILY: Arial, Verdana, Helvetica, sans-serif
+}
+.BoldText12
+ {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #16039F; LINE-HEIGHT: 14px; FONT-FAMILY: Arial, Verdana, Helvetica, sans-serif
+}
+.BoldText
+ {
+	FONT-WEIGHT: bold; FONT-SIZE: 11px; COLOR: black; LINE-HEIGHT: 14px; FONT-FAMILY: Arial, Verdana, Helvetica, sans-serif
+}
+#suggestions A {
+	COLOR:#000000; FONT-SIZE:12px; FONT-FAMILY: Verdana; TEXT-DECORATION:none; FONT-WEIGHT: normal
+}
+#suggestions A:hover {
+	COLOR: #ff9900; TEXT-DECORATION: none
+}
+#suggestions A:active {
+	TEXT-DECORATION: none; color: #ff9900  
+}
+#suggestions A:link {
+	TEXT-DECORATION: none 
+}
+#suggestions A:visited {
+	TEXT-DECORATION: none ; color: #006699
+}
+h3 {   
+		margin: 0px;
+		padding: 0px;	
+	}
+.suggestionsBox { position: absolute; margin: 26px 0 20px 265px; width: 132px; color: #fff; z-index:1000; padding-bottom:10px;}
+.suggestionsBox ul{ background: #817f80; padding:0px 10px; width:110px;}
+
+	
+	.suggestionList {
+		margin: 0px;
+		padding: 0px 0px 10px 0px;
+		list-style:none;
+		background:url(../img/searchBottom_new.png) left bottom no-repeat; 
+	}
+	
+.suggestionList li {FONT-SIZE: 12px; margin: 0px 0px 1px 0px; padding:6px 3px; cursor: pointer; border-bottom:1px dashed #a6a6a6; width:100px;}
+.suggestionList li:hover{ color:#000000;}
+
+.suggestionshelp{position: absolute; margin:26px 0 20px 28px; width: 236px; color: #fff; z-index:1000; padding-bottom:10px;}
+.suggestionshelp ul{background: none repeat scroll 0 0 #817F80;  padding: 0 10px;  width: 216px;}
+.suggestionshelp li{padding:5px 0px; cursor:pointer;}

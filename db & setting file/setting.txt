@@ -1,0 +1,15 @@
+Please fill up the following details specific to your server/account:
+
+1) File:  app/config/routes.php
+DEFAULT_URL
+ZEND_LIB_DIR
+BASE_URL
+FACEBOOK_APP_ID
+FACEBOOK_APP_URL
+
+2) File: app/config/database.php
+DATABASE_CONFIG
+    host
+    login
+    password
+    database
