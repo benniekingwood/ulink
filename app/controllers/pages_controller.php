@@ -7,9 +7,10 @@ class PagesController extends AppController {
     var $name = 'Pages';
     var $uses = array();
     var $components = array('RequestHandler');
-    var $helpers = array('Html', 'Form', 'Javascript', 'Ajax', 'Jquery');
+    var $helpers = array('Html', 'Form', 'Javascript');
 
     /**
+     * Home uLink homepage loader.
      * @param null $msg
      */
     function home($msg=null) {
@@ -20,24 +21,11 @@ class PagesController extends AppController {
         $this->layout = 'v2';
         $this->pageTitle = 'Your college everything.';
         $this->chkAutopass();
-        //Recent added reviews 
-       // $recentReview = $this->Review->find('all', array('conditions' => 'Review.status=1',
-         //           'order' => 'Review.id DESC'));
-        //$this->set('Review', $recentReview);
-
-
-
-       // $news = $this->Article->find('all', array('conditions' => 'Article.status=1', 'order' => 'Article.modified DESC'));
-
-
-        //$this->set('News', $news);
     }
 
-    function success() {
-        $this->set('currentPageHeading', '');
-        $this->layout = "v2";
-    }
-
+    /**
+     *
+     */
     function validate_data() {
         if (isset($this->data)) {
             if (!eregi('^[A-Za-z0-9_]+$', $this->data['Message']['url'])) {
@@ -49,29 +37,47 @@ class PagesController extends AppController {
         }
     }
 
+    /**
+     * Success page loader for new users activating
+     */
+    function success() {
+        $this->set('currentPageHeading', '');
+        $this->layout = "v2";
+    }
+
+    /**
+     * Help page loader
+     */
     function help() {
         $this->set('currentPageHeading', '');
         $this->layout = "v2";
         $this->pageTitle = 'uLink Help';
-        //$data=$this->Page->find('all',array('conditions'=>array('Page.id'=>'1')));
-        //$this->set('faqs',$data);
     }
 
+    /**
+     * Advertise page loader
+     */
     function advertise() {
         $this->set('currentPageHeading', '');
         $this->layout = "v2";
-        //$data=$this->Page->find('all',array('conditions'=>array('Page.id'=>'2')));
-        //$this->set('advertisement',$data);
     }
 
+    /**
+     * Terms page loader
+     */
     function terms() {
         $this->set('currentPageHeading', '');
         $this->layout = "v2";
         $this->pageTitle = 'Terms and Conditions';
-        //$data=$this->Page->find('all',array('conditions'=>array('Page.id'=>'3')));
-        //$this->set('legals',$data);
     }
 
+    /**
+     * About page loader
+     */
+    function about() {
+        $this->set('currentPageHeading', '');
+        $this->layout = "v2";
+        $this->pageTitle = 'About Us';
+    }
 }
-
 ?>

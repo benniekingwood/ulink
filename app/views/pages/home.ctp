@@ -21,3 +21,6 @@
         <p><a class="btn btn-warning" data-toggle="modal" href="#suggestComponent">Suggest Here</a></p>
     </div>
 </div> <!-- /container -->
+<!-- components section -->
+<?php echo $this->element('suggest_school'); ?>
+<!-- /components section -->

@@ -20,6 +20,27 @@ class SchoolsController extends AppController {
         $this->Auth->allow('*');
     }
 
+    /**
+     * This function will add a school suggestion
+     * to the database
+     *
+     * @param null $id
+     */
+    function suggestion($id=NULL) {
+        $this->autoRender = false;
+        $this->layout=null;
+        $retVal = "false";
+        if (!empty($this->data)) {
+            $this->data['Suggestion']['name'] = $this->data['School']['name'];
+            if ($this->Suggestion->save($this->data)) {
+                $retVal = "true";
+            }
+            Configure:: write('debug', 0);
+            return $retVal;
+            exit();
+        }
+    }
+
     // listing o fsuggested schools
     function admin_school_index() {
         $this->layout = "admin_dashboard";
@@ -34,7 +55,8 @@ class SchoolsController extends AppController {
         } elseif ($this->Session->check('advancedSchoolSearch')) {
 
             if (isset($this->params['named']['page'])) {
-                $searchText = $this->data['AdvancedSearch'] = $this->Session->read('advancedSchoolSearch');
+                $this->data['AdvancedSearch'] = $this->Session->read('advancedSchoolSearch');
+                $searchText =    $this->data['AdvancedSearch'];
             } else {
                 $this->Session->delete('advancedSchoolSearch');
                 $searchText = $this->data['School']['searchText'];
@@ -387,24 +409,6 @@ class SchoolsController extends AppController {
             $this->autoRender = false;
             $this->layout = null;
             echo "false";
-        }
-    }
-
-//ef
-
-    function suggestion($id=NULL) {
-        $this->autoRender = false;
-        $this->layout = null;
-
-        if (!empty($this->data)) {
-            $this->data['Suggestion']['name'] = $this->data['School']['name'];
-            if ($this->Suggestion->save($this->data)) {
-                echo "true";
-                exit();
-            } else {
-                echo "false";
-                exit();
-            }
         }
     }
 

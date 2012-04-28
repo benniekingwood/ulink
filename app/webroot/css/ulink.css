@@ -490,3 +490,13 @@ div.time-picker li.selected {
   background: #0063CE;
   color: #fff;
 }
+
+.success-img {
+   background: url("../img/success_image.png") no-repeat left center;
+   height: 100px;
+   width: 100px;
+}
+#suggest-response {
+    margin-top:30px;
+    font-size: 1.2em;
+}

@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" >
+
 <head>
     <?php echo $html->charset(); ?>
     <title>
@@ -21,6 +22,11 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <!-- facebook scripts -->
+    <script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+    <script type="text/javascript">
+        FB.init( "<?php echo FACEBOOK_APP_ID; ?>","<?php echo FACEBOOK_APP_URL; ?>");
+    </script>
 
     <!--  favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico">
@@ -39,8 +45,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="./ulink_home.html">
-                <img src="./img/logouLink_7539.png" alt="ulinklogo" />
+            <a class="brand" href="<?php e($html->url('/')); ?>">
+                <?php echo $html->image('logouLink_7539.png', array('alt' => 'ulinklogo')); ?>
             </a>
             <div class="nav-collapse">
                 <ul class="nav span3">
@@ -48,7 +54,7 @@
                 </ul>
 
                 <div class="span2">&nbsp;
-                </div><!-- /nav middel spacer -->
+                </div><!-- /nav middle spacer -->
                 <ul class="nav pull-right">
                     <li class="divider-vertical"></li>
                     <li class="dropdown">
@@ -60,7 +66,7 @@
                         <ul class="dropdown-menu profile-mgmt">
                             <li>
                                 <div class="span3">
-                                    <img src="./img/jack.png" alt="myprofilepicture">
+                                    <?php echo $html->image('jack.png', array('alt' => 'myprofilepicture')); ?>
                                     <span id="profile-mgmt-name">Jack Dean</span>
                                 </div>
                                 <a href="#">Manage my profile</a>
@@ -103,24 +109,7 @@
     </div>
 </footer> <!-- /footer -->
 
-<!-- components section -->
-<div class="modal hide fade" id="suggestComponent">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-        <h3>Suggest your school</h3>
-    </div>
-    <div class="modal-body">
-        <form id="suggestionFormNew" action="">
-            <input class="input-xxlarge ulink-input-bigfont" type="text" placeHolder="Enter your school name">
-        </form>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn btn-primary btn-large">Submit</a>
-    </div>
-</div> <!-- /suggestComponent -->
-<!-- /components section -->
-
 <!-- Placed at the end of the document so the pages load faster -->
-<?php echo $javascript->link(array('jquery.min.js', 'boostrap.js', 'ulink.js')); ?>
+<?php echo $javascript->link(array('jquery.min.js', 'ulink.js','var.js','validate.js','form-submit.js', 'ajax.js','jquery.form.js')); ?>
 </body>
 </html>

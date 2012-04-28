@@ -36,6 +36,7 @@ $(function() {
 
 // activates tooltips
 $("[rel=tooltip]").tooltip({placement : 'bottom'});
+
 $(function(){
 	$('#eventtime').timePicker({
 	  startTime: "24:00",  
