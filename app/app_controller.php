@@ -60,8 +60,6 @@ class AppController extends Controller {
 
             $this->Auth->loginError = "<font color='#fff'></font>";
 
-
-            //$this->Auth->loginRedirect = array('controller' => 'pages', 'action' => 'home');
             $this->Auth->logoutRedirect = array('controller' => 'pages', 'action' => 'home');
             $this->Auth->allow('*');
             //$this->Auth->authorize = 'controller';
@@ -69,10 +67,11 @@ class AppController extends Controller {
 
             $this->Auth->userScope = array('User.activation' => '1');
             $this->set('loggedInId', $this->Auth->user('id'));
-            $this->set('loggedInName', $this->Auth->user('firstname'));
+            $this->set('loggedInName', $this->Auth->user('firstname').' '.$this->Auth->user('lastname'));
             $this->set('userSchoolId', $this->Auth->user('school_id'));
             $this->set('loggedInUserName', $this->Auth->user('username'));
             $this->set('loggedInFacebookId', $this->Auth->user('fbid'));
+            $this->set('profileImgURL', $this->Auth->user('image_url'));
             $this->Auth->autoRedirect = false;
             $this->Cookie->name = 'Ulink';
 
@@ -266,7 +265,7 @@ class AppController extends Controller {
 
         if ($userDetails['User']['autopass'] == 1) {
 
-            $this->Session->setFlash('Your password is auto genrated. please change your password first');
+            $this->Session->setFlash('Your password is auto generated, please change your password to have full access to uLink.');
             $this->redirect(array('controller' => 'users', 'action' => 'index'));
         }
     }
@@ -371,20 +370,23 @@ class AppController extends Controller {
         return $key;
     }
 
-// eof 
-
+    /**
+     * This function will set the error layout before
+     * any page loads
+     */
     function beforeRender() {
         //to set the not found page
         $this->_setErrorLayout();
     }
 
-    //function will set the not found layout and render it
+    /*
+     * This function will set the not found layout and render it
+     */
     function _setErrorLayout() {
         if ($this->name == 'CakeError') {
             $this->layout = 'not_found';
         }
     }
-
 }
 
 ?>

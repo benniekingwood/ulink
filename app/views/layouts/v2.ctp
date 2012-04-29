@@ -1,5 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+        >
 
 <head>
     <?php echo $html->charset(); ?>
@@ -11,22 +13,19 @@
         // print meta tags
         echo $html->meta('icon');
         echo $html->meta('viewport','width=device-width, initial-scale=1.0');
-        echo $html->meta('description','uLink, Inc.');
-        echo $html->meta('author','');
+        echo $html->meta('description','Handle your everyday college activities with uLink.');
+        echo $html->meta('author','uLink, Inc.');
 
         // print styles
         echo $html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
+        echo $javascript->link(array('jquery.min.js','bootstrap.js'));
+
     ?>
 
     <!--  HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <!-- facebook scripts -->
-    <script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
-    <script type="text/javascript">
-        FB.init( "<?php echo FACEBOOK_APP_ID; ?>","<?php echo FACEBOOK_APP_URL; ?>");
-    </script>
 
     <!--  favicon and touch icons -->
     <link rel="shortcut icon" href="../assets/ico/favicon.ico">
@@ -48,42 +47,73 @@
             <a class="brand" href="<?php e($html->url('/')); ?>">
                 <?php echo $html->image('logouLink_7539.png', array('alt' => 'ulinklogo')); ?>
             </a>
+
             <div class="nav-collapse">
                 <ul class="nav span3">
-                    <li id="ucampus-module"><a class="module" href="./ucampus_home.html"><i class="ulink-icon-ucampus"></i>uCampus</a></li>
+                    <li id="ucampus-module">
+                        <a class="module" href="./ucampus_home.html">
+                            <i class="ulink-icon-ucampus"></i>uCampus
+                        </a>
+                    </li>
                 </ul>
-
-                <div class="span2">&nbsp;
-                </div><!-- /nav middle spacer -->
+                <div class="span2">&nbsp;</div><!-- /nav middle spacer -->
                 <ul class="nav pull-right">
                     <li class="divider-vertical"></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-user icon-white"></i>
-                            <span id="profile-mgmt-username">deanVT</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu profile-mgmt">
-                            <li>
-                                <div class="span3">
-                                    <?php echo $html->image('jack.png', array('alt' => 'myprofilepicture')); ?>
-                                    <span id="profile-mgmt-name">Jack Dean</span>
-                                </div>
-                                <a href="#">Manage my profile</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">Sign out</a></li>
-                        </ul>
-                    </li>
+
+                    <?php if (!isset($loggedInId)) { ?>
+                        <li>
+                            <a href="<?php e($html->url('/users/register'));?>">Join</a>
+                        </li>
+                        <li>
+                            <a data-toggle="modal" href="#loginComponent">Log In</a>
+                        </li>
+                    <?php } else { ?>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-user icon-white"></i>
+                                <span id="profile-mgmt-username"><?php echo $loggedInUserName ?></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu profile-mgmt">
+                                <li>
+                                    <div class="span3">
+                                        <?php
+                                            if ($profileImgURL != '' && file_exists(WWW_ROOT . '/img/files/users/' . $profileImgURL)) {
+                                                echo $html->image('files/users/' . $profileImgURL . '', array('alt' =>
+                                            'profileimage'));
+                                            } else {
+                                                echo $html->image('files/users/noImage.jpg', array('alt' => 'noimage'));
+                                            }
+                                        ?>
+                                        <span id="profile-mgmt-name"><?php echo $loggedInName?></span>
+                                    </div>
+                                    <a href="<?php e($html->url('/users/'));?>">Manage my profile</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <?php
+                                    if ($loggedInFacebookId > 0):
+                                        echo $html->link('Sign Out', '#', array('class' => 'login', 'onclick' =>
+                                        'FB.Connect.logout(function() { document.location = "' . $html->url('/users/logout/') .
+                                        '"; });return false;'));
+                                    else:
+                                    ?>
+                                    <a href="<?php echo $html->url('/users/logout');?>">Sign Out</a>
+                                    <?php endif; }?>
+                                </li>
+                            </ul>
+                        </li> <!-- /dropdown -->
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
     </div>
-</div> <!-- /navbar -->
+</div><!-- /navbar -->
 
 <?php $session->flash(); ?>
 <?php echo $content_for_layout; ?>
-
+<!-- global components -->
+<?php echo $this->element('login'); ?>
+<!-- /global components -->
 <footer>
     <div class="container">
         <div class="row">
@@ -101,15 +131,23 @@
                 <a href="http://www.twitter.com/ulinkinc">
                     <i class="ulink-social-icon-twitter"></i>
                 </a>
-					<span class="pull-right">
-						&copy 2012 uLink, Inc. All rights reserved.
-					</span>
+                <span class="pull-right">
+                    &copy 2012 uLink, Inc. All rights reserved.
+                </span>
             </div>
         </div>
     </div>
 </footer> <!-- /footer -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<?php echo $javascript->link(array('jquery.min.js', 'ulink.js','var.js','validate.js','form-submit.js', 'ajax.js','jquery.form.js')); ?>
+<?php echo $javascript->link(array('jquery.form.js','ulink.js','var.js','validate.js','form-submit.js','ajax.js'));?>
+
+<!-- facebook scripts -->
+<script type="text/javascript"
+        src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+<script type="text/javascript">
+    FB.init("<?php echo FACEBOOK_APP_ID; ?>", "<?php echo FACEBOOK_APP_URL; ?>");
+</script>
+
 </body>
 </html>

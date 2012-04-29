@@ -500,3 +500,105 @@ div.time-picker li.selected {
     margin-top:30px;
     font-size: 1.2em;
 }
+.login-header {
+    width:365px;
+    background:url("../img/loingHeading.gif") top left no-repeat;
+    height:47px;
+    text-align:center;
+    color:#FFF;
+    line-height:37px;
+    font-size:1.3em;
+    margin-left: 30px;
+}
+.no-account-header {
+    background:url("../img/newAccountHeading.gif") top left no-repeat;
+    height:39px;
+    text-align:center;
+    width:292px;
+    font-size:1.3em;
+    line-height:39px;
+}
+.no-account-header a { color:#FFF; text-decoration:none;}
+#loginForm { text-align: center; }
+.facebook-login {
+    height: 26px;
+    padding-top:8px;
+}
+.facebook-login span {
+    padding: 0 5px;
+}
+.remember-forgot { padding: 10px 0 0 27px;}
+/* MODAL STYLES */
+.modal-wide-open .dropdown-menu {
+z-index: 2050;
+}
+
+.modal-wide-open .dropdown.open {
+   *z-index: 2050;
+}
+
+.modal-wide-open .popover {
+   z-index: 2060;
+}
+
+.modal-wide-open .tooltip {
+   z-index: 2070;
+}
+
+.modal-wide-backdrop {
+   position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   z-index: 1040;
+   background-color: #000000;
+}
+
+.modal-wide-backdrop.fade {
+   opacity: 0;
+}
+
+.modal-wide-backdrop,
+.modal-wide-backdrop.fade.in {
+   opacity: 0.8;
+   filter: alpha(opacity = 80);
+}
+
+.modal-wide {
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   z-index: 1050;
+   overflow: auto;
+   width: 780px;
+   margin: -250px 0 0 -380px;
+   background-color: #ffffff;
+   border: 1px solid #999;
+   border: 1px solid rgba(0, 0, 0, 0.3);
+   *border: 1px solid #999;
+   /* IE6-7 */
+
+   -webkit-border-radius: 6px;
+   -moz-border-radius: 6px;
+   border-radius: 6px;
+   -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+   -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+   -webkit-background-clip: padding-box;
+   -moz-background-clip: padding-box;
+   background-clip: padding-box;
+}
+
+.modal-wide.fade {
+   -webkit-transition: opacity .3s linear, top .3s ease-out;
+   -moz-transition: opacity .3s linear, top .3s ease-out;
+   -ms-transition: opacity .3s linear, top .3s ease-out;
+   -o-transition: opacity .3s linear, top .3s ease-out;
+   transition: opacity .3s linear, top .3s ease-out;
+   top: -25%;
+}
+
+.modal-wide.fade.in {
+   top: 50%;
+}

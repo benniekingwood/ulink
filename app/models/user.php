@@ -1,5 +1,10 @@
 <?php
-
+/*********************************************************************************
+ * Copyright (C) 2012 uLink, Inc. All Rights Reserved.
+ *
+ * Created On: Mar 22, 2012
+ * Description: This class is the User model object
+ ********************************************************************************/
 class User extends AppModel {
 
     var $name = 'Users';
@@ -42,7 +47,7 @@ class User extends AppModel {
             ),
             'unique' => array(
                 'rule' => array('checkUnique', 'username'),
-                'message' => 'User name taken. Use another'
+                'message' => 'Username taken. Please try another'
             )
         ),
         'password' => array(
@@ -90,17 +95,26 @@ class User extends AppModel {
         )
     );
 
+    /**
+     * This method verifies that the confirmation and
+     * regular password fields are matching
+     *
+     * @param $data
+     */
     function Confirm_password($data) {
-
+        $retVal = false;
         $value = $_REQUEST['data']['User']['confirm_password'];
-
         if ($value == $_REQUEST['data']['User']['password']) {
-            return true;
-        } else {
-            return false;
+            $retVal = true;
         }
     }
 
+    /**
+     * This method verifies that the passed in field is unique
+     * @param $data
+     * @param $fieldName
+     * @return bool
+     */
     function checkUnique($data, $fieldName) {
         $valid = false;
         if (isset($fieldName) && $this->hasField($fieldName)) {
@@ -108,7 +122,5 @@ class User extends AppModel {
         }
         return $valid;
     }
-
 }
-
 ?>

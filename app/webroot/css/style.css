@@ -323,7 +323,7 @@ right;}
 /* start: login */
 .loginBox{ width:667px; margin:auto; padding:0px 10px;}
 .loginBox .login_button{width:auto !important;}
-.loginHeading{ float:left; width:365px; background:url(../img/loingHeading.gif) top left no-repeat; font-family:Georgia, "Times New Roman", Times, serif; height:47px; text-align:center; color:#FFF; line-height:37px; font-size:19px;}
+.noaccountHeading{ float:left; width:365px; background:url(../img/loingHeading.gif) top left no-repeat; font-family:Georgia, "Times New Roman", Times, serif; height:47px; text-align:center; color:#FFF; line-height:37px; font-size:19px;}
 .noaccountHeading{ float:right !important; background:url(../img/newAccountHeading.gif) top left no-repeat; height:39px; text-align:center; width:292px; font-size:19px; line-height:39px;}
 .noaccountHeading a{ color:#FFFFFF; text-decoration:none;}
 .loginBox div{ float:left; padding-bottom:10px;  margin-bottom:0px !important;}
@@ -358,14 +358,7 @@ right;}
 /*shakti after 18 feb */
 
 #autoControlsButtons{ display:none;}
-.facebookIconBox { 
-    float: left;
-    height: 26px;
-    line-height: 20px;
-    padding: 0 !important;
-    vertical-align: top;
-    padding-top:4px;}
-.facebookIconBox  span{ height:26px; line-height:26px; float:left; padding-right:10px;}
+
 .fb{ padding:10px 0px 0px 20px; font-size:20px; font-weight:bold;}
 .your-account{ padding:5px 0px 0px 20px;}
 .message{ color: darkorange; font-size: 15px; font-weight: bold; margin-bottom: 9px;}

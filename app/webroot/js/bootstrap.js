@@ -674,6 +674,9 @@
 
         if (this.isShown) return
 
+        if($('body').hasClass('modal-open'))
+            return
+
         $('body').addClass('modal-open')
 
         this.isShown = true

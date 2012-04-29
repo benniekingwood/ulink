@@ -1,7 +1,11 @@
 <?php
-
-class UsersController extends AppController
-{
+/*********************************************************************************
+ * Copyright (C) 2012 uLink, Inc. All Rights Reserved.
+ *
+ * Created On: Mar 22, 2012
+ * Description: This class handles all the User object business logic
+ ********************************************************************************/
+class UsersController extends AppController {
 
     var $name = 'Users';
     var $uses = array('User', 'Country', 'State', 'City', 'School', 'Review', 'Domain');
@@ -13,69 +17,68 @@ class UsersController extends AppController
     var $paginate_limit_admin = '20';
     var $paginate = "";
 
-    function beforeFilter()
-    {
+    function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('*');
     }
 
-    function login()
-    {
+    /**
+     * Handles the login action
+     */
+    function login() {
         if ($_POST['username']) {
             $this->autoRender = false;
             $this->layout = null;
         }
-        if ($_GET['mode'] == 1) {
-            // $this->layout =null;	
-        } else {
-            $this->layout = "default1";
-        }
-        $this->pageTitle = 'Login to uLink';
 
-        $this->set('currentPageHeading', 'Login to uLink');
+        // if the user is already authenticated or there is post data...
         if ($this->Auth->user() || ($_POST['username'] && $_POST['password'])) {
+            // if there is data set from the form
             if (!empty($this->data)) {
-
+                // if "remember_me" was not clicked, removed any user data from the Cookie
                 if (empty($this->data['User']['remember_me'])) {
                     $this->Cookie->del('User');
                 } else {
+                    // add the user info as a Cookie for 2 weeks
                     $cookie = array();
                     $cookie['username'] = $this->data['User']['username'];
                     $cookie['password'] = $this->data['User']['password'];
                     $this->Cookie->write('User', $cookie, true, '+2 weeks');
                 }
+                // remove the remember_me form data from the data object
                 unset($this->data['User']['remember_me']);
             }
 
+            // grab the user activation status based on the passed in username/password
             $userActCheck = $this->User->find('all', array('conditions' => 'User.username="' . $_POST['username'] . '"',
                 'fields' => 'User.activation'));
+
+            // authenticate the user
             $getInfo = $this->Auth->user();
+
+            // if a user was retrieved...success
             if ($getInfo) {
                 $this->layout = null;
                 echo "yes";
-            } else if ($userActCheck[0]['User']['activation'] == "0") {
+            } else if ($userActCheck[0]['User']['activation'] == "0") {    // user is not active
                 echo "std";
-            } else {
+            } else {   // finally it must be an invalide login
                 echo "in-valid";
             }
         }
+                     $this->log($getInfo->username, 'debug') ;
+        $this->set('username',$getInfo->username);
+    } // login
 
-        $this->set('checkLogin', 'checkLogin');
-    }
-
-//ef
-
-    function logout()
-    {
-        $this->layout = "default1";
-        // $this->Session->setFlash('You have been logged out.');
+    /**
+     * Handles the logout action
+     */
+    function logout() {
+        $this->layout = "v2";
         $this->redirect($this->Auth->logout());
-    }
+    } // logout
 
-//ef
-
-    function forgotpassword()
-    {
+    function forgotpassword() {
         $this->pageTitle = 'Forgotten Password';
         $this->layout = "default1";
         $this->set('currentPageHeading', 'Forgotten Password');
@@ -174,7 +177,7 @@ class UsersController extends AppController
         if (!empty($this->data)) {
 
             // check against the email here
-            if($this->emailExists($this->data['User']['email'])) {
+            if ($this->emailExists($this->data['User']['email'])) {
                 $this->Session->setFlash('Email already exists in uLink.  Please submit another.');
 
             } else {
@@ -243,7 +246,7 @@ class UsersController extends AppController
             $schools[$school['School']['id']] = $school['School']['name'];
         }
 
-        for ($i = 1960; $i <= date("Y")+10; $i++) {
+        for ($i = 1960; $i <= date("Y") + 10; $i++) {
             $years[$i] = $i;
         }
 
@@ -293,9 +296,10 @@ class UsersController extends AppController
      * @param $email
      * @return bool
      */
-    function emailExists($email) {
-         $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''));
-         return !empty($chkuserExist);
+    function emailExists($email)
+    {
+        $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''));
+        return !empty($chkuserExist);
     }
 
     function index()
@@ -342,7 +346,7 @@ class UsersController extends AppController
                 $schools[$school['School']['id']] = $school['School']['name'];
             }
 
-            for ($i = 1960; $i <= date("Y")+10; $i++) {
+            for ($i = 1960; $i <= date("Y") + 10; $i++) {
                 $years[$i] = $i;
             }
 
@@ -415,7 +419,7 @@ class UsersController extends AppController
                 $this->User->invalidate('school_status', 'Please select school status');
                 $validateError++;
             }
-            if($this->emailExists($this->data['User']['email'])) {
+            if ($this->emailExists($this->data['User']['email'])) {
                 $this->User->invalidate('email', 'Email already exists in uLink.  Please submit another.');
                 $validateError++;
             }
@@ -459,7 +463,7 @@ class UsersController extends AppController
                 $schools[$school['School']['id']] = $school['School']['name'];
             }
 
-            for ($i = 1960; $i <= date("Y")+10; $i++) {
+            for ($i = 1960; $i <= date("Y") + 10; $i++) {
                 $years[$i] = $i;
             }
 
@@ -636,7 +640,7 @@ class UsersController extends AppController
             $schools [$school['School']['id']] = $school['School']['name'];
         }
 
-        for ($i = 1960; $i <= date("Y")+10; $i++) {
+        for ($i = 1960; $i <= date("Y") + 10; $i++) {
             $years[$i] = $i;
         }
 
@@ -689,7 +693,7 @@ class UsersController extends AppController
             $schools[$school['School']['id']] = $school['School']['name'];
         }
 
-        for ($i = 1960; $i <= date("Y")+10; $i++) {
+        for ($i = 1960; $i <= date("Y") + 10; $i++) {
             $years[$i] = $i;
         }
 
@@ -910,10 +914,10 @@ class UsersController extends AppController
         $email = $_POST['data']['User']['email'];
         $schoolSelect = $_POST['school_id'];
         $schoolStatus = $_POST['school_status'];
-       // $this->log('schoolstatus-' . $schoolStatus . '-', 'debug');
+        // $this->log('schoolstatus-' . $schoolStatus . '-', 'debug');
 
 
-      /*  $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''
+        /*  $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''
             )
         );*/
 
@@ -923,40 +927,40 @@ class UsersController extends AppController
          * sure they have an approved emails domain for the school
          * in which they are registering.
          */
-       // if (empty($chkuserExist)) {
+        // if (empty($chkuserExist)) {
 
-            if ($schoolStatus != 'Alumni') {
-                $this->log('here in checking out -', 'debug');
-                $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . $schoolSelect
-                    )
-                );
+        if ($schoolStatus != 'Alumni') {
+            $this->log('here in checking out -', 'debug');
+            $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . $schoolSelect
+                )
+            );
 
-                $domains = explode(',', $chkuser[0]['School']['domain']);
-                foreach ($domains as $val) { //echo $val;
-                    $lookdomain = explode('.', $lookdomain = $val);
-                    /* 	echo "<pre>";
-                      print_r($lookdomain);
-                      exit('xx'); */
-                    if ((eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@" . $lookdomain[0] . "." . $lookdomain[1] . "$", $email))) {
+            $domains = explode(',', $chkuser[0]['School']['domain']);
+            foreach ($domains as $val) { //echo $val;
+                $lookdomain = explode('.', $lookdomain = $val);
+                /* 	echo "<pre>";
+               print_r($lookdomain);
+               exit('xx'); */
+                if ((eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@" . $lookdomain[0] . "." . $lookdomain[1] . "$", $email))) {
 
-                        $status = 1;
-                        break;
-                    } else {
-
-                        $status = 0;
-                    }
-                }
-                if ($status == 1) {
-                    echo "true";
+                    $status = 1;
+                    break;
                 } else {
-                    echo "false";
+
+                    $status = 0;
                 }
-            } else {
-                $this->log('it is an alumn, returing true', 'debug');
-                echo "true";
             }
-      //  } else {
-       //     echo "false";
+            if ($status == 1) {
+                echo "true";
+            } else {
+                echo "false";
+            }
+        } else {
+            $this->log('it is an alumn, returing true', 'debug');
+            echo "true";
+        }
+        //  } else {
+        //     echo "false";
         //}
     }
 
@@ -1237,7 +1241,7 @@ class UsersController extends AppController
         }
     }
 
-    ########################################################  
+    ########################################################
 
     function test()
     {
