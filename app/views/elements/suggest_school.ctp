@@ -1,4 +1,4 @@
-<?php echo $javascript->link(array('jquery.min.js','bootstrap.js'));?>
+<?php echo $javascript->link(array('jquery.min.js','bootstrap-modal.js'));?>
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
         $('#suggestSchoolForm').ajaxForm({

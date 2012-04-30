@@ -123,6 +123,62 @@ class AppController extends Controller {
     }
 
     /**
+     * This function will generate a random String based on the passed in parameters
+     * @param int $minLength
+     * @param int $maxLength
+     * @param bool $useUpper
+     * @param bool $useSpecial
+     * @param bool $useNumbers
+     * @return string
+     */
+    function getRandomString($minLength = 20, $maxLength = 20, $useUpper = true, $useSpecial = false, $useNumbers = true) {
+        $charset = "abcdefghijklmnopqrstuvwxyz";
+        $key = '';
+
+        if ($useUpper) {
+            $charset .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
+        if ($useNumbers) {
+            $charset .= "0123456789";
+        }
+        if ($useSpecial) {
+            $charset .= "~@#$%^*()_+-={}|][";
+        }
+        if ($minLength > $maxLength) {
+            $length = mt_rand($maxLength, $minLength);
+        } else {
+            $length = mt_rand($minLength, $maxLength);
+        }
+
+        /*
+         *  iterate over the desired length of the string
+         *  appending a random char from the charset.
+         */
+        for ($i = 0; $i < $length; $i++) {
+            $key .= $charset[(mt_rand(0, (strlen($charset) - 1)))];
+        }
+        return $key;
+    }
+
+    /**
+     * This function will set the error layout before
+     * any page loads
+     */
+    function beforeRender() {
+        //to set the not found page
+        $this->_setErrorLayout();
+    }
+
+    /*
+     * This function will set the not found layout and render it
+     */
+    function _setErrorLayout() {
+        if ($this->name == 'CakeError') {
+            $this->layout = 'v2_not_found';
+        }
+    }
+
+    /**
      * uploads files to the server
      * 		will return an array with the success of each file upload
      */
@@ -351,62 +407,6 @@ class AppController extends Controller {
                 }
             }
         endif;
-    }
-
-    /**
-     * This function will generate a random String based on the passed in parameters
-     * @param int $minLength
-     * @param int $maxLength
-     * @param bool $useUpper
-     * @param bool $useSpecial
-     * @param bool $useNumbers
-     * @return string
-     */
-    function getRandomString($minLength = 20, $maxLength = 20, $useUpper = true, $useSpecial = false, $useNumbers = true) {
-        $charset = "abcdefghijklmnopqrstuvwxyz";
-        $key = '';
-
-        if ($useUpper) {
-            $charset .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        }
-        if ($useNumbers) {
-            $charset .= "0123456789";
-        }
-        if ($useSpecial) {
-            $charset .= "~@#$%^*()_+-={}|][";
-        }
-        if ($minLength > $maxLength) {
-            $length = mt_rand($maxLength, $minLength);
-        } else {
-            $length = mt_rand($minLength, $maxLength);
-        }
-
-        /*
-         *  iterate over the desired length of the string
-         *  appending a random char from the charset.
-         */
-        for ($i = 0; $i < $length; $i++) {
-            $key .= $charset[(mt_rand(0, (strlen($charset) - 1)))];
-        }
-        return $key;
-    }
-
-    /**
-     * This function will set the error layout before
-     * any page loads
-     */
-    function beforeRender() {
-        //to set the not found page
-        $this->_setErrorLayout();
-    }
-
-    /*
-     * This function will set the not found layout and render it
-     */
-    function _setErrorLayout() {
-        if ($this->name == 'CakeError') {
-            $this->layout = 'not_found';
-        }
     }
 }
 ?>
