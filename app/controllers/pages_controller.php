@@ -51,7 +51,7 @@ class PagesController extends AppController {
     function help() {
         $this->set('currentPageHeading', '');
         $this->layout = "v2";
-        $this->pageTitle = 'uLink Help';
+        $this->pageTitle = 'Help';
     }
 
     /**
