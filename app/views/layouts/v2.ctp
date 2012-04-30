@@ -109,8 +109,10 @@
     </div>
 </div><!-- /navbar -->
 
-<?php $session->flash(); ?>
+<!-- page content -->
 <?php echo $content_for_layout; ?>
+<!-- /page content -->
+
 <!-- global components -->
 <?php echo $this->element('login'); ?>
 <!-- /global components -->

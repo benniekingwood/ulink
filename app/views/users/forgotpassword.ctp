@@ -1,55 +1,52 @@
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#UserForgotpasswordForm").validate({
-        rules: {
-            'data[User][email]':{	 required: true,
-            email:true
+    $(document).ready(function () {
+        $("#btnForgotPassword").click(function() {
+            var valid = true;
+            // first validate the form fields
+            if ($('#email').val() == "") {
+                $('#email').focus();
+                valid = false;
+            } else {
+                $('#email').blur();
             }
-        },
-        messages: {
-            'data[User][email]':{ 
-            required: "Please enter email"	,
-            email:"Please enter valid email"
-            }
-        }	
-    });
-});
 
+            // if valid submit the form
+            if(valid) {
+                return valid;
+            } else {
+                $('#forgot-form-container').addClass('error');
+                $('#login-message').html('Please enter your email address');
+                return valid;
+            }
+        });
+    });
 </script>
 
-<div class="content">
-    <div id="blueBox">
-        <div class="top">
-            <span class="left"><?php echo $html->image('blue-border-box-top-left.gif',array('alt'=>''));?></span>
-            <span class="right"><?php echo $html->image('blue-border-box-top-right.gif',array('alt'=>''));?></span>
-            <div class="clear"></div>
+<div class="container">
+    <div class="well span7 offset2">
+        <h4>Forgot your password? Don't worry, we're here to help.  Follow the steps below and you will receive a temporary password by email.
+        </h4>
+        <p>
+            <blockquote>
+                <ul class="unstyled">
+                    <li>Enter the email address registered to your uLink account.</li>
+                </ul>
+            </blockquote>
+        </p>
+        <div id="forgot-form-container" class="control-group">
+            <?php echo $form->create('User', array('id' => 'forgotPassswordForm', 'action' => 'forgotpassword'));?>
+            <div class="controls">
+                <?php echo $form->text('email', array('div' => false, 'label' => false, 'class'=>'input-xxlarge ulink-input-bigfont', 'placeholder' => 'email'));?>
+                <span htmlfor="UserEmail" generated="true" class="help-inline error" style="display:block;"></span>
+                <span class="help-inline"><?php $session->flash(); ?></span>
+            </div>
         </div>
-        <div class="form_forgot content">
-            <div style ="margin:auto; width:500px;line-height: 18px; text-align:left;">Follow the steps below and you will receive a temporary password by email. <br />Enter the email address registered on your uLink account</div>
-            <div style="margin:auto; width:500px;">
-				<?php echo $form->create('User', array('action' => 'forgotpassword'));?>
-
-                <div class="enter-email"> 
-                     <?php echo $form->text('email', array('class'=>'forgotemail'));?>
-                    <span htmlfor="UserEmail" generated="true" class="error" style="display:block;"></span>
-                </div>
-                <br />
-                    <div style="padding-top:20px;"><?php echo $form->submit('submit.gif');?></div>
-                    
-					  <?php echo $form->end(); ?>
-                    <div class="clear"></div>
-                </div>
-
-                <div class="clear"></div></div>
-        </div>
-        <div class="clear"></div>
-        <div class="bottom">
-            <span class="left"><?php echo $html->image('blue-border-box-bottom-left.gif',array('alt'=>''));?></span>
-            <span class="right"><?php echo $html->image('blue-border-box-bottom-right.gif',array('alt'=>''));?></span>
-            <div class="clear"></div>
-        </div>
-
-        <div class="clear"></div>
+        <?php echo $form->button('Send Me Instructions', array('id'=>'btnForgotPassword', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
+        <?php echo $form->end(); ?>
     </div>
-    <div class="clear"></div>
 </div>
+<?php if($forgotError=='true') { ?>
+        <script>$('#forgot-form-container').addClass('error');</script>
+<?php } else {  ?>
+        <script>$('#forgot-form-container').removeClass('error');</script>
+<?php } ?>

@@ -602,3 +602,19 @@ z-index: 2050;
 .modal-wide.fade.in {
    top: 50%;
 }
+
+p.tip {
+   padding: 5px 10px;
+   margin: 0 0 14px 12px;
+   margin-bottom: 26px;
+   display: block;
+   width: 91.3%;
+   color: #444;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   -webkit-box-shadow: 0 1px 2px #CCCCCC;
+   -moz-box-shadow: 0 1px 2px #CCCCCC;
+   border: 1px solid #F1F1F1;
+   text-align: left;
+   background-color: #E5EEF2;
+}

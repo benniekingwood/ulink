@@ -32,6 +32,18 @@ class AppController extends Controller {
     var $youtube_password = YOUTUBE_PASSWORD;
     var $emailCheckExpression = '/^\s*[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9}\s*$/';
 
+    /**
+     * Default constructor, will instantiate a facebook client
+     */
+    function __construct() {
+        parent::__construct();
+        // Prevent the 'Undefined index: facebook_config' notice from being thrown.
+        $GLOBALS['facebook_config']['debug'] = NULL;
+
+        // Create a Facebook client API object.
+        $this->facebook = new Facebook($this->__fbApiKey, $this->__fbSecret);
+    }
+
     function beforeFilter() {
 
         $this->Auth->allow = array('*');
@@ -225,7 +237,6 @@ class AppController extends Controller {
 
         $miles = AppController::calculate_mileage($details1[0], $details2[0], $details1[1], $details2[1]);
 
-
         if ($this->units == "k")
             return round($miles * (1.609344), $this->decimals);
         else
@@ -270,14 +281,7 @@ class AppController extends Controller {
         }
     }
 
-    function __construct() {
-        parent::__construct();
-        // Prevent the 'Undefined index: facebook_config' notice from being thrown.
-        $GLOBALS['facebook_config']['debug'] = NULL;
 
-        // Create a Facebook client API object.
-        $this->facebook = new Facebook($this->__fbApiKey, $this->__fbSecret);
-    }
 
 // ef
 
@@ -310,7 +314,7 @@ class AppController extends Controller {
                 $fc = new FacebookRestClient(FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, $facebook->api_client->session_key);
 
                 $fUserData = $fc->users_getInfo($user_record['User']['fbid'], 'last_name,first_name,sex,current_location,email');
-                $user_record['User']['fbpassword'] = $this->__randomString();
+                $user_record['User']['fbpassword'] = $this->getRandomString();
                 $user_record['User']['password'] = $this->Auth->password($user_record['User']['fbpassword']);
                 $user_record['User']['lastname'] = $fUserData[0]['last_name'];
                 $user_record['User']['firstname'] = $fUserData[0]['first_name'];
@@ -349,21 +353,38 @@ class AppController extends Controller {
         endif;
     }
 
-// eof 
-
-    private function __randomString($minlength = 20, $maxlength = 20, $useupper = true, $usespecial = false, $usenumbers = true) {
+    /**
+     * This function will generate a random String based on the passed in parameters
+     * @param int $minLength
+     * @param int $maxLength
+     * @param bool $useUpper
+     * @param bool $useSpecial
+     * @param bool $useNumbers
+     * @return string
+     */
+    function getRandomString($minLength = 20, $maxLength = 20, $useUpper = true, $useSpecial = false, $useNumbers = true) {
         $charset = "abcdefghijklmnopqrstuvwxyz";
-        if ($useupper)
-            $charset .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        if ($usenumbers)
-            $charset .= "0123456789";
-        if ($usespecial)
-            $charset .= "~@#$%^*()_+-={}|][";
-        if ($minlength > $maxlength)
-            $length = mt_rand($maxlength, $minlength);
-        else
-            $length = mt_rand($minlength, $maxlength);
         $key = '';
+
+        if ($useUpper) {
+            $charset .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
+        if ($useNumbers) {
+            $charset .= "0123456789";
+        }
+        if ($useSpecial) {
+            $charset .= "~@#$%^*()_+-={}|][";
+        }
+        if ($minLength > $maxLength) {
+            $length = mt_rand($maxLength, $minLength);
+        } else {
+            $length = mt_rand($minLength, $maxLength);
+        }
+
+        /*
+         *  iterate over the desired length of the string
+         *  appending a random char from the charset.
+         */
         for ($i = 0; $i < $length; $i++) {
             $key .= $charset[(mt_rand(0, (strlen($charset) - 1)))];
         }
@@ -388,5 +409,4 @@ class AppController extends Controller {
         }
     }
 }
-
 ?>

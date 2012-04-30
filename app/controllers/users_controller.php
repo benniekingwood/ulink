@@ -78,37 +78,49 @@ class UsersController extends AppController {
         $this->redirect($this->Auth->logout());
     } // logout
 
+    /**
+     * Handles the forgot password action.  This will verify that
+     * the inputted user email exists, and will
+     * reset the password for that user and send them an email.
+     */
     function forgotpassword() {
-        $this->pageTitle = 'Forgotten Password';
-        $this->layout = "default1";
-        $this->set('currentPageHeading', 'Forgotten Password');
+        $this->pageTitle = 'Forgot Password';
+        $this->layout = "v2";
+        $this->set('currentPageHeading', 'Forgot your password?');
+
+        // if the user is already authenticated, redirect to homepage
         if ($this->Auth->user()) {
             $this->redirect($this->Auth->redirect());
             exit();
         }
 
+        // if there is form data, continue with the process
         if (!empty($this->data)) {
 
+            // if the email was provided
             if (!empty($this->data['User']['email'])) {
                 $useremail = $this->data['User']['email'];
 
+                // grab the user from the db based on the passed in email
                 $user = $this->User->find('all', array('conditions' => 'User.email="' . $useremail . '"'));
 
+                // if a user was successfully retrieved
                 if ($user) {
+                    // grab a random string for the auto password
+                    $autopass = UsersController::getRandomString();
 
-                    $val1 = rand(1, 1000);
-                    $val2 = rand(1000, 5000);
-                    $val3 = rand(5000, 10000);
-                    $autopass = $val1 . "" . $val2 . "" . $val3;
-
-
+                    // set password and user information to be saved in db
                     $this->data['User']['password2hashed'] = $this->Auth->password($autopass);
                     $this->data['User']['password'] = $this->data['User']['password2hashed'];
+                    // remove the updated autopass from the user object so that it is not saved in the db
                     unset($this->data['User']['password2hashed']);
+
+                    // set the user id, username, and autopass status to be saved
                     $this->User->id = $user[0]['User']['id'];
                     $this->data['User']['username'] = $user[0]['User']['username'];
                     $this->data['User']['autopass'] = 1;
 
+                    // if saving the user
                     if ($this->User->save($this->data)) {
                         $this->Email->to = $useremail;
                         $this->Email->subject = 'Your uLink temporary password';
@@ -125,9 +137,7 @@ class UsersController extends AppController {
                         /* Set delivery method */
                         $this->Email->delivery = 'smtp';
 
-                        $this->set('auto_pass', $autopass);
-                        $this->set('usersname', $this->data['User']['username']);
-                        $this->set('name', $user[0]['User']['firstname']);
+                        // if the email was sent successfully
                         if ($this->Email->send()) {
                             $this->Session->setFlash('Your new password was sent to ' . $useremail . '.');
 
@@ -135,25 +145,27 @@ class UsersController extends AppController {
                             // saying the message above about the new password being sent
                             //$this->redirect(array('controller' => 'users', 'action' => 'login'));
                         } else {
-                            $this->Session->setFlash('There was a problem sending the password mail. Please try again later.');
+                            $this->set('forgotError', 'true');
+                            $this->Session->setFlash('There was a problem sending the password email. Please try again later, or contact help@theulink.com', 'default', array('class' => 'help-inline error'));
                         }
-                    } else {
+                    } else {  // saving of the user failed
+                        $this->set('forgotError', 'true');
+
                         $this->Session->setFlash('There was an issue with your account,  please try again later.');
                         $this->data = null;
                     }
-                } else {
-                    $this->Session->setFlash('Please enter a valid email.');
-
-                    $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
+                } else {  // no user was retrieved for that specified email
+                    $this->set('forgotError', 'true');
+                    $this->Session->setFlash('There is no uLink account associated with this email, please try another.', 'default', array('class' => 'help-inline error'));
+                   // $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
                 }
-            } else {
-                $this->Session->setFlash('Please enter your email address.');
-
-                $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
+            } else {  // no email was provided for the user
+                $this->set('forgotError', 'true');
+                $this->Session->setFlash('Please enter your email address.',  'default', array('class' => 'help-inline error'));
+               // $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
             }
         }
-        // end of if when data is not empty
-    }
+    } // forgotpassword
 
 //ef
 
