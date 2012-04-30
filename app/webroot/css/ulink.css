@@ -519,7 +519,9 @@ div.time-picker li.selected {
     line-height:39px;
 }
 .no-account-header a { color:#FFF; text-decoration:none;}
-#loginForm { text-align: center; }
+.no-account-header a:hover { color:#e6e6e6; text-decoration:underline;}
+
+   #loginForm { text-align: center; }
 .facebook-login {
     height: 26px;
     padding-top:8px;
