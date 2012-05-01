@@ -167,44 +167,53 @@ class UsersController extends AppController {
         }
     } // forgotpassword
 
-//ef
+    /**
+     * This function will handle the main registration of new users
+     * to the site.  If an id is passed in, we know that this
+     * is for facebook users.
+     *
+     * @param null $id
+     */
+    function register($id = null) {
+        $this->pageTitle = 'Sign up with uLink';
+        $this->layout = "v2";
+        $this->set('currentPageHeading', 'Join uLink');
 
-    function register($id = null)
-    {
-        $this->pageTitle = 'Create your uLink account';
-        $this->layout = "default1";
+        /*
+         * If an id was passed in, it will be for fb.  Grab
+         * the first user that has the passed in fb id, and
+         * set it to be used in the view.
+         */
         if (isset($id)) {
             $user_record =
                 $this->User->find('first', array(
                     'conditions' => array('fbid' => $id),
                     'fields' => array('User.id'),
                 ));
-
             $this->set('id', $user_record['User']['id']);
         }
 
-        $this->set('currentPageHeading', 'Join uLink');
-
-
+        // if there is data to be saved
         if (!empty($this->data)) {
-
             // check against the email here
             if ($this->emailExists($this->data['User']['email'])) {
-                $this->Session->setFlash('Email already exists in uLink.  Please submit another.');
-
+                $this->Session->setFlash('Email already exists in uLink.  Please try another email address.');
             } else {
-
+                // get the user's password
                 $this->data['User']['password2hashed'] = $this->Auth->password($this->data['User']['password']);
+                // create their activation key
                 $this->data['User']['activation_key'] = String::uuid();
+                // upload their profile picture to the file system and save the url if successful
                 $fileOK = $this->uploadFiles('img/files/users', $this->data['User']['file']);
                 if (array_key_exists('urls', $fileOK)) {
-                    // save the url in the form data
+                    // save the url in the user data
                     $this->data['User']['image_url'] = $fileOK['urls'][0];
                 }
 
-
+                // save the user
                 if ($this->User->save($this->data)) {
 
+                    // build an email to be sent to the user for account activation
                     $this->Email->to = $this->data['User']['email'];
                     $this->Email->subject = 'uLink Account Activation';
                     $this->Email->replyTo = 'noreply@theulink.com';
@@ -220,6 +229,7 @@ class UsersController extends AppController {
                     /* Set delivery method */
                     $this->Email->delivery = 'smtp';
 
+                    // now set various info to be used in the view
                     $this->set('name', $this->data['User']['username']);
                     $this->set('server_name', $_SERVER['SERVER_NAME']);
                     if ($this->data['User']['id']) {
@@ -229,16 +239,15 @@ class UsersController extends AppController {
                     }
                     $this->set('code', $this->data['User']['activation_key']);
 
+                    // send off the email, and redirect to the successful signup page
                     if ($this->Email->send()) {
-
                         $this->redirect(array('controller' => 'pages', 'action' => 'success'));
                     } else {
                         $this->User->del($this->User->getLastInsertID());
-                        $this->Session->setFlash('There was a problem sending the confirmation mail. Please try again');
+                        $this->Session->setFlash('There was a problem sending the confirmation email. Please try again, or contact help@thelink.com.');
                     }
-                } else {
-                    $this->Session->setFlash('There was an error signing up. Please, try again.');
-                    //$this->data = null;
+                } else {  // there was an error when trying to save the user
+                    $this->Session->setFlash('There was a problem with signing up your new account. Please try again, or contact help@theulink.com.');
                 }
             }
         }
@@ -246,29 +255,31 @@ class UsersController extends AppController {
         $countries = array();
         $schools = array();
 
+        // grab all of the countries and schools from the db
         $data_countries = $this->Country->findAll();
         $data_schools = $this->School->findAll();
 
 
+        // used all the countries in the system for the form
         foreach ($data_countries as $country) {
             $countries[$country['Country']['id']] = $country['Country']['countries_name'];
         }
 
+        // use all the schools in the system  for the form
         foreach ($data_schools as $school) {
             $schools[$school['School']['id']] = $school['School']['name'];
         }
 
+        // build up the years up to this year + 10
         for ($i = 1960; $i <= date("Y") + 10; $i++) {
             $years[$i] = $i;
         }
 
-
+        // set various data to be used in the register view
         $this->set('countries', $countries);
         $this->set('years', $years);
         $this->set('schools', $schools);
-    }
-
-//ef
+    }  // register
 
     function message()
     {
