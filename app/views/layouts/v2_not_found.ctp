@@ -107,7 +107,14 @@
 </div><!-- /navbar -->
 
 <!-- page content -->
-<?php echo $content_for_layout; ?>
+<div class="container well well-white span9 offset1">
+    <div class="not-found">
+        <ul class="unstyled">
+            <li>We're sorry, the webpage you are looking for could not be found.</li>
+            <li>Please check the web address and try again. You may also return to our <a href="<?php echo $html->url('/'); ?>">Home Page.</a></li>
+        </ul>
+    </div>
+</div>
 <!-- /page content -->
 
 <!-- global components -->

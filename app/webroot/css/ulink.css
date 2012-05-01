@@ -620,3 +620,15 @@ p.tip {
    text-align: left;
    background-color: #E5EEF2;
 }
+
+.not-found {
+    background: url("../img/404.png") transparent no-repeat left center;
+    float: left;
+    font-size: 1.3em;
+    padding-top: 14px;
+    text-align: center;
+    padding-left:240px;
+    height:105px;
+    font-weight:bold;
+}
+
