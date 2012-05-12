@@ -1,5 +1,5 @@
 /* =========================================================
- * bootstrap-modal.js v2.0.2
+ * bootstrap-modal.js v2.0.3
  * http://twitter.github.com/bootstrap/javascript.html#modals
  * =========================================================
  * Copyright 2012 Twitter, Inc.
@@ -18,14 +18,15 @@
  * ========================================================= */
 
 
-!function( $ ){
+!function ($) {
 
-    "use strict"
+    "use strict"; // jshint ;_;
+
 
     /* MODAL CLASS DEFINITION
      * ====================== */
 
-    var Modal = function ( content, options ) {
+    var Modal = function (content, options) {
         this.options = options
         this.$element = $(content)
             .delegate('[data-dismiss="modal"]', 'click.dismiss.modal', $.proxy(this.hide, this))
@@ -40,23 +41,25 @@
         }
 
         , show: function () {
+
             var that = this
+                , e = $.Event('show')
 
-            if (this.isShown) return
+            this.$element.trigger(e)
 
-            if($('body').hasClass('modal-open'))
-                return
+            if (this.isShown || e.isDefaultPrevented()) return
 
             $('body').addClass('modal-open')
 
             this.isShown = true
-            this.$element.trigger('show')
 
             escape.call(this)
             backdrop.call(this, function () {
                 var transition = $.support.transition && that.$element.hasClass('fade')
 
-                !that.$element.parent().length && that.$element.appendTo(document.body) //don't move modals dom position
+                if (!that.$element.parent().length) {
+                    that.$element.appendTo(document.body) //don't move modals dom position
+                }
 
                 that.$element
                     .show()
@@ -74,21 +77,21 @@
             })
         }
 
-        , hide: function ( e ) {
+        , hide: function (e) {
             e && e.preventDefault()
-
-            if (!this.isShown) return
-
             var that = this
+            e = $.Event('hide')
+            this.$element.trigger(e)
+            if (!this.isShown || e.isDefaultPrevented()) {
+                return
+            }
+
             this.isShown = false
 
             $('body').removeClass('modal-open')
-
             escape.call(this)
 
-            this.$element
-                .trigger('hide')
-                .removeClass('in')
+            this.$element.removeClass('in')
 
             $.support.transition && this.$element.hasClass('fade') ?
                 hideWithTransition.call(this) :
@@ -114,7 +117,7 @@
         })
     }
 
-    function hideModal( that ) {
+    function hideModal(that) {
         this.$element
             .hide()
             .trigger('hidden')
@@ -122,7 +125,7 @@
         backdrop.call(this)
     }
 
-    function backdrop( callback ) {
+    function backdrop(callback) {
         var that = this
             , animate = this.$element.hasClass('fade') ? 'fade' : ''
 
@@ -172,11 +175,10 @@
         }
     }
 
-
     /* MODAL PLUGIN DEFINITION
      * ======================= */
 
-    $.fn.modal = function ( option ) {
+    $.fn.modal = function (option) {
         return this.each(function () {
             var $this = $(this)
                 , data = $this.data('modal')
@@ -204,10 +206,9 @@
             var $this = $(this), href
                 , $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
                 , option = $target.data('modal') ? 'toggle' : $.extend({}, $target.data(), $this.data())
-
             e.preventDefault()
             $target.modal(option)
         })
     })
 
-}( window.jQuery );
+}(window.jQuery);

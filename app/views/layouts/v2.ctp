@@ -15,8 +15,7 @@
 
         // print styles
         echo $html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
-        echo $javascript->link(array('jquery.min.js','bootstrap.js','var.js', 'validate.js'));
-
+        echo $javascript->link(array('jquery.min.js','var.js', 'validate.js'));
     ?>
 
     <!--  HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -139,7 +138,7 @@
 </footer> <!-- /footer -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<?php echo $javascript->link(array('jquery.form.js','ulink.js','var.js','validate.js','form-submit.js','ajax.js'));?>
+<?php echo $javascript->link(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
 
 <!-- facebook scripts -->
 <script type="text/javascript"

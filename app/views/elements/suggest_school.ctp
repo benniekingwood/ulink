@@ -1,4 +1,4 @@
-<?php echo $javascript->link(array('jquery.min.js','bootstrap-modal.js'));?>
+<?php echo $javascript->link(array('jquery.min.js')); ?>
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
         $('#suggestSchoolForm').ajaxForm({
@@ -30,7 +30,6 @@
 <div class="modal hide fade" id="suggestComponent">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-
         <h3>Suggest your school</h3>
     </div>
 
