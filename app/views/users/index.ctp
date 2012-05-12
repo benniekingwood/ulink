@@ -1,43 +1,66 @@
 <script type="text/javascript">
-    function getState(countryId) {
-      
-       // getCity();
-        var strURL=hostname+"/users/state/"+countryId;
+
+    /**
+     * Get the states based on the country code
+     *
+     * @param code
+     */
+    function getStates(countryCode) {
+        var strURL = hostname + "users/states/" + countryCode;
         var req = getXMLHTTP();
         if (req) {
-            req.onreadystatechange = function() {
-                if (req.readyState == 4) {
-                    // only if "OK"
-                    if (req.status == 200) {						
-                        document.getElementById('statediv').innerHTML=req.responseText;						
-                    } else {
-                        //alert("There was a problem while using XMLHTTP:\n" + req.statusText);
-                    }
-                }				
-            }			
-            req.open("GET", strURL, true);
-            req.send(null);
-        }		
-    }
-    function getCity(stateId) {		
-        var strURL=hostname+"/users/city/"+stateId;
-        var req = getXMLHTTP();
-        if (req) {
-			
-            req.onreadystatechange = function() {
-                if (req.readyState == 4) {
-                    // only if "OK"
-                    if (req.status == 200) {						
-                        document.getElementById('citydiv').innerHTML=req.responseText;						
-                    } else {
-                        //alert("There was a problem while using XMLHTTP:\n" + req.statusText);
-                    }
-                }				
-            }			
+            req.onreadystatechange = function () {
+                if (req.readyState == 4 && req.status == 200) {
+                    alert(req.responseText);
+                    $('#statediv').html(req.responseText);
+                }
+            }
             req.open("GET", strURL, true);
             req.send(null);
         }
-				
+    }
+    /**
+     * Get the states based on the country_id
+     *
+     * @param countryId
+     */
+    function getState(countryId) {
+        var strURL = hostname + "users/state/" + countryId;
+        var req = getXMLHTTP();
+        if (req) {
+            req.onreadystatechange = function () {
+                if (req.readyState == 4) {
+                    if (req.status == 200) {
+                        $('#statediv').html(req.responseText);
+                    } else {
+                        //alert("There was a problem while using XMLHTTP:\n" + req.statusText);
+                    }
+                }
+            }
+            req.open("GET", strURL, true);
+            req.send(null);
+        }
+    }
+
+
+
+    /**
+     * Load the city by the state id
+     *
+     * @param stateId
+     */
+    function getCity(stateId) {
+        var strURL = hostname + "users/city/" + stateId;
+        var req = getXMLHTTP();
+        if (req) {
+            req.onreadystatechange = function () {
+                if (req.readyState == 4 && req.status == 200) {
+                    $('#citydiv').html(req.responseText);
+                }
+            }
+            req.open("GET", strURL, true);
+            req.send(null);
+        }
     }
 </script>
 <script type="text/javascript">
@@ -75,7 +98,7 @@
 													  
 
                 'data[User][newpass]'			:	{
-                    minlength:5
+                    minlength:6
                 },
                 'data[User][newconfirmpass]'	:	{
                     equalTo: "#pass1"
@@ -105,7 +128,7 @@
 												
                 'data[User][newpass]'			:	{ 
 														
-                    minlength: "Please enter at least 5 characters"	
+                    minlength: "Please enter at least 6 characters"
                 },
                 'data[User][newconfirmpass]'	:	{ 
 													
@@ -144,7 +167,34 @@
 
 </script>
 
-
+<!-- <div id="personal-info-container" class="well well-white span7 offset2">
+ <h3>Personal Information</h3>
+ <div id="personal-info-form-fields" class="control-group">
+     <input placeholder="first name" type="text" id="UserFirstname" value="<?php echo $data[User][firstname] ?>" maxlength="50" name="data[User][firstname]" class="input-xlarge ulink-input-bigfont"/>
+     <div htmlfor="UserFirstname" generated="true" class="error" style="display:none;"></div>
+     <input placeholder="last name" type="text" id="UserLastname" value="" maxlength="50" name="data[User][lastname]" class="input-xlarge ulink-input-bigfont"/>
+     <div htmlfor="UserLastname" generated="true" class="error" style="display:none;"></div>
+     <input placeholder="hometown" type="text" id="UserHometown" value="" maxlength="50" name="data[User][hometown]" class="input-xlarge ulink-input-bigfont"/>
+     <div htmlfor="UserHometown" generated="true" class="error" style="display:none;"></div>
+     <?php
+         echo $form->input('country_id', array('onchange' => 'getState(this.value)', 'value' => '223','type' =>
+             'hidden', 'options' => $countries, 'empty' => 'Select Country', 'class' => 'input-large'));
+     ?>
+     <div class="input-large">
+         <label>State</label>
+         <select name="state">
+             <option>Select state</option>
+         </select>
+     </div>
+     <div class="input-large">
+         <label>City</label>
+         <select name="city">
+             <option>Select state first</option>
+         </select>
+     </div>
+     <?php echo $form->input('file', array('type' => 'file', 'class'=>'input-large', 'label' => 'Profile Image')); ?>
+ </div>
+</div> <!-- personal-info-container -->
 
 <?php echo $javascript->link(array('jqurey-removeImg.js')); ?>
 <?php echo $form->create('User', array('action' => 'index', 'name' => 'UserIndexForm', 'type' => 'file')); ?>

@@ -39,13 +39,11 @@ class AppController extends Controller {
         parent::__construct();
         // Prevent the 'Undefined index: facebook_config' notice from being thrown.
         $GLOBALS['facebook_config']['debug'] = NULL;
-
         // Create a Facebook client API object.
         $this->facebook = new Facebook($this->__fbApiKey, $this->__fbSecret);
     }
 
     function beforeFilter() {
-
         $this->Auth->allow = array('*');
         $this->Auth->userModel = 'User';  // to set the table to use with authentication
         $this->Auth->fields = array('username' => 'username', 'password' => 'password');
@@ -63,7 +61,7 @@ class AppController extends Controller {
                 }
             }
         } else {
-            if (isset($_POST['username'])) {
+            if (isset($_POST['username']) && isset($_POST['password'])) {
                 $this->data['User']['username'] = $_POST['username'];
                 $this->data['User']['password'] = $_POST['password'];
             } 

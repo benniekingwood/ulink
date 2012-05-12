@@ -203,16 +203,9 @@ class UsersController extends AppController {
                 $this->data['User']['password2hashed'] = $this->Auth->password($this->data['User']['password']);
                 // create their activation key
                 $this->data['User']['activation_key'] = String::uuid();
-                // upload their profile picture to the file system and save the url if successful
-                $fileOK = $this->uploadFiles('img/files/users', $this->data['User']['file']);
-                if (array_key_exists('urls', $fileOK)) {
-                    // save the url in the user data
-                    $this->data['User']['image_url'] = $fileOK['urls'][0];
-                }
 
                 // save the user
                 if ($this->User->save($this->data)) {
-
                     // build an email to be sent to the user for account activation
                     $this->Email->to = $this->data['User']['email'];
                     $this->Email->subject = 'uLink Account Activation';
@@ -232,7 +225,7 @@ class UsersController extends AppController {
                     // now set various info to be used in the view
                     $this->set('name', $this->data['User']['username']);
                     $this->set('server_name', $_SERVER['SERVER_NAME']);
-                    if ($this->data['User']['id']) {
+                    if (isset($this->data['User']['id'])) {
                         $this->set('id', $this->data['User']['id']);
                     } else {
                         $this->set('id', $this->User->getLastInsertID());
@@ -247,42 +240,34 @@ class UsersController extends AppController {
                         $this->Session->setFlash('There was a problem sending the confirmation email. Please try again, or contact help@thelink.com.');
                     }
                 } else {  // there was an error when trying to save the user
-                    $this->Session->setFlash('There was a problem with signing up your new account. Please try again, or contact help@theulink.com.');
+                    if($this->User->invalidFields() != null) {
+                        $errors = '';
+                        foreach($this->User->invalidFields() as $key => $value) {
+                            $errors .= $value . '<br />';
+                        }
+                        $this->Session->setFlash($errors);
+                    } else {
+                        $this->Session->setFlash('Opps, there was a problem getting your account setup. Please try again, or contact help@theulink.com.');
+                    }
                 }
             }
         }
 
-        $countries = array();
         $schools = array();
 
-        // grab all of the countries and schools from the db
-        $data_countries = $this->Country->findAll();
+        // grab all of the schools from the db
         $data_schools = $this->School->findAll();
-
-
-        // used all the countries in the system for the form
-        foreach ($data_countries as $country) {
-            $countries[$country['Country']['id']] = $country['Country']['countries_name'];
-        }
 
         // use all the schools in the system  for the form
         foreach ($data_schools as $school) {
             $schools[$school['School']['id']] = $school['School']['name'];
         }
 
-        // build up the years up to this year + 10
-        for ($i = 1960; $i <= date("Y") + 10; $i++) {
-            $years[$i] = $i;
-        }
-
         // set various data to be used in the register view
-        $this->set('countries', $countries);
-        $this->set('years', $years);
         $this->set('schools', $schools);
     }  // register
 
-    function message()
-    {
+    function message() {
         $this->autoRender = false;
         $this->layout = null;
     }
@@ -798,37 +783,68 @@ class UsersController extends AppController {
 
 //ef
 
-    function state($id = null)
-    {
+    /**
+     * Get the state based on the passed in
+     * country id
+     * @param null $id
+     */
+    function state($id = null) {
         $this->layout = null;
+        // grab the list of states by the country id
         $data_states = $this->State->find('all', array('conditions' => 'State.country_id =' . $id . '',
                 'order' => 'State.name ASC'
             )
         );
-
         $country = $id;
+        // build up the states list and set in view
         foreach ($data_states as $state) {
             $states[$state['State']['id']] = $state['State']['name'];
         }
         $this->set('states', $states);
-    }
+    }   // state
 
-//ef
+    /**
+     * Get the states based on the country
+     * code
+     * @param null $code
+     */
+    function states($code = null) {
+        $this->layout = null;
+        // grab the list of states by the country code
+        $data_states = $this->State->find('all', array('contain' => array (
+            'Country' => array(
+                'conditions' => array (
+                    'countries_iso_code' => $code)))));
+        $this->log('here', 'debug');
 
-    function city($id = null)
-    {
+        // build up the states list and set in view
+        foreach ($data_states as $state) {
+            $states[$state['State']['id']] = $state['State']['name'];
+            $this->log($state['State']['name'], 'debug');
+        }
+        $this->set('states', $states);
+    } // getStatesByCountryCode
+
+    /**
+     * Get the city based on the passed in
+     * statid id
+     * @param null $id
+     */
+    function city($id = null) {
         $this->layout = null;
 
+        // grab the list of cities by the state id
         $data_cities = $this->City->find('all', array('conditions' => 'City.state_id =' . $id . '',
                 'order' => 'City.name ASC'
             )
         );
 
+        // build up the city list and set in view
         foreach ($data_cities as $city) {
             $cities[$city['City']['id']] = $city['City']['name'];
         }
         $this->set('cities', $cities);
-    }
+    } // city
 
 //ef
 

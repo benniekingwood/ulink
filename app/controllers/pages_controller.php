@@ -43,6 +43,7 @@ class PagesController extends AppController {
     function success() {
         $this->set('currentPageHeading', '');
         $this->layout = "v2";
+        $this->pageTitle = 'Your college everything.';
     }
 
     /**

@@ -1083,9 +1083,16 @@ select:focus {
 .input-xlarge {
   width: 270px;
 }
+.input-xlarger {
+    width: 330px;
+}
+.input-xlargest {
+    width: 390px;
+}
 .input-xxlarge {
   width: 530px;
 }
+
 input[class*="span"],
 select[class*="span"],
 textarea[class*="span"],
@@ -1589,6 +1596,19 @@ legend + .control-group {
 .btn-xlarge [class^="icon-"] {
   margin-top: 2px;
 }
+
+.btn-xlarge-wide {
+    padding: 14px 40px;
+    font-size: 19px;
+    line-height: normal;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.btn-xlarge-wide [class^="icon-"] {
+    margin-top: 2px;
+}
+
 .btn-large [class^="icon-"] {
   margin-top: 1px;
 }

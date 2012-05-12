@@ -32,11 +32,13 @@
  * @return boolean 
  */
 function inDevMode() {
+    $retVal = false;
     if (isset($_SERVER) and preg_match('/^localhost/', $_SERVER['HTTP_HOST'])) {
-        return true;
+        $retVal = true;
     } else {
-        return false;
+        $retVal =  false;
     }
+    return $retVal;
 }
 
 /**

@@ -35,7 +35,7 @@ $(function() {
 });
 
 // activates tooltips
-$("[rel=tooltip]").tooltip({placement : 'bottom'});
+$("[rel=tooltip]").tooltip({placement : 'right'});
 
 $(function(){
 	$('#eventtime').timePicker({

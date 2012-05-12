@@ -15,7 +15,7 @@
 
         // print styles
         echo $html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
-        echo $javascript->link(array('jquery.min.js','bootstrap.js'));
+        echo $javascript->link(array('jquery.min.js','bootstrap.js','var.js', 'validate.js'));
 
     ?>
 

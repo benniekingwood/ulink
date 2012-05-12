@@ -31,50 +31,34 @@ class User extends AppModel {
         )
     );
     var $validate = array(
-        'firstname' => array(
-            'rule' => 'notEmpty',
-            'message' => 'Firstname is required'
-        ),
-        'lastname' => array(
-            'rule' => 'notEmpty',
-            'message' => 'Lastname is required'
-        ),
         'username' => array(
             'notempty' => array(
                 'rule' => array('minLength', 1),
                 'allowEmpty' => false,
-                'message' => 'User name cannot be empty'
+                'message' => 'Please enter a username.'
             ),
             'unique' => array(
                 'rule' => array('checkUnique', 'username'),
-                'message' => 'Username taken. Please try another'
+                'message' => 'That username is already being used, please try another.'
             )
         ),
         'password' => array(
-            'rule' => array('minLength', 5),
-            'message' => 'Password must be at least 5 characters long'
-        ),
-        'confirm_password' => array(
-            'rule' => array('Confirm_password'),
-            'message' => 'The Two password do not match'
+            'rule' => array('minLength', 6),
+            'message' => 'Password must be at least six characters long.'
         ),
         'school_id' => array(
             'rule' => 'notEmpty',
-            'message' => 'School should not be empty'
-        ),
-        'year' => array(
-            'rule' => 'notEmpty',
-            'message' => 'Please select your graduation year'
+            'message' => 'Please select a school.'
         ),
         'school_status' => array(
             'rule' => 'notEmpty',
-            'message' => 'You have to select the school status'
+            'message' => 'Please select your school status.'
         ),
         'email' => array(
             'emailRule-1' => array(
                 'rule' => 'notEmpty',
-                'message' => 'Email Should not be empty',
-                'last' => true
+                'message' => 'Please enter an email address.',
+                'last' => false
             ),
             'emailRule-2' => array(
                 'rule' => 'email',
@@ -82,16 +66,8 @@ class User extends AppModel {
             ),
             'unique' => array(
                 'rule' => array('checkUnique', 'email'),
-                'message' => 'email name taken. Use another'
+                'message' => 'The email address is already in use, you might have already signed up.'
             )
-        ),
-        'major' => array(
-            'rule' => 'notEmpty',
-            'message' => 'Major should not be empty'
-        ),
-        'hometown' => array(
-            'rule' => 'notEmpty',
-            'message' => 'Hometown should not be empty'
         )
     );
 
@@ -101,7 +77,7 @@ class User extends AppModel {
      *
      * @param $data
      */
-    function Confirm_password($data) {
+    function confirmPassword($data) {
         $retVal = false;
         $value = $_REQUEST['data']['User']['confirm_password'];
         if ($value == $_REQUEST['data']['User']['password']) {

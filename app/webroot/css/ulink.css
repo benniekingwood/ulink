@@ -1,6 +1,6 @@
-   body {
+body {
         padding-top: 75px; /* 75px to make the container go all the way to the bottom of the topbar */
-      }
+}
 .profile-component {
 	padding: 15px 20px;
 }
@@ -632,3 +632,18 @@ p.tip {
     font-weight:bold;
 }
 
+.success-register-container {
+    margin-top: 100px;
+}
+/** Register page styles **/
+.flash-error {
+    color: #993333;
+    font-size: 1.3em;
+}
+
+.jerror {
+    background: url("../img/error.png") transparent no-repeat left 1px;
+    margin-top: 10px;
+    color: #993333;
+    padding-left: 20px;
+}
