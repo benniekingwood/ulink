@@ -646,4 +646,50 @@ p.tip {
     margin-top: 10px;
     color: #993333;
     padding-left: 20px;
+    margin-left: 30px;
+}
+
+/** Splash page styles **/
+.schools-supported-list {
+    overflow-y: auto;
+    height: 150px;
+}
+
+.schools-supported-container {
+    height: 237px;
+}
+
+.splash-hero-bg-1 {
+    width: 540px;
+    background: url("../img/hero_1.png") transparent no-repeat left center;
+}
+
+.splash-hero-bg-2 {
+    width: 540px;
+    background: url("../img/hero_2.png") transparent no-repeat left center;
+}
+
+.splash-hero-bg-3 {
+    width: 540px;
+    background: url("../img/hero_3.png") transparent no-repeat left center;
+}
+
+.splash-hero-bg-4 {
+    width: 540px;
+    background: url("../img/hero_4.png") transparent no-repeat left center;
+}
+
+.splash-hero-bg-5 {
+    width: 540px;
+    background: url("../img/hero_5.png") transparent no-repeat left center;
+}
+
+.splash-hero-container {
+    color: #fff;
+    opacity: 1;
+    filter: alpha(opacity=1);
+}
+
+.splash-container {
+    margin-top: 80px;
 }

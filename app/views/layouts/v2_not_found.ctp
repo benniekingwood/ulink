@@ -108,12 +108,14 @@
 </div><!-- /navbar -->
 
 <!-- page content -->
-<div class="container well well-white span9 offset1">
-    <div class="not-found">
-        <ul class="unstyled">
-            <li>We're sorry, the webpage you are looking for could not be found.</li>
-            <li>Please check the web address and try again. You may also return to our <a href="<?php echo $html->url('/'); ?>">Home Page.</a></li>
-        </ul>
+<div class="container">
+    <div class=" well well-white span9 offset1">
+        <div class="not-found">
+            <ul class="unstyled">
+                <li>We're sorry, the webpage you are looking for could not be found.</li>
+                <li>Please check the web address and try again. You may also return to our <a href="<?php echo $html->url('/'); ?>">Home Page.</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 <!-- /page content -->
