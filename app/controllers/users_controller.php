@@ -29,8 +29,9 @@ class UsersController extends AppController {
         if ($_POST['username']) {
             $this->autoRender = false;
             $this->layout = null;
+        } else {
+            $this->layout = "v2";
         }
-
         // if the user is already authenticated or there is post data...
         if ($this->Auth->user() || ($_POST['username'] && $_POST['password'])) {
             // if there is data set from the form
@@ -58,15 +59,13 @@ class UsersController extends AppController {
 
             // if a user was retrieved...success
             if ($getInfo) {
-                $this->layout = null;
                 echo "yes";
             } else if ($userActCheck[0]['User']['activation'] == "0") {    // user is not active
                 echo "std";
-            } else {   // finally it must be an invalide login
+            } else {   // finally it must be an invalid login
                 echo "in-valid";
             }
         }
-                     $this->log($getInfo->username, 'debug') ;
         $this->set('username',$getInfo->username);
     } // login
 
@@ -267,15 +266,21 @@ class UsersController extends AppController {
         $this->set('schools', $schools);
     }  // register
 
+    /**
+     *
+     */
     function message() {
         $this->autoRender = false;
         $this->layout = null;
     }
 
-    function confirm($user_id = null, $code = null)
-    {
+    /**
+     * @param null $user_id
+     * @param null $code
+     */
+    function confirm($user_id = null, $code = null) {
         $this->pageTitle = 'Account confirmation';
-        $this->layout = "default1";
+        $this->layout = "v2";
 
         if (empty($user_id) || empty($code)) {
             $this->set('confirmed', 0);
@@ -295,75 +300,167 @@ class UsersController extends AppController {
             $this->User->saveField('activation_key', '');
             $this->set('confirmed', 1); // represents success
         }
+    }  // confirm
+
+    /**
+     * This function will delete the image
+     * from the user's profile
+     *
+     * @param null $image_url
+     */
+    function removeImage($image_url = null) {
+        // grab the current logged in user
+        $sessVar = $this->Auth->user();
+
+        // create a data object with the user's info
+        $data = array(
+            'User' => array(
+                'id' => $sessVar['User']['id'],
+                'username' => $sessVar['User']['username'],
+                'image_url' => ""
+            )
+        );
+
+        // update the user's profile in the db
+        if ($this->User->save($data)) {
+            Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->layout = null;
+            unlink("" . WWW_ROOT . "/img/files/users/" . $image_url);
+            echo "true";
+        } else {
+            Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->layout = null;
+            echo "false";
+        }
+    } // removeImage
+
+    /**
+     * Password page loader
+     */
+    function password() {
+
+        // if the user is not logged in, make them
+        if (!$this->Auth->user()) {
+            $this->redirect(array('action' => 'login'));
+        }
+        $this->layout = "v2";
+        $this->pageTitle = 'Your college everything.';
     }
 
-//ef
+    /**
+     * This function will update the password
+     * in the user's profile
+     */
+    function updatePassword() {
+        $validateError = 0;
+
+        // if the user is changing their password, perform validation
+        if (!empty($this->data['User']['oldpass'])) {
+            // if the user is changing their password make sure the confirm matches the new
+            if (!empty($this->data['User']['newpass'])) {
+                if ($this->data['User']['newpass'] != $this->data['User']['newconfirmpass']) {
+                    $this->User->invalidate('newconfirmpass', "The verify password does not match the new password.");
+                    $validateError++;
+                }
+            }
+            if($validateError == 0) {
+                $cuser = $this->User->find('first', array('conditions' => 'User.id=' . $this->Auth->user('id'),
+                    'fields' => array('User.password')));
+                if ($this->Auth->password($this->data['User']['oldpass']) == $cuser['User']['password']) {
+                    $this->data['User']['password'] = $this->Auth->password($this->data['User']['newconfirmpass']);
+                    $this->data['User']['autopass'] = 0;
+                } else {
+                    $this->User->invalidate('oldpass', 'The current password entered was incorrect, please try again.');
+                    $validateError++;
+                }
+            }
+        }
+
+        // grab the current logged in user
+        $sessVar = $this->Auth->user();
+
+        // create a data object with the user's info
+        $data = array(
+            'User' => array(
+                'id' => $sessVar['User']['id'],
+                'username' => $sessVar['User']['username']
+            )
+        );
+
+        $this->log($this->data['User']['password'], 'debug') ;
+        $this->log($this->data['User']['username'], 'debug') ;
+
+        Configure::write('debug', 0);
+        $this->autoRender = false;
+        $this->layout = null;
+
+        // check for validation errors
+        if($validateError > 0) {
+            if($this->User->invalidFields() != null) {
+                $errors = '';
+                foreach($this->User->invalidFields() as $key => $value) {
+                    $errors .= $value . '<br />';
+                }
+                $this->set('errors', $errors);
+            }
+            echo $errors;
+        }  else {
+            // update the user's profile in the db
+            if ($this->User->save($data)) {
+                echo "true";
+            } else {
+                echo "There was an issue saving your password.  Please try again, or contact help@theulink.com";
+            }
+        }
+
+    } // updatePassword
 
     /**
      * This function will check if the email exists or not
      * @param $email
      * @return bool
      */
-    function emailExists($email)
-    {
+    function emailExists($email) {
         $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''));
         return !empty($chkuserExist);
     }
 
-    function index()
-    {
-
+    /**
+     * This function will handle the user
+     * updating their profile
+     */
+    function index() {
         $this->pageTitle = 'Your college everything';
+        $this->layout = "v2";
 
-        $this->layout = "default1";
-
+        // if the user is not logged in, make them
         if (!$this->Auth->user()) {
-            $this->Session->setFlash('Please login first');
             $this->redirect(array('action' => 'login'));
         }
         $validateError = 0;
-        $sessVar = $this->Auth->user();
-        $this->set('currentPageHeading', 'Hi ' . ucwords($sessVar['User']['firstname']));
-        $this->set('currentPageHeading_last', ucwords($sessVar['User']['lastname']));
-
-
+        // grab the user off the session
+        $user = $this->Auth->user();
+        // if their is no data set, the client is viewing the profile
         if (empty($this->data)) {
 
+            // grad the user off the session
+            $this->data = $this->User->read('', $user['User']['id']);
 
-            $this->data = $this->User->read('', $sessVar['User']['id']);
-
-            $countries = array();
-            $states = array();
-            $cities = array();
+            // build up the schools data
             $schools = array();
-            $data_countries = $this->Country->findAll();
-            $data_states = $this->State->findAll();
-            $data_cities = $this->City->findAll();
             $data_schools = $this->School->findAll();
 
-            foreach ($data_countries as $country) {
-                $countries[$country['Country']['id']] = $country['Country']['countries_name'];
-            }
-            foreach ($data_states as $state) {
-                $states[$state['State']['id']] = $state['State']['name'];
-            }
-            foreach ($data_cities as $city) {
-                $cities[$city['City']['id']] = $city['City']['name'];
-            }
             foreach ($data_schools as $school) {
                 $schools[$school['School']['id']] = $school['School']['name'];
             }
 
+            // grab the years starting from 1960
             for ($i = 1960; $i <= date("Y") + 10; $i++) {
                 $years[$i] = $i;
             }
 
-            $this->set('countries', $countries);
-            $this->set('countries_id', $user['User']['country_id']);
-            $this->set('states', $states);
-            $this->set('states_id', $user['User']['state_id']);
-            $this->set('cities', $cities);
-            $this->set('cities_id', $user['User']['city_id']);
             $this->set('schools_id', $user['School']['school_id']);
             $this->set('schools', $schools);
             $this->set('years_id', $user['User']['year']);
@@ -371,102 +468,68 @@ class UsersController extends AppController {
             $this->set('status', $user['User']['school_status']);
             $this->set('school_status', $status);
         } else { // user hit the "update" button
-            //------------------
+
+            // set the saved data on the user
             $this->User->set($this->data);
+            // validate the user data
             $this->User->validate();
 
-            if (!empty($this->data['User']['oldpass'])) {
-
-                $cuser = $this->User->find('first', array('conditions' => 'User.id=' . $this->Auth->user('id'),
-                    'fields' => array('User.password')));
-                $this->set('CUSER', $cuser);
-
-                if ($this->Auth->password($this->data['User']['oldpass']) == $cuser['User']['password']) {
-                    $this->data['User']['password'] = $this->Auth->password($this->data['User']['newconfirmpass']);
-                    $this->data['User']['autopass'] = 0;
-                } else {
-                    $this->User->invalidate('oldpass', 'Old password does not match');
-                    $validateError++;
-                }
-            }
-
-            if (!empty($this->data['User']['newpass'])) {
-                if ($this->data['User']['newpass'] != $this->data['User']['newconfirmpass']) {
-
-                    $this->User->invalidate('newconfirmpass', "Two password doesn't match");
-                    $validateError++;
-                }
-            }
-
-
+            // validate the first name
             if (empty($this->data['User']['firstname'])) {
-                $this->User->invalidate('firstname', 'Firstname should not be empty');
+                $this->User->invalidate('firstname', 'Please enter your first name');
                 $validateError++;
             }
+            // validate teh last name
             if (empty($this->data['User']['lastname'])) {
-                $this->User->invalidate('lastname', 'Lastname should not be empty');
+                $this->User->invalidate('lastname', 'Please enter your last name');
                 $validateError++;
             }
-            if (empty($this->data['User']['hometown'])) {
-                $this->User->invalidate('hometown', 'hometown should not be empty');
-                $validateError++;
-            }
-            if (empty($this->data['User']['hometown'])) {
-                $this->User->invalidate('hometown', 'hometown should not be empty');
-                $validateError++;
-            }
-            if (empty($this->data['User']['major'])) {
-                $this->User->invalidate('major', 'Major should not be empty');
-                $validateError++;
-            }
+            // validate the graduation year
             if (empty($this->data['User']['year'])) {
-                $this->User->invalidate('year', 'Please select year');
+                $this->User->invalidate('year', 'Please select your year of graduation');
                 $validateError++;
             }
+            // validate the school status
             if (empty($this->data['User']['school_status'])) {
-                $this->User->invalidate('school_status', 'Please select school status');
+                $this->User->invalidate('school_status', 'Please choose your school status');
                 $validateError++;
             }
+            // validate the email
             if ($this->emailExists($this->data['User']['email'])) {
                 $this->User->invalidate('email', 'Email already exists in uLink.  Please submit another.');
                 $validateError++;
             }
 
-            //-----------
+            // if there are no validation errors
             if (empty($this->User->validationErrors)) {
 
+                // upload the users picture
                 $fileOK = $this->uploadFiles('img/files/users', $this->data['User']['file']);
                 if (array_key_exists('urls', $fileOK)) {
                     // save the url in the form data
                     $this->data['User']['image_url'] = $fileOK['urls'][0];
                 }
 
-
+                // update the user in the db
                 if ($this->User->save($this->data)) {
                     $this->Auth->login($this->User->read());
-                    $this->Session->setFlash('Your profile has been updated.');
+                    $this->Session->setFlash('<span class="profile-success">Your profile has been updated.</span>');
                     $this->redirect(array('action' => 'index'));
                 }
+            } else {
+                if($this->User->invalidFields() != null) {
+                    $errors = '';
+                    foreach($this->User->invalidFields() as $key => $value) {
+                        $errors .= $value . '<br />';
+                    }
+                    $this->set('errors', $errors);
+                }
             }
-            //  $this->data = $this->User->read('',$sessVar['User']['id']);
-            $countries = array();
-            $states = array();
-            $cities = array();
+
+            // grab the schools, and years for form display
             $schools = array();
-            $data_countries = $this->Country->findAll();
-            $data_states = $this->State->findAll();
-            $data_cities = $this->City->findAll();
             $data_schools = $this->School->findAll();
 
-            foreach ($data_countries as $country) {
-                $countries[$country['Country']['id']] = $country['Country']['countries_name'];
-            }
-            foreach ($data_states as $state) {
-                $states[$state['State']['id']] = $state['State']['name'];
-            }
-            foreach ($data_cities as $city) {
-                $cities[$city['City']['id']] = $city['City']['name'];
-            }
             foreach ($data_schools as $school) {
                 $schools[$school['School']['id']] = $school['School']['name'];
             }
@@ -475,12 +538,6 @@ class UsersController extends AppController {
                 $years[$i] = $i;
             }
 
-            $this->set('countries', $countries);
-            $this->set('countries_id', $user['User']['country_id']);
-            $this->set('states', $states);
-            $this->set('states_id', $user['User']['state_id']);
-            $this->set('cities', $cities);
-            $this->set('cities_id', $user['User']['city_id']);
             $this->set('schools_id', $user['School']['school_id']);
             $this->set('schools', $schools);
             $this->set('years_id', $user['User']['year']);
@@ -488,26 +545,26 @@ class UsersController extends AppController {
             $this->set('status', $user['User']['school_status']);
             $this->set('school_status', $status);
         }
-    }
+    }   // index
 
-//ef
-
-    function userinfo($id = null)
-    {
-
+    /**
+     * This function will show the user's information
+     * to the client based on the passed in user id
+     * @param null $id
+     */
+    function userinfo($id = null) {
+        // if the user is not logged in, redirect them to the login screen
         if (!$this->Auth->user()) {
-            $this->Session->setFlash('Please login first');
+            $this->Session->setFlash('Please login to view this user account');
             $this->redirect(array('action' => 'login'));
         }
 
         $this->chkAutopass();
-
-
-        $this->layout = "default1";
+        $this->layout = "v2";
+        // grab the user from the db
         $user = $this->User->find('User.id=' . $id);
         $this->set('User', $user);
         $this->pageTitle = $user['User']['username'] . '\'s profile';
-        $this->set('currentPageHeading', $user['User']['username']);
     }
 
     function admin_index()
@@ -846,10 +903,14 @@ class UsersController extends AppController {
         $this->set('cities', $cities);
     } // city
 
-//ef
-
-    function delimage($image_url = null)
-    {
+    /**
+     * This function will delete the image
+     * from the user's profile
+     *
+     * @param null $image_url
+     */
+    function delimage($image_url = null) {
+        // grab the current logged in user
         $sessVar = $this->Auth->user();
         $school = $this->User->find('User.id=' . $sessVar['User']['id']);
         $data = array(
@@ -859,7 +920,6 @@ class UsersController extends AppController {
                 'image_url' => ""
             )
         );
-
 
         if ($this->User->save($data)) {
             Configure::write('debug', 0);
@@ -873,9 +933,7 @@ class UsersController extends AppController {
             $this->layout = null;
             echo "false";
         }
-    }
-
-//ef
+    } // delimage
 
     function admin_user_delimage($id = null, $image_url = null)
     {

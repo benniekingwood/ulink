@@ -7,17 +7,15 @@
         <?php echo $title_for_layout; ?>
     </title>
     <?php
-        // print meta tags
+     // print meta tags
         echo $html->meta('icon');
-    echo $html->meta('viewport','width=device-width, initial-scale=1.0');
-    echo $html->meta('description','Handle your everyday college activities with uLink.');
-    echo $html->meta('author','uLink, Inc.');
+        echo $html->meta('viewport','width=device-width, initial-scale=1.0');
+        echo $html->meta('description','Handle your everyday college activities with uLink.');
+        echo $html->meta('author','uLink, Inc.');
 
-    // print styles
-    echo $html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
-
-    // print js
-    echo $javascript->link(array('jquery.min.js','bootstrap-modal.js'));
+        // print styles
+        echo $html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
+        echo $javascript->link(array('jquery.min.js','var.js', 'validate.js'));
     ?>
 
     <!--  HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -45,7 +43,6 @@
             <a class="brand" href="<?php e($html->url('/')); ?>">
                 <?php echo $html->image('logouLink_7539.png', array('alt' => 'ulinklogo')); ?>
             </a>
-
             <div class="nav-collapse">
                 <ul class="nav span3">
                     <li id="ucampus-module">
@@ -53,54 +50,6 @@
                             <i class="ulink-icon-ucampus"></i>uCampus
                         </a>
                     </li>
-                </ul>
-                <div class="span2">&nbsp;</div><!-- /nav middle spacer -->
-                <ul class="nav pull-right">
-                    <li class="divider-vertical"></li>
-
-                    <?php if (!isset($loggedInId)) { ?>
-                    <li>
-                        <a href="<?php e($html->url('/users/register'));?>">Join</a>
-                    </li>
-                    <li>
-                        <a data-toggle="modal" href="#loginComponent">Log In</a>
-                    </li>
-                    <?php } else { ?>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-user icon-white"></i>
-                            <span id="profile-mgmt-username"><?php echo $loggedInUserName ?></span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu profile-mgmt">
-                            <li>
-                                <div class="span3">
-                                    <?php
-                                            if ($profileImgURL != '' && file_exists(WWW_ROOT . '/img/files/users/' . $profileImgURL)) {
-                                                echo $html->image('files/users/' . $profileImgURL . '', array('alt' =>
-                                    'profileimage'));
-                                    } else {
-                                    echo $html->image('files/users/noImage.jpg', array('alt' => 'noimage'));
-                                    }
-                                    ?>
-                                    <span id="profile-mgmt-name"><?php echo $loggedInName?></span>
-                                </div>
-                                <a href="<?php e($html->url('/users/'));?>">Manage my profile</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <?php
-                                    if ($loggedInFacebookId > 0):
-                                echo $html->link('Sign Out', '#', array('class' => 'login', 'onclick' =>
-                                'FB.Connect.logout(function() { document.location = "' . $html->url('/users/logout/') .
-                                '"; });return false;'));
-                                else:
-                                ?>
-                                <a href="<?php echo $html->url('/users/logout');?>">Sign Out</a>
-                                <?php endif; }?>
-                            </li>
-                        </ul>
-                    </li> <!-- /dropdown -->
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

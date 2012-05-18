@@ -2394,13 +2394,14 @@ input[type="submit"].btn.btn-mini {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 .nav-list > li > a {
-  padding: 3px 15px;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eeeeee;
 }
 .nav-list > .active > a,
 .nav-list > .active > a:hover {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-  background-color: #0088cc;
+  background-color: #b6ccd5;
 }
 .nav-list [class^="icon-"] {
   margin-right: 2px;

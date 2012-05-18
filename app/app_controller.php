@@ -86,14 +86,10 @@ class AppController extends Controller {
             $this->Cookie->name = 'Ulink';
 
 
-            if ($this->Auth->user('id')) {// echo "<pre>"; print_r( $this->Auth->user());
+            if ($this->Auth->user('id')) {
                 $this->PermitModel = ClassRegistry::init("School");
 
-
                 $Shoolreview = $this->PermitModel->find('all', array('conditions' => array('School.id' => $this->Auth->user('school_id'))));
-
-
-
                 $this->set('Shoolreview', $Shoolreview);
                 $this->PermitModel = ClassRegistry::init("Review");
                 $usertextreview = $this->PermitModel->find('all', array('conditions' => array('Review.school_id' => $this->Auth->user('school_id'), 'Review.type' => 'text', 'Review.user_id' => $this->Auth->user('id'))));
@@ -103,8 +99,6 @@ class AppController extends Controller {
                         $this->set('ApprovalPending', 1);
                     }
                 }
-
-
 
                 $this->set('usertextreview', $usertextreview);
                 $randCaptcha = rand(10000, 20000);

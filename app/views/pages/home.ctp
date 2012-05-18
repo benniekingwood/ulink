@@ -13,10 +13,10 @@
             <p>Find out what's happening on your campus, right now.</p>
             <p>
                 <a class="btn btn-warning btn-xlarge" href="<?php e($html->url('/users/register'));?>">
-                    Sign up for uLink
+                    Sign up for uLink »
                 </a>
                 <a class="btn btn-warning btn-xlarge" href="<?php e($html->url('/pages/about'));?>">
-                    Learn More
+                    Learn More »
                 </a>
             </p>
         </div>
