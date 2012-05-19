@@ -12,14 +12,13 @@
                 </ul>
             </div>
         </div>
-        <div class="span6 well well-white">
+        <div class="span6 well well-nopadding well-white">
             <div id="password-tab-content">
                 <input type="hidden" name="schooldomainCheck" id="schooldomainCheck" />
                 <?php e($form->input('User.id', array('type' => 'hidden'))); ?>
                 <div class="profile-header">
                     <h3>Password</h3>
                 </div>
-                <hr />
                 <div id="profile-password-message">&nbsp;
                     <?php
                     if(isset($errors)) { echo $errors; }
@@ -50,7 +49,9 @@
                         <?php echo $form->input('User.newconfirmpass', array('class' => 'input-xlarge ulink-input-bigfont','type' => 'password', 'id' => 'pass2', 'maxlength' => '50', 'label' => false, 'div'=>false)); ?>
                     </div>
                 </div>
-                <a id="btnUpdatePwd" class="btn btn-primary btn-large">Save changes</a>
+                <div class="modal-footer">
+                    <a id="btnUpdatePwd" class="btn btn-primary btn-large">Save changes</a>
+                </div>
             </div>  <!-- /password-tab-content -->
             <?php echo $form->end(); ?>
         </div> <!-- /tab-content -->

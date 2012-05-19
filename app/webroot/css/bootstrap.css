@@ -3989,6 +3989,13 @@ a.thumbnail:hover {
   border-color: #ddd;
   border-color: rgba(0, 0, 0, 0.15);
 }
+
+.well-nopadding {
+    min-height: 20px;
+    padding: 1px;
+    margin-bottom: 20px;
+}
+
 .well-large {
   padding: 24px;
   -webkit-border-radius: 6px;

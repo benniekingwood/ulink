@@ -73,10 +73,11 @@
                 </ul>
             </div>
         </div>
-        <div class="span6 well well-white tab-content">
+        <div class="span6 well well-white well-nopadding">
             <div id="profile-tab-content" class="profile-content tab-pane active">
-                <h3>My Profile</h3>
-                <hr />
+               <div class="profile-header">
+                    <h3>My Profile</h3>
+               </div>
                 <div id="profile-message">
                     <?php $session->flash(); ?>
                 </div>
@@ -123,7 +124,8 @@
                     <label class="control-label" for="bio">Bio</label>
                     <div class="controls">
                         <?php echo $form->input('User.bio', array('id' => 'bio', 'type'=>'textarea', 'maxlength' => '150',
-                        'class' => 'input-xlarge','maxlength' => '150', 'label'=>false, 'div'=>false,'rel'=>'tooltip', 'data-original-title'=>'Describe how awesome you are, in <b>150</b> characters or less.')); ?>
+                        'class' => 'input-xlarge','maxlength' => '150', 'label'=>false, 'div'=>false)); ?>
+                        <p class="input-info">Describe yourself in <b>150</b> characters or less.</p>
                     </div>
                 </div>
                 <hr />
@@ -155,7 +157,9 @@
                 <input type="hidden" name="schooldomainCheck" id="schooldomainCheck" />
                 <?php e($form->input('User.id', array('type' => 'hidden'))); ?>
                 <?php e($form->input('User.image_url', array('type' => 'hidden'))); ?>
-                <?php echo $form->button('Save changes', array('id'=>'btnSaveChanges', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
+                <div class="modal-footer">
+                    <?php echo $form->button('Save changes', array('id'=>'btnSaveChanges', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
+                </div>
             </div> <!-- /profile-tab-content -->
 
             <?php echo $form->end(); ?>

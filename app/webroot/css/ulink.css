@@ -102,7 +102,21 @@ footer .social > a:hover {
     padding: 9px 0;
 }
 
-.profile-header {}
+.profile-header {
+    padding: 14px 15px 15px;
+    margin-bottom: 0;
+    text-align: left;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    -webkit-border-radius: 6px 6px 0 0;
+    -moz-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+    -webkit-box-shadow: inset 0 1px 0 #ffffff;
+    -moz-box-shadow: inset 0 1px 0 #ffffff;
+    box-shadow: inset 0 1px 0 #ffffff;
+    *zoom: 1;
+}
+
 .profile-error {
     background: url("../img/error.png") transparent no-repeat left center;
     color: #993333;
@@ -116,7 +130,7 @@ footer .social > a:hover {
     font-size:1.1em;
 }
 #profile-message {
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 .profile-mgmt li{
@@ -369,7 +383,7 @@ footer .social > a:hover {
 
 a.orange {
 	font-size: 1.1em;
-	color: #f89913;
+	color: #f0a000;
 	-webkit-transition: color .2s linear;
 	-moz-transition: color .2s linear;
 	transition: color .2s linear;
@@ -714,6 +728,21 @@ p.tip {
    border: 1px solid #F1F1F1;
    text-align: left;
    background-color: #E5EEF2;
+}
+p.input-info {
+    padding: 5px 10px;
+    margin: 10px 0 14px 0;
+    margin-bottom: 26px;
+    display: block;
+    width: 71.3%;
+    color: #2d2d2d;
+    text-align: left;
+    background-color: #f0a000;
+    font-size: 0.9em;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px #CCCCCC;
+    -moz-box-shadow: 0 1px 2px #CCCCCC;
 }
 
 .not-found {
