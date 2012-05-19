@@ -104,19 +104,19 @@
                 <div class="control-group">
                     <label class="control-label" for="username">Username</label>
                     <div class="controls">
-                        <?php echo $form->input('User.username', array('id'=>'username', 'class' => 'input-xlarge ulink-input-bigfont', 'type' => 'text','disabled'=>'disabled', 'label'=>false, 'div'=>false)); ?>
+                        <?php echo $form->input('User.username', array('id'=>'username', 'class' => 'input-xlarge', 'type' => 'text','disabled'=>'disabled', 'label'=>false, 'div'=>false)); ?>
                     </div>
                 </div>
                <div class="control-group">
                     <label class="control-label" for="firstname">First Name</label>
                     <div class="controls">
-                        <?php echo $form->input('User.firstname', array('id' => 'firstname', 'class' => 'input-xlarge ulink-input-bigfont','maxlength' => '50', 'label'=>false, 'div'=>false)); ?>
+                        <?php echo $form->input('User.firstname', array('id' => 'firstname', 'class' => 'input-xlarge','maxlength' => '50', 'label'=>false, 'div'=>false)); ?>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="lastname">Last Name</label>
                     <div class="controls">
-                        <?php echo $form->input('User.lastname', array('id' => 'lastname', 'class' => 'input-xlarge ulink-input-bigfont','maxlength' => '50', 'label'=>false, 'div'=>false)); ?>
+                        <?php echo $form->input('User.lastname', array('id' => 'lastname', 'class' => 'input-xlarge','maxlength' => '50', 'label'=>false, 'div'=>false)); ?>
                     </div>
                 </div>
 
@@ -138,7 +138,7 @@
                 <div class="control-group">
                     <label class="control-label" for="email">School Email</label>
                     <div class="controls">
-                        <?php echo $form->input('User.email', array('id'=>'email','class' => 'input-xlarge ulink-input-bigfont', 'type' => 'text', 'label'=>false, 'div'=>false,'disabled'=>'disabled')); ?>
+                        <?php echo $form->input('User.email', array('id'=>'email','class' => 'input-xlarge', 'type' => 'text', 'label'=>false, 'div'=>false,'disabled'=>'disabled')); ?>
                     </div>
                 </div>
                 <div class="control-group">
