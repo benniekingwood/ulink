@@ -30,7 +30,7 @@ class UsersController extends AppController {
             $this->autoRender = false;
             $this->layout = null;
         } else {
-            $this->layout = "v2";
+            $this->layout = "v2_no_login_header";
         }
         // if the user is already authenticated or there is post data...
         if ($this->Auth->user() || ($_POST['username'] && $_POST['password'])) {
@@ -59,7 +59,11 @@ class UsersController extends AppController {
 
             // if a user was retrieved...success
             if ($getInfo) {
-                echo "yes";
+                if (!empty($_POST['loginMain'])) {
+                    echo "main";
+                }  else {
+                    echo "yes";
+                }
             } else if ($userActCheck[0]['User']['activation'] == "0") {    // user is not active
                 echo "std";
             } else {   // finally it must be an invalid login
@@ -545,7 +549,11 @@ class UsersController extends AppController {
             $this->set('status', $user['User']['school_status']);
             $this->set('school_status', $status);
         }
-    }   // index
+    }
+
+    function log($msg, $type = LOG_ERROR) {
+        return parent::log($msg, $type);
+    } // index
 
     /**
      * This function will show the user's information
