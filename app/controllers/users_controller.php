@@ -51,8 +51,7 @@ class UsersController extends AppController {
             }
 
             // grab the user activation status based on the passed in username/password
-            $userActCheck = $this->User->find('all', array('conditions' => 'User.username="' . $_POST['username'] . '"',
-                'fields' => 'User.activation'));
+            $userActCheck = $this->User->find('all', array('conditions' => 'User.username="' . $_POST['username'] . '"', 'fields' => 'User.activation'));
 
             // authenticate the user
             $getInfo = $this->Auth->user();
@@ -61,16 +60,18 @@ class UsersController extends AppController {
             if ($getInfo) {
                 if (!empty($_POST['loginMain'])) {
                     echo "main";
-                }  else {
+                } else {
                     echo "yes";
                 }
-            } else if ($userActCheck[0]['User']['activation'] == "0") {    // user is not active
-                echo "std";
-            } else {   // finally it must be an invalid login
-                echo "in-valid";
+            } else {
+                if ($userActCheck[0]['User']['activation'] == "0") { // user is not active
+                    echo "std";
+                } else { // finally it must be an invalid login
+                    echo "in-valid";
+                }
             }
         }
-        $this->set('username',$getInfo->username);
+        $this->set('username', $getInfo->username);
     } // login
 
     /**
@@ -132,11 +133,7 @@ class UsersController extends AppController {
                         $this->Email->sendAs = 'html';
                         $this->Email->template = 'forgotpassword';
                         /* SMTP Options */
-                        $this->Email->smtpOptions = array('port' => '587',
-                            'timeout' => '30',
-                            'host' => 'mail.theulink.com',
-                            'username' => 'bennie.kingwood@theulink.com',
-                            'password' => 'iPhone1983');
+                        $this->Email->smtpOptions = array('port' => '587', 'timeout' => '30', 'host' => 'mail.theulink.com', 'username' => 'bennie.kingwood@theulink.com', 'password' => 'iPhone1983');
                         /* Set delivery method */
                         $this->Email->delivery = 'smtp';
 
@@ -151,21 +148,21 @@ class UsersController extends AppController {
                             $this->set('forgotError', 'true');
                             $this->Session->setFlash('There was a problem sending the password email. Please try again later, or contact help@theulink.com', 'default', array('class' => 'help-inline error'));
                         }
-                    } else {  // saving of the user failed
+                    } else { // saving of the user failed
                         $this->set('forgotError', 'true');
 
                         $this->Session->setFlash('There was an issue with your account,  please try again later.');
                         $this->data = null;
                     }
-                } else {  // no user was retrieved for that specified email
+                } else { // no user was retrieved for that specified email
                     $this->set('forgotError', 'true');
                     $this->Session->setFlash('There is no uLink account associated with this email, please try another.', 'default', array('class' => 'help-inline error'));
-                   // $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
+                    // $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
                 }
-            } else {  // no email was provided for the user
+            } else { // no email was provided for the user
                 $this->set('forgotError', 'true');
-                $this->Session->setFlash('Please enter your email address.',  'default', array('class' => 'help-inline error'));
-               // $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
+                $this->Session->setFlash('Please enter your email address.', 'default', array('class' => 'help-inline error'));
+                // $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
             }
         }
     } // forgotpassword
@@ -188,11 +185,7 @@ class UsersController extends AppController {
          * set it to be used in the view.
          */
         if (isset($id)) {
-            $user_record =
-                $this->User->find('first', array(
-                    'conditions' => array('fbid' => $id),
-                    'fields' => array('User.id'),
-                ));
+            $user_record = $this->User->find('first', array('conditions' => array('fbid' => $id), 'fields' => array('User.id'),));
             $this->set('id', $user_record['User']['id']);
         }
 
@@ -217,11 +210,7 @@ class UsersController extends AppController {
                     $this->Email->sendAs = 'html';
                     $this->Email->template = 'confirmation';
                     /* SMTP Options */
-                    $this->Email->smtpOptions = array('port' => '587',
-                        'timeout' => '30',
-                        'host' => 'mail.theulink.com',
-                        'username' => 'bennie.kingwood@theulink.com',
-                        'password' => 'iPhone1983');
+                    $this->Email->smtpOptions = array('port' => '587', 'timeout' => '30', 'host' => 'mail.theulink.com', 'username' => 'bennie.kingwood@theulink.com', 'password' => 'iPhone1983');
                     /* Set delivery method */
                     $this->Email->delivery = 'smtp';
 
@@ -242,10 +231,10 @@ class UsersController extends AppController {
                         $this->User->del($this->User->getLastInsertID());
                         $this->Session->setFlash('There was a problem sending the confirmation email. Please try again, or contact help@thelink.com.');
                     }
-                } else {  // there was an error when trying to save the user
-                    if($this->User->invalidFields() != null) {
+                } else { // there was an error when trying to save the user
+                    if ($this->User->invalidFields() != null) {
                         $errors = '';
-                        foreach($this->User->invalidFields() as $key => $value) {
+                        foreach ($this->User->invalidFields() as $key => $value) {
                             $errors .= $value . '<br />';
                         }
                         $this->Session->setFlash($errors);
@@ -268,7 +257,7 @@ class UsersController extends AppController {
 
         // set various data to be used in the register view
         $this->set('schools', $schools);
-    }  // register
+    } // register
 
     /**
      *
@@ -291,9 +280,7 @@ class UsersController extends AppController {
             $this->render();
         }
 
-        $user = $this->User->find('first', array('conditions' => array('User.id' => $user_id, 'User.activation_key' => $code)
-            )
-        );
+        $user = $this->User->find('first', array('conditions' => array('User.id' => $user_id, 'User.activation_key' => $code)));
         if (empty($user)) {
             $this->set('confirmed', 0);
         } else {
@@ -304,7 +291,7 @@ class UsersController extends AppController {
             $this->User->saveField('activation_key', '');
             $this->set('confirmed', 1); // represents success
         }
-    }  // confirm
+    } // confirm
 
     /**
      * This function will delete the image
@@ -317,13 +304,7 @@ class UsersController extends AppController {
         $sessVar = $this->Auth->user();
 
         // create a data object with the user's info
-        $data = array(
-            'User' => array(
-                'id' => $sessVar['User']['id'],
-                'username' => $sessVar['User']['username'],
-                'image_url' => ""
-            )
-        );
+        $data = array('User' => array('id' => $sessVar['User']['id'], 'username' => $sessVar['User']['username'], 'image_url' => ""));
 
         // update the user's profile in the db
         if ($this->User->save($data)) {
@@ -369,9 +350,8 @@ class UsersController extends AppController {
                     $validateError++;
                 }
             }
-            if($validateError == 0) {
-                $cuser = $this->User->find('first', array('conditions' => 'User.id=' . $this->Auth->user('id'),
-                    'fields' => array('User.password')));
+            if ($validateError == 0) {
+                $cuser = $this->User->find('first', array('conditions' => 'User.id=' . $this->Auth->user('id'), 'fields' => array('User.password')));
                 if ($this->Auth->password($this->data['User']['oldpass']) == $cuser['User']['password']) {
                     $this->data['User']['password'] = $this->Auth->password($this->data['User']['newconfirmpass']);
                     $this->data['User']['autopass'] = 0;
@@ -386,31 +366,26 @@ class UsersController extends AppController {
         $sessVar = $this->Auth->user();
 
         // create a data object with the user's info
-        $data = array(
-            'User' => array(
-                'id' => $sessVar['User']['id'],
-                'username' => $sessVar['User']['username']
-            )
-        );
+        $data = array('User' => array('id' => $sessVar['User']['id'], 'username' => $sessVar['User']['username']));
 
-        $this->log($this->data['User']['password'], 'debug') ;
-        $this->log($this->data['User']['username'], 'debug') ;
+        $this->log($this->data['User']['password'], 'debug');
+        $this->log($this->data['User']['username'], 'debug');
 
         Configure::write('debug', 0);
         $this->autoRender = false;
         $this->layout = null;
 
         // check for validation errors
-        if($validateError > 0) {
-            if($this->User->invalidFields() != null) {
+        if ($validateError > 0) {
+            if ($this->User->invalidFields() != null) {
                 $errors = '';
-                foreach($this->User->invalidFields() as $key => $value) {
+                foreach ($this->User->invalidFields() as $key => $value) {
                     $errors .= $value . '<br />';
                 }
                 $this->set('errors', $errors);
             }
             echo $errors;
-        }  else {
+        } else {
             // update the user's profile in the db
             if ($this->User->save($data)) {
                 echo "true";
@@ -420,6 +395,26 @@ class UsersController extends AppController {
         }
 
     } // updatePassword
+
+    /**
+     * This function will show the user's information
+     * to the client based on the passed in user id
+     *
+     * @param null $id
+     */
+    function viewprofile($id = null) {
+        $this->layout = null;
+        // if the user is not logged in, redirect them to the login screen
+        if (!$this->Auth->user()) {
+            $this->Session->setFlash('Please login to gain full access to uLink.');
+            $this->redirect(array('action' => 'login'));
+        }
+        $this->chkAutopass();
+        // grab the user from the db
+        $user = $this->User->find('User.id=' . $id);
+        echo json_encode($user);
+        exit;
+    }
 
     /**
      * This function will check if the email exists or not
@@ -521,9 +516,9 @@ class UsersController extends AppController {
                     $this->redirect(array('action' => 'index'));
                 }
             } else {
-                if($this->User->invalidFields() != null) {
+                if ($this->User->invalidFields() != null) {
                     $errors = '';
-                    foreach($this->User->invalidFields() as $key => $value) {
+                    foreach ($this->User->invalidFields() as $key => $value) {
                         $errors .= $value . '<br />';
                     }
                     $this->set('errors', $errors);
@@ -553,49 +548,24 @@ class UsersController extends AppController {
 
     function log($msg, $type = LOG_ERROR) {
         return parent::log($msg, $type);
-    } // index
+    } // log
 
-    /**
-     * This function will show the user's information
-     * to the client based on the passed in user id
-     * @param null $id
-     */
-    function userinfo($id = null) {
-        // if the user is not logged in, redirect them to the login screen
-        if (!$this->Auth->user()) {
-            $this->Session->setFlash('Please login to view this user account');
-            $this->redirect(array('action' => 'login'));
-        }
-
-        $this->chkAutopass();
-        $this->layout = "v2";
-        // grab the user from the db
-        $user = $this->User->find('User.id=' . $id);
-        $this->set('User', $user);
-        $this->pageTitle = $user['User']['username'] . '\'s profile';
-    }
-
-    function admin_index()
-    {
+    function admin_index() {
         $this->redirect(array('action' => 'user_index'));
     }
 
-    function ajax_pagination()
-    {
+    function ajax_pagination() {
         $data = $this->User->findAll();
         $this->set('user', $data);
     }
 
-    function admin_user_index()
-    {
+    function admin_user_index() {
 
         $this->layout = "admin_dashboard";
 
         // set/get search to session
 
-        $this->paginate = array(
-            'limit' => $this->paginate_limit_front
-        );
+        $this->paginate = array('limit' => $this->paginate_limit_front);
 
         if (isset($this->data['User']['searchText'])) {
             $this->Session->write('advancedUserSearch', $this->data['User']['searchText']);
@@ -618,29 +588,22 @@ class UsersController extends AppController {
             $user_listing = $this->paginate('User');
         } else {
 
-            $user_listing = $this->paginate = array('conditions' => array('or' => array(
-                'User.firstname LIKE' => '%' . $searchText . '%'
-            )
-            ),
-                'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.activation'),
-                'limit' => $this->paginate_limit_front,
-                'order' => array('User.id DESC')
-            );
+            $user_listing = $this->paginate = array('conditions' => array('or' => array('User.firstname LIKE' => '%' . $searchText . '%')), 'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.activation'), 'limit' => $this->paginate_limit_front, 'order' => array('User.id DESC'));
 
 
             $user_listing = $this->paginate('User');
         }
 
         $page_no_arr = explode(":", $_REQUEST['url']);
-        if (isset($page_no_arr[1]))
+        if (isset($page_no_arr[1])) {
             $this->set("page_no", $page_no_arr[1]);
+        }
 
         $this->set('User', $user_listing);
         $this->set("paginate_limit", $this->paginate_limit_front);
     }
 
-    function admin_listing_ajax()
-    {
+    function admin_listing_ajax() {
         $this->set_paginate_limit(); // Setting Paginate Limit 
 
         $this->setLayout = null;
@@ -655,14 +618,12 @@ class UsersController extends AppController {
         $this->set("page_no", $page_no_arr[1]);
     }
 
-    function set_paginate_limit()
-    {
+    function set_paginate_limit() {
 
         $this->paginate = array('order' => array('User.id'), 'limit' => $this->paginate_limit);
     }
 
-    function admin_user_add()
-    {
+    function admin_user_add() {
 
         $this->layout = "admin_dashboard";
         if (!empty($this->data)) {
@@ -724,10 +685,9 @@ class UsersController extends AppController {
         $this->set('schools', $schools);
     }
 
-//ef
+    //ef
 
-    function admin_user_edit($id = null)
-    {
+    function admin_user_edit($id = null) {
         $this->layout = "admin_dashboard";
         $user = $this->User->find('User.id=' . $id);
 
@@ -785,11 +745,10 @@ class UsersController extends AppController {
         //	die('xx');
     }
 
-//ef
+    //ef
     // to delete a user from ajax
 
-    function admin_user_delete($id = null)
-    {
+    function admin_user_delete($id = null) {
 
         Configure::write('debug', 0);
         $this->layout = null;
@@ -813,15 +772,11 @@ class UsersController extends AppController {
         }
     }
 
-//ef
+    //ef
 
-    function admin_user_state($id = null)
-    {
+    function admin_user_state($id = null) {
         $this->layout = null;
-        $data_states = $this->State->find('all', array('conditions' => 'State.country_id =' . $id . '',
-                'order' => 'State.name ASC'
-            )
-        );
+        $data_states = $this->State->find('all', array('conditions' => 'State.country_id =' . $id . '', 'order' => 'State.name ASC'));
 
         $country = $id;
         foreach ($data_states as $state) {
@@ -830,15 +785,11 @@ class UsersController extends AppController {
         $this->set('states', $states);
     }
 
-//ef
+    //ef
 
-    function admin_user_city($id = null)
-    {
+    function admin_user_city($id = null) {
         $this->layout = null;
-        $data_cities = $this->City->find('all', array('conditions' => 'City.state_id =' . $id . '',
-                'order' => 'City.name ASC'
-            )
-        );
+        $data_cities = $this->City->find('all', array('conditions' => 'City.state_id =' . $id . '', 'order' => 'City.name ASC'));
 
         foreach ($data_cities as $city) {
             $cities[$city['City']['id']] = $city['City']['name'];
@@ -846,7 +797,7 @@ class UsersController extends AppController {
         $this->set('cities', $cities);
     }
 
-//ef
+    //ef
 
     /**
      * Get the state based on the passed in
@@ -856,17 +807,14 @@ class UsersController extends AppController {
     function state($id = null) {
         $this->layout = null;
         // grab the list of states by the country id
-        $data_states = $this->State->find('all', array('conditions' => 'State.country_id =' . $id . '',
-                'order' => 'State.name ASC'
-            )
-        );
+        $data_states = $this->State->find('all', array('conditions' => 'State.country_id =' . $id . '', 'order' => 'State.name ASC'));
         $country = $id;
         // build up the states list and set in view
         foreach ($data_states as $state) {
             $states[$state['State']['id']] = $state['State']['name'];
         }
         $this->set('states', $states);
-    }   // state
+    } // state
 
     /**
      * Get the states based on the country
@@ -876,10 +824,7 @@ class UsersController extends AppController {
     function states($code = null) {
         $this->layout = null;
         // grab the list of states by the country code
-        $data_states = $this->State->find('all', array('contain' => array (
-            'Country' => array(
-                'conditions' => array (
-                    'countries_iso_code' => $code)))));
+        $data_states = $this->State->find('all', array('contain' => array('Country' => array('conditions' => array('countries_iso_code' => $code)))));
         $this->log('here', 'debug');
 
         // build up the states list and set in view
@@ -899,10 +844,7 @@ class UsersController extends AppController {
         $this->layout = null;
 
         // grab the list of cities by the state id
-        $data_cities = $this->City->find('all', array('conditions' => 'City.state_id =' . $id . '',
-                'order' => 'City.name ASC'
-            )
-        );
+        $data_cities = $this->City->find('all', array('conditions' => 'City.state_id =' . $id . '', 'order' => 'City.name ASC'));
 
         // build up the city list and set in view
         foreach ($data_cities as $city) {
@@ -921,13 +863,7 @@ class UsersController extends AppController {
         // grab the current logged in user
         $sessVar = $this->Auth->user();
         $school = $this->User->find('User.id=' . $sessVar['User']['id']);
-        $data = array(
-            'User' => array(
-                'id' => $sessVar['User']['id'],
-                'username' => $sessVar['User']['username'],
-                'image_url' => ""
-            )
-        );
+        $data = array('User' => array('id' => $sessVar['User']['id'], 'username' => $sessVar['User']['username'], 'image_url' => ""));
 
         if ($this->User->save($data)) {
             Configure::write('debug', 0);
@@ -943,19 +879,12 @@ class UsersController extends AppController {
         }
     } // delimage
 
-    function admin_user_delimage($id = null, $image_url = null)
-    {
+    function admin_user_delimage($id = null, $image_url = null) {
 
         $user = $this->User->find('User.id=' . $id);
         $user['User']['username'];
 
-        $data = array(
-            'User' => array(
-                'id' => $id,
-                'username' => $user['User']['username'],
-                'image_url' => ""
-            )
-        );
+        $data = array('User' => array('id' => $id, 'username' => $user['User']['username'], 'image_url' => ""));
         if ($this->User->save($data)) {
             Configure::write('debug', 0);
             $this->autoRender = false;
@@ -970,16 +899,13 @@ class UsersController extends AppController {
         }
     }
 
-//ef
+    //ef
 
-    function checkuser($username = null)
-    {
+    function checkuser($username = null) {
         $this->layout = null;
         $this->autoRender = false;
 
-        $chkuser = $this->User->find('all', array('conditions' => 'User.username=' . "'$username'" . ''
-            )
-        );
+        $chkuser = $this->User->find('all', array('conditions' => 'User.username=' . "'$username'" . ''));
 
         if (count($chkuser) == 0) {
             echo "1";
@@ -988,16 +914,13 @@ class UsersController extends AppController {
         }
     }
 
-//ef
+    //ef
 
-    function admin_checkuser($username = null)
-    {
+    function admin_checkuser($username = null) {
         $this->layout = null;
         $this->autoRender = false;
 
-        $chkuser = $this->User->find('all', array('conditions' => 'User.username=' . "'$username'" . ''
-            )
-        );
+        $chkuser = $this->User->find('all', array('conditions' => 'User.username=' . "'$username'" . ''));
 
         if (count($chkuser) == 0) {
             echo "1";
@@ -1006,10 +929,9 @@ class UsersController extends AppController {
         }
     }
 
-//ef
+    //ef
 
-    function checkdomain()
-    {
+    function checkdomain() {
 
 
         $this->layout = null;
@@ -1036,9 +958,7 @@ class UsersController extends AppController {
 
         if ($schoolStatus != 'Alumni') {
             $this->log('here in checking out -', 'debug');
-            $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . $schoolSelect
-                )
-            );
+            $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . $schoolSelect));
 
             $domains = explode(',', $chkuser[0]['School']['domain']);
             foreach ($domains as $val) { //echo $val;
@@ -1069,10 +989,9 @@ class UsersController extends AppController {
         //}
     }
 
-//ef
+    //ef
     //function to check username
-    function checkUsername()
-    {
+    function checkUsername() {
         $this->setLayout = null;
         Configure::write('debug', 0);
 
@@ -1093,8 +1012,7 @@ class UsersController extends AppController {
 
     //
 
-    function admin_checkdomain($email = null, $schoolSelect = null)
-    {
+    function admin_checkdomain($email = null, $schoolSelect = null) {
 
 
         $this->layout = null;
@@ -1102,17 +1020,13 @@ class UsersController extends AppController {
         $status = 0;
 
 
-        $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''
-            )
-        );
+        $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''));
 
 
         if (empty($chkuserExist)) {
 
 
-            $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . "'$schoolSelect'" . ''
-                )
-            );
+            $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . "'$schoolSelect'" . ''));
 
             $domains = explode(',', $chkuser[0]['School']['domain']);
             foreach ($domains as $val) { //echo $val;
@@ -1136,20 +1050,16 @@ class UsersController extends AppController {
         }
     }
 
-//ef
+    //ef
     // function to change the status of a user
 
-    function admin_user_changeStatus($id = null)
-    {
+    function admin_user_changeStatus($id = null) {
 
         Configure::write('debug', 0);
         $this->layout = null;
         $this->autoRender = false;
 
-        $user = $this->User->find('first', array('conditions' => 'User.id=' . $id,
-                'fields' => array('User.id', 'User.activation')
-            )
-        );
+        $user = $this->User->find('first', array('conditions' => 'User.id=' . $id, 'fields' => array('User.id', 'User.activation')));
 
         if ($user['User']['activation']) {
             $newStatus = "0";
@@ -1157,12 +1067,7 @@ class UsersController extends AppController {
             $newStatus = "1";
         }
 
-        $data = array(
-            'User' => array(
-                'id' => $id,
-                'activation' => $newStatus
-            )
-        );
+        $data = array('User' => array('id' => $id, 'activation' => $newStatus));
 
 
         if ($this->User->save($data)) {
@@ -1172,27 +1077,29 @@ class UsersController extends AppController {
         }
     }
 
-//ef
+    //ef
 
-    function searchform()
-    { // to display the ajax loaded search form
+    function searchform() { // to display the ajax loaded search form
         $this->layout = null;
     }
 
-// ef 
+    // ef
     ########################################### to do ajax pagination  
 
-    function searchresults($page_no = '')
-    {
+    function searchresults($page_no = '') {
         $this->layout = 'default1';
         $this->set("page_no", $page_no);
 
         if (isset($this->data['Map']['search'])) {
             $search_srting = $this->data['Map']['search'];
-        } else if (isset($this->data['User']['search'])) {
-            $search_srting = $this->data['User']['search'];
-        } else if (isset($this->data['Review']['search'])) {
-            $search_srting = $this->data['Review']['search'];
+        } else {
+            if (isset($this->data['User']['search'])) {
+                $search_srting = $this->data['User']['search'];
+            } else {
+                if (isset($this->data['Review']['search'])) {
+                    $search_srting = $this->data['Review']['search'];
+                }
+            }
         }
 
 
@@ -1203,10 +1110,9 @@ class UsersController extends AppController {
         $this->set('currentPageHeading', 'Search Users');
     }
 
-// ef   
+    // ef
 
-    function search_ajax($search_srting = '')
-    {
+    function search_ajax($search_srting = '') {
 
         $search_srting = str_replace("-", " ", $search_srting);
         $this->set_paginate_limit_search($search_srting); // Setting Paginate Limit 
@@ -1225,12 +1131,10 @@ class UsersController extends AppController {
         $this->set("search_srting", $search_srting);
     }
 
-    function set_paginate_limit_search($search_srting = '')
-    {
+    function set_paginate_limit_search($search_srting = '') {
 
         if ($search_srting == '') {
-            $this->paginate = array('conditions' => array('User.activation' => 1),
-                'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.image_url', 'User.school_status', 'School.id', 'School.name', 'Country.countries_name'), 'limit' => $this->paginate_limit_front);
+            $this->paginate = array('conditions' => array('User.activation' => 1), 'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.image_url', 'User.school_status', 'School.id', 'School.name', 'Country.countries_name'), 'limit' => $this->paginate_limit_front);
         } else {
             $checkstring = array();
 
@@ -1241,38 +1145,20 @@ class UsersController extends AppController {
 
                 $checkstring = str_replace("889988", " ", $checkstring);
 
-                $this->paginate = array('conditions' => array('or' => array(
-                    'User.firstname LIKE' => '%' . $checkstring[0] . '%',
-                    'User.lastname LIKE' => '%' . $checkstring[0] . '%',
-                    'User.school_status  LIKE' => '%' . $checkstring[0] . '%'
-                ),
-                    'User.activation' => 1
-                ),
-                    'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.image_url', 'User.school_status', 'School.id', 'School.name', 'Country.countries_name'),
-                    'limit' => $this->paginate_limit_front
-                );
+                $this->paginate = array('conditions' => array('or' => array('User.firstname LIKE' => '%' . $checkstring[0] . '%', 'User.lastname LIKE' => '%' . $checkstring[0] . '%', 'User.school_status  LIKE' => '%' . $checkstring[0] . '%'), 'User.activation' => 1), 'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.image_url', 'User.school_status', 'School.id', 'School.name', 'Country.countries_name'), 'limit' => $this->paginate_limit_front);
             } else {
 
 
                 //$search_srting = str_replace("889988", " ", $search_srting);
 
-                $this->paginate = array('conditions' => array('and' => array(
-                    'User.firstname LIKE' => $checkstring[0],
-                    'User.lastname LIKE' => '%' . $checkstring[1] . '%'
-                ),
-                    'User.activation' => 1
-                ),
-                    'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.image_url', 'User.school_status', 'School.id', 'School.name', 'Country.countries_name'),
-                    'limit' => $this->paginate_limit_front
-                );
+                $this->paginate = array('conditions' => array('and' => array('User.firstname LIKE' => $checkstring[0], 'User.lastname LIKE' => '%' . $checkstring[1] . '%'), 'User.activation' => 1), 'fields' => array('User.id', 'User.firstname', 'User.lastname', 'User.email', 'User.image_url', 'User.school_status', 'School.id', 'School.name', 'Country.countries_name'), 'limit' => $this->paginate_limit_front);
             }
         } // else ends here
     }
 
-// ef
+    // ef
 
-    function admin_search($page_no = '')
-    {
+    function admin_search($page_no = '') {
         //  print_r($this->data);exit;
         $this->layout = "admin";
         $search_srting = "";
@@ -1290,8 +1176,7 @@ class UsersController extends AppController {
         $this->set("page_no", $page_no);
     }
 
-    function admin_all_search_ajax($search_srting = '')
-    {
+    function admin_all_search_ajax($search_srting = '') {
 
         $this->set_paginate_limit_front($search_srting); // Setting Paginate Limit 
 
@@ -1314,8 +1199,7 @@ class UsersController extends AppController {
         $this->set("search_srting", $search_srting);
     }
 
-    function set_paginate_limit_front($search_srting = '')
-    {
+    function set_paginate_limit_front($search_srting = '') {
         $condition = "";
 
         if ($search_srting == '') {
@@ -1333,8 +1217,9 @@ class UsersController extends AppController {
 
                     switch ($search_sub_srting_arr[0]) {
                         case "firstname":
-                            if (!empty($search_sub_srting_arr[1]))
+                            if (!empty($search_sub_srting_arr[1])) {
                                 $condition = $condition . " User.firstname like '%" . $search_sub_srting_arr[1] . "%'";
+                            }
 
                             break;
                     }
@@ -1348,8 +1233,7 @@ class UsersController extends AppController {
 
     ########################################################
 
-    function test()
-    {
+    function test() {
 
         $this->layout = "default1";
     }
