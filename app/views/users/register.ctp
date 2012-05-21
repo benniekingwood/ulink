@@ -152,7 +152,7 @@ $(document).ready(function () {
                 </div>
                 <div class="row">
                     <div class="span4">
-                    <input placeholder="confirm password" type="password" id="UserConfirmPassword" value="" name="data[User][confirm_password]" class="input-xlarger ulink-input-bigfont"/>
+                    <input placeholder="verify password" type="password" id="UserConfirmPassword" value="" name="data[User][confirm_password]" class="input-xlarger ulink-input-bigfont"/>
                     </div>
                     <div class="span3"></div>
                 </div>

@@ -80,7 +80,7 @@ class PagesController extends AppController {
      * UCampus home page loader
      */
     function ucampus() {
-        $this->layout = "v2";
+        $this->layout = "v2_ucampus";
         $this->pageTitle = 'Your college everything.';
     }
 }
