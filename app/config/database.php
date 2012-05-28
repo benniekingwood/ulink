@@ -82,7 +82,7 @@ class DATABASE_CONFIG {
 
     // default configuration for Production
     var $default = array(
-        'driver' => 'mysql',
+        'datasource' => 'Database/Mysql',
         'persistent' => false,
         'host' => 'localhost',
         'login' => 'ulink',
@@ -91,6 +91,14 @@ class DATABASE_CONFIG {
         'prefix' => '',
         'encoding' => 'utf8'
     );
+
+    /*var $mongo = array(
+	    'datasource' => 'mongodb',
+	    'database' => 'test',
+	    'host' => 'localhost',
+	    'port' => 27017
+    );*/
+
 
     function DATABASE_CONFIG() {
         if (inDevMode()) {
