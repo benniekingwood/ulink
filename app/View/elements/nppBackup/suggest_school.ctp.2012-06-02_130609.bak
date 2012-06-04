@@ -1,4 +1,4 @@
-<?php //echo $this->Html->script(array('jquery.min.js')); ?>
+<?php echo $this->Js->link(array('jquery.min.js')); ?>
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
         $('#suggestSchoolForm').ajaxForm({
@@ -34,7 +34,7 @@
     </div>
 
     <div class="modal-body">
-        <?php echo $this->Form->create('School', array('action' => 'suggestion', 'id' => 'suggestSchoolForm')); ?>
+        <?php //echo $form->create(('School', array('action' => 'suggestion', 'id' => 'suggestSchoolForm')); ?>
 
         <div id="form-response-container" class="row" style="display: none;">
             <div class="success-img span1">&nbsp;</div>

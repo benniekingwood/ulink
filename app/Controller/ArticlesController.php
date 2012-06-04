@@ -4,7 +4,7 @@ class ArticlesController extends AppController {
 
     var $name = 'Articles';
     var $uses = array('Article');
-    var $helpers = array('Html', 'Form', 'JsHelper', 'Ajax', 'Session');
+    var $helpers = array('Html', 'Form', 'Js',  'Session');
     var $components = array('Email', 'RequestHandler', 'Auth', 'Session');
     var $paginate_limit_front = '10';
 

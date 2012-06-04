@@ -9,7 +9,7 @@ class UsersController extends AppController {
 
     var $name = 'Users';
     var $uses = array('User', 'Country', 'State', 'City', 'School', 'Review', 'Domain');
-    var $helpers = array('Html', 'Form', 'JsHelper', 'Ajax', 'Jquery');
+    var $helpers = array('Html', 'Form', 'Js',  'Jquery');
     var $components = array('Email', 'Auth', 'Session', 'RequestHandler');
     var $paginate_limit = '20';
     var $paginate_limit_front = '10';

@@ -7,7 +7,7 @@ class PagesController extends AppController {
     var $name = 'Pages';
     var $uses = array();
     var $components = array('RequestHandler');
-    var $helpers = array('Html', 'Form', 'JsHelper');
+    var $helpers = array('Html', 'Form', 'Js');
 
     /**
      * Home uLink homepage loader.

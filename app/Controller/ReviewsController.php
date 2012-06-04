@@ -5,7 +5,7 @@ class ReviewsController extends AppController {
     var $name = 'Reviews';
     var $uses = array('Review', 'Country', 'School', 'User');
     var $components = array('RequestHandler');
-    var $helpers = array('Html', 'Form', 'JsHelper', 'Ajax', 'Fck');
+    var $helpers = array('Html', 'Form', 'Js',  'Fck');
     var $paginate_limit = '20';
     var $paginate_limit_front = '10';
     var $paginate = "";

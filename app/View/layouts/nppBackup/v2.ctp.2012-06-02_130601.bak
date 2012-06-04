@@ -15,7 +15,7 @@
 
         // print styles
         echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
-        echo $this->Html->script(array('jquery.min.js','var.js', 'validate.js'));
+        echo $this->Js->link(array('jquery.min.js','var.js', 'validate.js'));
     ?>
 
     <!--  HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -75,10 +75,10 @@
                                     <div class="span3">
                                         <?php
                                             if ($profileImgURL != '' && file_exists(WWW_ROOT . '/img/files/users/' . $profileImgURL)) {
-                                                echo $this->Html->image('files/users/' . $profileImgURL . '', array('alt' =>
+                                                echo $this->Html->image(('files/users/' . $profileImgURL . '', array('alt' =>
                                             'profileimage'));
                                             } else {
-                                                echo $this->Html->image('files/users/noImage.jpg', array('alt' => 'noimage'));
+                                                echo $this->Html->image(('files/users/noImage.jpg', array('alt' => 'noimage'));
                                             }
                                         ?>
                                         <span id="profile-mgmt-name"><?php echo $loggedInName?></span>
@@ -138,7 +138,7 @@
 </footer> <!-- /footer -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<?php echo $this->Html->script(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
+<?php echo $javascript->link(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
 
 <!-- facebook scripts -->
 <script type="text/javascript"

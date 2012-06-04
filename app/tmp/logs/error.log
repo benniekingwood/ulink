@@ -429,3 +429,123 @@
 #4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
 #5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #6 {main}
+2012-06-02 11:52:11 Error: [MissingHelperException] Helper class JsHelperHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('JsHelper', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-02 11:54:40 Error: [MissingHelperException] Helper class AjaxHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('Ajax', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-02 11:55:11 Error: [MissingHelperException] Helper class JsHelperHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('JsHelper', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-02 11:59:32 Error: [MissingHelperException] Helper class JsHelperHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('JsHelper', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-02 12:09:41 Error: [MissingHelperException] Helper class JsHelperHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('JsHelper', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-02 12:17:28 Error: [MissingHelperException] Helper class JsHelperHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('JsHelper', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-02 12:18:09 Error: [MissingHelperException] Helper class JsHelperHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('JsHelper', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-02 12:19:37 Error: [MissingHelperException] Helper class JsHelperHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('JsHelper', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-02 13:07:11 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 13:07:19 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 13:34:23 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 15:54:26 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 15:55:13 Error: [MissingActionException] Action AdminsController::login() could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(103): Controller->invokeAction(Object(CakeRequest))
+#1 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(AdminsController), Object(CakeRequest), Object(CakeResponse))
+#2 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2012-06-02 16:02:25 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 16:03:43 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 16:15:08 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 16:17:41 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 16:17:41 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 16:17:43 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 16:17:43 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 16:17:52 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-02 16:29:51 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-03 12:30:29 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-03 12:30:52 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-03 12:33:22 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-03 20:20:27 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}

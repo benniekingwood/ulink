@@ -4,7 +4,7 @@ class EventsController extends AppController {
         
         var $name = 'Events';
 		var $components = array('RequestHandler');
-		var $helpers = array('Html', 'Form', 'JsHelper');
+		var $helpers = array('Html', 'Form', 'Js');
 
         public function index() {
 				$this->layout = 'v2';

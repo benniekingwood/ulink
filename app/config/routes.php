@@ -43,7 +43,7 @@
  */
 //	require CAKE . 'Config' . DS . 'routes.php';
 
-Router::connect('/admin', array('controller' => 'admins', 'action' => 'login', 'admin' => false));
+Router::connect('/admin', array('controller' => 'admins', 'action' => 'admin_login', 'admin' => false));
 
 Router::connect('/', array('controller' => 'pages', 'action' => 'home'));
 /**

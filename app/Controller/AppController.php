@@ -21,7 +21,7 @@ define('_M2KM_FACTOR', 1.609344);
 class AppController extends Controller {
 
     var $uses = array('School', 'User', 'Review', 'Article');
-    var $helpers = array('Html', 'JsHelper', 'Ajax', 'Session');
+    var $helpers = array('Html', 'Js',  'Session', 'Form');
     var $components = array('RequestHandler', 'Auth', 'Cookie', 'Session');
     var $last_error = "";            // last error message set by this class
     var $units = _UNIT_MILES;        // miles or kilometers
