@@ -98,6 +98,7 @@
                     <div class="span3">
                         <?php echo $form->input('file', array('type' => 'file', 'label' => false, 'div' => false)); ?>
                         <p>Maximum file size 700k.<br />Filetypes JPG,PNG,GIF.</p>
+                        <a href="<?php e($html->url('/users/deactivate'));?>">Deactivate my account</a>
                     </div>
                 </div>
                 <hr />
