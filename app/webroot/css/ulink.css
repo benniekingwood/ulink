@@ -15,7 +15,7 @@ body {
 	width: 128px;
 	height: 128px;
 }
-.profile-component .blurb {
+.profile-component .bio {
 	font-style: italic;
 	color:#999;
 }
@@ -129,7 +129,7 @@ footer .social > a:hover {
     padding-left: 20px;
     font-size:1.1em;
 }
-#profile-message {
+#profile-message,#profile-password-message {
     margin: 10px 0;
 }
 
@@ -155,10 +155,11 @@ footer .social > a:hover {
     border-radius: 5px;
     width: 150px;
     height: 150px;
+    margin-left: 10px;
 }
 
 .remove-profile-image {
-    margin-left: 17px;
+    margin-left: 27px;
 }
 
 /* NAVBAR SECTION */

@@ -82,7 +82,7 @@
                     <?php $session->flash(); ?>
                 </div>
                 <div class="row">
-                    <div class="span2">
+                    <div class="span3">
                         <?php if ($this->data['User']['image_url'] != '' && file_exists(WWW_ROOT . '/img/files/users/' . $this->data['User']['image_url'])) {?>
                             <div id="profile-image">
                                 <?php echo $this->Html->image(('files/users/' . $this->data['User']['image_url'] . '', array('alt' => 'profile image')); ?>
@@ -181,5 +181,5 @@
     try{convertEntities(pwsL10n);}catch(e){};
     /* ]]> */
 </script>
-<?php echo $javascript->link(array('ulink-remove-profile-img.js')); ?>
+<?php echo $javascript->link(array('jquery.min.js','ulink-remove-profile-img.js')); ?>
 

@@ -41,7 +41,6 @@ class PagesController extends AppController {
      * Success page loader for new users activating
      */
     function success() {
-        $this->set('currentPageHeading', '');
         $this->layout = "v2";
         $this->pageTitle = 'Your college everything.';
     }
@@ -50,7 +49,6 @@ class PagesController extends AppController {
      * Help page loader
      */
     function help() {
-        $this->set('currentPageHeading', '');
         $this->layout = "v2";
         $this->pageTitle = 'Help';
     }
@@ -67,7 +65,6 @@ class PagesController extends AppController {
      * Terms page loader
      */
     function terms() {
-        $this->set('currentPageHeading', '');
         $this->layout = "v2";
         $this->pageTitle = 'Terms and Conditions';
     }
@@ -76,9 +73,18 @@ class PagesController extends AppController {
      * About page loader
      */
     function about() {
-        $this->set('currentPageHeading', '');
         $this->layout = "v2";
         $this->pageTitle = 'About Us';
     }
+
+
+    /**
+     * UCampus home page loader
+     */
+    function ucampus() {
+        $this->layout = "v2";
+        $this->pageTitle = 'Your college everything.';
+    }
+
 }
 ?>
