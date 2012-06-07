@@ -818,3 +818,34 @@ p.input-info {
 .splash-container {
     margin-top: 80px;
 }
+
+/* ABOUT STYLES */
+#about-content {
+    min-height: 400px;
+}
+
+#team ul li div div > img {
+    height: 150px;
+    width: 150px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#team ul > li {
+	margin-bottom: 15px;
+}
+
+/* HELP STYLES */
+#help-content {
+ 	min-height: 400px;
+}
+
+#help-nav .nav-list > li > a {
+	border-bottom: 1px solid #eee;
+}
+#help-nav .nav  li {
+	margin: 0px;
+}
+
+/* ADVERTISE STYLES */
+

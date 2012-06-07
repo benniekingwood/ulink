@@ -182,7 +182,7 @@ class UsersController extends AppController {
      */
     function register($id = null) {
         $this->pageTitle = 'Sign up with uLink';
-        $this->layout = "v2";
+        $this->layout = "v2_no_login_header";
         $this->set('currentPageHeading', 'Join uLink');
 
         /*
