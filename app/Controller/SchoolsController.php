@@ -8,7 +8,7 @@ class SchoolsController extends AppController {
     var $name = 'Schools';
     var $uses = array('School', 'State', 'City', 'Country', 'Suggestion', 'Image', 'Review', 'User');
     var $components = array('Email', 'Auth', 'Session', 'RequestHandler');
-    var $helpers = array('Fck', 'Html', 'Form', 'Js',  'Jquery');
+    var $helpers = array('Fck', 'Html', 'Form', 'Js');
     var $paginate_limit = '20';
     var $paginate_limit_front = '5';
     var $paginate_limit_front_compact = '10';

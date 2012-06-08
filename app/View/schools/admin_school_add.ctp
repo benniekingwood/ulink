@@ -1,4 +1,4 @@
-<?php echo $javascript->link(array('jqurey-removeImg.js', 'ckeditor/ckeditor', 'ckfinder/ckfinder')); ?>
+<?php echo $this->Html->script(array('jqurey-removeImg.js', 'ckeditor/ckeditor', 'ckfinder/ckfinder')); ?>
 <style type="text/css">
 
     /* to tackle the multiple upload */
@@ -369,62 +369,62 @@
 unset($_SESSION['ct']);
 unset($_SESSION['extra_image']);
 
-echo $form->create(('School', array('action' => 'school_add', 'type' => 'file'));
+echo $this->Form->create(('School', array('action' => 'school_add', 'type' => 'file'));
 ?>
-<?php echo $form->input('name', array('class' => 'schoolName', 'label' => 'School Name*')); ?> 
+<?php echo $this->Form->input('name', array('class' => 'schoolName', 'label' => 'School Name*')); ?> 
 <br/>
 
 <div class="editor_title">
 
-    <?php echo $form->input('School.short_description', array('class' => 'schoolShortDescription', 'type' => 'textarea', 'label' => 'School Short Description*')); ?> 
+    <?php echo $this->Form->input('School.short_description', array('class' => 'schoolShortDescription', 'type' => 'textarea', 'label' => 'School Short Description*')); ?> 
 
 </div>
 
-<?php echo $form->input('School.description', array('id' => 'editor1', 'label' => 'Description*', 'type' => 'textarea')); ?>
-<?php echo $form->input('attendence', array('label' => 'School Attendence*')); ?>
-<?php echo $form->input('address', array('label' => 'Address*')); ?> 
-<?php echo $form->input('School.zipcode', array('label' => 'Zip Code*', 'class' => 'zipcode')); ?>
+<?php echo $this->Form->input('School.description', array('id' => 'editor1', 'label' => 'Description*', 'type' => 'textarea')); ?>
+<?php echo $this->Form->input('attendence', array('label' => 'School Attendence*')); ?>
+<?php echo $this->Form->input('address', array('label' => 'Address*')); ?> 
+<?php echo $this->Form->input('School.zipcode', array('label' => 'Zip Code*', 'class' => 'zipcode')); ?>
 
-<?php echo $form->input('School.year', array('type' => 'text', 'class' => 'schoolYearSel', 'label' => 'Foundation Year*')); ?> <span id="SchoolYearInfo" name ="SchoolYearInfo"></span><br/>
+<?php echo $this->Form->input('School.year', array('type' => 'text', 'class' => 'schoolYearSel', 'label' => 'Foundation Year*')); ?> <span id="SchoolYearInfo" name ="SchoolYearInfo"></span><br/>
 
-	School Type<?php echo $form->input('type', array('type' => 'radio', 'options' => array('private' => 'private', 'public' => 'public'), 'default' => 'public', 'legend' => false)); ?>
+	School Type<?php echo $this->Form->input('type', array('type' => 'radio', 'options' => array('private' => 'private', 'public' => 'public'), 'default' => 'public', 'legend' => false)); ?>
 
-<?php echo $form->input('School.domain', array('class' => 'domainName', 'label' => 'School-email domain*')); ?> 
+<?php echo $this->Form->input('School.domain', array('class' => 'domainName', 'label' => 'School-email domain*')); ?> 
 
-<?php echo $form->input('country_id', array('onchange' => 'getStatecho(this.value)', 'type' => 'select', 'empty' => 'Please Select', 'options' => $countries)); ?><br/>
-<?php echo $form->error('School.country_id'); ?>
+<?php echo $this->Form->input('country_id', array('onchange' => 'getStatecho(this.value)', 'type' => 'select', 'empty' => 'Please Select', 'options' => $countries)); ?><br/>
+<?php echo $this->Form->error('School.country_id'); ?>
 <div id="statediv">
-    <?php echo $form->input('state', array('type' => false, 'empty' => 'Select Country First', 'type' => 'select')) ?>
+    <?php echo $this->Form->input('state', array('type' => false, 'empty' => 'Select Country First', 'type' => 'select')) ?>
 </div>
 
 <div id="statedivother" style="display:none;">
-    <?php echo $form->input('School.stateother', array('type' => 'text', 'id' => 'stateother', 'label' => 'State')); ?>
+    <?php echo $this->Form->input('School.stateother', array('type' => 'text', 'id' => 'stateother', 'label' => 'State')); ?>
 
 </div>
 
 <br/>
 
 <div id="citydiv">
-    <?php echo $form->input('city', array('empty' => 'Select State First', 'type' => 'select')) ?>
+    <?php echo $this->Form->input('city', array('empty' => 'Select State First', 'type' => 'select')) ?>
 </div>
 <br/>
 <div id="citydivother" style="display:none;">
-    <?php echo $form->input('School.cityother', array('type' => 'text', 'id' => 'cityother', 'label' => 'City')); ?>
+    <?php echo $this->Form->input('School.cityother', array('type' => 'text', 'id' => 'cityother', 'label' => 'City')); ?>
 </div>
 <br/>
-<?php echo $form->input('School.longitude', array('label' => 'Longitude*')); ?>
+<?php echo $this->Form->input('School.longitude', array('label' => 'Longitude*')); ?>
 
-<?php echo $form->input('School.latitude', array('label' => 'Latitude*')); ?>
+<?php echo $this->Form->input('School.latitude', array('label' => 'Latitude*')); ?>
 
 
-<?php echo $form->input('file', array('type' => 'file', 'label' => 'Main Image')); ?>
+<?php echo $this->Form->input('file', array('type' => 'file', 'label' => 'Main Image')); ?>
 
 
 <table><tr><td><div id="upload" ><span>Upload Images for Gallery<span></div><span id="status" ></span>
                         <ul id="files" ></ul>
                         </td></tr></table>
 
-                        <?php echo $form->end('Submit'); ?></div>
+                        <?php echo $this->Form->end('Submit'); ?></div>
 
 
                         <div align="left"> <div><a href="<?php echo($this->Html->url('/admin/schools/index')); ?>"><b>Cancel</b></a></div></div>

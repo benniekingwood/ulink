@@ -109,10 +109,10 @@ $(document).ready(function(){
 		
 		<div class="form_input_box">
 			<label>Email:</label>
-			<?php echo($form->input('Admin.email', array('label'=>false,'div'=>false))); ?>
+			<?php echo($this->Form->input('Admin.email', array('label'=>false,'div'=>false))); ?>
 		</div>
 		
-		<?php echo($form->input('Admin.id', array('label'=>''))); ?>
+		<?php echo($this->Form->input('Admin.id', array('label'=>''))); ?>
 		<br /><br />
 		<div class="form_input_box">
 			<label>&nbsp;</label>
@@ -127,9 +127,9 @@ $(document).ready(function(){
 		
 		<div class="form_input_box">
 			<label>User name:</label>
-			<?php echo($form->input('Admin.username', array('label'=>false,'div'=>false))); ?>
+			<?php echo($this->Form->input('Admin.username', array('label'=>false,'div'=>false))); ?>
 		</div>
-		<?php echo($form->input('Admin.id', array('label'=>''))); ?>
+		<?php echo($this->Form->input('Admin.id', array('label'=>''))); ?>
 		
 		<div class="form_input_box">
 			<label>&nbsp;</label>
@@ -141,20 +141,20 @@ $(document).ready(function(){
 			<h2 class="form_head">Change Password</h2>
 		<div class="form_input_box">
 			<label>Current password:</label>
-			<?php echo($form->input('Admin.currentpassword', array('label'=>false,'div'=>false, 'type'=>'password', 'value'=>''))); ?>
+			<?php echo($this->Form->input('Admin.currentpassword', array('label'=>false,'div'=>false, 'type'=>'password', 'value'=>''))); ?>
 		</div>
 		
 		<div class="form_input_box">
 			<label>New password:</label>
-			<?php echo($form->input('Admin.password', array('label'=>false,'div'=>false, 'value'=>''))); ?>
+			<?php echo($this->Form->input('Admin.password', array('label'=>false,'div'=>false, 'value'=>''))); ?>
 		</div>
 		
 		<div class="form_input_box">
 			<label>Confirm new password:</label>
-			<?php echo($form->input('Admin.confirmpassword', array('label'=>false,'div'=>false, 'type'=>'password', 'value'=>''))); ?>
+			<?php echo($this->Form->input('Admin.confirmpassword', array('label'=>false,'div'=>false, 'type'=>'password', 'value'=>''))); ?>
 		</div>
 		
-		<?php echo($form->input('Admin.id', array('label'=>''))); ?>
+		<?php echo($this->Form->input('Admin.id', array('label'=>''))); ?>
 		
 		
 			<div class="form_input_box">

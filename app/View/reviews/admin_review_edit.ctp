@@ -1,4 +1,4 @@
-<?php echo ($javascript->link(array('ckeditor/ckeditor', 'ckfinder/ckfinder'))); //includes .JS files ?>
+<?php echo ($this->Html->script(array('ckeditor/ckeditor', 'ckfinder/ckfinder'))); //includes .JS files ?>
 <script type="text/javascript" language="javascript">
 		
     function setDisplayRatingLevel(level) {
@@ -26,9 +26,9 @@
 
 
 <div class="login">
-    <?php echo $form->create(('Review', array('action' => 'admin_review_edit', 'name' => 'ReviewAdminReviewEditForm')); ?>
+    <?php echo $this->Form->create(('Review', array('action' => 'admin_review_edit', 'name' => 'ReviewAdminReviewEditForm')); ?>
     <?php $hello = "bye"; ?>
-    <?php echo $form->input('Review.title'); ?>
+    <?php echo $this->Form->input('Review.title'); ?>
 
     <h3>Rate It</h3><p><?php for ($i = 1; $i < 6; $i++) { ?>	
 
@@ -36,14 +36,14 @@
             </a>	
         <?php } ?>
 
-        <?php echo $form->input('Review.description', array('id' => 'editor1', 'label' => 'Description', 'type' => 'textarea')); ?>
+        <?php echo $this->Form->input('Review.description', array('id' => 'editor1', 'label' => 'Description', 'type' => 'textarea')); ?>
 
-        <?php echo($form->text('Review.id', array('type' => 'hidden'))); ?><br/>
+        <?php echo($this->Form->text('Review.id', array('type' => 'hidden'))); ?><br/>
 
-        <?php echo($form->text('Review.rating', array('type' => 'hidden'))); ?>
+        <?php echo($this->Form->text('Review.rating', array('type' => 'hidden'))); ?>
 
-        <?php echo $form->submit('Update', array('value' => 'Update')); ?>
-        <?php echo $form->end(); ?>
+        <?php echo $this->Form->submit('Update', array('value' => 'Update')); ?>
+        <?php echo $this->Form->end(); ?>
 
     <div><object width="200" height="200" data="http://www.youtube.com/v/<?php echo $link; ?>" type="application/x-shockwave-flash"><param name="src" value="http://www.youtube.com/v/<?php echo $link; ?>" /></object></div>
 

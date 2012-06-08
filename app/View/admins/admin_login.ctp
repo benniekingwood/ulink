@@ -10,11 +10,11 @@
         </div>
 
         <div>
-            <div style="padding-bottom: 6px; padding-top: 18px;"><?php echo($form->input('Admin.username', array('label' => array('label' => 'Username', 'style' => 'padding-right:10px;')))); ?></div>
+            <div style="padding-bottom: 6px; padding-top: 18px;"><?php echo($this->Form->input('Admin.username', array('label' => array('label' => 'Username', 'style' => 'padding-right:10px;')))); ?></div>
             <div class="clear"></div>
         </div>
 
-        <div style="padding-bottom: 6px;padding-top:5px; "><?php echo($form->input('Admin.password', array('label' => array('label' => 'Passowrd', 'style' => 'padding-right:10px;'), 'type' => 'password'))); ?></div>
+        <div style="padding-bottom: 6px;padding-top:5px; "><?php echo($this->Form->input('Admin.password', array('label' => array('label' => 'Passowrd', 'style' => 'padding-right:10px;'), 'type' => 'password'))); ?></div>
         <div style="padding-left:71px; padding-top:5px"><input type="checkbox" name="data[remember_me]" id="remember_me" /> Keep me signed in</div>
 
         <div style="padding-left:70px; padding-top:5px;"><input type="submit" name="login" value="Login" /></div>

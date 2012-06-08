@@ -1,5 +1,5 @@
 <?php 
-echo $form->create((null, array('action' => 'validate_data'));
-echo $form->input('Message.url');
-echo $form->end('Submit'); 
+echo $this->Form->create((null, array('action' => 'validate_data'));
+echo $this->Form->input('Message.url');
+echo $this->Form->end('Submit'); 
 ?>

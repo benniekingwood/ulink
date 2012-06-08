@@ -175,7 +175,7 @@
 	
     });
 </script>
-<?php echo $javascript->link(array('image_validation.js')); ?>
+<?php echo $this->Html->script(array('image_validation.js')); ?>
 
 <div class="content">
     <div class="form">
@@ -186,7 +186,7 @@
                     <div class="registerContainter">
                         <div class="registerContent"><label>School name:</label><strong><?php echo $Shoolreview[0]['School']['name']; ?></strong></div>
 
-                        <?php echo $form->create((null, array('id' => '', 'action' => 'editvideo_step/' . $Shoolreview[0]['School']['id'], 'name' => 'ReviewWritereviewForm')); ?>
+                        <?php echo $this->Form->create((null, array('id' => '', 'action' => 'editvideo_step/' . $Shoolreview[0]['School']['id'], 'name' => 'ReviewWritereviewForm')); ?>
                         <div class="registerContent"><label>Rate School</label>
 
                             <?php for ($i = 1; $i < 6; $i++) { ?>	
@@ -198,14 +198,14 @@
                             <span id="ratingInfo" class="error-small"></span>	
                         </div>
 
-                        <div class="registerContent"><label>Review Title</label><?php echo $form->text('Review.title', array('onkeyup' => 'setTitleCookiecho(this.value)', 'value' => $reviews[0]['Review']['title'])); ?>
+                        <div class="registerContent"><label>Review Title</label><?php echo $this->Form->text('Review.title', array('onkeyup' => 'setTitleCookiecho(this.value)', 'value' => $reviews[0]['Review']['title'])); ?>
                             <br class="clear"/>
 
                             <span id="titleInfo" class="error-small"></span>
 
                         </div>
 
-                        <div class="registerContent"><label>Comments</label><?php echo $form->textarea('Review.description', array('onkeyup' => 'setDescriptionCookiecho(this.value)', 'value' => $reviews[0]['Review']['description'])); ?>
+                        <div class="registerContent"><label>Comments</label><?php echo $this->Form->textarea('Review.description', array('onkeyup' => 'setDescriptionCookiecho(this.value)', 'value' => $reviews[0]['Review']['description'])); ?>
                             <br class="clear"/>
                             <span id="descriptionInfo" class="error-small"></span></div>
 
@@ -220,9 +220,9 @@
                         <div id="searchResult_file"></div>
 
                         <div style="padding-left:186px;">
-                            <?php echo $form->input('Review.link', array('type' => 'hidden', 'value' => $reviews[0]['Review']['link'])); ?>
-                            <?php echo $form->input('Review.id', array('type' => 'hidden', 'value' => $reviews[0]['Review']['id'])); ?>
-                            <?php echo $form->submit('buttonUpdate.gif', array('id' => 'reviewFormSubmit', 'value' => 'Submit')); ?>
+                            <?php echo $this->Form->input('Review.link', array('type' => 'hidden', 'value' => $reviews[0]['Review']['link'])); ?>
+                            <?php echo $this->Form->input('Review.id', array('type' => 'hidden', 'value' => $reviews[0]['Review']['id'])); ?>
+                            <?php echo $this->Form->submit('buttonUpdate.gif', array('id' => 'reviewFormSubmit', 'value' => 'Submit')); ?>
                             <div><a href="<?php echo($this->Html->url('/reviews/allvideoreview/' . $MyShoolID)); ?>">Cancel</a></div>
                             <div><a href="<?php echo($this->Html->url('/reviews/uploadvideoreview/' . $MyShoolID)); ?>">Change video</a></div>
 

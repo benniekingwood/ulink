@@ -1,6 +1,6 @@
-<?php echo $javascript->link(array('jquery-1.4.2.min.js')); ?>
-<?php echo $javascript->link(array('jquery-common.js')); ?>
-<?php echo $javascript->link(array('tableSort.js')); ?>
+<?php echo $this->Html->script(array('jquery-1.4.2.min.js')); ?>
+<?php echo $this->Html->script(array('jquery-common.js')); ?>
+<?php echo $this->Html->script(array('tableSort.js')); ?>
 
 <script type="text/javascript">
  				 

@@ -1,4 +1,4 @@
-<?php echo ($javascript->link(array('jquery-common'))); //includes .JS files  ?>
+<?php echo ($this->Html->script(array('jquery-common'))); //includes .JS files  ?>
 
 <div id="ajax_msg"></div>
 

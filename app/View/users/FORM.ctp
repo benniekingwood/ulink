@@ -6,17 +6,17 @@
     </div>
     <div class="content">
 
-        <?php echo $form->create(('User', array('action' => 'register', 'name' => 'UserRegisterForm', 'type' => 'file')); ?>
+        <?php echo $this->Form->create(('User', array('action' => 'register', 'name' => 'UserRegisterForm', 'type' => 'file')); ?>
 
         <?php
-        echo $form->input('username');
-        echo $form->input('password');
+        echo $this->Form->input('username');
+        echo $this->Form->input('password');
         echo "<div class='buttons'>";
-        echo $form->submit('buttonLogin.gif');
-        echo $form->submit('buttonLogin.gif');
+        echo $this->Form->submit('buttonLogin.gif');
+        echo $this->Form->submit('buttonLogin.gif');
         echo "</div>";
         ?>
-        <?php echo $form->end(); ?>
+        <?php echo $this->Form->end(); ?>
         <div class="clear"></div>
     </div>
     <div class="clear"></div>

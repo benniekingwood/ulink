@@ -34,7 +34,7 @@
     </div>
 
     <div class="modal-body">
-        <?php //echo $form->create(('School', array('action' => 'suggestion', 'id' => 'suggestSchoolForm')); ?>
+        <?php //echo $this->Form->create(('School', array('action' => 'suggestion', 'id' => 'suggestSchoolForm')); ?>
 
         <div id="form-response-container" class="row" style="display: none;">
             <div class="success-img span1">&nbsp;</div>

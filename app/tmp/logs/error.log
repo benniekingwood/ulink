@@ -549,3 +549,344 @@
 2012-06-03 20:20:27 Error: [MissingControllerException] Controller class Controller could not be found.
 #0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #1 {main}
+2012-06-04 21:56:48 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-04 21:56:56 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-04 21:57:06 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-04 21:57:27 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-04 22:08:05 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-04 22:08:07 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-04 22:08:13 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-04 22:08:15 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-04 22:08:25 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:12:14 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:14:31 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:16:22 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:17:02 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:22:06 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:22:31 Error: [MissingActionException] Action PagesController::display() could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(103): Controller->invokeAction(Object(CakeRequest))
+#1 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#2 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2012-06-07 18:22:37 Error: [MissingActionException] Action PagesController::display() could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(103): Controller->invokeAction(Object(CakeRequest))
+#1 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#2 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2012-06-07 18:22:52 Error: [MissingActionException] Action PagesController::display() could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(103): Controller->invokeAction(Object(CakeRequest))
+#1 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#2 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2012-06-07 18:23:43 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:23:52 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:23:59 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:25:01 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:25:07 Error: [MissingActionException] Action PagesController::display() could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(103): Controller->invokeAction(Object(CakeRequest))
+#1 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#2 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2012-06-07 18:25:26 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:25:31 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:27:03 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:27:18 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:27:29 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:29:01 Error: [MissingControllerException] Controller class UlinkController could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:29:16 Error: [MissingControllerException] Controller class UlinkController could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:29:23 Error: [MissingHelperException] Helper class JqueryHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('Jquery', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:33:00 Error: [MissingHelperException] Helper class JqueryHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('Jquery', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:33:12 Error: [MissingHelperException] Helper class JqueryHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('Jquery', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:38:52 Error: [MissingHelperException] Helper class JqueryHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('Jquery', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:39:04 Error: [MissingHelperException] Helper class JqueryHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('Jquery', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:40:00 Error: [MissingHelperException] Helper class JqueryHelper could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(852): HelperCollection->load('Jquery', Array)
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(458): View->loadHelpers()
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:44:05 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:44:29 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:45:05 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:45:33 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:45:38 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:47:08 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:47:13 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:48:51 Error: [MissingControllerException] Controller class UlinkController could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:49:20 Error: [MissingControllerException] Controller class UlinkController could not be found.
+#0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-07 18:55:08 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:55:45 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:56:48 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:57:15 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:03 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:07 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:08 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:09 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:09 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:10 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:10 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:10 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:11 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:11 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:12 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 18:59:51 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2012-06-07 19:00:31 Error: [MissingLayoutException] Layout file "/media/sf_WebDev_share/ulink/app/View/Layouts/v2_no_login_header.ctp" is missing.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(503): View->_getLayoutFileName('v2_no_login_hea...')
+#1 /media/sf_WebDev_share/ulink/lib/Cake/View/View.php(473): View->renderLayout('', 'v2_no_login_hea...')
+#2 /media/sf_WebDev_share/ulink/lib/Cake/Controller/Controller.php(959): View->render(NULL, NULL)
+#3 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(110): Controller->render()
+#4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}

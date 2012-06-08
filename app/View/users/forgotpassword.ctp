@@ -34,15 +34,15 @@
             </blockquote>
         </p>
         <div id="forgot-form-container" class="control-group">
-            <?php echo $form->create(('User', array('id' => 'forgotPassswordForm', 'action' => 'forgotpassword'));?>
+            <?php echo $this->Form->create(('User', array('id' => 'forgotPassswordForm', 'action' => 'forgotpassword'));?>
             <div class="controls">
-                <?php echo $form->text('email', array('div' => false, 'label' => false, 'class'=>'input-xxlarge ulink-input-bigfont', 'placeholder' => 'email'));?>
+                <?php echo $this->Form->text('email', array('div' => false, 'label' => false, 'class'=>'input-xxlarge ulink-input-bigfont', 'placeholder' => 'email'));?>
                 <span htmlfor="UserEmail" generated="true" class="help-inline error" style="display:block;"></span>
                 <span class="help-inline"><?php $session->flash(); ?></span>
             </div>
         </div>
-        <?php echo $form->button('Send Me Instructions', array('id'=>'btnForgotPassword', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
-        <?php echo $form->end(); ?>
+        <?php echo $this->Form->button('Send Me Instructions', array('id'=>'btnForgotPassword', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
+        <?php echo $this->Form->end(); ?>
     </div>
 </div>
 <?php if($forgotError=='true') { ?>

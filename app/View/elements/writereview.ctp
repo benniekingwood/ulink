@@ -220,7 +220,7 @@
 //echo $_SERVER['SERVER_NAME'];
                     ?>
 
-                    <?php echo $form->create(('Review', array('action' => 'writereview', 'name' => 'ReviewWritereviewForm')); ?>
+                    <?php echo $this->Form->create(('Review', array('action' => 'writereview', 'name' => 'ReviewWritereviewForm')); ?>
 
                     <div id="reviewResponse">	
 
@@ -232,7 +232,7 @@
                                     <?php echo $this->Html->image(('img_rateMiniStarOff.gif', array('onclick' => 'setRatingLevel(' . $i . ')', 'onMouseOut' => 'resetRatingLevel()', 'onmouseover' => 'setDisplayRatingLevel(' . $i . ')', 'name' => 'starpp' . $i . '')); ?>
 
                                 <?php } ?>
-                                <?php echo $form->input('Review.ratingInfo', array('type' => 'hidden', 'label' => false, 'div' => false, 'hiddenField' => false)) ?>
+                                <?php echo $this->Form->input('Review.ratingInfo', array('type' => 'hidden', 'label' => false, 'div' => false, 'hiddenField' => false)) ?>
                                 <span id="ratingInfo"></span></label>	</div>
 
                         <?php //echo "<pre>";print_r($usertextreview);exit;  ?>
@@ -240,12 +240,12 @@
 
                             <h3>Review Title</h3>
                             <div class="main-field-contianer">
-                                <?php echo $form->input('Review.title', array('value' => $usertextreview[0]['Review']['title'], 'label' => false, 'div' => false)); ?><span id="titleInfo"></span>
+                                <?php echo $this->Form->input('Review.title', array('value' => $usertextreview[0]['Review']['title'], 'label' => false, 'div' => false)); ?><span id="titleInfo"></span>
                             </div>
                         <?php } else { ?>
                             <h3> Review Title</h3>
                             <div class="main-field-contianer">
-                                <?php echo $form->input('Review.title', array('label' => false, 'div' => false)); ?><span id="titleInfo"></span>
+                                <?php echo $this->Form->input('Review.title', array('label' => false, 'div' => false)); ?><span id="titleInfo"></span>
                             </div>
                         <?php } ?>
                         <?php // echo "hhheleleo".$usertextreview[0]['Review']['description']; ?>
@@ -259,32 +259,32 @@
                             <br />
                             <?php $kk = 1; ?>
                             <?php if ($usertextreview[0]['Review']['rating'] != 0) { ?>
-                                <?php echo($form->input('Review.ratingnew', array('type' => 'hidden', 'value' => $usertextreview[0]['Review']['rating']))); ?>
+                                <?php echo($this->Form->input('Review.ratingnew', array('type' => 'hidden', 'value' => $usertextreview[0]['Review']['rating']))); ?>
                             <?php } else { ?>
                                 <?php //echo "shakasasti"; ?>
-                                <?php echo($form->input('Review.ratingnew', array('type' => 'hidden'))); ?>
+                                <?php echo($this->Form->input('Review.ratingnew', array('type' => 'hidden'))); ?>
                             <?php } ?> 
-                            <?php echo($form->input('Review.school_id', array('type' => 'hidden', 'value' => '' . $Shoolreview[0]['School']['id'] . ''))); ?>
+                            <?php echo($this->Form->input('Review.school_id', array('type' => 'hidden', 'value' => '' . $Shoolreview[0]['School']['id'] . ''))); ?>
 
-                            <?php echo $form->input('Review.descriptionarea', array('id' => 'textarea2', 'label' => false, 'type' => 'textarea', 'value' => $usertextreview[0]['Review']['description'], 'class' => 'mceAdvanced')); ?>
-                            <?php echo($form->input('Review.description', array('type' => 'hidden', 'id' => 'ReviewDescriptionpopUp'))); ?>
-                            <?php //echo $form->input('Review.description2',array('id' => 'textarea2','label'=>false,'value'=>$usertextreview[0]['Review']['description']));?>
-                            <?php //echo($form->input('Review.description', array( 'type'=>'hidden','value'=>''.$usertextreview[0]['Review']['description'].'') )); ?>
-                            <?php echo($form->input('Review.user_id', array('type' => 'hidden', 'value' => $loggedInId))); ?>
+                            <?php echo $this->Form->input('Review.descriptionarea', array('id' => 'textarea2', 'label' => false, 'type' => 'textarea', 'value' => $usertextreview[0]['Review']['description'], 'class' => 'mceAdvanced')); ?>
+                            <?php echo($this->Form->input('Review.description', array('type' => 'hidden', 'id' => 'ReviewDescriptionpopUp'))); ?>
+                            <?php //echo $this->Form->input('Review.description2',array('id' => 'textarea2','label'=>false,'value'=>$usertextreview[0]['Review']['description']));?>
+                            <?php //echo($this->Form->input('Review.description', array( 'type'=>'hidden','value'=>''.$usertextreview[0]['Review']['description'].'') )); ?>
+                            <?php echo($this->Form->input('Review.user_id', array('type' => 'hidden', 'value' => $loggedInId))); ?>
                         </div>
                         <h3>Enter the code below</h3>
                         <div class="main-field-contianer">
-                            <?php echo($form->input('Review.entervalnew', array('div' => false, 'id' => 'entervalnew', 'label' => false))); ?>
+                            <?php echo($this->Form->input('Review.entervalnew', array('div' => false, 'id' => 'entervalnew', 'label' => false))); ?>
                         </div>
                         <div class="clear"></div>
-                        <?php echo($form->input('Review.autovalnew', array('id' => 'autovalnew', 'value' => $RandCaptcha, 'class' => 'captchaImage', 'disabled' => 'disabled', 'label' => false))) ?>	
-                        <?php echo($form->input('Review.type', array('type' => 'hidden', 'value' => 'text'))); ?> 
+                        <?php echo($this->Form->input('Review.autovalnew', array('id' => 'autovalnew', 'value' => $RandCaptcha, 'class' => 'captchaImage', 'disabled' => 'disabled', 'label' => false))) ?>	
+                        <?php echo($this->Form->input('Review.type', array('type' => 'hidden', 'value' => 'text'))); ?> 
                         <div class="clear"></div>
                         <div class="pop_sub">
-                            <?php echo $form->submit('buttonSubmit.gif'); ?> 
+                            <?php echo $this->Form->submit('buttonSubmit.gif'); ?> 
                             <a class="preview_link" href="javascript:void(0)"  onclick="preview('<?php echo($this->Html->url('/text_preview.php')); ?>')"><?php echo $this->Html->image(('preview.gif', array('alt' => '')); ?></a>
                         </div>
-                        <?php echo $form->end(); ?>
+                        <?php echo $this->Form->end(); ?>
 
 
                         <div class="clear"></div>

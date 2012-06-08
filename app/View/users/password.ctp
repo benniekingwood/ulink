@@ -1,6 +1,6 @@
 <div class="container-fluid">
-    <?php echo $form->create(('User', array('action' => 'updatePassword', 'name' => 'UserIndexForm', 'type' => 'file', 'class' => 'form-horizontal')); ?>
-    <?php echo $form->input('User.username', array('type' => 'hidden')); ?>
+    <?php echo $this->Form->create(('User', array('action' => 'updatePassword', 'name' => 'UserIndexForm', 'type' => 'file', 'class' => 'form-horizontal')); ?>
+    <?php echo $this->Form->input('User.username', array('type' => 'hidden')); ?>
     <input name="user_login" id="user_login" value="admin" disabled="disabled" type="hidden">
 
     <div class="offset1 row-fluid">
@@ -15,7 +15,7 @@
         <div class="span6 well well-nopadding well-white">
             <div id="password-tab-content">
                 <input type="hidden" name="schooldomainCheck" id="schooldomainCheck" />
-                <?php echo($form->input('User.id', array('type' => 'hidden'))); ?>
+                <?php echo($this->Form->input('User.id', array('type' => 'hidden'))); ?>
                 <div class="profile-header">
                     <h3>Password</h3>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="control-group">
                     <label class="control-label" for="oldPass1">Current Password</label>
                     <div class="controls">
-                        <?php echo $form->input('User.oldpass', array('class' => 'input-xlarge ulink-input-bigfont', 'type' => 'password', 'id' => 'oldPass1', 'maxlength' => '50', 'label' => false, 'div'=>false)); ?>
+                        <?php echo $this->Form->input('User.oldpass', array('class' => 'input-xlarge ulink-input-bigfont', 'type' => 'password', 'id' => 'oldPass1', 'maxlength' => '50', 'label' => false, 'div'=>false)); ?>
                     </div>
                 </div>
                 <div class="control-group">
@@ -40,24 +40,24 @@
                         <div class="pull-right span2" id="pass-strength-result">&nbsp;</div>
                     </label>
                     <div class="controls">
-                        <?php echo $form->input('User.newpass', array('class' => 'input-xlarge ulink-input-bigfont', 'type' => 'password', 'id' => 'pass1', 'maxlength' => '50', 'label' => false, 'div' => false)); ?>
+                        <?php echo $this->Form->input('User.newpass', array('class' => 'input-xlarge ulink-input-bigfont', 'type' => 'password', 'id' => 'pass1', 'maxlength' => '50', 'label' => false, 'div' => false)); ?>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="pass2">Verify Password</label>
                     <div class="controls">
-                        <?php echo $form->input('User.newconfirmpass', array('class' => 'input-xlarge ulink-input-bigfont','type' => 'password', 'id' => 'pass2', 'maxlength' => '50', 'label' => false, 'div'=>false)); ?>
+                        <?php echo $this->Form->input('User.newconfirmpass', array('class' => 'input-xlarge ulink-input-bigfont','type' => 'password', 'id' => 'pass2', 'maxlength' => '50', 'label' => false, 'div'=>false)); ?>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <a id="btnUpdatePwd" class="btn btn-primary btn-large">Save changes</a>
                 </div>
             </div>  <!-- /password-tab-content -->
-            <?php echo $form->end(); ?>
+            <?php echo $this->Form->end(); ?>
         </div> <!-- /tab-content -->
     </div><!-- /row-fluid -->
 </div> <!-- /container-fluid -->
-<?php echo $form->end(); ?>
+<?php echo $this->Form->end(); ?>
 <script type="text/javascript">
     /* <![CDATA[ */
     try{convertEntities(commonL10n);}catch(e){};
@@ -72,5 +72,5 @@
     try{convertEntities(pwsL10n);}catch(e){};
     /* ]]> */
 </script>
-<?php echo $javascript->link(array('ulink-password-strength.js', 'ulink-update-profile-pwd.js')); ?>
+<?php echo $this->Html->script(array('ulink-password-strength.js', 'ulink-update-profile-pwd.js')); ?>
 

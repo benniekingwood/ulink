@@ -33,12 +33,12 @@
         <?php
         echo $this->Html->meta('icon');
         echo $this->Html->css(array('style_admin.css', 'pop_thickbox.css'));
-        echo $javascript->link(array('var.js', 'jquery.js', 'citystates.js', 'thickbox.js', 'ajax.js', 'check_user_script.js', 'multiple-image-upload.js', 'jquery-common', 'validate.js'));
+        echo $this->Html->script(array('var.js', 'jquery.js', 'citystates.js', 'thickbox.js', 'ajax.js', 'check_user_script.js', 'multiple-image-upload.js', 'jquery-common', 'validate.js'));
         echo $scripts_for_layout;
         ?>
     </head>
     <body>
-        <?php echo $javascript->link(array('wz_tooltip')); ?>
+        <?php echo $this->Html->script(array('wz_tooltip')); ?>
         <div id="mainContainer">
             <div id="header">
                 <div class="left"><?php echo $this->Html->image(('logouLinkv2.png', array('alt' => 'uLink Logo')); ?></div>

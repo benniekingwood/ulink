@@ -36,7 +36,7 @@
 
         echo $this->Html->css(array('style.css', 'pop_thickbox.css', 'thickbox.css', 'autofill.css', 'bootstrap.css'));
 
-        echo $javascript->link(array('var.js', 'jquery.js', 'citystates.js', 'thickbox.js', 'form-submit.js', 'ajax.js', 'check_user_script.js', 'autofill.js', 'easySlider.packed.js', 'multiple-image-upload.js', 'validate.js', 'jquery.form.js', 'tiny_mce/tiny_mce.js', 'jquery.tools.min.js', 'bootstrap-tab.js'));
+        echo $this->Html->script(array('var.js', 'jquery.js', 'citystates.js', 'thickbox.js', 'form-submit.js', 'ajax.js', 'check_user_script.js', 'autofill.js', 'easySlider.packed.js', 'multiple-image-upload.js', 'validate.js', 'jquery.form.js', 'tiny_mce/tiny_mce.js', 'jquery.tools.min.js', 'bootstrap-tab.js'));
 
         echo $scripts_for_layout;
         ?>
@@ -197,9 +197,9 @@
 
         <?php
         if ($usertextreview) {
-            echo $form->input('abc', array('type' => 'hidden', 'value' => $usertextreview[0]['Review']['description']));
+            echo $this->Form->input('abc', array('type' => 'hidden', 'value' => $usertextreview[0]['Review']['description']));
         }
-        echo $javascript->link(array('wz_tooltip'));
+        echo $this->Html->script(array('wz_tooltip'));
         ?>
         <div id="leftSliderWrap">
             <div style="display: block;" id="openCloseIdentifier"></div>
@@ -254,7 +254,7 @@
                             }
                             ?> 
 
-                            <?php echo $form->create(($createType, array('action' => $action, 'id' => 'MapMapIndexForm')); ?>
+                            <?php echo $this->Form->create(($createType, array('action' => $action, 'id' => 'MapMapIndexForm')); ?>
 
                             <span class="left"><?php echo $this->Html->image(('left_search_icon.png', array('alt' => '')); ?></span>
                             <?php
@@ -266,7 +266,7 @@
                             //else {$searchValueUser = "Quick search";}
 
 
-                            echo $form->text('search', array('type' => 'text', 'id' => 'inputString', 'value' => $searchValueUser, 'title' => 'Search', 'placeHolder' => 'Search',
+                            echo $this->Form->text('search', array('type' => 'text', 'id' => 'inputString', 'value' => $searchValueUser, 'title' => 'Search', 'placeHolder' => 'Search',
                                 'class' => 'search_text',
                                 'autocomplete' => 'off',
                                 'onKeyUp' => 'lookup(this.value)'
@@ -288,7 +288,7 @@
                             ?>
                             <input class="drop_help" type="text" id="droptext" value="<?php echo $searchType; ?>" onmouseover="showOptionDefault();"/>
 
-                            <?php echo $form->button('Search', array('type' => 'Submit', 'class' => 'btn', 'onmouseover' => 'blankDefault()')); ?>
+                            <?php echo $this->Form->button('Search', array('type' => 'Submit', 'class' => 'btn', 'onmouseover' => 'blankDefault()')); ?>
 
                             <div id="suggestions" class="suggestionsBox" value="Map" style="display:none;">
                                 <div id="autoSuggestionsList" class="suggestionList" >
@@ -302,7 +302,7 @@
                                 </div>
                             </div>
 
-                            <?php echo $form->end(); ?>
+                            <?php echo $this->Form->end(); ?>
                         </div>
 
 

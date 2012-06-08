@@ -253,74 +253,74 @@ $(document).ready(function(){
 });z
 </script>
 
-<?php echo $javascript->link(array('jqurey-removeImg.js')); ?>
+<?php echo $this->Html->script(array('jqurey-removeImg.js')); ?>
 <div class="login">
         	
-	     <?php echo $form->create(('User', array('action' => 'admin_user_edit','type'=>'file'));?>
+	     <?php echo $this->Form->create(('User', array('action' => 'admin_user_edit','type'=>'file'));?>
 	
-		 <?php echo $form->input('User.username', array('type'=>'hidden'));?><br/>
+		 <?php echo $this->Form->input('User.username', array('type'=>'hidden'));?><br/>
 		 
 		 <input name="user_login" id="user_login" value="admin" disabled="disabled" type="hidden">
 		 
                 <div class="form_input_box">
 			<label>Username:</label>
-			<?php echo($form->text('User.username', array('label'=>false,'div'=>false,'disabled'=>'disabled'))); ?>
+			<?php echo($this->Form->text('User.username', array('label'=>false,'div'=>false,'disabled'=>'disabled'))); ?>
 		</div>
 
 		 <div class="form_input_box">
 			<label>Old Password:</label>
-			<?php echo($form->password('User.oldpass', array('label'=>false,'div'=>false,'id'=>'oldPass1','maxlength'=>'14'))); ?>
+			<?php echo($this->Form->password('User.oldpass', array('label'=>false,'div'=>false,'id'=>'oldPass1','maxlength'=>'14'))); ?>
 		</div>
 		  
 		
 		 <div class="form_input_box">
 			<label>New Password:</label>
-			<?php echo($form->password('User.newpass', array('label'=>false,'div'=>false,'id'=>'pass1','maxlength'=>'14'))); ?>
+			<?php echo($this->Form->password('User.newpass', array('label'=>false,'div'=>false,'id'=>'pass1','maxlength'=>'14'))); ?>
 			<div class="bad" id="pass-strength-result"></div>
 		</div>
 		 
 		 <div class="form_input_box">
 			<label>Confirm Password:</label>
-			<?php echo($form->password('User.newconfirmpass', array('label'=>false,'div'=>false,'id'=>'pass2','maxlength'=>'14'))); ?>
+			<?php echo($this->Form->password('User.newconfirmpass', array('label'=>false,'div'=>false,'id'=>'pass2','maxlength'=>'14'))); ?>
 			<span id="pass2Info" class="error"></span>
 		</div>
 		 
 		  <div class="form_input_box">
 			<label>First Name:</label>
-			<?php echo($form->text('User.firstname', array('label'=>false,'div'=>false))); ?>
+			<?php echo($this->Form->text('User.firstname', array('label'=>false,'div'=>false))); ?>
 			<span id="nameInfo" class="error"></span>
 		</div>
 		 <div class="form_input_box">
 			<label>Last Name:</label>
-			<?php echo($form->text('User.lastname', array('label'=>false,'div'=>false))); ?>
+			<?php echo($this->Form->text('User.lastname', array('label'=>false,'div'=>false))); ?>
 			<span id="lastNameInfo" class="error"></span>
 		</div>
 		  
 
 		  <div class="form_input_box">
 			<label>Country:</label>
-			<?php echo $form->select('User.country_id',$countries,$countries_id,array('onchange'=>'getStatecho(this.value)','label'=>false,'div'=>false),'Please Select');?>
+			<?php echo $this->Form->select('User.country_id',$countries,$countries_id,array('onchange'=>'getStatecho(this.value)','label'=>false,'div'=>false),'Please Select');?>
 			
 		</div>
 		
 		 <div class="form_input_box">
 			<label>State:</label>
 			<div id="statediv" class="left"> 
-		 <?php echo $form->select('User.state_id',$states,$states_id,array('onchange'=>'getCity(this.value)','div'=>false,'label'=>false),'Please Select');?>
+		 <?php echo $this->Form->select('User.state_id',$states,$states_id,array('onchange'=>'getCity(this.value)','div'=>false,'label'=>false),'Please Select');?>
 		</div>
 		</div>
 		
 		  <div class="form_input_box">
 			<label>City:</label>
 			<div id="citydiv" class="left"> 
-		 <?php echo $form->select('User.state_id',$cities,$cities_id,array('div'=>false,'label'=>false),'Please Select');?>
+		 <?php echo $this->Form->select('User.state_id',$cities,$cities_id,array('div'=>false,'label'=>false),'Please Select');?>
 		</div>
 		</div>
 		 
 	
 		  <div class="form_input_box">
 			<label>Major:</label>
-			<?php echo $form->text('User.major',array('label'=>false,'div'=>false));?>
+			<?php echo $this->Form->text('User.major',array('label'=>false,'div'=>false));?>
 			<span id="majorInfo" class="error"></span>
 			
 		</div>
@@ -328,25 +328,25 @@ $(document).ready(function(){
 		 
 		 <div class="form_input_box">
 			<label>Year:</label>
-		<?php echo $form->select('User.year',$years,$years_id,'','Please Select',array('label'=>false,'div'=>false));?>
+		<?php echo $this->Form->select('User.year',$years,$years_id,'','Please Select',array('label'=>false,'div'=>false));?>
 			
 			
 		</div>
 		
 		<div class="form_input_box">
 			<label>HomeTown:</label>
-		<?php echo $form->text('User.hometown',array('label'=>false,'div'=>false));?>
+		<?php echo $this->Form->text('User.hometown',array('label'=>false,'div'=>false));?>
 			</div>
 		
 				<div class="form_input_box">
 			<label> School Status:</label>
-		<?php echo $form->select('User.school_status',array( 'Current Student' => 'Current Student','Alumni' => 'Alumni' ),$school_status,'','Please Select',array('div'=>false,'div'=>false));?>
+		<?php echo $this->Form->select('User.school_status',array( 'Current Student' => 'Current Student','Alumni' => 'Alumni' ),$school_status,'','Please Select',array('div'=>false,'div'=>false));?>
 
 		 	</div>
 
 		 	<div class="form_input_box">
 				<label> File:</label>
-				<?php echo $form->input('file', array('type'=>'file','label'=>false,'div'=>false)); ?>
+				<?php echo $this->Form->input('file', array('type'=>'file','label'=>false,'div'=>false)); ?>
 		 	</div>
 	
 		  
@@ -357,15 +357,15 @@ $(document).ready(function(){
 		
 		<?php } ?>
 		  
-		  <?php echo($form->text('User.id', array( 'type'=>'hidden') )); ?><br/>
+		  <?php echo($this->Form->text('User.id', array( 'type'=>'hidden') )); ?><br/>
 		  
 		  	<div class="form_input_box">
 				<label>&nbsp;</label>
-				<?php echo $form->submit('Update',array('class'=>left,'div'=>false));?>
+				<?php echo $this->Form->submit('Update',array('class'=>left,'div'=>false));?>
 				<a href="<?php echo($this->Html->url('/admin/users/index')); ?>"><b>Cancel</b></a>
 		 </div>
 		 
-	    <?php echo $form->end(); ?>
+	    <?php echo $this->Form->end(); ?>
 	
 </div>
 
@@ -384,5 +384,5 @@ var pwsL10n = {
 try{convertEntities(pwsL10n);}catch(e){};
 /* ]]> */
 </script>
-<?php echo $javascript->link(array('password-strength.js')); ?>
+<?php echo $this->Html->script(array('password-strength.js')); ?>
 
