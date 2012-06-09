@@ -114,21 +114,21 @@
         </div>
         <!-- /modal-header -->
         <div class="modal-body">
-            <?php echo $form->create(('User', array('action' => '#', 'id' => 'loginFormMain')); ?>
+            <?php echo $this->Form->create('User', array('action' => '#', 'id' => 'loginFormMain')); ?>
             <input type="hidden" name="loginMain" id="loginMain" value="2"/>
 
             <div id="loginFormMain-container" class="control-group">
                 <div class="controls">
-                    <?php echo $form->input('username', array('id' => 'username','label' => false, 'placeholder' =>
+                    <?php echo $this->Form->input('username', array('id' => 'username','label' => false, 'placeholder' =>
                     'username','class' =>
                     'input-xxlarge ulink-input-bigfont')); ?>
-                    <?php echo $form->input('password', array('id' => 'password', 'label' => false,'placeholder' =>
+                    <?php echo $this->Form->input('password', array('id' => 'password', 'label' => false,'placeholder' =>
                     'password','class' =>
                     'input-xxlarge ulink-input-bigfont')); ?>
                     <span id="loginMain-message" class="help-inline"></span>
                 </div>
             </div>
-            <?php echo $form->end(); ?>
+            <?php echo $this->Form->end(); ?>
         </div>
         <!-- /modal-body -->
         <div class="modal-footer">
@@ -158,7 +158,7 @@
             <div class="row">
                 <div class="span1">&nbsp;</div>
                 <div class="pull-left remember-forgot">
-                    <?php echo($form->checkbox('remember_me')) ?>&nbsp;Remember Me&nbsp;|&nbsp;<a
+                    <?php echo($this->Form->checkbox('remember_me')) ?>&nbsp;Remember Me&nbsp;|&nbsp;<a
                         href="<?php echo($this->Html->url('/users/forgotpassword')); ?>">Forgot Password?</a>
                 </div>
             </div>

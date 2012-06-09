@@ -1,4 +1,4 @@
-<?php echo $javascript->link(array('jqurey-removeImg.js', 'jqurey-removeExtraImg.js', 'ckeditor/ckeditor', 'ckfinder/ckfinder')); ?>
+<?php echo $this->Html->script(array('jqurey-removeImg.js', 'jqurey-removeExtraImg.js', 'ckeditor/ckeditor', 'ckfinder/ckfinder')); ?>
 <style type="text/css">
 
     /* to tackle the multiple upload */
@@ -454,73 +454,73 @@ unset($_SESSION['ct']);
 unset($_SESSION['extra_image']);
 ?>
 <div class="login">
-    <?php echo $form->create(('School', array('action' => 'admin_school_edit', 'type' => 'file')); ?>
+    <?php echo $this->Form->create(('School', array('action' => 'admin_school_edit', 'type' => 'file')); ?>
     <?php $hello = "bye"; ?>
 
     <div class="editor_title">
         <label>School Name<span class="red">*</span></label> 
-        <?php echo $form->text('name', array('class' => 'schoolName')); ?> 
+        <?php echo $this->Form->text('name', array('class' => 'schoolName')); ?> 
         <span id="nameInfo" ></span> 
     </div>
 
     <div class="editor_title">
         <label>School Short Description<span class="red">*</span></label> 
-        <?php echo $form->input('School.short_description', array('class' => 'schoolShortDescription', 'type' => 'textarea', 'label' => false)); ?> 
+        <?php echo $this->Form->input('School.short_description', array('class' => 'schoolShortDescription', 'type' => 'textarea', 'label' => false)); ?> 
         <span id="short_descriptionInfo" ></span>
     </div>
     <label>Description</label>
 
-    <?php echo $form->input('School.description', array('id' => 'editor1', 'label' => false, 'type' => 'textarea')); ?>
+    <?php echo $this->Form->input('School.description', array('id' => 'editor1', 'label' => false, 'type' => 'textarea')); ?>
     <div class="login_form">
-        <h2>School Attendence<span class="red" >*</span></h2> <?php echo $form->text('attendence', array('class' => 'schoolAttendence')); ?>
+        <h2>School Attendence<span class="red" >*</span></h2> <?php echo $this->Form->text('attendence', array('class' => 'schoolAttendence')); ?>
         <span id="attendenceInfo" ></span>
     </div>
     <br/>
 
     <div class="login_form">
-        <h2>Address</h2> <?php echo $form->text('School.address', array('class' => 'schoolAddress')); ?> 
+        <h2>Address</h2> <?php echo $this->Form->text('School.address', array('class' => 'schoolAddress')); ?> 
         <span id="addressInfo"></span> 
 
     </div>
     <div class="login_form">
-        <h2>Zip Code<span class="red" >*</span></h2> <?php echo $form->text('School.zipcode', array('class' => 'zipcode')); ?> 
+        <h2>Zip Code<span class="red" >*</span></h2> <?php echo $this->Form->text('School.zipcode', array('class' => 'zipcode')); ?> 
         <span id="zipcodeInfo"></span> 
 
     </div>
     <br/>
 
     <div class="login_form">
-        <h2>Foundation Year<span class="red" >*</span></h2><?php echo $form->text('School.year', array('class' => 'year')); ?>
+        <h2>Foundation Year<span class="red" >*</span></h2><?php echo $this->Form->text('School.year', array('class' => 'year')); ?>
         <span id="yearInfo"></span> 
     </div>
     <br/>
     <div class="login_form">
-        <h2>School Type </h2><?php echo $form->radio('School.type', array('private' => 'private', 'public' => 'public'), array('legend' => false)); ?>
+        <h2>School Type </h2><?php echo $this->Form->radio('School.type', array('private' => 'private', 'public' => 'public'), array('legend' => false)); ?>
     </div>
     <br/>
 
     <div class="login_form">
-        <h2>Shool-email domain</h2><?php echo $form->text('School.domain', array('class' => 'domainName')); ?> 
+        <h2>Shool-email domain</h2><?php echo $this->Form->text('School.domain', array('class' => 'domainName')); ?> 
         <span id="domainInfo"></span>
     </div>
     <br/>	 
 
     <div class="login_form">
         <h2>Country</h2> 
-        <?php echo $form->select('School.country_id', $countries, $countries_id, array('onchange' => 'getStatecho(this.value)'), 'Please Select'); ?>
+        <?php echo $this->Form->select('School.country_id', $countries, $countries_id, array('onchange' => 'getStatecho(this.value)'), 'Please Select'); ?>
     </div>
     <br/>
 
     <div class="login_form">
         <h2>State</h2><div id="statediv"> 
-            <?php echo $form->select('School.state_id', $states, $states_id, array('onchange' => 'getCity(this.value)'), 'Please Select'); ?>
+            <?php echo $this->Form->select('School.state_id', $states, $states_id, array('onchange' => 'getCity(this.value)'), 'Please Select'); ?>
         </div>
     </div>
     <br/>
 
     <div class="login_form">
         <h2>City</h2><div id="citydiv">
-            <?php echo $form->select('School.city_id', $cities, $cities_id, '', 'Please Select'); ?>
+            <?php echo $this->Form->select('School.city_id', $cities, $cities_id, '', 'Please Select'); ?>
         </div>
     </div>
 
@@ -528,19 +528,19 @@ unset($_SESSION['extra_image']);
 
 
     <div class="login_form">
-        <h2>Longitude</h2> <?php echo $form->text('longitude', array('class' => 'schoolLongitude')); ?>
+        <h2>Longitude</h2> <?php echo $this->Form->text('longitude', array('class' => 'schoolLongitude')); ?>
         <span id="longitudeInfo" ></span> 
     </div>
     <br/>
 
     <div class="login_form">
-        <h2>Latitude</h2> <?php echo $form->text('latitude', array('class' => 'schoolLatitude')); ?>
+        <h2>Latitude</h2> <?php echo $this->Form->text('latitude', array('class' => 'schoolLatitude')); ?>
         <span id="latitudeInfo" ></span> 
     </div>
     <br/>
     <div class="login_form">    
         <h2>File</h2>
-        <?php echo $form->input('file', array('type' => 'file', 'label' => false)); ?>&nbsp;
+        <?php echo $this->Form->input('file', array('type' => 'file', 'label' => false)); ?>&nbsp;
     </div>
     <br/>
 
@@ -596,14 +596,14 @@ unset($_SESSION['extra_image']);
                                 </div>
 
 
-                                <?php echo($form->text('School.id', array('type' => 'hidden'))); ?><br/>
+                                <?php echo($this->Form->text('School.id', array('type' => 'hidden'))); ?><br/>
                                 <div id="submit_button">
-                                    <?php echo $form->submit('Update', array('class' => 'update_button', 'div' => false)); ?>
+                                    <?php echo $this->Form->submit('Update', array('class' => 'update_button', 'div' => false)); ?>
                                     <div class="cancel_button"><a href="<?php echo($this->Html->url('/admin/schools/index')); ?>"><b>Cancel</b></a></div>
                                 </div>
 
 
-                                <?php echo $form->end(); ?>
+                                <?php echo $this->Form->end(); ?>
 
                                 </div>
 

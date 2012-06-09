@@ -36,7 +36,7 @@ $("#forgotPassword").validatecho({
 			</div>
 			<?php } ?>
 				<label class="left">Please enter your email</label>
-				<div class="left"><?php echo($form->input('Admin.email', array('label'=>false,'div'=>false))); ?> </div>
+				<div class="left"><?php echo($this->Form->input('Admin.email', array('label'=>false,'div'=>false))); ?> </div>
 				</div>
 				<div class="forgot-submit-button"><input type="submit" value="Submit" /></div> 
 			

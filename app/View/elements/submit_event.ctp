@@ -1,4 +1,4 @@
-<?php echo $javascript->link(array('jquery.min.js')); ?>
+<?php echo $this->Html->script(array('jquery.min.js')); ?>
 <!-- components section -->
 <div class="modal hide fade" id="submitEventComponent">
     <div class="modal-header">
@@ -46,4 +46,3 @@
         </div>
     </div>
 </div> <!-- /submitEventComponent-->
-No newline at end of file

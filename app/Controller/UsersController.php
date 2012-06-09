@@ -9,7 +9,7 @@ class UsersController extends AppController {
 
     var $name = 'Users';
     var $uses = array('User', 'Country', 'State', 'City', 'School', 'Review', 'Domain');
-    var $helpers = array('Html', 'Form', 'Js',  'Jquery');
+    var $helpers = array('Html', 'Form', 'Js');
     var $components = array('Email', 'Auth', 'Session', 'RequestHandler');
     var $paginate_limit = '20';
     var $paginate_limit_front = '10';
@@ -26,14 +26,14 @@ class UsersController extends AppController {
      * Handles the login action
      */
     function login() {
-        if ($_POST['username']) {
+        if (isset($_POST['username'])) {
             $this->autoRender = false;
             $this->layout = null;
         } else {
             $this->layout = "v2_no_login_header";
         }
         // if the user is already authenticated or there is post data...
-        if ($this->Auth->user() || ($_POST['username'] && $_POST['password'])) {
+        if ($this->Auth->user() || (isset($_POST['username']) && isset($_POST['password']))) {
             // if there is data set from the form
             if (!empty($this->request->data)) {
                 // if "remember_me" was not clicked, removed any user data from the Cookie
@@ -56,7 +56,7 @@ class UsersController extends AppController {
 
             // authenticate the user
             $getInfo = $this->Auth->user();
-
+	
             // if a user was retrieved...success
             if ($getInfo) {
                 // if the user was deactivated, reactivate them
@@ -65,6 +65,7 @@ class UsersController extends AppController {
                     $this->User->saveField('deactive', '0');
                 }
 
+				$this->set('username',$getInfo->username);
                 if (!empty($_POST['loginMain'])) {
                     echo "main";
                 }  else {
@@ -76,7 +77,7 @@ class UsersController extends AppController {
                 echo "in-valid";
             }
         }
-        $this->set('username',$getInfo->username);
+        
     } // login
 
     /**
@@ -1385,15 +1386,6 @@ class UsersController extends AppController {
             $this->paginate = array('conditions' => $condition, 'order' => array('User.id  desc'), 'limit' => $this->paginate_limit_front);
         }
     }
-
-    ########################################################
-
-    function test()
-    {
-
-        $this->layout = "default1";
-    }
-
 }
 
 ?>

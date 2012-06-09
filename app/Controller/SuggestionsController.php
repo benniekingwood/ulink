@@ -4,7 +4,7 @@ class SuggestionsController extends AppController {
 
     var $name = 'Suggestions';
     var $uses = array('Suggestion', 'User', 'Country', 'State', 'City', 'School', 'Review', 'Domain');
-    var $helpers = array('Html', 'Form', 'Js',  'Jquery');
+    var $helpers = array('Html', 'Form', 'Js');
     var $components = array('Email', 'Auth', 'Session', 'RequestHandler');
     var $paginate_limit = '5';
     var $paginate_limit_front = '20';

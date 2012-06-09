@@ -60,8 +60,8 @@
 </script>
 
 <div class="container-fluid">
-    <?php echo $form->create(('User', array('action' => 'index', 'name' => 'UserIndexForm', 'type' => 'file', 'class' => 'form-horizontal')); ?>
-    <?php echo $form->input('User.username', array('type' => 'hidden')); ?>
+    <?php echo $this->Form->create(('User', array('action' => 'index', 'name' => 'UserIndexForm', 'type' => 'file', 'class' => 'form-horizontal')); ?>
+    <?php echo $this->Form->input('User.username', array('type' => 'hidden')); ?>
     <input name="user_login" id="user_login" value="admin" disabled="disabled" type="hidden">
 
     <div class="offset1 row-fluid">
@@ -96,7 +96,7 @@
                         <?php } ?>
                     </div>
                     <div class="span3">
-                        <?php echo $form->input('file', array('type' => 'file', 'label' => false, 'div' => false)); ?>
+                        <?php echo $this->Form->input('file', array('type' => 'file', 'label' => false, 'div' => false)); ?>
                         <p>Maximum file size 700k.<br />Filetypes JPG,PNG,GIF.</p>
                         <a href="<?php echo($this->Html->url('/users/deactivate'));?>">Deactivate my account</a>
                     </div>
@@ -105,26 +105,26 @@
                 <div class="control-group">
                     <label class="control-label" for="username">Username</label>
                     <div class="controls">
-                        <?php echo $form->input('User.username', array('id'=>'username', 'class' => 'input-xlarge', 'type' => 'text','disabled'=>'disabled', 'label'=>false, 'div'=>false)); ?>
+                        <?php echo $this->Form->input('User.username', array('id'=>'username', 'class' => 'input-xlarge', 'type' => 'text','disabled'=>'disabled', 'label'=>false, 'div'=>false)); ?>
                     </div>
                 </div>
                <div class="control-group">
                     <label class="control-label" for="firstname">First Name</label>
                     <div class="controls">
-                        <?php echo $form->input('User.firstname', array('id' => 'firstname', 'class' => 'input-xlarge','maxlength' => '50', 'label'=>false, 'div'=>false)); ?>
+                        <?php echo $this->Form->input('User.firstname', array('id' => 'firstname', 'class' => 'input-xlarge','maxlength' => '50', 'label'=>false, 'div'=>false)); ?>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="lastname">Last Name</label>
                     <div class="controls">
-                        <?php echo $form->input('User.lastname', array('id' => 'lastname', 'class' => 'input-xlarge','maxlength' => '50', 'label'=>false, 'div'=>false)); ?>
+                        <?php echo $this->Form->input('User.lastname', array('id' => 'lastname', 'class' => 'input-xlarge','maxlength' => '50', 'label'=>false, 'div'=>false)); ?>
                     </div>
                 </div>
 
                 <div class="control-group">
                     <label class="control-label" for="bio">Bio</label>
                     <div class="controls">
-                        <?php echo $form->input('User.bio', array('id' => 'bio', 'type'=>'textarea', 'maxlength' => '150',
+                        <?php echo $this->Form->input('User.bio', array('id' => 'bio', 'type'=>'textarea', 'maxlength' => '150',
                         'class' => 'input-xlarge','maxlength' => '150', 'label'=>false, 'div'=>false)); ?>
                         <p class="input-info">Describe yourself in <b>150</b> characters or less.</p>
                     </div>
@@ -133,41 +133,41 @@
                 <div class="control-group">
                     <label class="control-label" for="school_id">School</label>
                     <div class="controls">
-                        <?php echo $form->input('User.school_id', array('id'=>'school_id','class' => 'input-xlarge','type' => 'select','label'=>false, 'div'=>false, 'disabled' => 'true', 'options' => $schools, 'selected' => $schools_id)); ?>
+                        <?php echo $this->Form->input('User.school_id', array('id'=>'school_id','class' => 'input-xlarge','type' => 'select','label'=>false, 'div'=>false, 'disabled' => 'true', 'options' => $schools, 'selected' => $schools_id)); ?>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="email">School Email</label>
                     <div class="controls">
-                        <?php echo $form->input('User.email', array('id'=>'email','class' => 'input-xlarge', 'type' => 'text', 'label'=>false, 'div'=>false,'disabled'=>'disabled')); ?>
+                        <?php echo $this->Form->input('User.email', array('id'=>'email','class' => 'input-xlarge', 'type' => 'text', 'label'=>false, 'div'=>false,'disabled'=>'disabled')); ?>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="school_status">School Status</label>
                     <div class="controls">
-                        <?php echo $form->input('User.school_status', array('id' => 'school_status','class' => 'input-xlarge',
+                        <?php echo $this->Form->input('User.school_status', array('id' => 'school_status','class' => 'input-xlarge',
                         'options' => array('Current Student' => 'Current Student', 'Alumni' => 'Alumni'), 'type' => 'select', 'label'=>false, 'div'=>false, 'selected' => $school_status, 'empty' => 'Please Select')); ?>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="year">Graduation Year</label>
                     <div class="controls">
-                        <?php echo $form->input('User.year', array('id'=>'year', 'class' => 'input-xlarge', 'type' => 'select', 'options' => $years, 'selected' => $years_id, 'label'=>false, 'div'=>false, 'empty' => 'Please Select')); ?>
+                        <?php echo $this->Form->input('User.year', array('id'=>'year', 'class' => 'input-xlarge', 'type' => 'select', 'options' => $years, 'selected' => $years_id, 'label'=>false, 'div'=>false, 'empty' => 'Please Select')); ?>
                     </div>
                 </div>
                 <input type="hidden" name="schooldomainCheck" id="schooldomainCheck" />
-                <?php echo($form->input('User.id', array('type' => 'hidden'))); ?>
-                <?php echo($form->input('User.image_url', array('type' => 'hidden'))); ?>
+                <?php echo($this->Form->input('User.id', array('type' => 'hidden'))); ?>
+                <?php echo($this->Form->input('User.image_url', array('type' => 'hidden'))); ?>
                 <div class="modal-footer">
-                    <?php echo $form->button('Save changes', array('id'=>'btnSaveChanges', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
+                    <?php echo $this->Form->button('Save changes', array('id'=>'btnSaveChanges', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
                 </div>
             </div> <!-- /profile-tab-content -->
 
-            <?php echo $form->end(); ?>
+            <?php echo $this->Form->end(); ?>
         </div> <!-- /tab-content -->
     </div><!-- /row-fluid -->
 </div> <!-- /container-fluid -->
-<?php echo $form->end(); ?>
+<?php echo $this->Form->end(); ?>
 <script type="text/javascript">
     /* <![CDATA[ */
     try{convertEntities(commonL10n);}catch(e){};
@@ -182,5 +182,6 @@
     try{convertEntities(pwsL10n);}catch(e){};
     /* ]]> */
 </script>
-<?php echo $javascript->link(array('jquery.min.js','ulink-remove-profile-img.js')); ?>
+<?php echo $this->Html->script(array('jquery.min.js','ulink-remove-profile-img.js')); ?>
+
 

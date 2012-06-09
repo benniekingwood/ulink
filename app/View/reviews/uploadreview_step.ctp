@@ -1,5 +1,5 @@
 <style>.video_sub {padding:0px !important; background:none !important;}</style>
-<?php echo ( $javascript->link(array('jquery.form.js')) ); //includes .JS files ?>
+<?php echo ( $this->Html->script(array('jquery.form.js')) ); //includes .JS files ?>
 
 <script>
     jQuery.validator.addMethod("checkcaptchaNew", function(value, element) {
@@ -184,7 +184,7 @@
 	
 
 </script>
-<?php echo $javascript->link(array('image_validation.js')); ?>
+<?php echo $this->Html->script(array('image_validation.js')); ?>
 <div class="profile_image">
 
     <?php if ($Shoolreview[0]['School']['image_url'] != '' && file_exists(WWW_ROOT . '/img/files/schools/' . $Shoolreview[0]['School']['image_url'])) {
@@ -218,7 +218,7 @@
                     <input type="hidden" name="schooldomainCheck" id="schooldomainCheck" />
                     <label>School Name:</label> <?php echo $Shoolreview[0]['School']['name']; ?>
 
-                    <?php echo $form->create((null, array('id' => 'VideoReviewWritereviewForm', 'action' => 'uploadreview_step/' . $Shoolreview[0]['School']['id'], 'name' => 'ReviewWritereviewForm')); ?>
+                    <?php echo $this->Form->create((null, array('id' => 'VideoReviewWritereviewForm', 'action' => 'uploadreview_step/' . $Shoolreview[0]['School']['id'], 'name' => 'ReviewWritereviewForm')); ?>
                     <div class="clear"></div>
                     <div class="videocontent"><label>Rate School</label>
 
@@ -231,42 +231,42 @@
 
                         <?php $kk = 1; ?>
                         <?php if ($reviews[0]['Review']['rating'] != 0) { ?>
-                            <?php echo($form->input('Review.rating', array('type' => 'hidden', 'value' => $reviews[0]['Review']['rating']))); ?>
+                            <?php echo($this->Form->input('Review.rating', array('type' => 'hidden', 'value' => $reviews[0]['Review']['rating']))); ?>
                         <?php } else { ?>
                             <?php //echo "shakasasti"; ?>
-                            <?php echo($form->input('Review.rating', array('type' => 'hidden'))); ?>
+                            <?php echo($this->Form->input('Review.rating', array('type' => 'hidden'))); ?>
                         <?php } ?> 
 
-                        <?php echo $form->input('Review.ratingInfonew', array('type' => 'hidden', 'label' => false, 'div' => false, 'hiddenField' => false)) ?>
+                        <?php echo $this->Form->input('Review.ratingInfonew', array('type' => 'hidden', 'label' => false, 'div' => false, 'hiddenField' => false)) ?>
                     </div>
-                    <?php echo $form->input('Review.title', array('onkeyup' => 'setTitleCookiecho(this.value)', 'value' => $reviews[0]['Review']['title'], 'label' => 'Title')); ?>
-                    <?php //echo $form->input('Review.description',array('onkeyup'=>'setDescriptionCookiecho(this.value)','value'=>$reviews[0]['Review']['description'],'label'=>'Comment','type'=>'textarea'));?>			      
+                    <?php echo $this->Form->input('Review.title', array('onkeyup' => 'setTitleCookiecho(this.value)', 'value' => $reviews[0]['Review']['title'], 'label' => 'Title')); ?>
+                    <?php //echo $this->Form->input('Review.description',array('onkeyup'=>'setDescriptionCookiecho(this.value)','value'=>$reviews[0]['Review']['description'],'label'=>'Comment','type'=>'textarea'));?>			      
 
                     <?php if (!empty($reviews[0]['Review']['description'])) { ?>
-                        <?php echo $form->input('Review.descriptionnew', array('id' => 'textarea1', 'label' => 'Description', 'type' => 'textarea', 'value' => $reviews[0]['Review']['description'], 'class' => 'mceAdvanced')); ?>
+                        <?php echo $this->Form->input('Review.descriptionnew', array('id' => 'textarea1', 'label' => 'Description', 'type' => 'textarea', 'value' => $reviews[0]['Review']['description'], 'class' => 'mceAdvanced')); ?>
 
                     <?php } else { ?>
-                        <?php echo $form->input('Review.descriptionnew', array('id' => 'textarea1', 'label' => 'Description', 'type' => 'textarea', 'value' => '', 'class' => 'mceAdvanced')); ?>
+                        <?php echo $this->Form->input('Review.descriptionnew', array('id' => 'textarea1', 'label' => 'Description', 'type' => 'textarea', 'value' => '', 'class' => 'mceAdvanced')); ?>
                     <?php } ?>
-                    <?php // echo $form->input('Review.description',array('id'=>'textarea2','label'=>'Description*','type'=>'textarea','value'=>$reviews[0]['Review']['description'],'class'=>'mceAdvanced'));?>
-                    <?php echo $form->input('Review.description', array('type' => 'hidden')); ?>
+                    <?php // echo $this->Form->input('Review.description',array('id'=>'textarea2','label'=>'Description*','type'=>'textarea','value'=>$reviews[0]['Review']['description'],'class'=>'mceAdvanced'));?>
+                    <?php echo $this->Form->input('Review.description', array('type' => 'hidden')); ?>
 
 
-                    <?php echo $form->input('Review.enterval', array('id' => 'enterval', 'value' => '', 'label' => 'Enter the code below')); ?>		
+                    <?php echo $this->Form->input('Review.enterval', array('id' => 'enterval', 'value' => '', 'label' => 'Enter the code below')); ?>		
 
-                    <?php echo($form->input('Review.autoval', array('id' => 'autoval', 'value' => $RandCaptcha, 'class' => 'captchaImagevideo', 'disabled' => 'disabled', 'label' => '&nbsp;'))) ?>
+                    <?php echo($this->Form->input('Review.autoval', array('id' => 'autoval', 'value' => $RandCaptcha, 'class' => 'captchaImagevideo', 'disabled' => 'disabled', 'label' => '&nbsp;'))) ?>
 
 
 
                     <div class="profile_buttons">
-                        <?php echo $form->submit('next_b.gif', array('id' => 'reviewFormSubmit', 'value' => 'Submit', 'class' => 'video_sub', 'style' => 'padding:0px!important;')); ?>
+                        <?php echo $this->Form->submit('next_b.gif', array('id' => 'reviewFormSubmit', 'value' => 'Submit', 'class' => 'video_sub', 'style' => 'padding:0px!important;')); ?>
 
                         <a href="<?php echo($this->Html->url('/reviews/allvideoreview/' . $MyShoolID)); ?>">
                             <?php echo $this->Html->image(('buttonCancel.gif', array('alt' => 'cancel')); ?>
                         </a>
 
                     </div>
-                    <?php echo $form->end(); ?>
+                    <?php echo $this->Form->end(); ?>
                     <div class="clear"></div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-<?php echo $javascript->link(array('image_validation.js')); ?>
+<?php echo $this->Html->script(array('image_validation.js')); ?>
 <script type="text/javascript" language="javascript">
     function setDisplayRatingLevel(level) {
         for(i = 1; i <= 5; i++) {
@@ -211,9 +211,9 @@
                                 <?php } ?><span id="ratingInfo"></span>	
                             </div>
 
-                            <div class="registerContent"><label>Review Title</label><?php echo $form->text('Review.title', array('onkeyup' => 'setTitleCookiecho(this.value)', 'name' => 'videoTitle', 'value' => $reviews[0]['Review']['title'])); ?><span id="titleInfo"></span></div>
+                            <div class="registerContent"><label>Review Title</label><?php echo $this->Form->text('Review.title', array('onkeyup' => 'setTitleCookiecho(this.value)', 'name' => 'videoTitle', 'value' => $reviews[0]['Review']['title'])); ?><span id="titleInfo"></span></div>
 
-                            <div class="registerContent"><label>Comments</label><?php echo $form->textarea('Review.description', array('onkeyup' => 'setDescriptionCookiecho(this.value)', 'name' => 'videoDescription', 'value' => $reviews[0]['Review']['description'])); ?><span id="descriptionInfo"></span></div>
+                            <div class="registerContent"><label>Comments</label><?php echo $this->Form->textarea('Review.description', array('onkeyup' => 'setDescriptionCookiecho(this.value)', 'name' => 'videoDescription', 'value' => $reviews[0]['Review']['description'])); ?><span id="descriptionInfo"></span></div>
 
 
                             <div class="registerContent"><label>Enter the code below</label><input type="text" name="enterval" id="enterval" value=""><span id="entervalInfo"></span></div>
@@ -222,14 +222,14 @@
 
                             <input type="hidden" id="h1" name="hiddenvideo" value="0" />  
 
-                            <?php echo($form->text('Review.rating', array('type' => 'hidden', 'onkeyup' => 'setTitleCookiecho()'))); ?>
-                            <?php echo($form->text('Review.school_id', array('type' => 'hidden', 'value' => '' . $Shoolreview[0]['School']['id'] . ''))); ?>
-                            <?php echo($form->text('Review.user_id', array('type' => 'hidden', 'value' => $loggedInId))); ?>
-                            <?php echo($form->text('Review.type', array('type' => 'hidden', 'value' => 'video'))); ?> 
+                            <?php echo($this->Form->text('Review.rating', array('type' => 'hidden', 'onkeyup' => 'setTitleCookiecho()'))); ?>
+                            <?php echo($this->Form->text('Review.school_id', array('type' => 'hidden', 'value' => '' . $Shoolreview[0]['School']['id'] . ''))); ?>
+                            <?php echo($this->Form->text('Review.user_id', array('type' => 'hidden', 'value' => $loggedInId))); ?>
+                            <?php echo($this->Form->text('Review.type', array('type' => 'hidden', 'value' => 'video'))); ?> 
                             <?php
                             if (isset($reviews[0]['Review']['id'])) {
-                                echo($form->text('Review.id', array('type' => 'hidden', 'value' => $reviews[0]['Review']['id'])));
-                                echo($form->text('Review.link', array('type' => 'hidden', 'value' => $reviews[0]['Review']['link'])));
+                                echo($this->Form->text('Review.id', array('type' => 'hidden', 'value' => $reviews[0]['Review']['id'])));
+                                echo($this->Form->text('Review.link', array('type' => 'hidden', 'value' => $reviews[0]['Review']['link'])));
                             }
                             ?> 
 
@@ -238,7 +238,7 @@
                             <div id="searchResult_file"></div>
 
                             <div style="padding-left:186px;">
-<?php echo $form->submit('buttonSubmit.gif', array('id' => 'reviewFormSubmit', 'value' => 'Submit')); ?>
+<?php echo $this->Form->submit('buttonSubmit.gif', array('id' => 'reviewFormSubmit', 'value' => 'Submit')); ?>
                                 <div><a href="<?php echo($this->Html->url('/reviews/allvideoreview/' . $MyShoolID)); ?>">Cancel</a></div>
 
                             </div>

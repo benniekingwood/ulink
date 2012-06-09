@@ -137,7 +137,7 @@
 </footer> <!-- /footer -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<?php echo $javascript->link(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
+<?php echo $this->Html->script(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
 
 <!-- facebook scripts -->
 <script type="text/javascript"

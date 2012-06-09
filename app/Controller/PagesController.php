@@ -11,13 +11,8 @@ class PagesController extends AppController {
 
     /**
      * Home uLink homepage loader.
-     * @param null $msg
      */
-    function home($msg=null) {
-        if ($msg) {
-            $this->set('msg', $msg);
-        }
-
+    function home() {
         $this->layout = 'v2';
         $this->pageTitle = 'Your college everything.';
         $this->chkAutopass();

@@ -6,14 +6,14 @@
     }
 </script>
 <h1 class="form_head">Reviews</h1>
-<?php echo $form->create(('Review', array('action' => 'admin_review_index')); ?>
+<?php echo $this->Form->create(('Review', array('action' => 'admin_review_index')); ?>
 <div class="search_admin">
-    <b>Search  </b><?php echo $form->text('Review.searchText'); ?>
-    <?php echo $form->submit('Search', array('div' => false)); ?>
+    <b>Search  </b><?php echo $this->Form->text('Review.searchText'); ?>
+    <?php echo $this->Form->submit('Search', array('div' => false)); ?>
     <div class="clear"></div>
 </div>
 
-<?php echo $form->end(); ?>
+<?php echo $this->Form->end(); ?>
 
 <div id="ajax_msg"></div>
 

@@ -1,5 +1,5 @@
 <?php
-echo $javascript->link(array('jquery_004.js', 'jquery_013.js', 'global_fn.js'));
+echo $this->Html->script(array('jquery_004.js', 'jquery_013.js', 'global_fn.js'));
 echo $this->Html->css(array('jquery_thumbs.css'));
 ?>
 <script type="text/javascript">

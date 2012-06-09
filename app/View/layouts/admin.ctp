@@ -7,7 +7,7 @@
         <?php
         echo $this->Html->meta('icon');
         echo $this->Html->css(array('style_admin.css'));
-        echo $javascript->link(array());
+        echo $this->Html->script(array());
         echo $scripts_for_layout;
         ?>
     </head>
@@ -101,14 +101,14 @@
 
         echo $this->Html->css(array('admin'));
 
-        echo $javascript->link(array('var.js', 'jquery.js', 'citystates.js', 'thickbox.js', 'ajax.js', 'check_user_script.js', 'multiple-image-upload.js', 'jquery-common'));
+        echo $this->Html->script(array('var.js', 'jquery.js', 'citystates.js', 'thickbox.js', 'ajax.js', 'check_user_script.js', 'multiple-image-upload.js', 'jquery-common'));
 
         echo $scripts_for_layout;
         ?>
     </head>
     <body>
         <?php 
-            echo $javascript->link(array('wz_tooltip')); 
+            echo $this->Html->script(array('wz_tooltip')); 
             $session->flash(); 
             echo $content_for_layout; 
         ?>

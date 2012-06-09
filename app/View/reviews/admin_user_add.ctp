@@ -461,31 +461,31 @@ $(document).ready(function(){
 });
 </script>
 
-<?php echo $form->create(('User', array('action' => 'admin_user_add','name'=>'UserAdminUserAddForm','type'=>'file'));?>
+<?php echo $this->Form->create(('User', array('action' => 'admin_user_add','name'=>'UserAdminUserAddForm','type'=>'file'));?>
 	
-		<?php echo $form->input('firstname');?> 
+		<?php echo $this->Form->input('firstname');?> 
          <span id="nameInfo" class="error">Required more than three characters!</span>
 		 
 		 
-		 <?php echo $form->input('lastname');?>
+		 <?php echo $this->Form->input('lastname');?>
 		 <span id="lastNameInfo" class="error">Required more than three characters!</span>
 		 
-		 <?php echo $form->input('username',array('onKeyup'=>'return chkemailByAdmin();'));?>
+		 <?php echo $this->Form->input('username',array('onKeyup'=>'return chkemailByAdmin();'));?>
 		  <div id="searchResult_username"></div>
 		  
 		  <input name="user_login" id="user_login" value="admin" disabled="disabled" type="hidden">
 		 
-		 <?php echo $form->input('password',array('id'=>'pass1'));?>
+		 <?php echo $this->Form->input('password',array('id'=>'pass1'));?>
 		 <span id="pass1Info">At least 5 characters: letters</span>
 		 <div class="bad" id="pass-strength-result"></div>
 		 
 		 
 		 Confirm Password<br/>
-		 <?php echo $form->text('confirm_password',array( 'type'=>'password','id'=>'pass2')); ?><br/>
+		 <?php echo $this->Form->text('confirm_password',array( 'type'=>'password','id'=>'pass2')); ?><br/>
 		 <span id="pass2Info" class="error">Passwords doesn't match!</span>
 		 
 		 <br/><br/>
-		 Country <?php echo $form->select('country_id',$countries,'',array('onchange'=>'getStatecho(this.value)'),'Please Select');?>							<br/>
+		 Country <?php echo $this->Form->select('country_id',$countries,'',array('onchange'=>'getStatecho(this.value)'),'Please Select');?>							<br/>
 	
 	  State <div id="statediv">
 	  <select name="state" >
@@ -498,15 +498,15 @@ $(document).ready(function(){
 	  </select></div><br/>
 		
 		 School 
-		 <?php echo $form->select('school_id',$schools,'',array('onchange'=>'getschoolId(this.value)'),'Please Select');?><br/>
-		 <?php echo $form->error('User.school_id');?>
+		 <?php echo $this->Form->select('school_id',$schools,'',array('onchange'=>'getschoolId(this.value)'),'Please Select');?><br/>
+		 <?php echo $this->Form->error('User.school_id');?>
 		 
-		 <?php echo $form->input('selectedSchool',array('type'=>'hidden'));?><br/>
+		 <?php echo $this->Form->input('selectedSchool',array('type'=>'hidden'));?><br/>
 		  <span id="schoolInfo" class="error">Please Select your school</span>
 		  
 		  <br/>
 		  School email
-		 <?php echo $form->input('email',array('label'=>false));?>
+		 <?php echo $this->Form->input('email',array('label'=>false));?>
 		 <div id="searchResult_email">
 		 <br/>
 		 <span id="emailInfo" class="error">Required for registration confirmation</span>
@@ -516,24 +516,24 @@ $(document).ready(function(){
 		 <input type="hidden" name="schooldomainCheck" id="schooldomainCheck" />
 		 
 		 
-		 Major <?php echo $form->text('major');?> <?php echo $form->error('User.major');?>
+		 Major <?php echo $this->Form->text('major');?> <?php echo $this->Form->error('User.major');?>
 		  <span id="majorInfo" class="error">Required more than three characters!</span> <br/>
 		 
-		 Year<?php echo $form->select('year',$years,'','','Please Select');?><br/>
+		 Year<?php echo $this->Form->select('year',$years,'','','Please Select');?><br/>
 		 
-		 Hometown* <?php echo $form->text('hometown');?><?php echo $form->error('User.hometown');?>
+		 Hometown* <?php echo $this->Form->text('hometown');?><?php echo $this->Form->error('User.hometown');?>
 		  <span id="hometownInfo" class="error">Required more than three characters!</span> <br/>
 		 
 		 School Status 
 		 
-		 <?php echo $form->select('school_status',array( 'Current Student' => 'Current Student','Alumni' => 'Alumni' ),'','','Please Select');?>
-		  <?php echo $form->input('file', array('type'=>'file')); ?>
+		 <?php echo $this->Form->select('school_status',array( 'Current Student' => 'Current Student','Alumni' => 'Alumni' ),'','','Please Select');?>
+		  <?php echo $this->Form->input('file', array('type'=>'file')); ?>
 		   
 		  
-		  <?php echo $form->submit('Submit');?> <div><a href="<?php echo($this->Html->url('/admin/users/index')); ?>"><b>Cancel</b></a></div>
+		  <?php echo $this->Form->submit('Submit');?> <div><a href="<?php echo($this->Html->url('/admin/users/index')); ?>"><b>Cancel</b></a></div>
 		 
 		 
-	    <?php echo $form->end(); ?>
+	    <?php echo $this->Form->end(); ?>
 <script type="text/javascript" charset="utf-8">
 	if (window.location.hash == '#password') {
 		document.getElementById('pass1').focus();
@@ -555,4 +555,4 @@ var pwsL10n = {
 try{convertEntities(pwsL10n);}catch(e){};
 /* ]]> */
 </script>
-<?php echo $javascript->link(array('password-strength.js')); ?>		
+<?php echo $this->Html->script(array('password-strength.js')); ?>		

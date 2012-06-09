@@ -130,9 +130,9 @@ $(document).ready(function () {
 </script>
 
 <div class="container">
-    <?php echo $form->create(('User', array('action' => 'register', 'name' => 'UserRegisterForm', 'type' => 'file')); ?>
+    <?php echo $this->Form->create('User', array('action' => 'register', 'name' => 'UserRegisterForm', 'type' => 'file')); ?>
     <div id="login-details-container" class="well well-white span7 offset2">
-        <span class="flash-error"><?php $session->flash(); ?></span>
+        <span class="flash-error"><?php $this->Session->flash(); ?></span>
         <h3>Login Details</h3>
 
         <div id="login-details-form-fields">
@@ -176,7 +176,7 @@ $(document).ready(function () {
             <div class="row">
                 <div class="span4">
                     <?php
-                        echo $form->input('school_id', array('type' => 'select', 'options' => $schools, 'empty' =>
+                        echo $this->Form->input('school_id', array('type' => 'select', 'options' => $schools, 'empty' =>
                         'Select school', 'label' => false, 'div' => false, 'class' => 'input-xlarger', 'rel'=>'tooltip', 'data-original-title'
                     => 'If your school is not present, you will need to suggest your school
                     from the home page. This will speed up the process of adding your school to uLink.'));
@@ -198,8 +198,8 @@ $(document).ready(function () {
             By Pressing the "Create My Account" button you agree to the terms and conditions listed in the Terms section of this website.
         </div>
         <div class="span4">
-            <?php echo $form->button('Create My Account', array('id'=>'btnCreateAccount', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-xlarge-wide'));?>
+            <?php echo $this->Form->button('Create My Account', array('id'=>'btnCreateAccount', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-xlarge-wide'));?>
         </div>
     </div>  <!--school-details-container-->
-    <?php echo $form->end(); ?>
+    <?php echo $this->Form->end(); ?>
 </div> <!-- container -->

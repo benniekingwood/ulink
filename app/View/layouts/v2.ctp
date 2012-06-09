@@ -15,7 +15,7 @@
 
         // print styles
         echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
-        echo $this->Html->script(array('jquery.min.js','var.js', 'validate.js'));
+        echo $this->Html->script(array('var.js','jquery.min.js', 'validate.js'));
     ?>
 
     <!--  HTML5 shim, for IE6-8 support of HTML5 elements -->

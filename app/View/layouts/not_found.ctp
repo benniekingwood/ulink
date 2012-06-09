@@ -36,7 +36,7 @@
 
         echo $this->Html->css(array('style.css', 'pop_thickbox.css', 'thickbox.css', 'autofill.css'));
 
-        echo $javascript->link(array('var.js', 'jquery-1.4.2.min.js', 'citystates.js', 'thickbox.js', 'form-submit.js', 'ajax.js', 'check_user_script.js', 'autofill.js', 'easySlider.packed.js', 'multiple-image-upload.js', 'validate.js', 'jquery.form.js'));
+        echo $this->Html->script(array('var.js', 'jquery-1.4.2.min.js', 'citystates.js', 'thickbox.js', 'form-submit.js', 'ajax.js', 'check_user_script.js', 'autofill.js', 'easySlider.packed.js', 'multiple-image-upload.js', 'validate.js', 'jquery.form.js'));
 
         echo $scripts_for_layout;
         ?>
@@ -117,7 +117,7 @@
 
 
         <?php //echo $userSchoolId;  ?>
-        <?php echo $javascript->link(array('wz_tooltip')); ?>
+        <?php echo $this->Html->script(array('wz_tooltip')); ?>
         <div id="leftSliderWrap">
             <div style="display: block;" id="openCloseIdentifier"></div>
             <div style="margin-left:-76px;" id="sliderLeft">
@@ -172,7 +172,7 @@
                             }
                             ?> 
 
-                            <?php echo $form->create(($createType, array('action' => $action, 'id' => 'MapMapIndexForm')); ?>
+                            <?php echo $this->Form->create(($createType, array('action' => $action, 'id' => 'MapMapIndexForm')); ?>
 
                             <span class="left"><?php echo $this->Html->image(('left_search_icon.png', array('alt' => '')); ?></span>
                             <?php
@@ -183,7 +183,7 @@
 
                                 $searchValueUser = "Quick search";
                             }
-                            echo $form->text('search', array('type' => 'text', 'id' => 'inputString', 'value' => $searchValueUser,
+                            echo $this->Form->text('search', array('type' => 'text', 'id' => 'inputString', 'value' => $searchValueUser,
                                 'class' => 'search_text',
                                 'autocomplete' => 'off',
                                 'onfocus' => 'blank(this)',
@@ -208,7 +208,7 @@
                             ?>
                             <input class="drop_help" type="text" id="droptext" value="<?php echo $searchType; ?>" onmouseover="showOptionDefault();"/>
 
-                            <?php echo $form->button('Search', array('type' => 'Submit', 'class' => 'btn', 'onmouseover' => 'blankDefault()', 'onmouseout' => 'fillDefault()')); ?>
+                            <?php echo $this->Form->button('Search', array('type' => 'Submit', 'class' => 'btn', 'onmouseover' => 'blankDefault()', 'onmouseout' => 'fillDefault()')); ?>
 
                             <div id="suggestions" class="suggestionsBox" value="Map" style="display:none;">
                                 <div id="autoSuggestionsList" class="suggestionList" >
@@ -222,7 +222,7 @@
                                 </div>
                             </div>
 
-                            <?php echo $form->end(); ?>
+                            <?php echo $this->Form->end(); ?>
                         </div>
 
 

@@ -14,8 +14,8 @@
     echo $this->Html->meta('author','uLink, Inc.');
 
     // print styles
-    echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
-    echo $this->Html->script(array('jquery.min.js','var.js', 'validate.js'));
+    echo $this->Html->css(array('bootstrap-light.css', 'ulink.css','bootstrap-responsive.css'));
+    echo $this->Html->script(array('var.js','jquery.min.js', 'validate.js'));
     ?>
 
     <!--  HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -138,7 +138,7 @@
 </footer> <!-- /footer -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<?php echo $javascript->link(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
+<?php echo $this->Html->script(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
 
 <!-- facebook scripts -->
 <script type="text/javascript"

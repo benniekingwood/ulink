@@ -129,36 +129,36 @@ function getStatecho(countryId) {
 		}
 </script>
 
-<?php echo $form->create(('User', array('action' => 'admin_user_add','name'=>'UserAdminUserAddForm','type'=>'file'));?>
+<?php echo $this->Form->create(('User', array('action' => 'admin_user_add','name'=>'UserAdminUserAddForm','type'=>'file'));?>
 	
 	
 		 <div class="form_input_box">
 		 <label for="UserFirstname">First Name</label>
-		<?php echo $form->input('User.firstname',array('div'=>false,'label'=>false));?>
+		<?php echo $this->Form->input('User.firstname',array('div'=>false,'label'=>false));?>
 		</div> 
          <div class="form_input_box">
 		 
 		 <label for="UserLastname">Last Name</label>
-		 <?php echo $form->input('User.lastname',array('div'=>false,'label'=>false));?>
+		 <?php echo $this->Form->input('User.lastname',array('div'=>false,'label'=>false));?>
 	</div>	
 	 <div class="form_input_box">
 	 <label for="UserUsername">User Name</label>
-		 <?php echo $form->input('User.username',array('onKeyup'=>'return chkemailByAdmin();','div'=>false,'label'=>false));?>
+		 <?php echo $this->Form->input('User.username',array('onKeyup'=>'return chkemailByAdmin();','div'=>false,'label'=>false));?>
 		  <div id="searchResult_username"></div>
 		  </div>
 		  <input name="user_login" id="user_login" value="admin" disabled="disabled" type="hidden">
 		  <div class="form_input_box">
-		 <?php echo $form->input('User.password',array('id'=>'pass1','div'=>false));?>
+		 <?php echo $this->Form->input('User.password',array('id'=>'pass1','div'=>false));?>
 		
 		 <div class="bad" id="pass-strength-result"></div>
 		 </div>
 		  <div class="form_input_box">
 		
-		 <?php echo $form->input('User.confirm_password',array( 'type'=>'password','id'=>'pass2','label'=>'Confirm Password','div'=>false)); ?><br/>
+		 <?php echo $this->Form->input('User.confirm_password',array( 'type'=>'password','id'=>'pass2','label'=>'Confirm Password','div'=>false)); ?><br/>
 		</div>
 		  <div class="form_input_box">
 		<label>Country</label>
-		  <?php echo $form->select('User.country_id',$countries,'',array('onchange'=>'getStatecho(this.value)','label'=>'Country','div'=>false),'Please Select');?>							<br/>
+		  <?php echo $this->Form->select('User.country_id',$countries,'',array('onchange'=>'getStatecho(this.value)','label'=>'Country','div'=>false),'Please Select');?>							<br/>
 	</div>
 	
 	 <div class="form_input_box">
@@ -177,15 +177,15 @@ function getStatecho(countryId) {
 		</div>
 		<div class="form_input_box">
 		 <label>School</label> 
-		 <?php echo $form->select('User.school_id',$schools,'',array('onchange'=>'getschoolId(this.value)','div'=>false),'Please Select');?><br/>
+		 <?php echo $this->Form->select('User.school_id',$schools,'',array('onchange'=>'getschoolId(this.value)','div'=>false),'Please Select');?><br/>
 		</div>
 		 
-		 <?php echo $form->input('User.selectedSchool',array('type'=>'hidden'));?><br/>
+		 <?php echo $this->Form->input('User.selectedSchool',array('type'=>'hidden'));?><br/>
 		 
 		  
 		<div class="form_input_box">
 		 <label for="UserEmail">School email</label> 
-		 <?php echo $form->input('User.email',array('label'=>false,'div'=>false));?>
+		 <?php echo $this->Form->input('User.email',array('label'=>false,'div'=>false));?>
 		 <div id="searchResult_email">
 		
 		
@@ -195,32 +195,32 @@ function getStatecho(countryId) {
 		 <input type="hidden" name="schooldomainCheck" id="schooldomainCheck" />
 		 
 		 <div class="form_input_box">
-		 <label for="UserMajor">Major</label> <?php echo $form->input('User.major',array('div'=>false,'label'=>false));?> 
+		 <label for="UserMajor">Major</label> <?php echo $this->Form->input('User.major',array('div'=>false,'label'=>false));?> 
 		</div>
 		 <div class="form_input_box">
-		<label > Year</label><?php echo $form->input('User.year',array('type'=>'select','div'=>false,'empty'=>'Please select','options'=>$years,'label'=>false));?>
+		<label > Year</label><?php echo $this->Form->input('User.year',array('type'=>'select','div'=>false,'empty'=>'Please select','options'=>$years,'label'=>false));?>
 		 </div>
 		 <div class="form_input_box">
-		 <label for="UserHometown">Hometown*</label> <?php echo $form->input('User.hometown',array('div'=>false,'label'=>false));?>
+		 <label for="UserHometown">Hometown*</label> <?php echo $this->Form->input('User.hometown',array('div'=>false,'label'=>false));?>
 		</div>
 		 <div class="form_input_box">
 		<label>School Status</label>  
 		 
-		 <?php echo $form->input('User.school_status',array('options'=>array('Current Student' => 'Current Student','Alumni' => 'Alumni'),'div'=>false,'label'=>false));?>
+		 <?php echo $this->Form->input('User.school_status',array('options'=>array('Current Student' => 'Current Student','Alumni' => 'Alumni'),'div'=>false,'label'=>false));?>
 		  </div>
 		  
 		  <div class="form_input_box">
 		 <label for="UserFile">File</label>
-		  <?php echo $form->input('User.file', array('type'=>'file','label'=>false,'div'=>false)); ?>
+		  <?php echo $this->Form->input('User.file', array('type'=>'file','label'=>false,'div'=>false)); ?>
 		   
 		  </div>
 		   <div class="form_input_box">
 		   <label for="UserFile">&nbsp;</label>
-		  <?php echo $form->submit('Submit');?> 
+		  <?php echo $this->Form->submit('Submit');?> 
 		  <div><a href="<?php echo($this->Html->url('/admin/users/index')); ?>"><b>Cancel</b></a></div>
 		 
 		 </div>
-	    <?php echo $form->end(); ?>
+	    <?php echo $this->Form->end(); ?>
 <script type="text/javascript" charset="utf-8">
 	if (window.location.hash == '#password') {
 		document.getElementById('pass1').focus();
@@ -242,4 +242,4 @@ var pwsL10n = {
 try{convertEntities(pwsL10n);}catch(e){};
 /* ]]> */
 </script>
-<?php echo $javascript->link(array('password-strength.js')); ?>		
+<?php echo $this->Html->script(array('password-strength.js')); ?>		

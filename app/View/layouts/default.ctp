@@ -38,7 +38,7 @@
         <?php
         echo $this->Html->meta('icon');
         echo $this->Html->css(array('style.css', 'autofill.css', 'pop_thickbox.css', 'thickbox.css'));
-        echo $javascript->link(array('var.js', 'jquery.js', 'infobox.js', 'autofill.js', 'thickbox.js', 'form-submit.js', 'ajax.js', 'validate.js', 'jquery.form.js', 'tiny_mce/tiny_mce.js'));
+        echo $this->Html->script(array('var.js', 'jquery.js', 'infobox.js', 'autofill.js', 'thickbox.js', 'form-submit.js', 'ajax.js', 'validate.js', 'jquery.form.js', 'tiny_mce/tiny_mce.js'));
         echo $scripts_for_layout;
         ?>
 
@@ -454,7 +454,7 @@ if ($schools != null) {
     <body onload="load()" onunload="GUnload()">
 
 
-        <?php echo $form->input('abc', array('type' => 'hidden', 'value' => $usertextreview[0]['Review']['description'])); ?>
+        <?php echo $this->Form->input('abc', array('type' => 'hidden', 'value' => $usertextreview[0]['Review']['description'])); ?>
         <div id="mainContainer">
             <div class="main_inner_container">
                 <div id="leftSliderWrap">
@@ -507,7 +507,7 @@ if ($schools != null) {
 
                         <div class="new_search">
                             <!-- <div class="search" id="tobeSearch">- -->
-                            <?php echo $form->create(('Map', array('action' => 'map_index')); ?>
+                            <?php echo $this->Form->create(('Map', array('action' => 'map_index')); ?>
 
                             <span class="left"><?php echo $this->Html->image(('left_search_icon.png', array('alt' => '')); ?></span>
                             <?php
@@ -518,7 +518,7 @@ if ($schools != null) {
 
 
 
-                            echo $form->text('search', array('type' => 'text', 'id' => 'inputString', 'value' => $searchValueUser, 'title' => 'Search', 'placeHolder' => 'Search',
+                            echo $this->Form->text('search', array('type' => 'text', 'id' => 'inputString', 'value' => $searchValueUser, 'title' => 'Search', 'placeHolder' => 'Search',
                                 'class' => 'search_text',
                                 'autocomplete' => 'off',
                                 'onKeyUp' => 'lookup(this.value)'
@@ -540,7 +540,7 @@ if ($schools != null) {
 
                             <input class="drop_help" type="text" id="droptext" value="<?php echo $searchType; ?>" onmouseover="showOptionDefault();" />
 
-                            <?php echo $form->button('Search', array('type' => 'Submit', 'class' => 'btn', 'onmouseover' => 'blankDefault()')); ?>
+                            <?php echo $this->Form->button('Search', array('type' => 'Submit', 'class' => 'btn', 'onmouseover' => 'blankDefault()')); ?>
 
                             <div id="suggestions" class="suggestionsBox" value="uMap" style="display:none;">
                                 <div id="autoSuggestionsList" class="suggestionList">
@@ -554,7 +554,7 @@ if ($schools != null) {
                                 </div>
                             </div>
 
-                            <?php echo $form->end(); ?>
+                            <?php echo $this->Form->end(); ?>
                         </div>
 
 

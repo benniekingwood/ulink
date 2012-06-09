@@ -90,7 +90,7 @@
 
 <!-- Placed at the end of the document so the pages load faster -->
 
-<?php echo $javascript->link(array('ulink.js','var.js','validate.js','form-submit.js','ajax.js'));?>
+<?php echo $this->Html->script(array('ulink.js','var.js','validate.js','form-submit.js','ajax.js'));?>
 
 <!-- facebook scripts -->
 <script type="text/javascript"

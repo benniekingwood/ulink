@@ -1,4 +1,4 @@
-<?php echo $javascript->link(array('image_validation.js')); ?>
+<?php echo $this->Html->script(array('image_validation.js')); ?>
 <script type="text/javascript" language="javascript">
     function setDisplayRatingLevel(level) {
         for(i = 1; i <= 5; i++) {
@@ -209,13 +209,13 @@
                                 <input type="hidden" id="h1" name="hiddenvideo" value="0" />  
 
 
-                                <?php echo($form->text('Review.school_id', array('type' => 'hidden', 'value' => '' . $Shoolreview[0]['School']['id'] . ''))); ?>
-                                <?php echo($form->text('Review.user_id', array('type' => 'hidden', 'value' => $loggedInId))); ?>
-                                <?php echo($form->text('Review.type', array('type' => 'hidden', 'value' => 'video'))); ?> 
+                                <?php echo($this->Form->text('Review.school_id', array('type' => 'hidden', 'value' => '' . $Shoolreview[0]['School']['id'] . ''))); ?>
+                                <?php echo($this->Form->text('Review.user_id', array('type' => 'hidden', 'value' => $loggedInId))); ?>
+                                <?php echo($this->Form->text('Review.type', array('type' => 'hidden', 'value' => 'video'))); ?> 
                                 <?php
                                 if (isset($reviews[0]['Review']['id'])) {
-                                    echo($form->text('Review.id', array('type' => 'hidden', 'value' => $reviews[0]['Review']['id'])));
-                                    echo($form->text('Review.link', array('type' => 'hidden', 'value' => $reviews[0]['Review']['link'])));
+                                    echo($this->Form->text('Review.id', array('type' => 'hidden', 'value' => $reviews[0]['Review']['id'])));
+                                    echo($this->Form->text('Review.link', array('type' => 'hidden', 'value' => $reviews[0]['Review']['link'])));
                                 }
                                 ?> 
                                 <input name="token" type="hidden" value="<?php echo $Token; ?>" />
@@ -228,7 +228,7 @@
 
                                 <div style="width: 300px;">
                                     <br /><br /><br />
-                                    <?php echo $form->submit('buttonSubmit.gif', array('id' => 'reviewFormSubmit', 'value' => 'Submit', 'alt' => 'submit', 'style' => 'padding:0px!important;')); ?>
+                                    <?php echo $this->Form->submit('buttonSubmit.gif', array('id' => 'reviewFormSubmit', 'value' => 'Submit', 'alt' => 'submit', 'style' => 'padding:0px!important;')); ?>
                                     <a href="<?php echo($this->Html->url('/reviews/allvideoreview/' . $MyShoolID)); ?>">
                                         <?php echo $this->Html->image(('buttonCancel.gif', array('alt' => 'cancel')); ?>
                                     </a>

@@ -4,7 +4,7 @@ class ThumbsController extends AppController {
 
     var $name = 'Thumbs';
     var $uses = null;
-    var $helpers = array('Html', 'Form', 'Js',  'Jquery', 'Session');
+    var $helpers = array('Html', 'Form', 'Js',   'Session');
     var $layout = null;
     var $autoRender = false;
 
