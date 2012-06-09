@@ -549,3 +549,18 @@
 2012-06-03 20:20:27 Error: [MissingControllerException] Controller class Controller could not be found.
 #0 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #1 {main}
+2012-06-08 16:15:04 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /Applications/MAMP/htdocs/Websites/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-08 16:15:10 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /Applications/MAMP/htdocs/Websites/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-08 16:15:14 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /Applications/MAMP/htdocs/Websites/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-08 16:15:16 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /Applications/MAMP/htdocs/Websites/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2012-06-08 16:15:16 Error: [MissingControllerException] Controller class Controller could not be found.
+#0 /Applications/MAMP/htdocs/Websites/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
