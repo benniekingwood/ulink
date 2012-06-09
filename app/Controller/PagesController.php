@@ -49,7 +49,7 @@ class PagesController extends AppController {
      * Help page loader
      */
     function help() {
-        $this->layout = "v2";
+        $this->layout = "v2_light";
         $this->pageTitle = 'Help';
     }
 
@@ -57,7 +57,6 @@ class PagesController extends AppController {
      * Advertise page loader
      */
     function advertise() {
-        $this->set('currentPageHeading', '');
         $this->layout = "v2";
     }
 
@@ -73,7 +72,7 @@ class PagesController extends AppController {
      * About page loader
      */
     function about() {
-        $this->layout = "v2";
+        $this->layout = "v2_light";
         $this->pageTitle = 'About Us';
     }
 
@@ -82,6 +81,11 @@ class PagesController extends AppController {
      * UCampus home page loader
      */
     function ucampus() {
+        // if the user is not logged in, redirect them to the login screen
+        if (!$this->Auth->user()) {
+            $this->redirect(array('controller' => 'users','action' => 'login'));
+        }
+
         $this->layout = "v2_ucampus";
         $this->pageTitle = 'Your college everything.';
     }
