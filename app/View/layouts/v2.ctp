@@ -14,7 +14,7 @@
         echo $this->Html->meta('author','uLink, Inc.');
 
         // print styles
-        echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
+        echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css', 'kevin.css'));
         echo $this->Html->script(array('jquery.min.js','var.js', 'validate.js'));
     ?>
 
@@ -106,7 +106,10 @@
 </div><!-- /navbar -->
 
 <!-- page content -->
-<?php echo $content_for_layout; ?>
+<?php 
+echo $this->Session->flash();
+echo $content_for_layout;
+ ?>
 <!-- /page content -->
 
 <!-- global components -->
