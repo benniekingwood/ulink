@@ -135,7 +135,7 @@
                         Statement[if applicable].</li>
             </ol>
 
-            <p>These Services are operated and provided by uLink Inc. If you have any questions about these Terms, please contact <a href="mailto:legal@theulink.com">legal@theulink.com</a>.</p>
+            <p>These Services are operated and provided by uLink Inc., 832 Garrow Road, Newport News, VA 23608. If you have any questions about these Terms, please contact <a href="mailto:legal@theulink.com">legal@theulink.com</a>.</p>
         </div>
     </div>
 </div>

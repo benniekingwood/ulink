@@ -6,7 +6,7 @@
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
         $("#loginFormMain").submit(function () {
-            $.post(hostname + "users/login", { username:$('#username').val(), password:$('#password').val(), rand:Math.random(), loginMain:$('#loginMain').val() },
+            $.post(hostname + "users/login", { username:$('#username').val(), password:$('#password').val(), rand:Math.random(), loginMain:$('#loginMain').val(), loginTest:$('#loginTest').val() },
                     function (data) {
                         switch (data) {
                             case 'main':

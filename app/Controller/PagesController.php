@@ -11,8 +11,13 @@ class PagesController extends AppController {
 
     /**
      * Home uLink homepage loader.
+     * @param null $msg
      */
-    function home() {
+    function home($msg=null) {
+        if ($msg) {
+            $this->set('msg', $msg);
+        }
+
         $this->layout = 'v2';
         $this->pageTitle = 'Your college everything.';
         $this->chkAutopass();
@@ -36,6 +41,7 @@ class PagesController extends AppController {
      * Success page loader for new users activating
      */
     function success() {
+        $this->set('currentPageHeading', '');
         $this->layout = "v2";
         $this->pageTitle = 'Your college everything.';
     }
@@ -44,7 +50,8 @@ class PagesController extends AppController {
      * Help page loader
      */
     function help() {
-        $this->layout = "v2_light";
+        $this->set('currentPageHeading', '');
+        $this->layout = "v2";
         $this->pageTitle = 'Help';
     }
 
@@ -52,6 +59,7 @@ class PagesController extends AppController {
      * Advertise page loader
      */
     function advertise() {
+        $this->set('currentPageHeading', '');
         $this->layout = "v2";
     }
 
@@ -59,6 +67,7 @@ class PagesController extends AppController {
      * Terms page loader
      */
     function terms() {
+        $this->set('currentPageHeading', '');
         $this->layout = "v2";
         $this->pageTitle = 'Terms and Conditions';
     }
@@ -67,23 +76,9 @@ class PagesController extends AppController {
      * About page loader
      */
     function about() {
-        $this->layout = "v2_light";
+        $this->set('currentPageHeading', '');
+        $this->layout = "v2";
         $this->pageTitle = 'About Us';
     }
-
-
-    /**
-     * UCampus home page loader
-     */
-    function ucampus() {
-        // if the user is not logged in, redirect them to the login screen
-        if (!$this->Auth->user()) {
-            $this->redirect(array('controller' => 'users','action' => 'login'));
-        }
-
-        $this->layout = "v2_ucampus";
-        $this->pageTitle = 'Your college everything.';
-    }
-
 }
 ?>

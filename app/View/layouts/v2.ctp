@@ -14,8 +14,8 @@
         echo $this->Html->meta('author','uLink, Inc.');
 
         // print styles
-        echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
-        echo $this->Html->script(array('var.js','jquery.min.js', 'validate.js'));
+        echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css', 'kevin.css'));
+        echo $this->Html->script(array('jquery.min.js','var.js', 'validate.js'));
     ?>
 
     <!--  HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -47,7 +47,7 @@
             <div class="nav-collapse">
                 <ul class="nav span3">
                     <li id="ucampus-module">
-                        <a class="module" href="<?php echo($this->Html->url('/pages/ucampus')); ?>">
+                        <a class="module" href="./ucampus_home.html">
                             <i class="ulink-icon-ucampus"></i>uCampus
                         </a>
                     </li>
@@ -106,11 +106,14 @@
 </div><!-- /navbar -->
 
 <!-- page content -->
-<?php echo $content_for_layout; ?>
+<?php 
+echo $this->Session->flash();
+echo $content_for_layout;
+ ?>
 <!-- /page content -->
 
 <!-- global components -->
-<?php echo $this->element('login'); echo $this->element('view_profile');?>
+<?php echo $this->element('login'); ?>
 <!-- /global components -->
 <footer>
     <div class="container">

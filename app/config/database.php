@@ -92,12 +92,12 @@ class DATABASE_CONFIG {
         'encoding' => 'utf8'
     );
 
-    /*var $mongo = array(
-	    'datasource' => 'mongodb',
-	    'database' => 'test',
+    var $mongo = array(
+	    'datasource' => 'Mongodb.MongodbSource',
+	    'database' => 'beta_ulink',
 	    'host' => 'localhost',
 	    'port' => 27017
-    );*/
+    );
 
 
     function DATABASE_CONFIG() {

@@ -1,1 +1,1 @@
-var hostname="http://localhost:8888/";
+var hostname="http://webdev/";
