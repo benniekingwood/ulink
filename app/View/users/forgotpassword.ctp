@@ -34,11 +34,11 @@
             </blockquote>
         </p>
         <div id="forgot-form-container" class="control-group">
-            <?php echo $this->Form->create(('User', array('id' => 'forgotPassswordForm', 'action' => 'forgotpassword'));?>
+            <?php echo $this->Form->create('User', array('id' => 'forgotPassswordForm', 'action' => 'forgotpassword'));?>
             <div class="controls">
                 <?php echo $this->Form->text('email', array('div' => false, 'label' => false, 'class'=>'input-xxlarge ulink-input-bigfont', 'placeholder' => 'email'));?>
                 <span htmlfor="UserEmail" generated="true" class="help-inline error" style="display:block;"></span>
-                <span class="help-inline"><?php $session->flash(); ?></span>
+                <span class="help-inline"><?php $this->Session->flash(); ?></span>
             </div>
         </div>
         <?php echo $this->Form->button('Send Me Instructions', array('id'=>'btnForgotPassword', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
