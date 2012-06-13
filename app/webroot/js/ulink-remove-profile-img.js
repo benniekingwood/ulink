@@ -5,8 +5,6 @@ $(document).ready(function () {
         $('.remove-profile-image').click(function () {
             // ask for confirmation
             var result = confirm('Are you sure you want to remove your profile image?');
-            // show loading image
-            $('.ajax_loader').show();
             $('#flashMessage').fadeOut();
             if (result) {
                 $.ajax({

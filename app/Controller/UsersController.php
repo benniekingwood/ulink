@@ -51,15 +51,20 @@ class UsersController extends AppController {
             }
 
             // grab the user activation status based on the passed in username/password
-            $userActCheck = $this->User->find('all', array('conditions' => 'User.username="' . $_POST['username'] . '"',
-                'fields' => 'User.activation'));
+            $userActCheck = $this->User->find('all', array('conditions' => 'User.username="' . $_POST['username'] . '"', 'fields' => array('User.activation','User.deactive')));
 
             // authenticate the user
             $getInfo = $this->Auth->user();
 	
             // if a user was retrieved...success
             if ($getInfo) {
-				$this->set('username',$getInfo->username);
+                // if the user was deactivated, reactivate them
+                if ($userActCheck[0]['User']['deactive'] == "1") {
+                    $this->User->id = $getInfo['User']['id'];
+                    $this->User->saveField('deactive', '0');
+                }
+
+                $this->set('username',$getInfo->username);
                 if (!empty($_POST['loginMain'])) {
                     echo "main";
                 }  else {
@@ -180,8 +185,7 @@ class UsersController extends AppController {
      */
     function register($id = null) {
         $this->pageTitle = 'Sign up with uLink';
-        $this->layout = "v2";
-        $this->set('currentPageHeading', 'Join uLink');
+        $this->layout = "v2_no_login_header";
 
         /*
          * If an id was passed in, it will be for fb.  Grab
@@ -394,9 +398,6 @@ class UsersController extends AppController {
             )
         );
 
-        $this->log($this->request->data['User']['password'], 'debug') ;
-        $this->log($this->request->data['User']['username'], 'debug') ;
-
         Configure::write('debug', 0);
         $this->autoRender = false;
         $this->layout = null;
@@ -421,6 +422,27 @@ class UsersController extends AppController {
         }
 
     } // updatePassword
+
+    /**
+     * This function will show the user's information
+     * to the client based on the passed in user id
+     *
+     * @param null $id
+     */
+    function viewprofile($id = null) {
+        $this->layout = null;
+        // if the user is not logged in, redirect them to the login screen
+        if (!$this->Auth->user()) {
+            $this->Session->setFlash('Please login to gain full access to uLink.');
+            $this->redirect(array('action' => 'login'));
+        }
+        $this->chkAutopass();
+        // grab the user from the db
+        $user = $this->User->find('User.id=' . $id);
+        echo json_encode($user);
+        exit;
+    } // viewprofile
+
 
     /**
      * This function will check if the email exists or not
@@ -554,7 +576,44 @@ class UsersController extends AppController {
 
     function log($msg, $type = LOG_ERROR) {
         return parent::log($msg, $type);
-    } // index
+    } // log
+
+    /**
+     * Deactivate page loader
+     */
+    public function deactivate() {
+
+        // if the user is not logged in, make them
+        if (!$this->Auth->user()) {
+            $this->redirect(array('action' => 'login'));
+        }
+        $this->layout = "v2_no_login_header";
+        $this->pageTitle = 'Your college everything.';
+    }  // deactivate
+
+    /**
+     * This function will deactivate the
+     * user's account
+     */
+    public function deactivateaccount() {
+        // grab the current logged in user
+        $sessVar = $this->Auth->user();
+
+        // create a data object with the user's info
+        $data = array('User' => array('id' => $sessVar['User']['id'], 'username' => $sessVar['User']['username'], 'deactive' => 1));
+
+        Configure::write('debug', 0);
+        $this->autoRender = false;
+        $this->layout = null;
+
+        // update the user's profile in the db
+        if ($this->User->save($data)) {
+            $this->Auth->logout();
+            echo "true";
+        } else {
+            echo "There was an issue deactivating your account.  Please try again, or contact help@theulink.com";
+        }
+    }  // deactivateaccount
 
     /**
      * This function will show the user's information
@@ -1346,15 +1405,5 @@ class UsersController extends AppController {
             $this->paginate = array('conditions' => $condition, 'order' => array('User.id  desc'), 'limit' => $this->paginate_limit_front);
         }
     }
-
-    ########################################################
-
-    function test()
-    {
-
-        $this->layout = "default1";
-    }
-
 }
-
 ?>

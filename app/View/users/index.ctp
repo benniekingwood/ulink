@@ -82,7 +82,7 @@
                     <?php $session->flash(); ?>
                 </div>
                 <div class="row">
-                    <div class="span2">
+                    <div class="span3">
                         <?php if ($this->data['User']['image_url'] != '' && file_exists(WWW_ROOT . '/img/files/users/' . $this->data['User']['image_url'])) {?>
                             <div id="profile-image">
                                 <?php echo $this->Html->image(('files/users/' . $this->data['User']['image_url'] . '', array('alt' => 'profile image')); ?>
@@ -98,6 +98,7 @@
                     <div class="span3">
                         <?php echo $this->Form->input('file', array('type' => 'file', 'label' => false, 'div' => false)); ?>
                         <p>Maximum file size 700k.<br />Filetypes JPG,PNG,GIF.</p>
+                        <a href="<?php echo($this->Html->url('/users/deactivate'));?>">Deactivate my account</a>
                     </div>
                 </div>
                 <hr />
@@ -181,5 +182,4 @@
     try{convertEntities(pwsL10n);}catch(e){};
     /* ]]> */
 </script>
-<?php echo $this->Html->script(array('ulink-remove-profile-img.js')); ?>
-
+<?php echo $this->Html->script(array('jquery.min.js','ulink-remove-profile-img.js')); ?>

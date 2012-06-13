@@ -47,7 +47,7 @@
             <div class="nav-collapse">
                 <ul class="nav span3">
                     <li id="ucampus-module">
-                        <a class="module" href="./ucampus_home.html">
+                        <a class="module" href="<?php echo($this->Html->url('/pages/ucampus')); ?>">
                             <i class="ulink-icon-ucampus"></i>uCampus
                         </a>
                     </li>
@@ -106,14 +106,14 @@
 </div><!-- /navbar -->
 
 <!-- page content -->
-<?php 
+<?php
 echo $this->Session->flash();
 echo $content_for_layout;
- ?>
+?>
 <!-- /page content -->
 
 <!-- global components -->
-<?php echo $this->element('login'); ?>
+<?php echo $this->element('login'); echo $this->element('view_profile');?>
 <!-- /global components -->
 <footer>
     <div class="container">
