@@ -2,10 +2,7 @@
 <html>
 <head>
     <?php echo $this->Html->charset(); ?>
-    <title>
-        <?php __('uLink | '); ?>
-        <?php echo $title_for_layout; ?>
-    </title>
+    <title>uLink | Your college everything</title>
     <?php
      // print meta tags
         echo $this->Html->meta('icon');

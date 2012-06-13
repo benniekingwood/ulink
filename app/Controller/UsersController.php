@@ -26,6 +26,8 @@ class UsersController extends AppController {
      * Handles the login action
      */
     function login() {
+        $this->set('title_for_layout','Login to uLink');
+
         if (isset($_POST['username'])) {
             $this->autoRender = false;
             $this->layout = null;
@@ -93,9 +95,8 @@ class UsersController extends AppController {
      * reset the password for that user and send them an email.
      */
     function forgotpassword() {
-        $this->pageTitle = 'Forgot Password';
+        $this->set('title_for_layout','Forgot Password');
         $this->layout = "v2";
-        $this->set('currentPageHeading', 'Forgot your password?');
 
         // if the user is already authenticated, redirect to homepage
         if ($this->Auth->user()) {
@@ -184,7 +185,7 @@ class UsersController extends AppController {
      * @param null $id
      */
     function register($id = null) {
-        $this->pageTitle = 'Sign up with uLink';
+        $this->set('title_for_layout','Sign up with uLink');
         $this->layout = "v2_no_login_header";
 
         /*
@@ -288,7 +289,7 @@ class UsersController extends AppController {
      * @param null $code
      */
     function confirm($user_id = null, $code = null) {
-        $this->pageTitle = 'Account confirmation';
+        $this->set('title_for_layout','Account confirmation');
         $this->layout = "v2";
 
         if (empty($user_id) || empty($code)) {
@@ -355,7 +356,7 @@ class UsersController extends AppController {
             $this->redirect(array('action' => 'login'));
         }
         $this->layout = "v2";
-        $this->pageTitle = 'Your college everything.';
+        $this->set('title_for_layout','Your college everything.');
     }
 
     /**
@@ -459,7 +460,7 @@ class UsersController extends AppController {
      * updating their profile
      */
     function index() {
-        $this->pageTitle = 'Your college everything';
+        $this->set('title_for_layout','Your college everything');
         $this->layout = "v2";
 
         // if the user is not logged in, make them
@@ -588,7 +589,7 @@ class UsersController extends AppController {
             $this->redirect(array('action' => 'login'));
         }
         $this->layout = "v2_no_login_header";
-        $this->pageTitle = 'Your college everything.';
+        $this->set('title_for_layout','Your college everything.');
     }  // deactivate
 
     /**

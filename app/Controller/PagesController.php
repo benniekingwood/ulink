@@ -14,7 +14,7 @@ class PagesController extends AppController {
      */
     function home() {
         $this->layout = 'v2';
-        $this->pageTitle = 'Your college everything.';
+        $this->set('title_for_layout','Your college everything.');
         $this->chkAutopass();
     }
 
@@ -37,7 +37,7 @@ class PagesController extends AppController {
      */
     function success() {
         $this->layout = "v2";
-        $this->pageTitle = 'Your college everything.';
+        $this->set('title_for_layout','Your college everything.');
     }
 
     /**
@@ -45,31 +45,31 @@ class PagesController extends AppController {
      */
     function help() {
         $this->layout = "v2_light";
-        $this->pageTitle = 'Help';
+        $this->set('title_for_layout','Help');
     }
 
     /**
      * Advertise page loader
      */
-    function advertise() {
+    public function advertise() {
         $this->layout = "v2";
-        $this->pageTitle = 'Advertise';
+        $this->set('title_for_layout', 'Advertise');
     }
 
     /**
      * Terms page loader
      */
-    function terms() {
+    public function terms() {
         $this->layout = "v2";
-        $this->pageTitle = 'Terms and Conditions';
+        $this->set('title_for_layout', 'Terms and Conditions');
     }
 
     /**
      * About page loader
      */
-    function about() {
+    public function about() {
         $this->layout = "v2_light";
-        $this->pageTitle = 'About Us';
+        $this->set('title_for_layout',  'About Us');
     }
     
     /**
@@ -82,7 +82,7 @@ class PagesController extends AppController {
         }
         
         $this->layout = "v2_ucampus";
-        $this->pageTitle = 'Your college everything.';
+        $this->set('title_for_layout', 'Your college everything.');
     }
 
 }

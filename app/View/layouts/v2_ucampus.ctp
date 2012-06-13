@@ -6,14 +6,14 @@
         <?php echo 'uLink | '.$title_for_layout; ?>
     </title>
     <?php
-      // print meta tags
+       // print meta tags
         echo $this->Html->meta('icon');
     echo $this->Html->meta('viewport','width=device-width, initial-scale=1.0');
     echo $this->Html->meta('description','Handle your everyday college activities with uLink.');
     echo $this->Html->meta('author','uLink, Inc.');
 
     // print styles
-    echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
+    echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css', 'kevin.css'));
     echo $this->Html->script(array('jquery.min.js','var.js', 'validate.js'));
     ?>
 
@@ -50,6 +50,54 @@
                         </a>
                     </li>
                 </ul>
+                <div class="span2">&nbsp;</div><!-- /nav middle spacer -->
+                <ul class="nav pull-right">
+                    <li class="divider-vertical"></li>
+
+                    <?php if (!isset($loggedInId)) { ?>
+                    <li>
+                        <a href="<?php echo($this->Html->url('/users/register'));?>">Join</a>
+                    </li>
+                    <li>
+                        <a data-toggle="modal" href="#loginComponent">Log In</a>
+                    </li>
+                    <?php } else { ?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-user icon-white"></i>
+                            <span id="profile-mgmt-username"><?php echo $loggedInUserName ?></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu profile-mgmt">
+                            <li>
+                                <div class="span3">
+                                    <?php
+                                            if ($profileImgURL != '' && file_exists(WWW_ROOT . '/img/files/users/' . $profileImgURL)) {
+                                                echo $this->Html->image('files/users/' . $profileImgURL . '', array('alt' =>
+                                    'profileimage'));
+                                    } else {
+                                    echo $this->Html->image('files/users/noImage.jpg', array('alt' => 'noimage'));
+                                    }
+                                    ?>
+                                    <span id="profile-mgmt-name"><?php echo $loggedInName?></span>
+                                </div>
+                                <a href="<?php echo($this->Html->url('/users/'));?>">Manage my profile</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <?php
+                                    if ($loggedInFacebookId > 0):
+                                echo $this->Html->link('Sign Out', '#', array('class' => 'login', 'onclick' =>
+                                'FB.Connect.logout(function() { document.location = "' . $this->Html->url('/users/logout/') .
+                                '"; });return false;'));
+                                else:
+                                ?>
+                                <a href="<?php echo $this->Html->url('/users/logout');?>">Sign Out</a>
+                                <?php endif; }?>
+                            </li>
+                        </ul>
+                    </li> <!-- /dropdown -->
+                </ul>
             </div><!--/.nav-collapse -->
         </div>
     </div>
@@ -60,7 +108,7 @@
 <!-- /page content -->
 
 <!-- global components -->
-<?php echo $this->element('login'); ?>
+<?php echo $this->element('login'); echo $this->element('view_profile');?>
 <!-- /global components -->
 <footer>
     <div class="container">
@@ -88,8 +136,7 @@
 </footer> <!-- /footer -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-
-<?php echo $this->Html->script(array('ulink.js','var.js','validate.js','form-submit.js','ajax.js'));?>
+<?php echo $this->Html->script(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
 
 <!-- facebook scripts -->
 <script type="text/javascript"

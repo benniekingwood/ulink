@@ -3,8 +3,7 @@
 <head>
     <?php echo $this->Html->charset(); ?>
     <title>
-        <?php __('uLink | '); ?>
-        <?php echo $title_for_layout; ?>
+        <?php echo 'uLink | '.$title_for_layout; ?>
     </title>
     <?php
         // print meta tags

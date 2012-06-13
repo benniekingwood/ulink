@@ -46,7 +46,7 @@
                             <li>
                                 <div class="row">
                                     <div class="span3">
-                                        <img src="/img/noImage.jpg" alt="">
+                                        <img src="/img/kevin.png" alt="">
                                     </div>
                                     <div class="span4">
                                         <h3>Kevin Tindall</h3>
