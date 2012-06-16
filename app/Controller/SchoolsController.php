@@ -15,9 +15,9 @@ class SchoolsController extends AppController {
     var $paginate_limit_admin = '20';
     var $paginate = "";
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('*');
+        $this->Auth->allow('suggestion');
     }
 
     /**

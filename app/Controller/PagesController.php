@@ -1,6 +1,7 @@
 <?php
 /**
- *
+ * This controller handles all basic main page 
+ * navigation in uLink
  */
 class PagesController extends AppController {
 
@@ -9,10 +10,15 @@ class PagesController extends AppController {
     var $components = array('RequestHandler');
     var $helpers = array('Html', 'Form', 'Js');
 
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow();
+    }
+    
     /**
      * Home uLink homepage loader.
      */
-    function home() {
+    public function home() {
         $this->layout = 'v2';
         $this->set('title_for_layout','Your college everything.');
         $this->chkAutopass();
@@ -35,7 +41,7 @@ class PagesController extends AppController {
     /**
      * Success page loader for new users activating
      */
-    function success() {
+    public function success() {
         $this->layout = "v2";
         $this->set('title_for_layout','Your college everything.');
     }
@@ -43,7 +49,7 @@ class PagesController extends AppController {
     /**
      * Help page loader
      */
-    function help() {
+    public function help() {
         $this->layout = "v2_light";
         $this->set('title_for_layout','Help');
     }
@@ -75,12 +81,11 @@ class PagesController extends AppController {
     /**
      * UCampus home page loader
      */
-    function ucampus() {
-        // if the user is not logged in, redirect them to the login screen
-        if (!$this->Auth->user()) {
+    public function ucampus() {
+        if (!$this->Auth->User()) {
             $this->redirect(array('controller' => 'users','action' => 'login'));
         }
-        
+
         $this->layout = "v2_ucampus";
         $this->set('title_for_layout', 'Your college everything.');
     }

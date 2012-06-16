@@ -10,38 +10,39 @@ class UsersController extends AppController {
     var $name = 'Users';
     var $uses = array('User', 'Country', 'State', 'City', 'School', 'Review', 'Domain');
     var $helpers = array('Html', 'Form', 'Js');
-    var $components = array('Email', 'Auth', 'Session', 'RequestHandler');
+    public $components = array('Email', 'Session', 'RequestHandler', 'Security', 'Cookie','Auth');
     var $paginate_limit = '20';
     var $paginate_limit_front = '10';
     var $paginate_limit_front_compact = '10';
     var $paginate_limit_admin = '20';
     var $paginate = "";
 
+    /**
+     * This method will be called before every action executes
+     */
     function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('*');
+        $this->Auth->allow('register', 'forgotpassword');
+        $this->Security->csrfCheck = false;
+        $this->Security->validatePost = false;
     }
 
     /**
      * Handles the login action
      */
-    function login() {
+    public function login() {
         $this->set('title_for_layout','Login to uLink');
-
-        if (isset($_POST['username'])) {
-            $this->autoRender = false;
-            $this->layout = null;
-        } else {
-            $this->layout = "v2_no_login_header";
-        }
         // if the user is already authenticated or there is post data...
         if ($this->Auth->user() || (isset($_POST['username']) && isset($_POST['password']))) {
+            $this->autoRender = false;
+            $this->layout = null;
+     
             // if there is data set from the form
             if (!empty($this->request->data)) {
                 // if "remember_me" was not clicked, removed any user data from the Cookie
-                if (empty($this->request->data['User']['remember_me'])) {
-                    $this->Cookie->del('User');
-                } else {
+                if (!isset($_POST['username'])) {
+                    $this->Cookie->delete('User');
+                } else { 
                     // add the user info as a Cookie for 2 weeks
                     $cookie = array();
                     $cookie['username'] = $this->request->data['User']['username'];
@@ -51,34 +52,45 @@ class UsersController extends AppController {
                 // remove the remember_me form data from the data object
                 unset($this->request->data['User']['remember_me']);
             }
-
             // grab the user activation status based on the passed in username/password
             $userActCheck = $this->User->find('all', array('conditions' => 'User.username="' . $_POST['username'] . '"', 'fields' => array('User.activation','User.deactive')));
-
-            // authenticate the user
-            $getInfo = $this->Auth->user();
-	
+           
+            /**
+             * Grab the authenticated user from the session
+             * Note: at this point the user has already been
+             * authenticated in the AppController::beforeFilter function
+             */
+            $getInfo = $this->Auth->User();
+                        
             // if a user was retrieved...success
-            if ($getInfo) {
+            if ($getInfo != null) {   
                 // if the user was deactivated, reactivate them
                 if ($userActCheck[0]['User']['deactive'] == "1") {
                     $this->User->id = $getInfo['User']['id'];
                     $this->User->saveField('deactive', '0');
                 }
+                // set the username to be used on the front end
+                $this->set('username',$getInfo['username']);
 
-                $this->set('username',$getInfo->username);
-                if (!empty($_POST['loginMain'])) {
+                // if this was from the login page
+                if (isset($_POST['loginMain'])) {
                     echo "main";
-                }  else {
+                    exit;
+                }  else { // else this was from the login modal
                     echo "yes";
+                    exit;
                 }
-            } else if ($userActCheck[0]['User']['activation'] == "0") {    // user is not active
+            } else if ($userActCheck[0]['User']['activation'] == "0") {  
+                // user is not active
                 echo "std";
-            } else {   // finally it must be an invalid login
-                echo "in-valid";
+                exit;
+            } else {   // finally it must be an invalid login 
+                echo "in-valid";  
+                exit;
             }
-        }
-        
+        } else { // page is initially loading
+            $this->layout = "v2_no_login_header";
+        } 
     } // login
 
     /**
@@ -106,7 +118,6 @@ class UsersController extends AppController {
 
         // if there is form data, continue with the process
         if (!empty($this->request->data)) {
-
             // if the email was provided
             if (!empty($this->request->data['User']['email'])) {
                 $useremail = $this->request->data['User']['email'];
@@ -115,7 +126,8 @@ class UsersController extends AppController {
                 $user = $this->User->find('all', array('conditions' => 'User.email="' . $useremail . '"'));
 
                 // if a user was successfully retrieved
-                if ($user) {
+                if ($user != null) {      
+
                     // grab a random string for the auto password
                     $autopass = UsersController::getRandomString();
 
@@ -149,31 +161,30 @@ class UsersController extends AppController {
 
                         // if the email was sent successfully
                         if ($this->Email->send()) {
-                            $this->Session->setFlash('Your new password was sent to ' . $useremail . '.');
+                            $this->set('forgotError', 'false');
+                            $this->Session->setFlash('Your new password was sent to ' . $useremail . '.','default', array('class' => 'help-inline success'));
 
                             // TODO: here have the same page just show a panel with a green check box 
                             // saying the message above about the new password being sent
-                            //$this->redirect(array('controller' => 'users', 'action' => 'login'));
                         } else {
                             $this->set('forgotError', 'true');
                             $this->Session->setFlash('There was a problem sending the password email. Please try again later, or contact help@theulink.com', 'default', array('class' => 'help-inline error'));
                         }
                     } else {  // saving of the user failed
                         $this->set('forgotError', 'true');
-
                         $this->Session->setFlash('There was an issue with your account,  please try again later.');
                         $this->request->data = null;
                     }
                 } else {  // no user was retrieved for that specified email
                     $this->set('forgotError', 'true');
                     $this->Session->setFlash('There is no uLink account associated with this email, please try another.', 'default', array('class' => 'help-inline error'));
-                   // $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
                 }
             } else {  // no email was provided for the user
                 $this->set('forgotError', 'true');
                 $this->Session->setFlash('Please enter your email address.',  'default', array('class' => 'help-inline error'));
-               // $this->redirect(array('controller' => 'users', 'action' => 'forgotpassword'));
             }
+        } else { // this is just initial page load
+            $this->set('forgotError', 'init');
         }
     } // forgotpassword
 
@@ -941,12 +952,10 @@ class UsersController extends AppController {
             'Country' => array(
                 'conditions' => array (
                     'countries_iso_code' => $code)))));
-        $this->log('here', 'debug');
 
         // build up the states list and set in view
         foreach ($data_states as $state) {
             $states[$state['State']['id']] = $state['State']['name'];
-            $this->log($state['State']['name'], 'debug');
         }
         $this->set('states', $states);
     } // getStatesByCountryCode
@@ -1080,7 +1089,6 @@ class UsersController extends AppController {
         $email = $_POST['data']['User']['email'];
         $schoolSelect = $_POST['school_id'];
         $schoolStatus = $_POST['school_status'];
-        // $this->log('schoolstatus-' . $schoolStatus . '-', 'debug');
 
 
         /*  $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''
@@ -1096,7 +1104,6 @@ class UsersController extends AppController {
         // if (empty($chkuserExist)) {
 
         if ($schoolStatus != 'Alumni') {
-            $this->log('here in checking out -', 'debug');
             $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . $schoolSelect
                 )
             );
@@ -1122,7 +1129,6 @@ class UsersController extends AppController {
                 echo "false";
             }
         } else {
-            $this->log('it is an alumn, returing true', 'debug');
             echo "true";
         }
         //  } else {

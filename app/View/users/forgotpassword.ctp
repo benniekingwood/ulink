@@ -2,14 +2,14 @@
     $(document).ready(function () {
         $("#btnForgotPassword").click(function() {
             var valid = true;
+            var email = $('#email');
             // first validate the form fields
-            if ($('#email').val() == "") {
-                $('#email').focus();
+            if (email.val() == "" || email.val() == undefined) {
+                email.focus();
                 valid = false;
             } else {
-                $('#email').blur();
+                email.blur();
             }
-
             // if valid submit the form
             if(valid) {
                 return valid;
@@ -36,9 +36,9 @@
         <div id="forgot-form-container" class="control-group">
             <?php echo $this->Form->create('User', array('id' => 'forgotPassswordForm', 'action' => 'forgotpassword'));?>
             <div class="controls">
-                <?php echo $this->Form->text('email', array('div' => false, 'label' => false, 'class'=>'input-xxlarge ulink-input-bigfont', 'placeholder' => 'email'));?>
+                <?php echo $this->Form->text('email', array('id'=>'email','div' => false, 'label' => false, 'class'=>'input-xxlarge ulink-input-bigfont', 'placeholder' => 'email'));?>
                 <span htmlfor="UserEmail" generated="true" class="help-inline error" style="display:block;"></span>
-                <span class="help-inline"><?php $this->Session->flash(); ?></span>
+                <span id="login-message" class="help-inline"><?php echo $this->Session->flash(); ?></span>
             </div>
         </div>
         <?php echo $this->Form->button('Send Me Instructions', array('id'=>'btnForgotPassword', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
@@ -46,7 +46,9 @@
     </div>
 </div>
 <?php if($forgotError=='true') { ?>
-        <script>$('#forgot-form-container').addClass('error');</script>
-<?php } else {  ?>
-        <script>$('#forgot-form-container').removeClass('error');</script>
+        <script>$('#forgot-form-container').addClass('error');
+        $('#forgot-form-container').removeClass('success');</script>
+<?php } else if($forgotError=='false'){  ?>
+        <script>$('#forgot-form-container').removeClass('error');
+       $('#forgot-form-container').addClass('success');</script>
 <?php } ?>

@@ -6,9 +6,9 @@
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
         $("#loginFormMain").submit(function () {
-            $.post(hostname + "users/login", { username:$('#username').val(), password:$('#password').val(), rand:Math.random(), loginMain:$('#loginMain').val() },
+            $.post("<?php echo $this->Html->url(array('controller'=>'users','action'=>'login'),true) ?>", {remember_me:$('#remember_me').val(), username:$('#username').val(), password:$('#password').val(), rand:Math.random(), loginMain:$('#loginMain').val() },
                     function (data) {
-                        switch (data) {
+                        switch (data) { 
                             case 'main':
                                 $('#loginFormMain-container').addClass('success');
 
@@ -128,7 +128,6 @@
                     <span id="loginMain-message" class="help-inline"></span>
                 </div>
             </div>
-            <?php echo $this->Form->end(); ?>
         </div>
         <!-- /modal-body -->
         <div class="modal-footer">
@@ -158,11 +157,12 @@
             <div class="row">
                 <div class="span1">&nbsp;</div>
                 <div class="pull-left remember-forgot">
-                    <?php echo($this->Form->checkbox('remember_me')) ?>&nbsp;Remember Me&nbsp;|&nbsp;<a
+                      <?php echo $this->Form->checkbox('remember_me', array('id' => 'remember_me', 'label' => false)); ?>&nbsp;Remember Me&nbsp;|&nbsp;<a
                         href="<?php echo($this->Html->url('/users/forgotpassword')); ?>">Forgot Password?</a>
                 </div>
             </div>
         </div>
         <!-- /modal-footer -->
+        <?php echo $this->Form->end(); ?>
     </div>
 </div>

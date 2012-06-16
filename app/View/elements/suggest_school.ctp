@@ -1,4 +1,4 @@
-<?php //echo $this->Html->script(array('jquery.min.js')); ?>
+<script src="/js/jquery.min.js"></script>
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
         $('#suggestSchoolForm').ajaxForm({
@@ -6,7 +6,7 @@
                 if (response == "true") {
                     $('#btnsuggest').addClass("disabled");
                     $('#form-response-container').show();
-                    $('#form-container').hidecho();
+                    $('#form-container').hide();
                     $('#suggest-response').html('Thank you!  Your suggestion has been submitted.  Please check back with us to see if your school has been added.');
                 } else if (response == "false") {
                     $('#formResponse').html('Sorry! Your suggestion was not submitted. Please try again later.');

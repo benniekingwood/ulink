@@ -22,7 +22,7 @@ class AppController extends Controller {
 
     var $uses = array('School', 'User', 'Review', 'Article');
     var $helpers = array('Html', 'Js',  'Session', 'Form');
-    var $components = array('RequestHandler', 'Auth', 'Cookie', 'Session');
+    var $components = array('RequestHandler', 'Security', 'Session', 'Cookie', 'Auth');
     var $last_error = "";            // last error message set by this class
     var $units = _UNIT_MILES;        // miles or kilometers
     var $decimals = 2;               // decimal places for returned distance
@@ -37,7 +37,7 @@ class AppController extends Controller {
     /**
      * Default constructor, will instantiate a facebook client
      */
-    function __construct($request = null, $response = null) {
+    public function __construct($request = null, $response = null) {
         parent::__construct($request, $response);
         // Prevent the 'Undefined index: facebook_config' notice from being thrown.
         $GLOBALS['facebook_config']['debug'] = NULL;
@@ -45,13 +45,21 @@ class AppController extends Controller {
         $this->facebook = new Facebook($this->__fbApiKey, $this->__fbSecret);
     }
 
-    function beforeFilter() {
-        $this->Auth->allow = array('*');
-        $this->Auth->userModel = 'User';  // to set the table to use with authentication
+    /**
+     * This function is called before every controller action
+     */
+    public function beforeFilter() {
+        
+        // to set the table to use with authentication
+        $this->Auth->userModel = 'User'; 
+        
+        // set the fields to be used for authentication
         $this->Auth->fields = array('username' => 'username', 'password' => 'password');
 
         //check to see if user is signed in with facebook
         $this->__checkFBStatus();
+        
+        // now check to see if this is admin site authentication
         if (isset($this->request->params['admin'])) {
             if ($this->request->params['admin'] == 1 && $this->request->action != 'admin_forgot_password') {
                 if ($this->request->action != 'admin_login' && $this->request->action != 'admin_logout') {
@@ -62,35 +70,38 @@ class AppController extends Controller {
                     }
                 }
             }
-        } else {
+        } else { // handle basic uLink authentication
+            
+            // set the logout redirect to the splash page of uLink
+            $this->Auth->logoutRedirect = array('controller' => 'pages', 'action' => 'home');
+            
+            // set any user contraints for successful authentication
+            $this->Auth->userScope = array('User.activation' => '1', 'User.deactive' => '0');
+            
+            // disable automatic redirects
+            $this->Auth->autoRedirect = false;
+            
+            // set the cookie name to Ulink
+            $this->Cookie->name = 'Ulink';
+            
+            // if the username as password was posted, set in request on User
             if (isset($_POST['username']) && isset($_POST['password'])) {
                 $this->request->data['User']['username'] = $_POST['username'];
                 $this->request->data['User']['password'] = $_POST['password'];
+                $this->Auth->login();
             } 
-               // $this->set('loggedInFacebookId', $this->Auth->user('fbid'));
             
-
-            $this->Auth->loginError = "<font color='#fff'></font>";
-
-            $this->Auth->logoutRedirect = array('controller' => 'pages', 'action' => 'home');
-            $this->Auth->allow('*');
-            //$this->Auth->authorize = 'controller';
-            $this->Auth->allow = array('*');
-
-            $this->Auth->userScope = array('User.activation' => '1');
+            // set some variables that can be accessed in all views
             $this->set('loggedInId', $this->Auth->user('id'));
             $this->set('loggedInName', $this->Auth->user('firstname').' '.$this->Auth->user('lastname'));
             $this->set('userSchoolId', $this->Auth->user('school_id'));
             $this->set('loggedInUserName', $this->Auth->user('username'));
             $this->set('loggedInFacebookId', $this->Auth->user('fbid'));
             $this->set('profileImgURL', $this->Auth->user('image_url'));
-            $this->Auth->autoRedirect = false;
-            $this->Cookie->name = 'Ulink';
 
-
-            if ($this->Auth->user('id')) {
+            // this section will load any reviews from the user
+            if ($this->Auth->user('id')) {         
                 $this->PermitModel = ClassRegistry::init("School");
-
                 $Shoolreview = $this->PermitModel->find('all', array('conditions' => array('School.id' => $this->Auth->user('school_id'))));
                 $this->set('Shoolreview', $Shoolreview);
                 $this->PermitModel = ClassRegistry::init("Review");
@@ -107,14 +118,15 @@ class AppController extends Controller {
                 $this->set('RandCaptcha', $randCaptcha);
             }
 
-            if (!$this->Auth->user('id')) {
+            // login user from cookie if they are not logged in
+            if (!$this->Auth->user('id')) {          
                 $cookie = $this->Cookie->read('User');
                 if ($cookie) {
                     $this->Auth->login($cookie);
                 }
             }
-        }// else end here	
-    }
+        }// end basic uLink auth	
+    } // beforefilter
 
     /**
      * This function will generate a random String based on the passed in parameters
@@ -269,17 +281,23 @@ class AppController extends Controller {
             }
         }
         return $result;
-    }
+    } // uploadFiles
 
-//ef
-
+    /**
+     * This function will create cookies for the admin site.  
+     * Defaults to 72 hours
+     *
+     * @param $user_id
+     */
     function createCookies($user_id) {
-
         $this->Cookie->write('admin_id', $user_id, false, '72 hour');
     }
 
+    /**
+     *
+     *
+     */
     function get_distance($zip1Lat, $zip2Lat, $zip1Long, $zip2Long) {
-
         $details1[0] = $zip1Lat;
         $details2[0] = $zip2Lat;
         $details1[1] = $zip1Long;
@@ -291,10 +309,13 @@ class AppController extends Controller {
             return round($miles * (1.609344), $this->decimals);
         else
             return round($miles, $this->decimals);       // must be miles
-    }
+    } // get_distance
 
-//ef 
 
+    /**
+     *  This function will calculate the mileage between
+     *  to lat/long points.
+     */
     function calculate_mileage($lat1, $lat2, $lon1, $lon2) {
 
         // Convert lattitude/longitude (degrees) to radians for calculations
@@ -312,31 +333,26 @@ class AppController extends Controller {
         $distance = 3956 * 2 * atan2(sqrt($temp), sqrt(1 - $temp));
 
         return $distance;
-    }
+    } // calculate_mileage
 
-//ef
-
-    function chkAutopass() {
-        $sessVar = $this->Auth->user();
-
-
-
-
-        $userDetails = ClassRegistry::init('User')->find('first', array('conditions' => array('User.id' => $sessVar['User']['id'])));
-
-        if ($userDetails['User']['autopass'] == 1) {
-
-            $this->Session->setFlash('Your password is auto generated, please change your password to have full access to uLink.');
-            $this->redirect(array('controller' => 'users', 'action' => 'index'));
+    /**
+     * This function will check to see if the user has an auto generated
+     * password.
+     */
+    public function chkAutopass() {
+        $sessVar = $this->Auth->User();
+        if($sessVar != null) {
+            $userDetails = ClassRegistry::init('User')->find('first', array('conditions' => array('User.id' => $sessVar['id'])));
+            
+            if ($userDetails['User']['autopass'] == 1) {
+                $this->Session->setFlash('Your password is auto generated, please change your password to have full access to uLink.');
+                $this->redirect(array('controller' => 'users', 'action' => 'index'));
+            }
         }
-    }
+    } // chkAutopass
 
-
-
-// ef
 
     private function __checkFBStatus() {
-
 
         $this->facebook->get_loggedin_user();
 

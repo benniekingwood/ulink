@@ -5,8 +5,8 @@
 <script language="javascript" type="text/javascript">
     $(document).ready(function() {
         $("#loginForm").submit(function() {
-            $.post(hostname+"users/login",{ username:$('#username').val(),password:$('#password').val(), rand:Math.random() },
-                    function(data) {
+            $.post("<?php echo $this->Html->url(array('controller'=>'users','action'=>'login'),true) ?>",{remember_me:$('#remember_me').val(), username:$('#username').val(),password:$('#password').val(), rand:Math.random() },
+                    function(data) { 
                         if(data=='yes') {
                             $('#loginForm-container').addClass('success');
 

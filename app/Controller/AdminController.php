@@ -6,9 +6,9 @@ class AdminsController extends AppController {
     var $uses = array('Admin', 'User', 'Review', 'Suggestion');
     var $components = array('Cookie', 'Email');
 
-    function beforeFilter() {
+   public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('*');
+        $this->Auth->allow();
     }
 
     function admin_index() {

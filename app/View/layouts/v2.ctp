@@ -106,7 +106,11 @@
 
 <!-- page content -->
 <?php
-echo $this->Session->flash();
+/**
+ * NEEDED to remove here- session flash needs to be on the individual
+ * inner pages (where desired) because it is placed a special locations. 
+ * echo $this->Session->flash();
+ */
 echo $content_for_layout;
 ?>
 <!-- /page content -->
