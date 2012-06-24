@@ -20,6 +20,24 @@ class Event extends AppModel {
 			
 			return $events;
 		}
+		
+		public function getActive()
+		{
+			$events = $this->find('all', array('conditions' => array('active' => '1')));
+			return $events;
+		}
+		
+		public function getNotActive()
+		{
+			$events = $this->find('all', array('conditions' => array('active' => '0')));
+			return $events;
+		}
+		
+		public function getAll()
+		{
+			$events = $this->find('all');
+			return $events;
+		}
  
 		 
 }
