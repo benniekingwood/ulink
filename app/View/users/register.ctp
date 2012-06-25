@@ -9,7 +9,7 @@ $(document).ready(function () {
     });
 
     jQuery.validator.addMethod("checkUsername", function (value, element) {
-        alert(checkUsernamecho());
+        alert(checkUsername());
     });
 
     /**
@@ -17,13 +17,13 @@ $(document).ready(function () {
      * validate the username to make sure it's not
      * already in use.
      */
-    function checkUsernamecho() {
+    function checkUsername() {
         var username = $("#UserUsername").val();
         var dataString = 'username=' + username;
         $.ajax({
             type:"POST",
             async:false,
-            url:hostname + "users/checkUsername",
+            url: "<?php echo $this->Html->url(array('controller'=>'users','action'=>'checkUsername'),true) ?>",
             data:dataString,
             success:function (data) {
                 if (data == '1') {
@@ -36,14 +36,14 @@ $(document).ready(function () {
         });
     }
 
-    $("#UserSchoolStatus").changecho(function () {
+    $("#UserSchoolStatus").change(function () {
         $("#UserEmail").removeData("previousValue");
     });
 
-    $("#UserSchoolId").changecho(function () {
+    $("#UserSchoolId").change(function () {
         $("#UserEmail").removeData("previousValue");
     });
-    $("#UserRegisterForm").validatecho({
+    $("#UserRegisterForm").validate({
         ignore: ':hidden',
         errorClass: "jerror",
         errorPlacement:function (error, element) {
@@ -51,7 +51,7 @@ $(document).ready(function () {
         },
         invalidHandler:function () {
            if ( $(this).prev().hasClass('jerror')) {
-                $(this).prev().removecho();
+                $(this).prev().remove();
             }
         },
         rules:{
@@ -132,7 +132,7 @@ $(document).ready(function () {
 <div class="container">
     <?php echo $this->Form->create('User', array('action' => 'register', 'name' => 'UserRegisterForm', 'type' => 'file')); ?>
     <div id="login-details-container" class="well well-white span7 offset2">
-        <span class="flash-error"><?php $this->Session->flash(); ?></span>
+        <span class="flash-error"><?php echo $this->Session->flash(); ?></span>
         <h3>Login Details</h3>
 
         <div id="login-details-form-fields">

@@ -129,6 +129,10 @@ footer .social > a:hover {
     padding-left: 20px;
     font-size:1.1em;
 }
+.profile-info {
+    color: #3a87ad;
+    padding-left: 20px;
+}
 #profile-message,#profile-password-message {
     margin: 10px 0;
 }
@@ -160,6 +164,10 @@ footer .social > a:hover {
 
 .remove-profile-image {
     margin-left: 27px;
+}
+
+.profile-file-upload {
+    color: #F0A000;
 }
 
 /* NAVBAR SECTION */
@@ -757,9 +765,10 @@ p.input-info {
     font-weight:bold;
 }
 
-.success-register-container {
+.success-register-container, .account-confirm-container {
     margin-top: 100px;
 }
+
 /** Register page styles **/
 .flash-error {
     color: #993333;

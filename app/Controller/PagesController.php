@@ -21,7 +21,6 @@ class PagesController extends AppController {
     public function home() {
         $this->layout = 'v2';
         $this->set('title_for_layout','Your college everything.');
-        $this->chkAutopass();
     }
 
     /**
@@ -88,6 +87,7 @@ class PagesController extends AppController {
 
         $this->layout = "v2_ucampus";
         $this->set('title_for_layout', 'Your college everything.');
+        $this->chkAutopass();
     }
 
 }

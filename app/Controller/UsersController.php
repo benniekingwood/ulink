@@ -20,9 +20,9 @@ class UsersController extends AppController {
     /**
      * This method will be called before every action executes
      */
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('register', 'forgotpassword');
+        $this->Auth->allow('register', 'forgotpassword', 'checkUsername', 'checkdomain', 'confirm', 'removeImage');
         $this->Security->csrfCheck = false;
         $this->Security->validatePost = false;
     }
@@ -52,8 +52,6 @@ class UsersController extends AppController {
                 // remove the remember_me form data from the data object
                 unset($this->request->data['User']['remember_me']);
             }
-            // grab the user activation status based on the passed in username/password
-            $userActCheck = $this->User->find('all', array('conditions' => 'User.username="' . $_POST['username'] . '"', 'fields' => array('User.activation','User.deactive')));
            
             /**
              * Grab the authenticated user from the session
@@ -61,29 +59,37 @@ class UsersController extends AppController {
              * authenticated in the AppController::beforeFilter function
              */
             $getInfo = $this->Auth->User();
-                        
             // if a user was retrieved...success
-            if ($getInfo != null) {   
-                // if the user was deactivated, reactivate them
-                if ($userActCheck[0]['User']['deactive'] == "1") {
-                    $this->User->id = $getInfo['User']['id'];
-                    $this->User->saveField('deactive', '0');
-                }
-                // set the username to be used on the front end
-                $this->set('username',$getInfo['username']);
+            if ($getInfo != null) { 
+                // first check to see if the user is active
+                if ((int)$getInfo['activation'] == 0) { 
+                    // log the user out
+                    $this->Auth->logout();
+                    // user is not active
+                    echo "std";
+                    exit;
+                } else if ((int)$getInfo['autopass'] == 1) { // if the user is active but might have reset their password
+                    // user is active but needs to change their password
+                    echo "auto";
+                    exit;
+                } else {
+                    // if the user was deactivated, reactivate them
+                    if ((int)$getInfo['deactive'] == 1) {
+                        $this->User->id = $getInfo['id'];
+                        $this->User->saveField('deactive', 0);
+                    }
+                    // set the username to be used on the front end
+                    $this->set('username',$getInfo['username']);
 
-                // if this was from the login page
-                if (isset($_POST['loginMain'])) {
-                    echo "main";
-                    exit;
-                }  else { // else this was from the login modal
-                    echo "yes";
-                    exit;
+                    // if this was from the login page
+                    if (isset($_POST['loginMain'])) {
+                        echo "main";
+                        exit;
+                    }  else { // else this was from the login modal
+                        echo "yes";
+                        exit;
+                    }
                 }
-            } else if ($userActCheck[0]['User']['activation'] == "0") {  
-                // user is not active
-                echo "std";
-                exit;
             } else {   // finally it must be an invalid login 
                 echo "in-valid";  
                 exit;
@@ -96,9 +102,10 @@ class UsersController extends AppController {
     /**
      * Handles the logout action
      */
-    function logout() {
-        $this->layout = "v2";
-        $this->redirect($this->Auth->logout());
+    public function logout() {
+        $this->layout = null;
+        $this->Auth->logout();
+        $this->redirect("/");
     } // logout
 
     /**
@@ -106,7 +113,7 @@ class UsersController extends AppController {
      * the inputted user email exists, and will
      * reset the password for that user and send them an email.
      */
-    function forgotpassword() {
+    public function forgotpassword() {
         $this->set('title_for_layout','Forgot Password');
         $this->layout = "v2";
 
@@ -144,30 +151,35 @@ class UsersController extends AppController {
 
                     // if saving the user
                     if ($this->User->save($this->request->data)) {
-                        $this->Email->to = $useremail;
-                        $this->Email->subject = 'Your uLink temporary password';
-                        $this->Email->replyTo = 'noreply@theulink.com';
-                        $this->Email->from = 'uLink <noreply@theulink.com>';
-                        $this->Email->sendAs = 'html';
-                        $this->Email->template = 'forgotpassword';
-                        /* SMTP Options */
-                        $this->Email->smtpOptions = array('port' => '587',
-                            'timeout' => '30',
-                            'host' => 'mail.theulink.com',
-                            'username' => 'bennie.kingwood@theulink.com',
-                            'password' => 'iPhone1983');
-                        /* Set delivery method */
-                        $this->Email->delivery = 'smtp';
+                        
+                        // create the email object
+                        $email = new CakeEmail('gmail');
+                        $email->to($useremail);
+                        $email->subject('Your uLink Temporary Password');
+                        $email->replyTo('noreply@theulink.com');
+                        $email->emailFormat('html');
+                        $email->template('forgotpassword');
+                        
+                        // set the variables that will be needed in the template
+                        $email->viewVars(array(
+                                               'username' => $user[0]['User']['username'],
+                                               'name' => $user[0]['User']['firstname']. ' ' .$user[0]['User']['lastname'],
+                                               'auto_pass' => $autopass
+                                               ));
+                        try {
+                            // if the email was sent successfully
+                            if ($email->send()) {
+                                $this->set('forgotError', 'false');
+                                $this->Session->setFlash('Your new password was sent to ' . $useremail . '.','default', array('class' => 'help-inline success'));
 
-                        // if the email was sent successfully
-                        if ($this->Email->send()) {
-                            $this->set('forgotError', 'false');
-                            $this->Session->setFlash('Your new password was sent to ' . $useremail . '.','default', array('class' => 'help-inline success'));
-
-                            // TODO: here have the same page just show a panel with a green check box 
-                            // saying the message above about the new password being sent
-                        } else {
-                            $this->set('forgotError', 'true');
+                                // TODO: here have the same page just show a panel with a green check box 
+                                // saying the message above about the new password being sent
+                            } else {
+                                $this->set('forgotError', 'true');
+                                $this->Session->setFlash('There was a problem sending the password email. Please try again later, or contact help@theulink.com', 'default', array('class' => 'help-inline error'));
+                            }
+                        } catch (Exception $e) {
+                            $this->log('An exception was thrown when attempting to send the forgot password email: ' . $e->getMessage());
                             $this->Session->setFlash('There was a problem sending the password email. Please try again later, or contact help@theulink.com', 'default', array('class' => 'help-inline error'));
                         }
                     } else {  // saving of the user failed
@@ -195,7 +207,7 @@ class UsersController extends AppController {
      *
      * @param null $id
      */
-    function register($id = null) {
+    public function register($id = null) {
         $this->set('title_for_layout','Sign up with uLink');
         $this->layout = "v2_no_login_header";
 
@@ -219,44 +231,55 @@ class UsersController extends AppController {
             if ($this->emailExists($this->request->data['User']['email'])) {
                 $this->Session->setFlash('Email already exists in uLink.  Please try another email address.');
             } else {
-                // get the user's password
-                $this->request->data['User']['password2hashed'] = $this->Auth->password($this->request->data['User']['password']);
+                // hash the user's password from the post 
+                $this->request->data['User']['password2hashed'] = AuthComponent::password($this->request->data['User']['password']);
+                // set the hashed password on the new user 
+                $this->request->data['User']['password'] = $this->request->data['User']['password2hashed'];
+                // remove the updated autopass from the user object so that it is not saved in the db
+                unset($this->request->data['User']['password2hashed']);
                 // create their activation key
                 $this->request->data['User']['activation_key'] = String::uuid();
-
+                
                 // save the user
                 if ($this->User->save($this->request->data)) {
                     // build an email to be sent to the user for account activation
-                    $this->Email->to = $this->request->data['User']['email'];
-                    $this->Email->subject = 'uLink Account Activation';
-                    $this->Email->replyTo = 'noreply@theulink.com';
-                    $this->Email->from = 'uLink <noreply@theulink.com>';
-                    $this->Email->sendAs = 'html';
-                    $this->Email->template = 'confirmation';
-                    /* SMTP Options */
-                    $this->Email->smtpOptions = array('port' => '587',
-                        'timeout' => '30',
-                        'host' => 'mail.theulink.com',
-                        'username' => 'bennie.kingwood@theulink.com',
-                        'password' => 'iPhone1983');
-                    /* Set delivery method */
-                    $this->Email->delivery = 'smtp';
-
-                    // now set various info to be used in the view
-                    $this->set('name', $this->request->data['User']['username']);
-                    $this->set('server_name', $_SERVER['SERVER_NAME']);
+                    $email = new CakeEmail('gmail');
+                    $email->to($this->request->data['User']['email']);
+                    $email->subject( 'uLink Account Activation');
+                    $email->replyTo('noreply@theulink.com');
+                    $email->emailFormat('html');
+                    $email->template('confirmation');
+                    
+                    $userId = null;
                     if (isset($this->request->data['User']['id'])) {
-                        $this->set('id', $this->request->data['User']['id']);
+                        $userId = $this->request->data['User']['id'];
                     } else {
-                        $this->set('id', $this->User->getLastInsertID());
+                        $userId = $this->User->getLastInsertID();
                     }
-                    $this->set('code', $this->request->data['User']['activation_key']);
-
-                    // send off the email, and redirect to the successful signup page
-                    if ($this->Email->send()) {
-                        $this->redirect(array('controller' => 'pages', 'action' => 'success'));
-                    } else {
-                        $this->User->del($this->User->getLastInsertID());
+                    
+                    // set the variables that will be needed in the template
+                    $email->viewVars(array(
+                           'name' => $this->request->data['User']['username'],
+                           'server_name' => $_SERVER['SERVER_NAME'],
+                           'code' => $this->request->data['User']['activation_key'],
+                           'id' =>  $userId             
+                     ));
+       
+                    $deleteUser = TRUE;
+                    try {
+                        // send off the email, and redirect to the successful signup page
+                        if ($email->send()) {
+                            $this->redirect(array('controller' => 'pages', 'action' => 'success'));
+                        } else {
+                            $this->User->delete($this->User->getLastInsertID());
+                            $deleteUser = FALSE;
+                            $this->Session->setFlash('There was a problem sending the confirmation email. Please try again, or contact help@thelink.com.');
+                        } 
+                    } catch (Exception $e) {
+                        if($deleteUser) {
+                            $this->User->delete($this->User->getLastInsertID());
+                        }
+                        $this->log('An exception was thrown when attempting to send the confirmation email: ' . $e->getMessage());
                         $this->Session->setFlash('There was a problem sending the confirmation email. Please try again, or contact help@thelink.com.');
                     }
                 } else {  // there was an error when trying to save the user
@@ -296,24 +319,30 @@ class UsersController extends AppController {
     }
 
     /**
+     * This function will activate the new user's account 
+     * in the database.
+     *
      * @param null $user_id
      * @param null $code
      */
-    function confirm($user_id = null, $code = null) {
-        $this->set('title_for_layout','Account confirmation');
+    public function confirm($user_id = null, $code = null) {
+        $this->set('title_for_layout','Account Activation');
         $this->layout = "v2";
 
+        // if the userid and the code are not set throw error
         if (empty($user_id) || empty($code)) {
             $this->set('confirmed', 0);
             $this->render();
         }
-
-        $user = $this->User->find('first', array('conditions' => array('User.id' => $user_id, 'User.activation_key' => $code)
-            )
-        );
+        
+        // grab the user based on the passed in code
+        $user = $this->User->find('first', array('conditions' => array('User.id' => $user_id, 'User.activation_key' => $code)));
+        
+        // if no user was found they are not activated
         if (empty($user)) {
             $this->set('confirmed', 0);
         } else {
+            // activate the user in the database
             $this->User->id = $user_id;
             $this->User->saveField('activation', '1');
 
@@ -336,8 +365,8 @@ class UsersController extends AppController {
         // create a data object with the user's info
         $data = array(
             'User' => array(
-                'id' => $sessVar['User']['id'],
-                'username' => $sessVar['User']['username'],
+                'id' => $sessVar['id'],
+                'username' => $sessVar['username'],
                 'image_url' => ""
             )
         );
@@ -349,66 +378,77 @@ class UsersController extends AppController {
             $this->layout = null;
             unlink("" . WWW_ROOT . "/img/files/users/" . $image_url);
             echo "true";
+            exit;
         } else {
             Configure::write('debug', 0);
             $this->autoRender = false;
             $this->layout = null;
             echo "false";
+            exit;
         }
     } // removeImage
 
     /**
      * Password page loader
+     * @param null change 
      */
-    function password() {
-
+    function password($change=null) {
         // if the user is not logged in, make them
         if (!$this->Auth->user()) {
             $this->redirect(array('action' => 'login'));
         }
         $this->layout = "v2";
         $this->set('title_for_layout','Your college everything.');
+        
+        /* 
+         * If the user has an autogenerated password, we will
+         * display a message for the user that they need to change
+         * their password.
+         */
+        if($change != null) {
+            $this->set('change',$change);
+        }
     }
 
     /**
      * This function will update the password
      * in the user's profile
      */
-    function updatePassword() {
+    public function updatePassword() {
         $validateError = 0;
-
         // if the user is changing their password, perform validation
         if (!empty($this->request->data['User']['oldpass'])) {
+            
             // if the user is changing their password make sure the confirm matches the new
             if (!empty($this->request->data['User']['newpass'])) {
                 if ($this->request->data['User']['newpass'] != $this->request->data['User']['newconfirmpass']) {
                     $this->User->invalidate('newconfirmpass', "The verify password does not match the new password.");
                     $validateError++;
                 }
+                if (strlen($this->request->data['User']['newpass']) < 6) {
+                    $this->User->invalidate('newconfirmpass', "The new password must be at least six characters.");
+                    $validateError++;
+                }
             }
+            
             if($validateError == 0) {
                 $cuser = $this->User->find('first', array('conditions' => 'User.id=' . $this->Auth->user('id'),
                     'fields' => array('User.password')));
+                $this->log($cuser);
                 if ($this->Auth->password($this->request->data['User']['oldpass']) == $cuser['User']['password']) {
                     $this->request->data['User']['password'] = $this->Auth->password($this->request->data['User']['newconfirmpass']);
-                    $this->request->data['User']['autopass'] = 0;
                 } else {
                     $this->User->invalidate('oldpass', 'The current password entered was incorrect, please try again.');
                     $validateError++;
                 }
             }
+        } else {
+            $this->User->invalidate('oldpass', "Please enter your old password.");
+            $validateError++;
         }
 
         // grab the current logged in user
         $sessVar = $this->Auth->user();
-
-        // create a data object with the user's info
-        $data = array(
-            'User' => array(
-                'id' => $sessVar['User']['id'],
-                'username' => $sessVar['User']['username']
-            )
-        );
 
         Configure::write('debug', 0);
         $this->autoRender = false;
@@ -418,18 +458,30 @@ class UsersController extends AppController {
         if($validateError > 0) {
             if($this->User->invalidFields() != null) {
                 $errors = '';
-                foreach($this->User->invalidFields() as $key => $value) {
-                    $errors .= $value . '<br />';
+                foreach($this->User->invalidFields() as $value) {
+                    $errors .= $value[0] . '<br />';
                 }
-                $this->set('errors', $errors);
             }
             echo $errors;
+            exit;
         }  else {
+            // create a data object with the user's info
+            $data = array(
+              'User' => array(
+                  'id' => $sessVar['id'],
+                  'username' => $sessVar['username'],
+                  'password' => $this->request->data['User']['password'],
+                  'autopass' => 0
+                  )
+              );
+
             // update the user's profile in the db
             if ($this->User->save($data)) {
                 echo "true";
+                exit;
             } else {
                 echo "There was an issue saving your password.  Please try again, or contact help@theulink.com";
+                exit;
             }
         }
 
@@ -461,7 +513,7 @@ class UsersController extends AppController {
      * @param $email
      * @return bool
      */
-    function emailExists($email) {
+    private function emailExists($email) {
         $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''));
         return !empty($chkuserExist);
     }
@@ -470,7 +522,7 @@ class UsersController extends AppController {
      * This function will handle the user
      * updating their profile
      */
-    function index() {
+    public function index() {
         $this->set('title_for_layout','Your college everything');
         $this->layout = "v2";
 
@@ -478,6 +530,7 @@ class UsersController extends AppController {
         if (!$this->Auth->user()) {
             $this->redirect(array('action' => 'login'));
         }
+        
         $validateError = 0;
         // grab the user off the session
         $user = $this->Auth->user();
@@ -485,7 +538,7 @@ class UsersController extends AppController {
         if (empty($this->request->data)) {
 
             // grad the user off the session
-            $this->request->data = $this->User->read('', $user['User']['id']);
+            $this->request->data = $this->User->read('', $user['id']);
 
             // build up the schools data
             $schools = array();
@@ -500,66 +553,72 @@ class UsersController extends AppController {
                 $years[$i] = $i;
             }
 
-            $this->set('schools_id', $user['School']['school_id']);
+            $this->set('schools_id', $user['school_id']);
             $this->set('schools', $schools);
-            $this->set('years_id', $user['User']['year']);
+            $this->set('years_id', $user['year']);
             $this->set('years', $years);
-            $this->set('status', $user['User']['school_status']);
-            $this->set('school_status', $status);
+            $this->set('school_status', $user['school_status']);
         } else { // user hit the "update" button
-
+            
             // set the saved data on the user
             $this->User->set($this->request->data);
-            // validate the user data
-            $this->User->validate();
-
+   
             // validate the first name
             if (empty($this->request->data['User']['firstname'])) {
                 $this->User->invalidate('firstname', 'Please enter your first name');
                 $validateError++;
             }
+            
             // validate teh last name
             if (empty($this->request->data['User']['lastname'])) {
                 $this->User->invalidate('lastname', 'Please enter your last name');
                 $validateError++;
             }
+            
             // validate the graduation year
             if (empty($this->request->data['User']['year'])) {
                 $this->User->invalidate('year', 'Please select your year of graduation');
                 $validateError++;
             }
+            
             // validate the school status
             if (empty($this->request->data['User']['school_status'])) {
                 $this->User->invalidate('school_status', 'Please choose your school status');
                 $validateError++;
             }
+
             // validate the email
-            if ($this->emailExists($this->request->data['User']['email'])) {
+            if (empty($this->request->data['User']['email'])) {
                 $this->User->invalidate('email', 'Email already exists in uLink.  Please submit another.');
                 $validateError++;
             }
-
+            
             // if there are no validation errors
             if (empty($this->User->validationErrors)) {
-
                 // upload the users picture
                 $fileOK = $this->uploadFiles('img/files/users', $this->request->data['User']['file']);
+
                 if (array_key_exists('urls', $fileOK)) {
                     // save the url in the form data
                     $this->request->data['User']['image_url'] = $fileOK['urls'][0];
                 }
-
                 // update the user in the db
                 if ($this->User->save($this->request->data)) {
-                    $this->Auth->login($this->User->read());
+                    // load the saved user back into the Auth component
+                    $user = $this->User->read(null, $this->Auth->user('id'));
+                    // update session and merge any differences
+                    $this->Session->write('Auth.User', array_merge($this->Auth->user(), $this->request->data['User']) );
+
+                    // $this->Auth->login($data);
                     $this->Session->setFlash('<span class="profile-success">Your profile has been updated.</span>');
+                    // redirect back to the my profile page
                     $this->redirect(array('action' => 'index'));
                 }
             } else {
                 if($this->User->invalidFields() != null) {
                     $errors = '';
-                    foreach($this->User->invalidFields() as $key => $value) {
-                        $errors .= $value . '<br />';
+                    foreach($this->User->invalidFields() as $value) {
+                        $errors .= $value[0] . '<br />';
                     }
                     $this->set('errors', $errors);
                 }
@@ -576,16 +635,18 @@ class UsersController extends AppController {
             for ($i = 1960; $i <= date("Y") + 10; $i++) {
                 $years[$i] = $i;
             }
-
-            $this->set('schools_id', $user['School']['school_id']);
+            $this->log($user);
+            $this->set('schools_id', $user['school_id']);
             $this->set('schools', $schools);
-            $this->set('years_id', $user['User']['year']);
+            $this->set('years_id', $user['year']);
             $this->set('years', $years);
-            $this->set('status', $user['User']['school_status']);
-            $this->set('school_status', $status);
+            $this->set('school_status', $user['school_status']);
         }
-    }
+    } // index
 
+    /**
+     * logging..is this needed?
+     */
     function log($msg, $type = LOG_ERROR) {
         return parent::log($msg, $type);
     } // log
@@ -612,7 +673,7 @@ class UsersController extends AppController {
         $sessVar = $this->Auth->user();
 
         // create a data object with the user's info
-        $data = array('User' => array('id' => $sessVar['User']['id'], 'username' => $sessVar['User']['username'], 'deactive' => 1));
+        $data = array('User' => array('id' => $sessVar['id'], 'username' => $sessVar['username'], 'deactive' => 1));
 
         Configure::write('debug', 0);
         $this->autoRender = false;
@@ -622,8 +683,10 @@ class UsersController extends AppController {
         if ($this->User->save($data)) {
             $this->Auth->logout();
             echo "true";
+            exit;
         } else {
             echo "There was an issue deactivating your account.  Please try again, or contact help@theulink.com";
+            exit;
         }
     }  // deactivateaccount
 
@@ -644,7 +707,7 @@ class UsersController extends AppController {
         // grab the user from the db
         $user = $this->User->find('User.id=' . $id);
         $this->set('User', $user);
-        $this->pageTitle = $user['User']['username'] . '\'s profile';
+        $this->pageTitle = $user['username'] . '\'s profile';
     }
 
     function admin_index()
@@ -669,20 +732,20 @@ class UsersController extends AppController {
             'limit' => $this->paginate_limit_front
         );
 
-        if (isset($this->request->data['User']['searchText'])) {
-            $this->Session->write('advancedUserSearch', $this->request->data['User']['searchText']);
-            $searchText = $this->request->data['User']['searchText'];
+        if (isset($this->request->data['searchText'])) {
+            $this->Session->write('advancedUserSearch', $this->request->data['searchText']);
+            $searchText = $this->request->data['searchText'];
         } elseif ($this->Session->check('advancedUserSearch')) {
 
             if (isset($this->request->params['named']['page'])) {
                 $searchText = $this->request->data['AdvancedSearch'] = $this->Session->read('advancedUserSearch');
             } else {
                 $this->Session->delete('advancedUserSearch');
-                $searchText = $this->request->data['User']['searchText'];
+                $searchText = $this->request->data['searchText'];
             }
         } else {
 
-            $searchText = $this->request->data['User']['searchText'];
+            $searchText = $this->request->data['searchText'];
         }
 
         if (empty($this->request->data)) {
@@ -738,8 +801,8 @@ class UsersController extends AppController {
 
         $this->layout = "admin_dashboard";
         if (!empty($this->request->data)) {
-            $this->request->data['User']['password2hashed'] = $this->Auth->password($this->request->data['User']['password']);
-            $this->request->data['User']['activation_key'] = String::uuid();
+            $this->request->data['password2hashed'] = $this->Auth->password($this->request->data['User']['password']);
+            $this->request->data['activation_key'] = String::uuid();
             $this->User->create();
 
             $fileOK = $this->uploadFiles('img/files/users', $this->request->data['User']['file']);
@@ -1032,11 +1095,13 @@ class UsersController extends AppController {
             $this->layout = null;
             unlink("" . WWW_ROOT . "/img/files/users/" . $image_url);
             echo "true";
+            exit;
         } else {
             Configure::write('debug', 0);
             $this->autoRender = false;
             $this->layout = null;
             echo "false";
+            exit;
         }
     }
 
@@ -1053,8 +1118,10 @@ class UsersController extends AppController {
 
         if (count($chkuser) == 0) {
             echo "1";
+            exit;
         } else {
             echo "0";
+            exit;
         }
     }
 
@@ -1071,21 +1138,25 @@ class UsersController extends AppController {
 
         if (count($chkuser) == 0) {
             echo "1";
+            exit;
         } else {
             echo "0";
+            exit;
         }
     }
 
 //ef
-
-    function checkdomain()
-    {
-
-
+    
+    /**
+     * This function will verify that the user has a matching
+     * email domain with the school
+     */
+    public function checkdomain() {
         $this->layout = null;
         $this->autoRender = false;
         $status = 0;
 
+        // grab the post data
         $email = $_POST['data']['User']['email'];
         $schoolSelect = $_POST['school_id'];
         $schoolStatus = $_POST['school_status'];
@@ -1104,61 +1175,61 @@ class UsersController extends AppController {
         // if (empty($chkuserExist)) {
 
         if ($schoolStatus != 'Alumni') {
-            $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . $schoolSelect
-                )
-            );
+            $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . $schoolSelect));
 
+            // grab all the valid domains for the school
             $domains = explode(',', $chkuser[0]['School']['domain']);
-            foreach ($domains as $val) { //echo $val;
+            
+            // iterate over the domains, verifying the posted email's domain matchs one in the list
+            foreach ($domains as $val) { 
                 $lookdomain = explode('.', $lookdomain = $val);
-                /* 	echo "<pre>";
-               print_r($lookdomain);
-               exit('xx'); */
+                
+                // break the loop if we find a match
                 if ((eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@" . $lookdomain[0] . "." . $lookdomain[1] . "$", $email))) {
-
                     $status = 1;
                     break;
                 } else {
-
                     $status = 0;
                 }
             }
+            
+            // domain matches, email is good for school
             if ($status == 1) {
                 echo "true";
-            } else {
+                exit;
+            } else { // email is not good for the school
                 echo "false";
+                exit;
             }
-        } else {
+        } else { // do NOT validate domain's if user is Alumni
             echo "true";
+            exit;
         }
-        //  } else {
-        //     echo "false";
-        //}
-    }
+    } // checkdomain
 
-//ef
-    //function to check username
-    function checkUsername()
-    {
+    /**
+     * This function will check to see if the username
+     * already exists in the system.
+     */
+    public function checkUsername() {
         $this->setLayout = null;
         Configure::write('debug', 0);
-
-
+        
+        // grab the username from the post data
         $username = $_POST['data']['User']['username'];
-
+        
+        // attempt to retrieve a user with the same username
         $userdetails = $this->User->find('count', array('conditions' => array('User.username' => $username)));
 
-
-        if ($userdetails) {
+        // if a user was found with the same username, throw error
+        if ($userdetails != null) {
             echo "false";
             exit();
-        } else {
+        } else { // else username is available
             echo "true";
             exit();
         }
-    }
-
-    //
+    } // checkUsername
 
     function admin_checkdomain($email = null, $schoolSelect = null)
     {
@@ -1195,11 +1266,14 @@ class UsersController extends AppController {
             }
             if ($status) {
                 echo "1";
+                exit;
             } else {
                 echo "0";
+                exit;
             }
         } else {
             echo "2";
+            exit;
         }
     }
 
@@ -1220,8 +1294,10 @@ class UsersController extends AppController {
 
         if ($user['User']['activation']) {
             $newStatus = "0";
+            exit;
         } else {
             $newStatus = "1";
+            exit;
         }
 
         $data = array(

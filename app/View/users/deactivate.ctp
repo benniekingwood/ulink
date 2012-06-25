@@ -24,4 +24,4 @@
         </div>
     </div>
 </div>
-<?php echo $this->Html->script(array('ulink-deactivate.js')); ?>
+<?php echo $this->Html->script(array('ulink-deactivation.js')); ?>

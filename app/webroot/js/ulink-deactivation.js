@@ -9,7 +9,7 @@ $(document).ready(function () {
     // add click handler
     $('#btn-deactivate').click(function () {
         //organize the data properly
-        var strURL = hostname + "users/deactivateaccount/";
+        var strURL = hostname + 'users/deactivateaccount';
         $.ajax({
             type:"GET",
             url:strURL,

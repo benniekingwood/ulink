@@ -72,12 +72,6 @@ class AppController extends Controller {
             }
         } else { // handle basic uLink authentication
             
-            // set the logout redirect to the splash page of uLink
-            $this->Auth->logoutRedirect = array('controller' => 'pages', 'action' => 'home');
-            
-            // set any user contraints for successful authentication
-            $this->Auth->userScope = array('User.activation' => '1', 'User.deactive' => '0');
-            
             // disable automatic redirects
             $this->Auth->autoRedirect = false;
             
@@ -181,6 +175,8 @@ class AppController extends Controller {
     function _setErrorLayout() {
         if ($this->name == 'CakeError') {
             $this->layout = 'v2_not_found';
+        } else {
+            $this->layout = 'v2';
         }
     }
 
@@ -188,7 +184,7 @@ class AppController extends Controller {
      * uploads files to the server
      * 		will return an array with the success of each file upload
      */
-    function uploadFiles($folder, $formdata, $itemId = null) {
+    protected function uploadFiles($folder, $formdata, $itemId = null) {
         // setup dir names absolute and relative
         $folder_url = WWW_ROOT . $folder;
         $rel_url = $folder;
@@ -203,7 +199,6 @@ class AppController extends Controller {
 
         // if itemId is set create an item folder
         if ($itemId) {
-
             // set new absolute folder
             $folder_url = WWW_ROOT . $folder . '/' . $itemId;
             // set new relative folder
@@ -218,25 +213,23 @@ class AppController extends Controller {
         $permitted = array('image/gif', 'image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png');
 
         // loop through and deal with the files
-        foreach ($formdata as $file) {
+       // foreach ($formdata as $file) {
             // replace spaces with underscores
             $filename = str_replace(' ', '_', $formdata['name']);
             // assume filetype is false
             $typeOK = false;
-            // check filetype is ok
 
+            // check filetype is ok
             foreach ($permitted as $type) {
                 if ($type == $formdata['type']) {
                     $typeOK = true;
-
                     break;
                 }
             }
             // if file type ok upload the file
-            if ($typeOK) {
-
+        if ($typeOK) {
                 // switch based on error code
-                switch ($file['error']) {
+                switch ((int)$formdata['error']) {
                     case 0:
                         // check filename already exists
                         if (!file_exists($folder_url . '/' . $filename)) {
@@ -256,7 +249,7 @@ class AppController extends Controller {
                             $success = move_uploaded_file($formdata['tmp_name'], $full_url);
                         }
                         // if upload was successful
-                        if ($success) {
+                        if ($success) { 
                             // save the url of the file
                             $result['urls'][] = $url;
                         } else {
@@ -272,14 +265,14 @@ class AppController extends Controller {
                         $result['errors'][] = "System error uploading $filename. Contact webmaster.";
                         break;
                 }
-            } elseif ($file['error'] == 4) {
+            } else if ((int)$formdata['error'] == 4) {
                 // no file was selected for upload
                 $result['nofiles'][] = "No file Selected";
             } else {
                 // unacceptable file type
                 $result['errors'][] = "$filename cannot be uploaded. Acceptable file types: gif, jpg, png.";
             }
-        }
+       // }
         return $result;
     } // uploadFiles
 
@@ -340,13 +333,13 @@ class AppController extends Controller {
      * password.
      */
     public function chkAutopass() {
+        // grab the user off the session
         $sessVar = $this->Auth->User();
         if($sessVar != null) {
             $userDetails = ClassRegistry::init('User')->find('first', array('conditions' => array('User.id' => $sessVar['id'])));
             
             if ($userDetails['User']['autopass'] == 1) {
-                $this->Session->setFlash('Your password is auto generated, please change your password to have full access to uLink.');
-                $this->redirect(array('controller' => 'users', 'action' => 'index'));
+                $this->redirect(array('controller' => 'users', 'action' => 'password', '1'));
             }
         }
     } // chkAutopass

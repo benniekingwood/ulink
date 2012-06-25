@@ -7,7 +7,7 @@
     $(document).ready(function () {
         $("#loginFormMain").submit(function () {
             $.post("<?php echo $this->Html->url(array('controller'=>'users','action'=>'login'),true) ?>", {remember_me:$('#remember_me').val(), username:$('#username').val(), password:$('#password').val(), rand:Math.random(), loginMain:$('#loginMain').val() },
-                    function (data) {
+                   function (data) { 
                         switch (data) { 
                             case 'main':
                                 $('#loginFormMain-container').addClass('success');
@@ -18,7 +18,7 @@
                                     $(this).html('Logging in.....').addClass('success').fadeTo(900, 1,
                                         function () {
                                             // redirect to the home page
-                                            window.location = '/';
+                                            window.location = "<?php echo $this->Html->url(array('controller'=>'pages','action'=>'home'),true) ?>";
                                         });
                                 });
                                  break;
@@ -29,11 +29,12 @@
                                 $("#loginMain-message").fadeTo(200, 0.1, function () {
                                     //add message and change the class of the box and start fading
                                     $(this).html('Logging in.....').addClass('success').fadeTo(900, 1,
-                                            function () {
-                                                // reload the current page
-                                                window.location.reload();
-                                            });
+                                        function () {
+                                            // reload the current page
+                                            window.location.reload();
+                                        });
                                 });
+                                break;
                             case 'std':
                                 $('#loginFormMain-container').addClass('error');
 
@@ -43,6 +44,19 @@
                                     $(this).html('Your account is inactive, please contact help@theulink.com.').addClass('error').fadeTo(900, 1);
                                 });
                                 break;
+                           case 'auto':                               
+                               $('#loginFormMain-container').addClass('success');
+                               
+                               //start fading the message box
+                               $("#loginMain-message").fadeTo(200, 0.1, function () {
+                                  //add message and change the class of the box and start fading
+                                  $(this).html('Logging in.....').addClass('success').fadeTo(900, 1,
+                                     function () { 
+                                             // redirect to the change password page
+                                             window.location = "<?php echo $this->Html->url(array('controller'=>'users','action'=>'password','1'),true) ?>";
+                                         });
+                                  });
+                               break;
                             default:
                                 $('#loginFormMain-container').addClass('error');
 

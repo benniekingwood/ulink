@@ -12,6 +12,7 @@
             }
             // if valid submit the form
             if(valid) {
+                $('#btnForgotPassword').addClass("disabled");
                 return valid;
             } else {
                 $('#forgot-form-container').addClass('error');
@@ -41,7 +42,9 @@
                 <span id="login-message" class="help-inline"><?php echo $this->Session->flash(); ?></span>
             </div>
         </div>
+        <div id="submit-container">
         <?php echo $this->Form->button('Send Me Instructions', array('id'=>'btnForgotPassword', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
+        </div>
         <?php echo $this->Form->end(); ?>
     </div>
 </div>
@@ -50,5 +53,5 @@
         $('#forgot-form-container').removeClass('success');</script>
 <?php } else if($forgotError=='false'){  ?>
         <script>$('#forgot-form-container').removeClass('error');
-       $('#forgot-form-container').addClass('success');</script>
+            $('#forgot-form-container').addClass('success');$('#email').val('');</script>
 <?php } ?>

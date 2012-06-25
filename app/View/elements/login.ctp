@@ -7,34 +7,50 @@
         $("#loginForm").submit(function() {
             $.post("<?php echo $this->Html->url(array('controller'=>'users','action'=>'login'),true) ?>",{remember_me:$('#remember_me').val(), username:$('#username').val(),password:$('#password').val(), rand:Math.random() },
                     function(data) { 
-                        if(data=='yes') {
-                            $('#loginForm-container').addClass('success');
+                        switch(data) {
+                            case 'yes':
+                                $('#loginForm-container').addClass('success');
 
-                            //start fading the message box
-                            $("#login-message").fadeTo(200,0.1,function() {
-                                //add message and change the class of the box and start fading
-                                $(this).html('Logging in.....').addClass('success').fadeTo(900,1,
-                                function() {
-                                    // reload the current page
-                                    window.location.reload();
+                                //start fading the message box
+                                $("#login-message").fadeTo(200,0.1,function() {
+                                    //add message and change the class of the box and start fading
+                                    $(this).html('Logging in.....').addClass('success').fadeTo(900,1,
+                                    function() {
+                                        // reload the current page
+                                        window.location.reload();
+                                    });
                                 });
-                            });
-                        } else if(data=='std') {
-                            $('#loginForm-container').addClass('error');
+                                break;
+                             case 'std': 
+                                $('#loginForm-container').addClass('error');
 
-                            //start fading the message box
-                            $("#login-message").fadeTo(200,0.1,function() {
-                                //add message and change the class of the box and start fading
-                                $(this).html('Your account is inactive, please contact help@theulink.com.').addClass('error').fadeTo(900,1);
-                            });
-                        } else {
-                            $('#loginForm-container').addClass('error');
+                                //start fading the message box
+                                $("#login-message").fadeTo(200,0.1,function() {
+                                    //add message and change the class of the box and start fading
+                                    $(this).html('Your account is inactive, please contact help@theulink.com.').addClass('error').fadeTo(900,1);
+                                });
+                                break;
+                             case 'auto':                               
+                                   $('#loginForm-container').addClass('success');
+                                   
+                                   //start fading the message box
+                                   $("#login-message").fadeTo(200, 0.1, function () {
+                                      //add message and change the class of the box and start fading
+                                      $(this).html('Logging in.....').addClass('success').fadeTo(900, 1,
+                                             function () {
+                                                 // redirect to the change password page
+                                                window.location = "<?php echo $this->Html->url(array('controller'=>'users','action'=>'password','1'),true) ?>";
+                                             });
+                                      });
+                                   break;
+                            default: 
+                                $('#loginForm-container').addClass('error');
 
-                            //start fading the message box
-                            $("#login-message").fadeTo(200,0.1,function() {
-                                //add message and change the class of the box and start fading
-                                $(this).html('Invalid login, please try again.').addClass('error').fadeTo(900,1);
-                            });
+                                //start fading the message box
+                                $("#login-message").fadeTo(200,0.1,function() {
+                                    //add message and change the class of the box and start fading
+                                    $(this).html('Invalid login, please try again.').addClass('error').fadeTo(900,1);
+                                });
                         }
                     });
             // prevent normal form submission

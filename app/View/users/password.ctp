@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <?php echo $this->Form->create(('User', array('action' => 'updatePassword', 'name' => 'UserIndexForm', 'type' => 'file', 'class' => 'form-horizontal')); ?>
+    <?php echo $this->Form->create('User', array('action' => 'updatePassword', 'name' => 'UserIndexForm', 'type' => 'file', 'class' =>'form-horizontal')); ?>
     <?php echo $this->Form->input('User.username', array('type' => 'hidden')); ?>
     <input name="user_login" id="user_login" value="admin" disabled="disabled" type="hidden">
 
@@ -23,10 +23,12 @@
                     <?php
                     if(isset($errors)) { echo $errors; }
                     else if (isset($pwdsavesuccess)) {  ?>
-                    <span class='control-group profile-success'>Your password has been updated.</span>
+                        <span class='control-group profile-success'>Your password has been updated.</span>
                     <?php  }  else if(isset($pwdsavefail)) { ?>
-                    <span class='control-group profile-error'>There was an issue updating your password.  Please try again, or contact help@theulink.com.</span>
-                    <?php  } ?>
+                        <span class='control-group profile-error'>There was an issue updating your password.  Please try again, or contact help@theulink.com.</span>
+                    <?php  } else if (isset($change)) { ?>
+                        <span class='control-group profile-info'>Your password is auto generated, please change your password to gain full access to uLink.</span>
+                    <?php } ?>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="oldPass1">Current Password</label>
