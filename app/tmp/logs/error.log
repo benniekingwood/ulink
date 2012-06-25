@@ -890,3 +890,8 @@
 #4 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
 #5 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #6 {main}
+2012-06-24 12:50:06 Error: [MissingActionException] Action EventsController::indx() could not be found.
+#0 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(103): Controller->invokeAction(Object(CakeRequest))
+#1 /media/sf_WebDev_share/ulink/lib/Cake/Routing/Dispatcher.php(85): Dispatcher->_invoke(Object(EventsController), Object(CakeRequest), Object(CakeResponse))
+#2 /media/sf_WebDev_share/ulink/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}

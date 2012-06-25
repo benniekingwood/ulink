@@ -19,6 +19,7 @@ class EventsController extends AppController {
 				i.e. "2012-06-10 13:53:44 -0400"
 			["eventTitle"] Short description of event
 			["eventInfo"] Detailed description of event
+			["active"] Wether or not event is active
 			
 			["collegeName"] not part of DB model, added in Event's afterFind callback to associate collegeID with the school model stored in MySQL
 		*/
@@ -27,13 +28,15 @@ class EventsController extends AppController {
 				$this->layout = 'v2';
 				$this->pageTitle = 'Your college everything.';
 				$this->chkAutopass();
+				//echo "<pre>";
+				//var_dump($this->params);
+				//echo "</pre>";
 				
-				$events = $this->Event->find('all');
-								
+				$events = array();
+				$events = $this->Event->getActive();
+					
                 $this->set('events', $events );
-				
-				
-				
+							
 				//$this->Event->create();
 				//$data = array("Event" => array('userID' => '10', 'collegeID' => '12', 'eventInfo' => 'This is from Cake'));
 				//$this->Event->save($data);
