@@ -175,8 +175,6 @@ class AppController extends Controller {
     function _setErrorLayout() {
         if ($this->name == 'CakeError') {
             $this->layout = 'v2_not_found';
-        } else {
-            $this->layout = 'v2';
         }
     }
 
