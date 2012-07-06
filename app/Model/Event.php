@@ -7,7 +7,8 @@ class Event extends AppModel {
 		//Relationships dont seem to work accross different datasource types... will be ugly until
 		//everything is moved over to mongoDB
 		//var $belongsTo = array('School' => array('className' => 'School', 'foreignKey' => 'collegeID'));
-
+		
+				
 		public function afterFind($events)
 		{
 			Controller::loadModel('School');
