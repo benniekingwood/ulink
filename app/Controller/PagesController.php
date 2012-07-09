@@ -85,10 +85,8 @@ class PagesController extends AppController {
             $this->redirect(array('controller' => 'users','action' => 'login'));
         }
 
-        $this->layout = "v2_ucampus";
-        $this->set('title_for_layout', 'Your college everything.');
-        $this->chkAutopass();
+        // redirect to uCampus splash page
+        $this->redirect(array('controller' => 'ucampus', 'action' => 'index'));
     }
-
 }
 ?>

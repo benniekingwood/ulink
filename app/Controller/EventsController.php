@@ -5,7 +5,12 @@ class EventsController extends AppController {
         var $name = 'Events';
 		var $components = array('RequestHandler');
 		var $helpers = array('Html', 'Form', 'Js','Time');
-				
+		
+
+		function beforeFilter() {
+			parent::beforeFilter();
+			$this->Auth->allow();
+		}
 		
 		/*
 		Event structure:
@@ -33,7 +38,7 @@ class EventsController extends AppController {
 				//echo "</pre>";
 				
 				$events = array();
-				$events = $this->Event->getActive();
+				$events = $this->Event->getAll();
 					
                 $this->set('events', $events );
 							
@@ -41,6 +46,26 @@ class EventsController extends AppController {
 				//$data = array("Event" => array('userID' => '10', 'collegeID' => '12', 'eventInfo' => 'This is from Cake'));
 				//$this->Event->save($data);
         }
+		
+		public function delete($eventID = NULL)
+		{
+			$this->layout = 'v2';
+			$this->pageTitle = 'Your college everything.';
+			$this->chkAutopass();
+			
+			if($eventID == NULL)
+			{
+				$this->flash(__('Invalid Event', true), array('action'=>'index'));
+			}
+			
+			if($this->Event->delete($eventID))
+			{
+				$this->Session->setFlash("Event Deleted.");
+				$this->redirect('/events');
+			}
+			
+		}
+		
 		
 		public function edit($eventID = NULL) {
 			
@@ -55,18 +80,46 @@ class EventsController extends AppController {
 			
 			$event = $this->Event->read(null, $eventID);
 			
+			Controller::loadModel('School');
+			$schools = $this->School->find('list',array('fields' => array('id', 'name')));			
+			$this->set('schools',$schools);
+			
 			if(empty($this->data))
 			{
 				$this->data = $event;
 			}
 			else
 			{
+				echo "<pre>"; var_dump($this->data); echo "</pre>";
 				if($this->Event->save($this->data))
 				{
 					$this->Session->setFlash("Event updated.");
 					$this->redirect('/events');
 				}
 			}
+		}
+		
+		public function add() {
+			
+			$this->layout = 'v2';
+			$this->pageTitle = 'Your college everything.';
+			$this->chkAutopass();
+			
+			Controller::loadModel('School');
+			$schools = $this->School->find('list',array('fields' => array('id', 'name')));			
+			$this->set('schools',$schools);
+						
+			
+			if(!empty($this->data))
+			{
+				
+				if($this->Event->save($this->data))
+				{
+					$this->Session->setFlash("Event added.");
+					$this->redirect('/events');
+				}
+			}
+			
 		}
 
 }

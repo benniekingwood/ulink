@@ -1,4 +1,4 @@
-<?php echo $this->Html->script(array('jquery.min.js')); ?>
+<script src="/js/jquery.min.js"></script>
 <!-- components section -->
 <div class="modal hide fade" id="submitEventComponent">
     <div class="modal-header">
@@ -6,8 +6,9 @@
         <h3>Submit Your Event</h3>
     </div>
     <div class="modal-body">
+        <?php echo $this->Form->create('Event', array('action' => 'suggestion', 'id' => 'submitEventForm')); ?>
         <input name="eventtitle" class="input-large ulink-input-bigfont" type="text" placeHolder="Title">
-        <input name="eventdate" class="input-large ulink-input-bigfont" type="text" placeholder="MM/DD/YYYY">
+        <input type="text" name="eventdate" class="input-large ulink-input-bigfont" data-date-format="mm/dd/yy" id="eventdate" placeholder="MM/DD/YYYY">
         <textarea name="eveninfo" class="event-textarea ulink-input-bigfont" placeHolder="Event information"></textarea>
         <div><input id="eventloc" type="text" class="geo-text" style="display: none; visibility: visible;" placeholder="Location"></div>
         <div><input id="eventtime" type="text" class="time-text input-small" style="display: none; visibility: visible;" placeholder="03:00 PM" maxlength="8"></div>
@@ -17,9 +18,8 @@
             <div class="event-picture-control">
                 <div class="event-picture-add-action" original-title="" rel="tooltip" data-original-title="Add event picture">
                     <div class="event-picture-icon"></div>
-                    <form id="submitEventForm" action="">
                         <input type="file" name="media[]" class="event-file-input">
-                    </form>
+                        <?php echo $this->Form->end(); ?>
                 </div>
             </div>
 				<span class="event-location-control">
@@ -46,3 +46,48 @@
         </div>
     </div>
 </div> <!-- /submitEventComponent-->
+<script src="./js/jquery.timePicker.min.js"></script>
+<script src="/js/bootstrap-datepicker.js"></script>
+<script>
+    $(function(){
+        $('#eventdate').datepicker({
+            format: 'mm/dd/yyyy'
+        });
+    });
+</script>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function(){
+        $(function(){
+            $('#eventtime').timePicker({
+                startTime: "24:00",
+                endTime: new Date(0, 0, 0, 23, 45, 0),
+                show24Hours: false,
+                separator:':',
+                step: 15});
+        });
+    });
+
+    // submit event component
+    function showEventTimeOn() {
+        $('#eventtime').toggle();
+        $('.event-time').hide();
+        $('.event-time-on').show();
+    }
+    function showEventTimeOff() {
+        $('#eventtime').val('');
+        $('#eventtime').toggle();
+        $('.event-time').show();
+        $('.event-time-on').hide();
+    }
+    function showEventLocOn() {
+        $('#eventloc').toggle();
+        $('.event-location').hide();
+        $('.event-location-on').show();
+    }
+    function showEventLocOff() {
+        $('#eventloc').val('');
+        $('#eventloc').toggle();
+        $('.event-location').show();
+        $('.event-location-on').hide();
+    }
+</script>
