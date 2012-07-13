@@ -25,8 +25,9 @@
  */
 
 App::import('Datasource', 'DboSource');
+App::uses('DboSource', 'Model/Datasource');
 
-include '/media/sf_WebDev_share/ulink/cake/libs/model/datasources/dbo_source.php';
+include '/cake/libs/model/datasources/dbo_source.php';
 
 /**
  * MongoDB Source

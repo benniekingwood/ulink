@@ -3,11 +3,11 @@
 class EventsController extends AppController {
         
         var $name = 'Events';
-		var $components = array('RequestHandler');
+		var $components = array('Auth', 'Session','RequestHandler');
 		var $helpers = array('Html', 'Form', 'Js','Time');
 		
 
-		function beforeFilter() {
+		public function beforeFilter() {
 			parent::beforeFilter();
 			$this->Auth->allow();
 		}

@@ -6,7 +6,7 @@
 class UCampusController extends AppController {
 
     var $name = 'UCampus';
-    var $uses = array();
+    var $uses = array('Event');
     var $components = array('RequestHandler');
     var $helpers = array('Html', 'Form', 'Js');
 
@@ -22,9 +22,19 @@ class UCampusController extends AppController {
      * Handles the uCampus splash page load
      */
     public function index() {
+
+        if (!$this->Auth->User()) {
+            $this->redirect(array('controller' => 'users','action' => 'login'));
+        }
         $this->layout = "v2_ucampus";
         $this->set('title_for_layout', 'Your college everything.');
         $this->chkAutopass();
+
+        // load the events
+        $events = array();
+        $events = $this->Event->getAll();
+        $this->set('events', $events );
+        // load the featured events
     }
 }
 ?>

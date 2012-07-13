@@ -6,12 +6,12 @@
         <h3>Submit Your Event</h3>
     </div>
     <div class="modal-body">
-        <?php echo $this->Form->create('Event', array('action' => 'suggestion', 'id' => 'submitEventForm')); ?>
+        <?php echo $this->Form->create('Event', array('controller' => 'events', 'action' => 'add', 'name' => 'submitEventForm', 'type' => 'file')); ?>
         <input name="eventtitle" class="input-large ulink-input-bigfont" type="text" placeHolder="Title">
         <input type="text" name="eventdate" class="input-large ulink-input-bigfont" data-date-format="mm/dd/yy" id="eventdate" placeholder="MM/DD/YYYY">
-        <textarea name="eveninfo" class="event-textarea ulink-input-bigfont" placeHolder="Event information"></textarea>
-        <div><input id="eventloc" type="text" class="geo-text" style="display: none; visibility: visible;" placeholder="Location"></div>
-        <div><input id="eventtime" type="text" class="time-text input-small" style="display: none; visibility: visible;" placeholder="03:00 PM" maxlength="8"></div>
+        <textarea id="eveninfo" name="eveninfo" class="event-textarea ulink-input-bigfont" placeHolder="Event information"></textarea>
+        <div><input id="eventloc" name="eventloc" type="text" class="geo-text" style="display: none; visibility: visible;" placeholder="Location"></div>
+        <div><input id="eventtime" name="eventtime" type="text" class="time-text input-small" style="display: none; visibility: visible;" placeholder="03:00 PM" maxlength="8"></div>
     </div>
     <div class="modal-footer">
         <div class="submit-event-button-container">

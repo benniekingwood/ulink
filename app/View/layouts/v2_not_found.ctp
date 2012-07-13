@@ -43,8 +43,8 @@
             <div class="nav-collapse">
                 <ul class="nav span3">
                     <li id="ucampus-module">
-                        <a class="module" href="./ucampus_home.html">
-                            <i class="ulink-icon-ucampus"></i>uCampus
+                        <a class="module" href="<?php echo($this->Html->url('/pages/ucampus')); ?>">
+                        <i class="ulink-icon-ucampus"></i>uCampus
                         </a>
                     </li>
                 </ul>

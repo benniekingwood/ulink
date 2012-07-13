@@ -1,7 +1,9 @@
 <?php
 class Event extends AppModel {
         var $name = 'Event';
-        var $primaryKey = '_id';
+    var $uses = array('Event');
+
+    var $primaryKey = '_id';
         var $useDbConfig = 'mongo';
 		
 		//Relationships dont seem to work accross different datasource types... will be ugly until
