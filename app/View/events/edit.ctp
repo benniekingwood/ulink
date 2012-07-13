@@ -2,21 +2,17 @@
 
 
 echo "<pre>";
-
-echo $this->Form->create('Event', array('action' => 'edit'));
+echo $this->Session->flash();
+echo "<img width='100' height='100' src='/events/getEventImage/" . $event['Event']['_id'] . "'/><br/>";
+echo $this->Form->create('Event', array('action' => 'edit','enctype' => 'multipart/form-data'));
 echo $this->Form->input('collegeID', array('label' => 'Select School','options' => $schools));
 echo $this->Form->input('eventTitle');
 echo $this->Form->input('eventInfo', array('type'=>'textarea','rows' => '3','cols'=>'40'));
 echo $this->Form->input('eventDate', array('type' => 'text','default' => 'MM/DD/YYYY'));
+echo $this->Form->file('image',array('between'=>'<br />','type'=>'file'));
 echo $this->Form->input('_id', array('type' => 'hidden'));
 echo $this->Form->end('Update Event');
 
-/*echo "<b>School: </b>" . $event["Event"]["collegeName"] . "<br/>";
-echo "<b>Title:</b> " . $event["Event"]["eventTitle"] . "<br/>";
-echo "<b>Date and time:</b> " . $this->Time->nice($this->Time->fromString($event["Event"]["eventDate"])) . "<br/>";
-echo "<b>Details</b></br>";
-echo $event["Event"]["eventInfo"] . "<br/><br/>";
-*/
 echo "</pre>";
 
 ?>
