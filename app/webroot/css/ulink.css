@@ -330,12 +330,13 @@ footer .social > a:hover {
 	*margin-right: .3em;
 }
 
-.school-logo-icon-virginiatech { 
+.school-logo-icon-167 {
 	background-position: 0px 0px;
 }
 
 .carousel-inner .item > img {
 	height: 300px;
+    margin: auto;
 }
 
 .carousel-inner .item > a:hover {
@@ -348,6 +349,11 @@ footer .social > a:hover {
 	margin-right: auto;
 }
 #featuredEventsCarousel { margin-top: 25px;}
+#featuredEventsCarousel.carousel-inner {
+    min-height: 300px;
+    height:300px;
+}
+
 .trends-feed-container { 
 	height: 495px; 
 }
@@ -431,6 +437,10 @@ a.orange:hover {
 	height: 350px;
 	width: 350px;
 }
+.event-user-picture-container a img {
+    height: 90px;
+    width: 90px;
+}
 .event-textarea {
 	padding: 6px 8px 5px;
 	width: 512px;
@@ -447,13 +457,14 @@ a.orange:hover {
 .event-file-input {
 	position: absolute;
 	top: 0;
-	right: 0;
+	right: 40px;
 	height: 100%;
-	opacity: .0;
-	filter: alpha(opacity=0);
-	font-size: 50px;
+	opacity: 1.0;
+	filter: alpha(opacity=1.0);
+	font-size: 0.8em;
 	z-index: 10;
 	cursor: pointer;
+    color: #F0A000;
 }
 .submit-event-button-container {
     display: block;
@@ -463,6 +474,7 @@ a.orange:hover {
     position: relative;
     text-align: right;
     z-index: 3;
+    padding-bottom: 25px;
 }
 .event-picture-control {
     float: left;
@@ -477,6 +489,8 @@ a.orange:hover {
     line-height: 20px;
     margin: 5px 0 5px 5px;
     position: relative;
+    left: -34px;
+    bottom: 13px;
 }
 
 a.event-location {
@@ -516,6 +530,8 @@ a.event-location span:hover {
     line-height: 20px;
     margin: 5px 0 5px 32px;
     position: relative;
+    left: -30px;
+    bottom: 13px;
 }
 
 a.event-time {
@@ -551,33 +567,47 @@ a.event-time span:hover {
     -moz-user-select: none;
     cursor: pointer;
     height: 25px;
-    margin: 2px 0 0;
+    margin: 15px 2px 0 0;
     overflow: hidden;
     position: relative;
-    width: 31px;
+    width: 250px;
+    padding-bottom: 15px;
+}
+.event-picture-add-action .file-error {
+    color: #993333;
+    padding-left: 20px;
+    font-size: 0.8em;
+    margin-top:25px;
 }
 .event-picture-add-action .event-picture-icon {
- 	background: url("../img/ulink-sprite.png") -45px -73px no-repeat scroll transparent;
-    cursor: pointer;
+ 	/*background: url("../img/ulink-sprite.png") -45px -73px no-repeat scroll transparent;  */
+   /* cursor: pointer;    */
     height: 25px;
     overflow: hidden;
     position: absolute;
     width: 35px;
 }
 
-.event-picture-add-action:hover div {
+/*.event-picture-add-action:hover div {
  	background: url("../img/ulink-sprite.png") -79px -73px no-repeat scroll transparent;
     cursor: pointer;
     height: 25px;
     overflow: hidden;
     position: absolute;
     width: 35px;
-}
+}       */
 
 .event-user-info { margin-left: 30px; }
 
 .submit-event-button-sub-container {
     display: inline-block;
+}
+
+.submit-event-img-note {
+    text-align: left;
+    font-size: .9em;
+    color: #000;
+    padding-bottom: 5px;
 }
 div.time-picker {
   position: absolute;
@@ -614,7 +644,7 @@ div.time-picker li.selected {
    height: 100px;
    width: 100px;
 }
-#suggest-response {
+#suggest-response, #submit-event-response {
     margin-top:30px;
     font-size: 1.2em;
 }

@@ -22,7 +22,7 @@ class UsersController extends AppController {
      */
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('register', 'forgotpassword', 'checkUsername', 'checkdomain', 'confirm', 'removeImage');
+        $this->Auth->allow('register', 'forgotpassword', 'checkUsername', 'checkdomain', 'confirm', 'removeImage', 'viewprofile');
         $this->Security->csrfCheck = false;
         $this->Security->validatePost = false;
     }
@@ -493,7 +493,7 @@ class UsersController extends AppController {
      *
      * @param null $id
      */
-    function viewprofile($id = null) {
+    public function viewprofile($id = null) {
         $this->layout = null;
         // if the user is not logged in, redirect them to the login screen
         if (!$this->Auth->user()) {
@@ -502,7 +502,7 @@ class UsersController extends AppController {
         }
         $this->chkAutopass();
         // grab the user from the db
-        $user = $this->User->find('User.id=' . $id);
+        $user = $this->User->find('first', array('conditions' => array('User.id' => $id)));
         echo json_encode($user);
         exit;
     } // viewprofile

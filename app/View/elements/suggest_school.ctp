@@ -23,7 +23,7 @@
         });
 
         $('#btnsuggest').click(function () {
-            $('#suggestSchoolForm').submit()
+            $('#suggestSchoolForm').submit();
         });
     });
 </script>

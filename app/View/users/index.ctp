@@ -8,6 +8,7 @@
                 <ul id="sidebar-nav" class="nav nav-tabs nav-stacked">
                     <li class="active"><a href="#"> <i class="icon-user"></i>My Profile</a></li>
                     <li><a href="<?php echo($this->Html->url('/users/password'));?>"><i class="icon-lock"></i>Password</a></li>
+                    <li><a href="<?php echo($this->Html->url('/users/events'));?>"><i class="icon-calendar"></i>My Events</a></li>
                 </ul>
             </div>
         </div>

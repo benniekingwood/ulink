@@ -1,4 +1,3 @@
-<?php echo $this->Html->script(array('jquery.min.js')); ?>
 <div class="modal profile-component fade hide" id="viewProfileComponent">
     <div class="row">
         <a class="close" data-dismiss="modal">x</a>
@@ -21,8 +20,7 @@
         // grab the unique user id from the element's id
         var id = $(this).attr('id').split("-")[2];
         // build the url
-        var url = hostname + "/users/viewprofile/" + id + "/" + username;
-
+        var url = hostname + "users/viewprofile/" + id;
         // grab the user
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);

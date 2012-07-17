@@ -37,38 +37,5 @@ $(document).ready(function(){
 
     // activates tooltips
     $("[rel=tooltip]").tooltip({placement : 'right'});
-
-    $(function(){
-        $('#eventtime').timePicker({
-          startTime: "24:00",
-          endTime: new Date(0, 0, 0, 23, 45, 0),
-          show24Hours: false,
-          separator:':',
-          step: 15});
-    });
-
-    // submit event component
-    function showEventTimeOn() {
-        $('#eventtime').toggle();
-        $('.event-time').hide();
-        $('.event-time-on').show();
-    }
-    function showEventTimeOff() {
-        $('#eventtime').val('');
-        $('#eventtime').toggle();
-        $('.event-time').show();
-        $('.event-time-on').hide();
-    }
-    function showEventLocOn() {
-        $('#eventloc').toggle();
-        $('.event-location').hide();
-        $('.event-location-on').show();
-    }
-    function showEventLocOff() {
-        $('#eventloc').val('');
-        $('#eventloc').toggle();
-        $('.event-location').show();
-        $('.event-location-on').hide();
-    }
 });
 

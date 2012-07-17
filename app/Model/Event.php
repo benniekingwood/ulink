@@ -13,7 +13,7 @@ class Event extends AppModel {
 		
 		public function beforeValidate()
 		{
-			/* Set default values */
+            /* Set default values */
 			if(!isset($this->data['Event']['active']) || strlen($this->data['Event']['active']) <= 0)
 			{
 				$this->data['Event']['active'] = 0;
@@ -22,33 +22,42 @@ class Event extends AppModel {
 			{
 				$this->data['Event']['featured'] = 0;
 			}
-			
-			
-			/* Image upload handling */
-			if(isset($this->data['Event']['image']['tmp_name']) && strlen($this->data['Event']['image']['tmp_name']) > 0)
-			{
-				$fh = fopen($this->data['Event']['image']['tmp_name'], 'r');
-				//Check that the file was opened and is not greater than 1MB
-				if($fh && filesize($this->data['Event']['image']['tmp_name']) <= 1048576)
-				{
-					$content = fread($fh, filesize($this->data['Event']['image']['tmp_name']));
-					fclose($fh);
-					$this->data['Event']['imageType'] = $this->data['Event']['image']['type'];
-					$this->data['Event']['image'] = new MongoBinData($content);
-				}
-				else
-				{
-					return false;
-				}
-			}
-			else
-			{
-				$this->data['Event']['imageType'] = "";
-				$this->data['Event']['image'] = "";
-			}
+            $this->data['Event']['eventAdded'] = date("F j, Y, g:i a");
+
+            /* Image upload handling */
+            // make sure the image is not of type mongoBinData
+            if(isset($this->data['Event']['image']) && !($this->data['Event']['image'] instanceof MongoBinData))  {
+
+
+                if(isset($this->data['Event']['image']['tmp_name']) && strlen($this->data['Event']['image']['tmp_name']) > 0)
+                {
+
+
+                    $fh = fopen($this->data['Event']['image']['tmp_name'], 'r');
+                    //Check that the file was opened and is not greater than 1MB
+                    if($fh && filesize($this->data['Event']['image']['tmp_name']) <= 1048576)
+                    {
+
+                        $content = fread($fh, filesize($this->data['Event']['image']['tmp_name']));
+                        fclose($fh);
+                        $this->data['Event']['imageType'] = $this->data['Event']['image']['type'];
+                        $this->data['Event']['image'] = new MongoBinData($content);
+                    }
+                    else
+                    {
+
+                        return false;
+                    }
+                }
+                else
+                {
+
+                    $this->data['Event']['imageType'] = "";
+                    $this->data['Event']['image'] = "";
+                }
+            }
 			
 			return true;
-			
 		}
 		
 		/*
