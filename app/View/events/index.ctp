@@ -9,7 +9,7 @@ foreach($events as $event)
 	echo "<img width='100' height='100' src='/events/getEventImage/" . $event['Event']['_id'] . "'/><br/>";
 	echo "<b>School: </b>" . $event["Event"]["collegeName"] . "<br/>";
 	echo "<b>Title:</b> " . $event["Event"]["eventTitle"] . "<br/>";
-	echo "<b>Date and time:</b> " . $this->Time->format('l F jS, Y', $this->Time->fromString($event["Event"]["eventDate"])) . "<br/>";
+	echo "<b>Date and time:</b> " .  DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date'])->format('F d, Y'). "<br/>";
 	echo "<b>Active?:</b> " . $event["Event"]["active"] . "<br/>";
 	echo "<b>Featured?:</b> " . $event["Event"]["featured"] . "<br/>";
 	echo "<b>Details</b></br>";

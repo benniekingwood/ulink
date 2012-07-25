@@ -19,6 +19,29 @@ body {
 	font-style: italic;
 	color:#999;
 }
+
+#my-events-container ul { height: 500px; width:100%; }
+#my-events-container ul > li {
+    padding: 10px 15px 10px 0;
+    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+#my-events-container ul > li:hover > a {
+    opacity: 1;
+    filter: alpha(opacity=1);
+}
+#my-events-container ul > li > span:hover+p:hover+a {
+    opacity: 1;
+    filter: alpha(opacity=1);
+}
+.my-events-content img {
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
+}
+.my-event-container { margin-left: 150px;}
 /* INPUT SECTION */
 .ulink-input-smallfont {
 	font-size: 1.3em;
@@ -133,8 +156,8 @@ footer .social > a:hover {
     color: #3a87ad;
     padding-left: 20px;
 }
-#profile-message,#profile-password-message {
-    margin: 10px 0;
+#profile-message,#profile-password-message,#event-message {
+    margin: 10px 0 10px 5px;
 }
 
 .profile-mgmt li{
@@ -422,9 +445,9 @@ a.orange:hover {
 	opacity: 1;
 	filter: alpha(opacity=1);	
 }
-.campus-event-title { font-weight: bold; }
+.campus-event-title, .my-event-title { font-weight: bold; }
 .campus-event-date { font-style: italic; font-size: 0.8em; }
-.view-event-link { 
+.view-event-link, .my-event-link {
 	opacity: .0;
 	filter: alpha(opacity=0);	
 	-webkit-transition: opacity .2s linear;

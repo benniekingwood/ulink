@@ -22,22 +22,16 @@ class Event extends AppModel {
 			{
 				$this->data['Event']['featured'] = 0;
 			}
-            $this->data['Event']['eventAdded'] = date("F j, Y, g:i a");
-
             /* Image upload handling */
             // make sure the image is not of type mongoBinData
             if(isset($this->data['Event']['image']) && !($this->data['Event']['image'] instanceof MongoBinData))  {
 
-
                 if(isset($this->data['Event']['image']['tmp_name']) && strlen($this->data['Event']['image']['tmp_name']) > 0)
                 {
-
-
                     $fh = fopen($this->data['Event']['image']['tmp_name'], 'r');
                     //Check that the file was opened and is not greater than 1MB
                     if($fh && filesize($this->data['Event']['image']['tmp_name']) <= 1048576)
                     {
-
                         $content = fread($fh, filesize($this->data['Event']['image']['tmp_name']));
                         fclose($fh);
                         $this->data['Event']['imageType'] = $this->data['Event']['image']['type'];
@@ -45,16 +39,18 @@ class Event extends AppModel {
                     }
                     else
                     {
-
                         return false;
                     }
+                } else if ($this->data['Event']['image']['name'] == '') {
+                    unset($this->data['Event']['image']);
+                    unset($this->data['Event']['imageType']);
+                    unset($this->data['Event']['file']);
                 }
-                else
+               /* else   do not reset, just leave the image
                 {
-
                     $this->data['Event']['imageType'] = "";
                     $this->data['Event']['image'] = "";
-                }
+                }  */
             }
 			
 			return true;

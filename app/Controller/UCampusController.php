@@ -6,7 +6,7 @@
 class UCampusController extends AppController {
 
     var $name = 'UCampus';
-    var $uses = array('Event', 'School');
+    var $uses = array('Event');
     var $components = array('RequestHandler');
     var $helpers = array('Html', 'Form', 'Js');
 
@@ -34,11 +34,11 @@ class UCampusController extends AppController {
         $activeUser = $this->Auth->User();
 
         // load the regular events for the logged in user's college
-        $events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle', 'eventDate', '_id', 'eventInfo'),'order'=>array('Event.eventDate'=>'DESC'),'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 0, 'active' => 1,'eventDate.date' => array('$gte' => date("j/m/Y")))));
+        $events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle', 'eventDate', '_id', 'eventInfo'),'order'=>array('Event.eventDate'=>'DESC'),'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 0, 'active' => 1,'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
         $this->set('events', $events);
 
         // load the featured events for the logged in user's college
-        $featureEvents = $this->Event->find('all', array('order'=>array('Event.eventDate'=>'ASC'),'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 1, 'active' => 1,'eventDate.date' => array('$gte' => date("j/m/Y")))));
+        $featureEvents = $this->Event->find('all', array('order'=>array('Event.eventDate'=>'ASC'),'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 1, 'active' => 1,'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
         $this->set('featureEvents', $featureEvents );
 
         $schoolName = "";

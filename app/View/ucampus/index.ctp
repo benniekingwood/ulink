@@ -21,7 +21,7 @@
                                     </div>
                                 </a>
                             </div>
-                    <?php $x++; } ;?>
+                    <?php $x++; } ?>
                 </div> <!-- /carousel-inner -->
                 <a class="left carousel-control" href="#featuredEventsCarousel" data-slide="prev">‹</a>
                 <a class="right carousel-control" href="#featuredEventsCarousel" data-slide="next">›</a>
@@ -104,7 +104,9 @@
         </div> <!-- /trends-feed-container -->
     </div> <!-- /trends-container -->
 </div> <!-- /container -->
-
+<script>
+    $('.carousel').carousel(0);
+</script>
 <!-- components -->
 <?php echo $this->element('submit_event'); ?>
 <!--  components -->

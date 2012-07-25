@@ -16,7 +16,7 @@
                 <?php echo $this->Form->create('Event', array('controller' => 'events', 'action' => 'insertEvent','id' => 'submitEventForm', 'type' => 'file')); ?>
                 <?php echo $this->Form->input('Event.eventTitle', array('id' => 'eventTitle', 'class' => 'input-large ulink-input-bigfont','maxlength' => '50', 'label'=>false, 'div'=>false, 'placeHolder' => 'Title')); ?>
                 <?php echo $this->Form->input('Event.eventDate', array('id' => 'eventDate', 'data-date-format'=>'mm/dd/yy', 'class' => 'input-large ulink-input-bigfont','maxlength' => '10', 'label'=>false, 'div'=>false, 'placeHolder' => 'MM/DD/YYYY')); ?>
-                <?php echo $this->Form->input('Event.eventInfo', array('id' => 'eventInfo', 'type'=>'textarea', 'maxlength' => '750','class' => 'event-textarea ulink-input-bigfont','maxlength' => '1500', 'label'=>false, 'div'=>false, 'placeHolder' => 'Event information'));?>
+                <?php echo $this->Form->input('Event.eventInfo', array('id' => 'eventInfo', 'type'=>'textarea', 'maxlength' => '750','class' => 'event-textarea ulink-input-bigfont', 'label'=>false, 'div'=>false, 'placeHolder' => 'Event information'));?>
                 <?php echo $this->Form->input('_id', array('type' => 'hidden')); ?>
 
                 <div>

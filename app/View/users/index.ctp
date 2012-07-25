@@ -6,9 +6,9 @@
         <div class="span3">
             <div>
                 <ul id="sidebar-nav" class="nav nav-tabs nav-stacked">
-                    <li class="active"><a href="#"> <i class="icon-user"></i>My Profile</a></li>
+                    <li class="active"><a href="#"> <i class="icon-user"></i>Profile</a></li>
                     <li><a href="<?php echo($this->Html->url('/users/password'));?>"><i class="icon-lock"></i>Password</a></li>
-                    <li><a href="<?php echo($this->Html->url('/users/events'));?>"><i class="icon-calendar"></i>My Events</a></li>
+                    <li><a href="<?php echo($this->Html->url('/events/myevents'));?>"><i class="icon-calendar"></i>Events</a></li>
                 </ul>
             </div>
         </div>
@@ -64,7 +64,7 @@
                     <label class="control-label" for="bio">Bio</label>
                     <div class="controls">
                         <?php echo $this->Form->input('User.bio', array('id' => 'bio', 'type'=>'textarea', 'maxlength' => '150',
-                        'class' => 'input-xlarge','maxlength' => '150', 'label'=>false, 'div'=>false)); ?>
+                        'class' => 'input-xlarge', 'label'=>false, 'div'=>false)); ?>
                         <p class="input-info">Describe yourself in <b>150</b> characters or less.</p>
                     </div>
                 </div>
@@ -103,27 +103,10 @@
                     <?php echo $this->Form->button('Save changes', array('id'=>'btnSaveChanges', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
                 </div>
             </div> <!-- /profile-tab-content -->
-
-            <?php echo $this->Form->end(); ?>
         </div> <!-- /tab-content -->
     </div><!-- /row-fluid -->
 </div> <!-- /container-fluid -->
 <?php echo $this->Form->end(); ?>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    try{convertEntities(commonL10n);}catch(e){};
-    var pwsL10n = {
-        empty: '<span>&nbsp;</span>',
-        short: "<span class='label'>Very weak</b>",
-        bad: "<span class='label label-warning'>Weak</b>",
-        good: "<span class='label label-warning'>Medium</span>",
-        strong: "<span class='label label-success'>Strong</span>",
-        mismatch: "<span class='label label-important'>Mismatch</span>"
-    };
-    try{convertEntities(pwsL10n);}catch(e){};
-    /* ]]> */
-</script>
-<!--<script src="/js/jquery.min.js"></script>-->
 <script type="text/javascript">
     $.validator.addMethod("noSpecialChars", function(value, element) {
       return this.optional(element) || /^[a-z0-9\_\s]+$/i.test(value);

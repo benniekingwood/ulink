@@ -20,27 +20,31 @@ i.e. "2012-06-10 13:53:44 -0400"
 class EventsController extends AppController {
         
         var $name = 'Events';
-		var $components = array('Auth', 'Session','RequestHandler');
+		var $components = array('Session','RequestHandler','Security', 'Cookie','Auth');
 		var $helpers = array('Html', 'Form', 'Js','Time');
 		
 
 		public function beforeFilter() {
 			parent::beforeFilter();
-			$this->Auth->allow('add', 'index', 'delete', 'edit', 'view', 'toggleActive', 'toggleFeatured', 'insertEvent');
-			$this->Security->enabled = false;
+			$this->Auth->allow('add', 'delete', 'edit', 'view', 'toggleActive', 'toggleFeatured', 'insertEvent','myevents');
+		//	$this->Security->enabled = false;
 			$this->Security->validatePost = false;
-			
-		}
+            $this->Security->csrfCheck = false;
+        }
 		
 		function beforeRender()
 		{
+            // if the user is not logged in, make them
+            if (!$this->Auth->user()) {
+                $this->redirect(array('controller' => 'users','action' => 'login'));
+            }
 			if(isset($this->params['url']['ajax']) && $this->params['url']['ajax'] == 1)
 			{
 				$this->layout = 'ajax';
 			}
 			else
 			{
-				$this->layout = 'v2_ucampus';
+				//$this->layout = 'v2_ucampus';
 			}
 		}
 
@@ -63,9 +67,10 @@ class EventsController extends AppController {
 		*/
 		
         public function index() {
-				
-				
-				$events = array();
+            $this->layout = 'v2_ucampus';
+
+
+            $events = array();
 				$events = $this->Event->getAll();
 					
                 $this->set('events', $events );
@@ -77,7 +82,9 @@ class EventsController extends AppController {
 		
 		public function getEventById($eventID = NULL)
 		{
-			if($eventID == NULL)
+            $this->layout = 'v2_ucampus';
+
+            if($eventID == NULL)
 			{
 				$this->flash(__('Invalid Event', true), array('action'=>'index'));
 			}
@@ -93,6 +100,8 @@ class EventsController extends AppController {
      */
     public function view($eventID = NULL)
     {
+        $this->layout = 'v2_ucampus';
+
         if($eventID == NULL) {
             $this->flash(__('Invalid Event', true), array('action'=>'index'));
         }
@@ -112,7 +121,9 @@ class EventsController extends AppController {
 		
 		public function getEventByCollegeId($collegeID = NULL)
 		{
-			if($collegeID == NULL)
+            $this->layout = 'v2_ucampus';
+
+            if($collegeID == NULL)
 			{
 				$this->flash(__('Invalid Event', true), array('action'=>'index'));
 			}
@@ -127,7 +138,9 @@ class EventsController extends AppController {
 		
 		public function getFeaturedEventsByCollegeId($collegeID = NULL)
 		{
-			if($collegeID == NULL)
+            $this->layout = 'v2_ucampus';
+
+            if($collegeID == NULL)
 			{
 				$this->flash(__('Invalid Event', true), array('action'=>'index'));
 			}
@@ -142,9 +155,10 @@ class EventsController extends AppController {
 		
 		public function getAllFeaturedEvents()
 		{
-			
-			
-			$events = $this->Event->find('all', array('conditions' => array('featured' => 1, 'active' => 1)));
+            $this->layout = 'v2_ucampus';
+
+
+            $events = $this->Event->find('all', array('conditions' => array('featured' => 1, 'active' => 1)));
 			
 			$this->set('events', $events);
 			
@@ -178,57 +192,79 @@ class EventsController extends AppController {
 		
 		public function delete($eventID = NULL)
 		{
-			
-			if($eventID == NULL)
+            $this->layout = 'v2_ucampus';
+
+            if($eventID == NULL)
 			{
-				$this->flash(__('Invalid Event', true), array('action'=>'index'));
+				$this->flash(__('Invalid Event', true), array('action'=>'myevents'));
 			}
 			
 			if($this->Event->delete($eventID))
 			{
-				$this->Session->setFlash("Event Deleted.");
-				$this->redirect('/events');
+				$this->Session->setFlash("Your event was deleted.");
+				$this->redirect('/events/myevents');
 			}
 			
 		}
 		
 		
 		public function edit($eventID = NULL) {
-			
+			$this->layout = "v2";
 			if($eventID == NULL)
 			{
-				$this->flash(__('Invalid Event', true), array('action'=>'index'));
+				$this->flash(__('Invalid Event', true), array('action'=>'myevents'));
 			}
-			
+
 			$event = $this->Event->read(null, $eventID);
-			
+            // grab the logged in user off the session
+            $activeUser = $this->Auth->User();
+            // validate the event to make sure the logged in user can edit it
+            if($event['Event']['userID'] != $activeUser['id']) {
+                $this->flash(__('That was not your event to edit.', true), array('action'=>'myevents'));
+            }
 			Controller::loadModel('School');
 			$schools = $this->School->find('list',array('fields' => array('id', 'name')));			
 			$this->set('schools',$schools);
 			$this->set('event',$event);
-			
-			if(empty($this->data))
+
+            if(empty($this->data))
 			{
+                // format the event so it's more readable
+                $date = DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date']);
+                $event['Event']['eventDate'] = $date->format('m/d/Y');
 				$this->data = $event;
-			}
+            }
 			else
 			{
-                // reformat the event date
-                $date = DateTime::createFromFormat('j/m/Y',$event['Event']['eventDate']);
-                $event = $this->data;
-                $event['Event']['eventDate']  = $date;
-                $this->data= $event;
-                if($this->Event->save($this->data))
-				{
-					$this->Session->setFlash("Event updated.");
-					$this->redirect('/events');
-				}
-				else
-				{
-					$this->Session->setFlash("Error updating event.");
-					$this->redirect('/events/edit/' . $this->data['Event']['_id']);
-				}
-			}
+                // first validate the event
+                $validateError = "";
+                if (empty($this->request->data['Event']['eventTitle'])) {
+                    $validateError .= "Please enter your event title.<br />";
+                }
+                if (empty($this->request->data['Event']['eventInfo'])) {
+                    $validateError .="Please enter some information about your event.<br />";
+                }
+                if (empty($this->request->data['Event']['eventDate'])) {
+                    $validateError .= "Please enter the date of your event.";
+                }
+
+                if(strlen($validateError) > 1) {
+                    $this->Session->setFlash($validateError);
+                }  else {
+                    $event = $this->data;
+                    // format the event date
+                    $event['Event']['eventDate']  = DateTime::createFromFormat('m/d/Y', $this->data['Event']['eventDate']);
+                    // deactivate the event again
+                   // $event['Event']['active'] = 0;
+                    $this->data = $event;
+                    if($this->Event->save($this->data)) {
+                        $this->Session->setFlash('<span class="profile-success">Your event has been updated.</span>');
+                    } else {
+                        $this->Session->setFlash("There was a problem updating your event, please try again later.");
+                    }
+                    $this->redirect('/events/edit/' . $this->data['Event']['_id']);
+                }
+            }
 		}
 
     /**
@@ -243,11 +279,13 @@ class EventsController extends AppController {
             $activeUser = $this->Auth->User();
 
             if(!empty($this->data)) {
+
                 $event = $this->data;
+                $event['Event']['eventAdded'] = date("F j, Y, g:i a");
                 $event['Event']['collegeID'] = $activeUser['school_id'];
                 $event['Event']['userID'] =  $activeUser['id'];
                 // format the event date
-                $event['Event']['eventDate']  = DateTime::createFromFormat('j/m/Y', $this->data['Event']['eventDate']);
+                $event['Event']['eventDate']  = DateTime::createFromFormat('m/d/Y', $this->data['Event']['eventDate']);
                 $this->data = $event;
                 try {
                     if($this->Event->save($this->data)) {
@@ -270,8 +308,9 @@ class EventsController extends AppController {
         } // insertEvent
 
 		public function add() {
-			
-			Controller::loadModel('School');
+            $this->layout = 'v2_ucampus';
+
+            Controller::loadModel('School');
 			$schools = $this->School->find('list',array('fields' => array('id', 'name')));			
 			$this->set('schools',$schools);
 			
@@ -282,6 +321,10 @@ class EventsController extends AppController {
 			
 			if(!empty($this->data))
 			{
+                $event = $this->data;
+                $event['Event']['eventAdded'] = date("F j, Y, g:i a");
+                $this->data = $event;
+
                 if($this->Event->save($this->data))
 				{
                     $this->Session->setFlash("Event added.");
@@ -297,7 +340,9 @@ class EventsController extends AppController {
 		
 		public function toggleActive($eventID = NULL)
 		{
-			if($eventID == NULL)
+            $this->layout = 'v2_ucampus';
+
+            if($eventID == NULL)
 			{
 				$this->flash(__('Invalid Event', true), array('action'=>'index'));
 			}
@@ -322,7 +367,9 @@ class EventsController extends AppController {
 		
 		public function toggleFeatured($eventID = NULL)
 		{
-			if($eventID == NULL)
+            $this->layout = 'v2_ucampus';
+
+            if($eventID == NULL)
 			{
 				$this->flash(__('Invalid Event', true), array('action'=>'index'));
 			}
@@ -345,6 +392,19 @@ class EventsController extends AppController {
 			}
 		}
 
+    /**
+     * This function will load the logged in
+     * user's events
+     */
+    public function myevents() {
+        $this->set('title_for_layout', 'My Events');
+        $this->layout = 'v2';
+
+        // grab the logged in user off the session
+        $activeUser = $this->Auth->User();
+        $events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle', 'eventDate', '_id', 'eventInfo'),'order'=>array('Event.eventDate'=>'DESC'),'conditions' => array('userID' => $activeUser['id'])));
+        $this->set('events', $events);
+    }
 }
 
 
