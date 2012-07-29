@@ -65,6 +65,7 @@ input,textarea,select {
 
 textarea { resize:vertical; }
 
+
 /* FOOTER SECTION */
 footer {
 	margin-top: 19px;
@@ -377,6 +378,18 @@ footer .social > a:hover {
     height:300px;
 }
 
+.tweet-time-marker {
+    position: relative;
+    color: #AAA;
+    font-size: .9em;
+    float: right;
+}
+
+.tweet-username-default {
+    color: #AAA;
+    font-size: .9em;
+}
+
 .trends-feed-container { 
 	height: 495px; 
 }
@@ -453,6 +466,7 @@ a.orange:hover {
 	-webkit-transition: opacity .2s linear;
 	-moz-transition: opacity .2s linear;
 	transition: opacity .2s linear;
+    padding-right: 17px;
 }
 .scroll { overflow: auto; }
 

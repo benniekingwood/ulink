@@ -27,7 +27,6 @@ class EventsController extends AppController {
 		public function beforeFilter() {
 			parent::beforeFilter();
 			$this->Auth->allow('add', 'delete', 'edit', 'view', 'toggleActive', 'toggleFeatured', 'insertEvent','myevents');
-		//	$this->Security->enabled = false;
 			$this->Security->validatePost = false;
             $this->Security->csrfCheck = false;
         }

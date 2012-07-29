@@ -2,6 +2,8 @@
 
 //App::import('Vendor', 'facebook/facebook/facebook.php');
 require_once("../vendors/facebook/facebook/facebook.php");
+require_once("../Lib/Twitter/tmhOAuth.php");
+require_once("../Lib/Twitter/tmhUtilities.php");
 
 define('_UNIT_MILES', 'm');
 define('_UNIT_KILOMETERS', 'k');

@@ -1,5 +1,5 @@
 <div class="container">
-    <div id="events-container" class="span6 offset1">
+    <div id="events-container" class="span7">
         <div id="featured-events-container" class="columns well">
             <div class="pull-right"><i class="school-logo-icon-<?php echo $userSchoolId?>"></i></div>
             <h2>
@@ -27,6 +27,7 @@
                 <a class="right carousel-control" href="#featuredEventsCarousel" data-slide="next">›</a>
             </div> <!-- /featuredEventsCarousel -->
         </div><!-- /feature-events-container -->
+
         <div id="campus-events-container" class="well">
             <h3>Campus Events<a class="btn btn-warning pull-right" data-toggle="modal" href="#submitEventComponent"><i class="icon-calendar icon-white"></i>Submit Your Event</a></h3>
             <ul class="unstyled scroll">
@@ -40,73 +41,55 @@
         </div> <!-- /campus-events-container -->
     </div> <!-- /events-container -->
 
-    <div id="trends-container" class="trends-well span3-5">
+    <div id="trends-container" class="trends-well span4">
         <div class="trends-trending">
-            <h3><?php echo $schoolName ?>&nbsp;Trends</h3>
-            <ul class="unstyled">
-                <li><a href="#">#swimwear</a></li>
-                <li><a href="#">#IloveFootball</a></li>
-                <li><a href="#">#VawterHallBrawl</a></li>
-                <li><a href="#">#Drillfield</a></li>
-                <li><a href="#">#snowday</a></li>
-            </ul>
+            <?php if(isset($trends))  { echo '<h3>'. $schoolName .' Trends'.'</h3>'; ?>
+                <ul class="unstyled">
+                    <?php $x=0;foreach($trends as $trend) { ?>
+                        <li><a href="#"><?php echo $trend;?></a></li>
+                    <?php $x++; if($x==5) break;  } ?>
+                </ul>
+           <?php } else {  echo '<h3>'. $schoolName .' Tweets'.'</h3>'; }?>
         </div>
         <div class="trends-feed-container scroll">
-            <div class="row trends-feed">
-                <div class="span1">
-                    <img src="/img/pic1.png" alt="">
-                    <a data-toggle="modal" href="#viewProfileComponent">deanVT</a>
+
+            <?php foreach ($tweets as $tweet) { ?>
+                <div class="row trends-feed">
+                    <div class="span1">
+                        <?php
+                            if (isset($tweet['ulinkImageURL']) && $tweet['ulinkImageURL'] != '' && file_exists(WWW_ROOT . '/img/files/users/' . $tweet['ulinkImageURL'])) {
+                                echo $this->Html->image('files/users/' . $tweet['ulinkImageURL'] . '', array('alt' => 'profile image'));
+                            } else {
+                                echo $this->Html->image($tweet['profile_image_url'] , array('alt' => 'tweet profile image'));
+                            } ?>
+
+                    </div>
+                    <div class="pull-left tweet-username-default">
+                        <?php if(isset($tweet['ulinkname'])) { ?>
+                        <a id="view-profile-<?php echo $tweet['ulinkUserId'] ?>" data-toggle="modal" href="#viewProfileComponent">
+                            <?php echo $tweet['ulinkname']; ?>
+                        </a>
+                        <?php } else { echo $tweet['from_user'];} ?>
+                    </div>
+                    <div class="tweet-time-marker">
+                        <?php
+                            $tweetTime = strtotime($tweet['created_at']);
+                            $diff = round(abs(time() - $tweetTime) / 60,0);
+                            if($diff >= 120) {
+                                echo '2h';
+                            } else if ($diff < 120 && $diff > 60) {
+                                echo '1h';
+                            } else { echo $diff . 'm'; }
+                        ?>
+                    </div>
+                    <div class="span3 pull-right">
+                        <?php echo $tweet['text'] ?>
+                    </div>
                 </div>
-                <div class="span2">Oh man, just got to Tech and it is cold as *&t*.  #blown #freezing</div>
-            </div>
-            <div class="row trends-feed">
-                <div class="span1">
-                    <img src="/img/pic2.png" alt="">
-                    <a data-toggle="modal" href="#viewProfileComponent">jackHokie</a>
-                </div>
-                <div class="span2">The drillfield was literally covered in about a million feet of snow.  #why</div>
-            </div>
-            <div class="row trends-feed">
-                <div class="span1">
-                    <img src="/img/pic3.png" alt="">
-                    <a data-toggle="modal" href="#viewProfileComponent">ladyBell</a>
-                </div>
-                <div class="span2">Hey @testch, when are we going to get togther for our study group? #needanswers</div>
-            </div>
-            <div class="row trends-feed">
-                <div class="span1">
-                    <img src="/img/me.png" alt="">
-                    <a id="view-profile-107" data-toggle="modal" href="#viewProfileComponent">bigwillie</a>
-                </div>
-                <div class="span2">The brothers of Phi Beta Sigma Fraternity, Inc. are having a food drive in front of O'Shag.  #gomab #service</div>
-            </div>
-            <div class="row trends-feed">
-                <div class="span1">
-                    <img src="http://placehold.it/40x40" alt="">
-                    <a data-toggle="modal" href="#viewProfileComponent">VabdoshT</a>
-                </div>
-                <div class="span2">I like to sleep, and have the covers over my head like I'm in a mini coma.  #sleepisthebest</div>
-            </div>
-            <div class="row trends-feed">
-                <div class="span1">
-                    <img src="/img/joe.png" alt="">
-                    <a data-toggle="modal" href="#viewProfileComponent">blingblau</a>
-                </div>
-                <div class="span2">I run VT.  That is all.  #idoit #blauentertainment #astonmartinmusic</div>
-            </div>
-            <div class="row trends-feed">
-                <div class="span1">
-                    <img src="http://placehold.it/40x40" alt="">
-                    <a data-toggle="modal" href="#viewProfileComponent">yellowTail</a>
-                </div>
-                <div class="span2">I like to sleep, and have the covers over my head like I'm in a mini coma.  #sleepisthebest</div>
-            </div>
+            <?php } ;?>
         </div> <!-- /trends-feed-container -->
     </div> <!-- /trends-container -->
 </div> <!-- /container -->
-<script>
-    $('.carousel').carousel(0);
-</script>
 <!-- components -->
 <?php echo $this->element('submit_event'); ?>
 <!--  components -->
