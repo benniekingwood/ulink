@@ -146,12 +146,12 @@ echo $content_for_layout;
 <!-- Placed at the end of the document so the pages load faster -->
 <?php echo $this->Html->script(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
 
-<!-- facebook scripts -->
+<!-- facebook scripts
 <script type="text/javascript"
         src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
 <script type="text/javascript">
     FB.init("<?php echo FACEBOOK_APP_ID; ?>", "<?php echo FACEBOOK_APP_URL; ?>");
-</script>
+</script>      -->
 
 </body>
 </html>

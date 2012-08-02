@@ -7,8 +7,22 @@
             </h2>
             <div id="featuredEventsCarousel" class="carousel slide">
                 <div class="carousel-inner">
-                    <?php $x=0; foreach( $featureEvents as $fevent ) {
-                        if($x==0) {  ?>
+                    <?php
+                        if(isset($events) && count($events) == 0) { ?>
+                            <div class="item active">
+                                <?php echo $this->Html->image('defaults/default_featured_event.png', array('alt' => 'featured event image'));?>
+                                <a href="#" alt="">
+                                    <div class="carousel-caption">
+                                        <h4>Featured Events</h4>
+                                        <p>Select events for your school will be featured in this section.  Will your event be one of the lucky ones featured here?</p>
+                                    </div>
+                                </a>
+                            </div>
+                    <?php
+                        } else {
+                            $x=0; foreach( $featureEvents as $fevent ) {
+                            if($x==0) {
+                    ?>
                             <div class="item active">
                       <?php   } else {   ?>
                             <div class="item">
@@ -21,7 +35,7 @@
                                     </div>
                                 </a>
                             </div>
-                    <?php $x++; } ?>
+                    <?php $x++; } }?>
                 </div> <!-- /carousel-inner -->
                 <a class="left carousel-control" href="#featuredEventsCarousel" data-slide="prev">‹</a>
                 <a class="right carousel-control" href="#featuredEventsCarousel" data-slide="next">›</a>
@@ -31,12 +45,17 @@
         <div id="campus-events-container" class="well">
             <h3>Campus Events<a class="btn btn-warning pull-right" data-toggle="modal" href="#submitEventComponent"><i class="icon-calendar icon-white"></i>Submit Your Event</a></h3>
             <ul class="unstyled scroll">
-                <?php foreach( $events as $event ) {   ?>
-                    <li><a class="pull-right view-event-link" href="<?php echo($this->Html->url('/events/view/'.$event['Event']['_id'])); ?>" alt=""><i class="icon-share-alt"></i>View</a>
-                    <span class="campus-event-title"><?php echo $event['Event']['eventTitle'] ?></span>&nbsp;-&nbsp;<span class="campus-event-date"><?php echo DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date'])->format('F d, Y'); ?></span>
-                    <p><?php echo substr($event['Event']['eventInfo'], 0, 150) . '...'; ?></p>
-                    </li>
-                <?php } ;?>
+                <?php
+                    if(isset($events) && count($events) == 0) {
+                       echo '<br /><div class="alert alert-warn">There are no events for your school right now, wow really?</div>';
+                    }
+                    else {
+                        foreach( $events as $event ) {   ?>
+                        <li><a class="pull-right view-event-link" href="<?php echo($this->Html->url('/events/view/'.$event['Event']['_id'])); ?>" alt=""><i class="icon-share-alt"></i>View</a>
+                        <span class="campus-event-title"><?php echo $event['Event']['eventTitle'] ?></span>&nbsp;-&nbsp;<span class="campus-event-date"><?php echo DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date'])->format('F d, Y'); ?></span>
+                        <p><?php echo substr($event['Event']['eventInfo'], 0, 150) . '...'; ?></p>
+                        </li>
+                <?php } }?>
             </ul>
         </div> <!-- /campus-events-container -->
     </div> <!-- /events-container -->
@@ -74,12 +93,11 @@
                     <div class="tweet-time-marker">
                         <?php
                             $tweetTime = strtotime($tweet['created_at']);
-                            $diff = round(abs(time() - $tweetTime) / 60,0);
-                            if($diff >= 120) {
-                                echo '2h';
-                            } else if ($diff < 120 && $diff > 60) {
-                                echo '1h';
-                            } else { echo $diff . 'm'; }
+                            $diff = time() - $tweetTime;
+                            if ($diff < 60*60)
+                                echo floor($diff/60) . 'm';
+                            elseif ($diff < 60*60*24)
+                                echo floor($diff/(60*60)) . 'h';
                         ?>
                     </div>
                     <div class="span3 pull-right">

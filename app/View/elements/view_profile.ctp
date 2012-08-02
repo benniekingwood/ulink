@@ -35,9 +35,17 @@
                 $('#vpSchoolStatus').html(data.User.school_status);
                 $('#vpGradYear').html(data.User.year);
                 $('#vpBio').html(data.User.bio);
+            } else { // set back to defaults
+                $('#vpUsername').html('username');
+                $('#vpImg').attr('src',hostname+"/img/files/users/noImage.jpg/");
+                $('#vpFirstName').html('Firstname');
+                $('#vpLastName').html('Lastname');
+                $('#vpSchool').html('School Name');
+                $('#vpSchoolStatus').html('status');
+                $('#vpGradYear').html('YYYY');
+                $('#vpBio').html('BIO');
             }
         };
         xhr.send(null);
     });
-
 </script>

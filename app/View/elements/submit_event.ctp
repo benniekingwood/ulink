@@ -18,7 +18,6 @@
                 <?php echo $this->Form->input('Event.eventDate', array('id' => 'eventDate', 'data-date-format'=>'mm/dd/yy', 'class' => 'input-large ulink-input-bigfont','maxlength' => '10', 'label'=>false, 'div'=>false, 'placeHolder' => 'MM/DD/YYYY')); ?>
                 <?php echo $this->Form->input('Event.eventInfo', array('id' => 'eventInfo', 'type'=>'textarea', 'maxlength' => '750','class' => 'event-textarea ulink-input-bigfont', 'label'=>false, 'div'=>false, 'placeHolder' => 'Event information'));?>
                 <?php echo $this->Form->input('_id', array('type' => 'hidden')); ?>
-
                 <div>
                     <?php echo $this->Form->input('Event.eventLocation', array('id' => 'eventLocation', 'class' => 'geo-text', 'style'=>'display: none; visibility: visible;','maxlength' => '50', 'label'=>false, 'div'=>false, 'placeHolder' => 'Location')); ?>
                 </div>
@@ -62,7 +61,7 @@
         </div>
     </div>
 </div> <!-- /submitEventComponent-->
-<script type="text/javascript" src="/js/validate.js"></script>
+<script src="/js/validate.js"></script>
 <script src="/js/jquery.timePicker.min.js"></script>
 <script src="/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" language="javascript">

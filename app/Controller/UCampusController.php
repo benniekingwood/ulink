@@ -6,7 +6,7 @@
 class UCampusController extends AppController {
 
     var $name = 'UCampus';
-    var $uses = array('Event', 'Trend');
+    var $uses = array('Event', 'Trend', 'User');
     var $components = array('RequestHandler');
     var $helpers = array('Html', 'Form', 'Js');
 
@@ -24,7 +24,7 @@ class UCampusController extends AppController {
     public function index() {
 
         if (!$this->Auth->User()) {
-            $this->redirect(array('controller' => 'users','action' => 'login'));
+            $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
         $this->layout = "v2_ucampus";
         $this->set('title_for_layout', 'Your college everything.');
@@ -34,41 +34,109 @@ class UCampusController extends AppController {
         $activeUser = $this->Auth->User();
 
         // load the regular events for the logged in user's college
-        $events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle', 'eventDate', '_id', 'eventInfo'),'order'=>array('Event.eventDate'=>'DESC'),'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 0, 'active' => 1,'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
+        $events = $this->Event->find('all', array('fields' => array('collegeID', 'eventTitle', 'eventDate', '_id', 'eventInfo'), 'order' => array('Event.eventDate' => 'DESC'), 'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 0, 'active' => 1, 'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
         $this->set('events', $events);
+
 
         $schoolName = "";
         // grab the user's school
-        if($events != null) {
-            $schoolName= $events[0]['Event']['collegeName'];
+        $school = $this->School->find('first', array('conditions' => array('School.id' => $activeUser['school_id']), 'fields' => array('woeid', 'name')));
+        if ($school != null) {
+            $schoolName = $school['School']['name'];
         }
         $this->set('schoolName', $schoolName);
 
         // grab the tweets for the school
-        $tweets = $this->getTweetsBySchool($schoolName);
-        //$tweets =  json_decode($results, true);
+        $tweets = $this->getTweetsBySchool($schoolName, $activeUser['school_id']);
         $this->set('tweets', $tweets);
 
         // grab the trends based on the school's woeid
-        $school = $this->School->find('first',array('conditions'=>array('School.id'=>$events[0]['Event']['collegeID']), 'fields' => array('woeid')));
-        $trends = $this->getTrendsByWOEID($school['School']['woeid'],$events[0]['Event']['collegeID']);
-        if($trends != null && (count($trends)>0)) {
-            $this->set('trends',$trends);
+        $trends = $this->getTrendsByWOEID($school['School']['woeid'], $activeUser['school_id']);
+        if ($trends != null && (count($trends) > 0)) {
+            $this->set('trends', $trends);
         }
 
         // load the featured events for the logged in user's college
-        $featureEvents = $this->Event->find('all', array('order'=>array('Event.eventDate'=>'ASC'),'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 1, 'active' => 1,'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
-        $this->set('featureEvents', $featureEvents );
+        $featureEvents = $this->Event->find('all', array('order' => array('Event.eventDate' => 'ASC'), 'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 1, 'active' => 1, 'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
+        $this->set('featureEvents', $featureEvents);
     }
+
+
+    /**
+     * Helper function for comparing tweets based on
+     * their created dates
+     * @param $a
+     * @param $b
+     * @return mixed
+     */
+    public function compareTweetDates($a, $b) {
+        $start = strtotime($a['create_at']);
+        $end = strtotime($b['create_at']);
+        if ($start == $end) {
+            return 0;
+        }
+        return ($start - $end > 0) ? 1 : -1;
+    }
+
+    /**
+     * This function will build up the queries that will
+     * hit Twitter's Search API.  It will randomly choose 25
+     * ulink users for the search along with the school name.
+     * @param $schoolName
+     * @param $schoolID
+     */
+    private function buildTwitterSearchQueries($schoolName, $schoolID) {
+        $retVal = array();
+        // first grab up to 100 Twitter enabled users from uLink
+        $twitUsers = $this->User->find('all', array('conditions' => array('twitter_enabled' => 1, 'school_id' => $schoolID), 'fields' => array('twitter_username')));
+
+
+        if($twitUsers != null) {
+            // mix up the users
+            shuffle($twitUsers);
+            $count = count($twitUsers);
+            $query = '';
+            for ($i = 0; $i < $count; $i++) {
+                if ($i==0) {
+                    $query .= 'from:' . $twitUsers[$i]['User']['twitter_username'];
+                } else {
+                    $query .= '+OR+from:' . $twitUsers[$i]['User']['twitter_username'];
+                }
+                if ($count > 10 && $i > 0 && $i % 10 == 0) {
+                    // only pull tweets from today
+                    $query .= ' since:'.date('Y-m-d');
+                    array_push($retVal, $query);
+                    // reset the query
+                    $query = '';
+                }
+                // break if we hit our limit
+                if($i == 100) {
+                    break;
+                }
+            }
+
+            // if there are less than 10 users just add the query here
+            if($count < 10) {
+                // only pull tweets from today
+                $query .= ' since:'.date('Y-m-d');
+                array_push($retVal, $query);
+            }
+        }
+        // finally add the school to the queries
+        array_push($retVal, $schoolName);
+
+        return $retVal;
+    } // buildTwitterSearchQuery
 
     /**
      * This method will return the tweets for the passed
      * in school param
      *
      * @param $schoolName
+     * @param $schoolID
      * @return array
      */
-    private function getTweetsBySchool($schoolName) {
+    private function getTweetsBySchool($schoolName, $schoolID) {
         $tmhOAuth = new tmhOAuth(array());
         $pageCount = '2';
         $tweetsPerPage = '50';
@@ -76,52 +144,32 @@ class UCampusController extends AppController {
         $resultType = 'recent';
         $includeEntities = '1';
 
-        $params = array(
-            'q'        => $schoolName,
-            'pages'    => $pageCount,
-            'rpp'      => $tweetsPerPage,
-            'show_user'     => $showUser,
-            'result_type' => $resultType,
-            'include_entities' => $includeEntities,
-        );
-
-        foreach ($params as $k => $v) :
-            $p[$k] = $v;
-            if (empty($p[$k]))
-                unset($p[$k]);
-        endforeach;
-
-        $pages = intval($p['pages']);
-        $pages = $pages > 0 ? $pages : 1;
+        // build up the search queries
+        $queries = $this->buildTwitterSearchQueries($schoolName, $schoolID);
         $results = array();
-
-        for ($i=1; $i < $pages; $i++) {
-            $args = array_intersect_key(
-                $p, array(
-                'q'        => $schoolName,
-                'pages'    => $pageCount,
-                'rpp'      => $tweetsPerPage,
-                'show_user'     => $showUser,
-                'result_type' => $resultType,
-                'include_entities' => $includeEntities,
-            ));
-            $args['page'] = $i;
-
-            $tmhOAuth->request(
-                'GET',
-                'http://search.twitter.com/search.json',
-                $args,
-                false
-            );
+        for ($i = 0; $i < count($queries); $i++) {
+            $params = array('q' => $queries[$i], 'pages' => $pageCount, 'rpp' => $tweetsPerPage, 'show_user' => $showUser, 'result_type' => $resultType, 'include_entities' => $includeEntities,);
+            $tmhOAuth->request('GET', 'http://search.twitter.com/search.json', $params, false);
 
             if ($tmhOAuth->response['code'] == 200) {
                 $data = json_decode($tmhOAuth->response['response'], true);
+                $results = array_merge((array)$results, (array)$data['results']);
             } else {
                 $data = htmlentities($tmhOAuth->response['response']);
                 $this->log('There was an error.' . PHP_EOL);
                 break;
             }
-        }
+        } // end for
+
+        // sort the results based on their created times
+        usort($results, function($a, $b) {
+            $start = strtotime($a['created_at']);
+            $end = strtotime($b['created_at']);
+            if ($start == $end) {
+                return 0;
+            }
+            return ($start - $end > 0) ? -1 : 1;
+        });
 
         /*
          * Iterate through results grabbing ulink usernames based on
@@ -130,13 +178,12 @@ class UCampusController extends AppController {
          * view profile link, make a link, else show twitter username without link
          */
         $retVal = array();
-        foreach ($data['results'] as $tweet) {
-
+        foreach ($results as $tweet) {
             // look for ulink username based on the twitter username
             $user = $this->getuLinkUserByTwitterName($tweet['from_user']);
-            if($user != null && $user['User'] != null) {
+            if ($user != null && $user['User'] != null) {
                 $tweet['ulinkname'] = $user['User']['username'];
-                $tweet['ulinkUserId']  = $user['User']['id'];
+                $tweet['ulinkUserId'] = $user['User']['id'];
                 $tweet['ulinkImageURL'] = $user['User']['image_url'];
             }
             array_push($retVal, $tweet);
@@ -159,33 +206,26 @@ class UCampusController extends AppController {
         $trends = $this->Trend->getTrendBySchoolID($schoolID);
 
         // if there are trends, check to see if they are stale
-        if($trends != null && $this->trendsAreNotStale($trends)) {
+        if ($trends != null && $this->trendsAreNotStale($trends)) {
             $retVal = $trends[0]['Trend']['trends'];
-        } else {  // we can search for new trends
+        } else { // we can search for new trends
             // first remove the stale trends from the cache if there were trends
-            if($trends != null) {
+            if ($trends != null) {
                 $this->Trend->delete($trends[0]['Trend']['_id']);
             }
 
             $tmhOAuth = new tmhOAuth(array());
             $exclude = '';
-            $params = array(
-                'woeid'        => $woeid,
-                'exclude'    => $exclude
-            );
+            $params = array('woeid' => $woeid, 'exclude' => $exclude);
 
             foreach ($params as $k => $v) :
                 $p[$k] = $v;
-                if (empty($p[$k]))
+                if (empty($p[$k])) {
                     unset($p[$k]);
+                }
             endforeach;
 
-            $tmhOAuth->request(
-                'GET',
-                'https://api.twitter.com/1/trends/1.json',
-                $params,
-                false
-            );
+            $tmhOAuth->request('GET', 'https://api.twitter.com/1/trends/1.json', $params, false);
 
             if ($tmhOAuth->response['code'] == 200) {
                 $data = json_decode($tmhOAuth->response['response'], true);
@@ -220,7 +260,7 @@ class UCampusController extends AppController {
     private function trendsAreNotStale($trends) {
         $staleLimit = 120; // minutes
         $trendTime = strtotime($trends[0]['Trend']['created']);
-        $trendAge = round(abs(time() - $trendTime) / 60,0);
+        $trendAge = round(abs(time() - $trendTime) / 60, 0);
         return ($trendAge <= $staleLimit);
     }
 
@@ -232,8 +272,9 @@ class UCampusController extends AppController {
      * @return User
      */
     private function getuLinkUserByTwitterName($twitName) {
-        $user = $this->User->find('first',array('fields'=> array('User.username', 'User.id', 'User.image_url'), 'conditions' => 'User.twitter_username="' . $twitName . '"'));
+        $user = $this->User->find('first', array('fields' => array('User.username', 'User.id', 'User.image_url'), 'conditions' => 'User.twitter_username="' . $twitName . '"'));
         return $user;
     }
 }
+
 ?>

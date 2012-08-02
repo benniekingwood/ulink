@@ -10,6 +10,7 @@
                     <li><a href="<?php echo($this->Html->url('/users/'));?>"> <i class="icon-user"></i>Profile</a></li>
                     <li class="active"><a href="#"><i class="icon-lock"></i>Password</a></li>
                     <li><a href="<?php echo($this->Html->url('/events/myevents'));?>"><i class="icon-calendar"></i>Events</a></li>
+                    <li><a href="<?php echo($this->Html->url('/users/social'));?>"><i class="icon-globe"></i>Social</a></li>
                 </ul>
             </div>
         </div>

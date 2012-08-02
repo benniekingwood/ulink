@@ -1,8 +1,8 @@
-<script type="text/javascript"
+<!--<script type="text/javascript"
         src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
 <script type="text/javascript">
     FB.init("cf0266cbd11fc7749378c8069b3543c3", "/ulink/app/webroot/xd_receiver.htm");
-</script>
+</script>    -->
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
         $("#loginFormMain").submit(function () {
@@ -101,7 +101,7 @@
 </script>
 <div class="container">
     <div class="span10 offset1 well well-nopadding well-white">
-        <div id="fb-root"></div>
+       <!-- <div id="fb-root"></div>
         <script type="text/javascript" language="javascript">
             window.fbAsyncInit = function () {
                 FB.init({
@@ -118,7 +118,7 @@
                 e.async = true;
                 document.getElementById('fb-root').appendChild(e);
             }());
-        </script>
+        </script>     -->
         <div class="modal-header">
             <div class="row">
                 <div class="login-header pull-left">Login with your uLink account</div>
@@ -149,7 +149,7 @@
                 <div class="span2">
                     <a id="btnLoginMain" class="btn btn-primary btn-large">Log In</a>
                 </div>
-                <div class="facebook-login pull-left">
+            <!--    <div class="facebook-login pull-left">
                     <span>or login with facebook</span>
                     <?php
                     if (isset($loggedInId)):

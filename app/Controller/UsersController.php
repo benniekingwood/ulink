@@ -412,6 +412,42 @@ class UsersController extends AppController {
     }
 
     /**
+     * This function will be for the management of
+     * the user's social integration to uLink
+     */
+    public function social() {
+        // if the user is not logged in, make them
+        if (!$this->Auth->user()) {
+            $this->redirect(array('action' => 'login'));
+        }
+        $this->layout = "v2";
+        $this->set('title_for_layout','Social Management');
+
+        // grab the current logged in user
+        $sessionUser = $this->Auth->user();
+        if(empty($this->data)) {
+            $this->data = $this->User->read('', $sessionUser['id']);
+        } else {
+            // create a data object with the user's info
+            $data = array(
+                'User' => array(
+                    'id' => $sessionUser['id'],
+                    'username' => $sessionUser['username'],
+                    'twitter_username' => $this->request->data['User']['twitter_username'],
+                    'twitter_enabled' => $this->request->data['User']['twitter_enabled']
+                )
+            );
+
+            // update the user's profile in the db
+            if ($this->User->save($data)) {
+                $this->Session->setFlash('<span class="profile-success">Your profile has been updated.</span>');
+            } else {
+                $this->Session->setFlash("There was an issue saving your account information.  Please try again, or contact help@theulink.com");
+            }
+        }
+    }  // social
+
+    /**
      * This function will update the password
      * in the user's profile
      */

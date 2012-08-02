@@ -106,6 +106,9 @@ class EventsController extends AppController {
         }
 
         $event = $this->Event->read(null, $eventID);
+        // set the page title to be the school and the event
+        $this->set('title_for_layout', $event['Event']['collegeName'] . ' ' . $event['Event']['eventTitle']);
+
         // format the event so it's more readable
         $date = DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date']);
         $event['Event']['eventDate'] = $date->format('F d, Y');
@@ -175,8 +178,8 @@ class EventsController extends AppController {
 			//If event does not have an image set, return a place holder image
 			if(count($event['Event']['image']->bin) <= 0 || !isset($event['Event']['image']->bin))
 			{				
-				$fh = fopen(APP . 'webroot/img/noImage.jpg', 'r');
-				$content = fread($fh, filesize(APP . 'webroot/img/noImage.jpg'));
+				$fh = fopen(APP . 'webroot/img/defaults/default_campus_event.png', 'r');
+				$content = fread($fh, filesize(APP . 'webroot/img/defaults/default_campus_event.png'));
 				fclose($fh);
 				$event['Event']['image']->bin = $content;
 			}

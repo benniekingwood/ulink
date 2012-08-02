@@ -1,7 +1,7 @@
 <?php
 
 //App::import('Vendor', 'facebook/facebook/facebook.php');
-require_once("../vendors/facebook/facebook/facebook.php");
+//require_once("../vendors/facebook/facebook/facebook.php");   <-- 7/30/2012 - Bennie- removing FB for now --too slow
 require_once("../Lib/Twitter/tmhOAuth.php");
 require_once("../Lib/Twitter/tmhUtilities.php");
 
@@ -44,7 +44,7 @@ class AppController extends Controller {
         // Prevent the 'Undefined index: facebook_config' notice from being thrown.
         $GLOBALS['facebook_config']['debug'] = NULL;
         // Create a Facebook client API object.
-        $this->facebook = new Facebook($this->__fbApiKey, $this->__fbSecret);
+        //$this->facebook = new Facebook($this->__fbApiKey, $this->__fbSecret);  <-- 7/30/2012 - Bennie- removing FB for now --too slow
     }
 
     /**
@@ -59,7 +59,7 @@ class AppController extends Controller {
         $this->Auth->fields = array('username' => 'username', 'password' => 'password');
 
         //check to see if user is signed in with facebook
-        $this->__checkFBStatus();
+       // $this->__checkFBStatus();
         
         // now check to see if this is admin site authentication
         if (isset($this->request->params['admin'])) {
@@ -345,7 +345,7 @@ class AppController extends Controller {
     } // chkAutopass
 
 
-    private function __checkFBStatus() {
+   /* private function __checkFBStatus() {
 
         $this->facebook->get_loggedin_user();
 
@@ -369,7 +369,7 @@ class AppController extends Controller {
                   print_r($info);exit; */
 
 
-                $user_record['User']['fbid'] = $this->facebook->get_loggedin_user();
+           /*     $user_record['User']['fbid'] = $this->facebook->get_loggedin_user();
                 $fc = new FacebookRestClient(FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, $facebook->api_client->session_key);
 
                 $fUserData = $fc->users_getInfo($user_record['User']['fbid'], 'last_name,first_name,sex,current_location,email');
@@ -410,6 +410,6 @@ class AppController extends Controller {
                 }
             }
         endif;
-    }
+    } */
 }
 ?>

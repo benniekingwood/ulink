@@ -41,7 +41,7 @@ class Event extends AppModel {
                     {
                         return false;
                     }
-                } else if ($this->data['Event']['image']['name'] == '') {
+                } else if ($this->data['Event']['image'] != null &&$this->data['Event']['image']['name'] == '') {
                     unset($this->data['Event']['image']);
                     unset($this->data['Event']['imageType']);
                     unset($this->data['Event']['file']);

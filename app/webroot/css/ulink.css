@@ -354,9 +354,28 @@ footer .social > a:hover {
 	*margin-right: .3em;
 }
 
+
 .school-logo-icon-167 {
 	background-position: 0px 0px;
 }
+
+.school-logo-icon-165 {
+    background-position: -100px 0px;
+}
+
+.school-logo-icon-MASON {
+    background-position: -180px 0px;
+}
+
+.school-logo-icon-JMU {
+    background-position: -280px 0px;
+}
+
+.school-logo-icon-UVA {
+    background-position: -380px 0px;
+}
+
+/* END ICON-SECTION */
 
 .carousel-inner .item > img {
 	height: 300px;

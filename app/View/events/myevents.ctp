@@ -6,6 +6,7 @@
                     <li><a href="<?php echo($this->Html->url('/users/'));?>"> <i class="icon-user"></i>Profile</a></li>
                     <li><a href="<?php echo($this->Html->url('/users/password'));?>"><i class="icon-lock"></i>Password</a></li>
                     <li  class="active"><a href="<?php echo($this->Html->url('/users/events'));?>"><i class="icon-calendar"></i>Events</a></li>
+                    <li><a href="<?php echo($this->Html->url('/users/social'));?>"><i class="icon-globe"></i>Social</a></li>
                 </ul>
             </div>
         </div>
@@ -19,7 +20,12 @@
                 </div>
                 <div id="my-events-container">
                     <ul class="unstyled scroll">
-                        <?php foreach( $events as $event ) {   ?>
+                        <?php
+                            if(isset($events) && count($events) == 0) {
+                                echo '<div class="alert alert-warn">You have no events at this time.</div>';
+                            }
+                            else {
+                            foreach( $events as $event ) {   ?>
                         <li><a class="pull-right my-event-link" href="<?php echo($this->Html->url('/events/edit/'.$event['Event']['_id'])); ?>" alt=""><i class="icon-share-alt"></i>Edit</a>
                             <div class="row">
                                 <div class="span1">
@@ -33,7 +39,7 @@
                                 </div>
                             </div>
                         </li>
-                        <?php } ;?>
+                        <?php } }?>
                     </ul>
                 </div>
             </div> <!-- /profile-tab-content -->

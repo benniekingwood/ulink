@@ -1,7 +1,7 @@
-<script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+<!--<script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
 <script type="text/javascript">
     FB.init("cf0266cbd11fc7749378c8069b3543c3","/ulink/app/webroot/xd_receiver.htm");
-</script>
+</script> -->
 <script language="javascript" type="text/javascript">
     $(document).ready(function() {
         $("#loginForm").submit(function() {
@@ -84,7 +84,7 @@
     });
 </script>
 <div class="modal-wide hide fade" id="loginComponent">
-    <div id="fb-root"></div>
+   <!-- <div id="fb-root"></div>
     <script type="text/javascript" language="javascript">
     window.fbAsyncInit = function() {
         FB.init({
@@ -101,7 +101,7 @@
         e.async = true;
         document.getElementById('fb-root').appendChild(e);
     }());
-    </script>
+    </script>   -->
 
     <div class="modal-header">
         <div class="row">
@@ -126,7 +126,7 @@
             <div class="span2">
                 <a id="btnLogin" class="btn btn-primary btn-large">Log In</a>
             </div>
-            <div class="facebook-login pull-left">
+      <!--      <div class="facebook-login pull-left">
                 <span>or login with facebook</span>
                 <?php
                 if (isset($loggedInId)):
