@@ -1,6 +1,6 @@
 <div class="modal profile-component fade hide" id="viewProfileComponent">
     <div class="row">
-        <a class="close" data-dismiss="modal">x</a>
+        <!--<a class="close" data-dismiss="modal">x</a>-->
         <div class="span2">&nbsp;
             <?php echo $this->Html->image('files/users/noImage.jpg', array('id'=>'vpImg', 'class'=>'rounded', 'alt' => 'profileImg')); ?>
         </div>

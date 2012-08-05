@@ -108,7 +108,7 @@
 <?php
 /**
  * NEEDED to remove here- session flash needs to be on the individual
- * inner pages (where desired) because it is placed a special locations. 
+ * inner pages (where desired) because it is placed a special locations.
  * echo $this->Session->flash();
  */
 echo $content_for_layout;
@@ -116,7 +116,7 @@ echo $content_for_layout;
 <!-- /page content -->
 
 <!-- global components -->
-<?php echo $this->element('login'); echo $this->element('view_profile');?>
+<?php echo $this->element('login'); ?>
 <!-- /global components -->
 <footer>
     <div class="container">
@@ -144,7 +144,7 @@ echo $content_for_layout;
 </footer> <!-- /footer -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<?php echo $this->Html->script(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
+<?php echo $this->Html->script(array('bootstrap.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
 
 <!-- facebook scripts
 <script type="text/javascript"

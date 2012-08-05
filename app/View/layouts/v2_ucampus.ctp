@@ -8,13 +8,13 @@
     <?php
        // print meta tags
         echo $this->Html->meta('icon');
-    echo $this->Html->meta('viewport','width=device-width, initial-scale=1.0');
-    echo $this->Html->meta('description','Handle your everyday college activities with uLink.');
-    echo $this->Html->meta('author','uLink, Inc.');
+        echo $this->Html->meta('viewport','width=device-width, initial-scale=1.0');
+        echo $this->Html->meta('description','Handle your everyday college activities with uLink.');
+        echo $this->Html->meta('author','uLink, Inc.');
 
-    // print styles
-    echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css', 'kevin.css'));
-    echo $this->Html->script(array('jquery.min.js','validate.js', 'var.js'));
+        // print styles
+        echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css', 'kevin.css'));
+        echo $this->Html->script(array('jquery.min.js','validate.js', 'var.js'));
     ?>
 
     <!--  HTML5 shim, for IE6-8 support of HTML5 elements -->

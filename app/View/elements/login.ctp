@@ -6,13 +6,13 @@
     $(document).ready(function() {
         $("#loginForm").submit(function() {
             $.post("<?php echo $this->Html->url(array('controller'=>'users','action'=>'login'),true) ?>",{remember_me:$('#remember_me').val(), username:$('#username').val(),password:$('#password').val(), rand:Math.random() },
-                    function(data) { 
+                    function(data) {
                         switch(data) {
                             case 'yes':
                                 $('#loginForm-container').addClass('success');
 
                                 //start fading the message box
-                                $("#login-message").fadeTo(200,0.1,function() {
+                                $("#loginForm-message").fadeTo(200,0.1,function() {
                                     //add message and change the class of the box and start fading
                                     $(this).html('Logging in.....').addClass('success').fadeTo(900,1,
                                     function() {
@@ -21,20 +21,20 @@
                                     });
                                 });
                                 break;
-                             case 'std': 
+                             case 'std':
                                 $('#loginForm-container').addClass('error');
 
                                 //start fading the message box
-                                $("#login-message").fadeTo(200,0.1,function() {
+                                $("#loginForm-message").fadeTo(200,0.1,function() {
                                     //add message and change the class of the box and start fading
                                     $(this).html('Your account is inactive, please contact help@theulink.com.').addClass('error').fadeTo(900,1);
                                 });
                                 break;
-                             case 'auto':                               
+                             case 'auto':
                                    $('#loginForm-container').addClass('success');
-                                   
+
                                    //start fading the message box
-                                   $("#login-message").fadeTo(200, 0.1, function () {
+                                   $("#loginForm-message").fadeTo(200, 0.1, function () {
                                       //add message and change the class of the box and start fading
                                       $(this).html('Logging in.....').addClass('success').fadeTo(900, 1,
                                              function () {
@@ -43,11 +43,11 @@
                                              });
                                       });
                                    break;
-                            default: 
+                            default:
                                 $('#loginForm-container').addClass('error');
 
                                 //start fading the message box
-                                $("#login-message").fadeTo(200,0.1,function() {
+                                $("#loginForm-message").fadeTo(200,0.1,function() {
                                     //add message and change the class of the box and start fading
                                     $(this).html('Invalid login, please try again.').addClass('error').fadeTo(900,1);
                                 });
@@ -77,7 +77,7 @@
                 $("#loginForm").submit();
             } else {
                 $('#loginForm-container').addClass('error');
-                $('#login-message').html('Please enter the required fields.');
+                $('#loginForm-message').html('Please enter the required fields.');
                 return valid;
             }
         });
@@ -116,7 +116,7 @@
                 <?php echo $this->Form->input('username', array('id' => 'username','label' => false, 'placeholder' => 'username','class' =>
                 'input-xxlarge ulink-input-bigfont')); ?>
                 <?php echo $this->Form->input('password', array('id' => 'password', 'label' => false,'placeholder' => 'password','class' =>'input-xxlarge ulink-input-bigfont')); ?>
-                <span id="login-message" class="help-inline"></span>
+                <span id="loginForm-message" class="help-inline"></span>
             </div>
         </div>
         <?php echo $this->Form->end(); ?>

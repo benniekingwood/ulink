@@ -36,67 +36,78 @@ class UsersController extends AppController {
         if ($this->Auth->user() || (isset($_POST['username']) && isset($_POST['password']))) {
             $this->autoRender = false;
             $this->layout = null;
-     
-            // if there is data set from the form
-            if (!empty($this->request->data)) {
-                // if "remember_me" was not clicked, removed any user data from the Cookie
-                if (!isset($_POST['username'])) {
-                    $this->Cookie->delete('User');
-                } else { 
-                    // add the user info as a Cookie for 2 weeks
-                    $cookie = array();
-                    $cookie['username'] = $this->request->data['User']['username'];
-                    $cookie['password'] = $this->request->data['User']['password'];
-                    $this->Cookie->write('User', $cookie, true, '+2 weeks');
-                }
-                // remove the remember_me form data from the data object
-                unset($this->request->data['User']['remember_me']);
-            }
-           
-            /**
-             * Grab the authenticated user from the session
-             * Note: at this point the user has already been
-             * authenticated in the AppController::beforeFilter function
-             */
-            $getInfo = $this->Auth->User();
-            // if a user was retrieved...success
-            if ($getInfo != null) { 
-                // first check to see if the user is active
-                if ((int)$getInfo['activation'] == 0) { 
-                    // log the user out
-                    $this->Auth->logout();
-                    // user is not active
-                    echo "std";
-                    exit;
-                } else if ((int)$getInfo['autopass'] == 1) { // if the user is active but might have reset their password
-                    // user is active but needs to change their password
-                    echo "auto";
-                    exit;
-                } else {
-                    // if the user was deactivated, reactivate them
-                    if ((int)$getInfo['deactive'] == 1) {
-                        $this->User->id = $getInfo['id'];
-                        $this->User->saveField('deactive', 0);
-                    }
-                    // set the username to be used on the front end
-                    $this->set('username',$getInfo['username']);
 
-                    // if this was from the login page
-                    if (isset($_POST['loginMain'])) {
-                        echo "main";
-                        exit;
-                    }  else { // else this was from the login modal
-                        echo "yes";
-                        exit;
+            try {
+                // if there is data set from the form
+                if (!empty($this->request->data)) {
+                    // if "remember_me" was not clicked, removed any user data from the Cookie
+                    if (!isset($_POST['username'])) {
+                        $this->Cookie->delete('User');
+                    } else {
+                        // add the user info as a Cookie for 2 weeks
+                        $cookie = array();
+                        $cookie['username'] = $this->request->data['User']['username'];
+                        $cookie['password'] = $this->request->data['User']['password'];
+                        $this->Cookie->write('User', $cookie, true, '+2 weeks');
                     }
+
+                    // remove the remember_me form data from the data object
+                    unset($this->request->data['User']['remember_me']);
                 }
-            } else {   // finally it must be an invalid login 
-                echo "in-valid";  
+            } catch (Exception $e) {
+                $this->log("{UsersController#login} - An exception was thrown when setting the cookie: " . $e->getMessage());
+            }
+
+            try {
+                /**
+                 * Grab the authenticated user from the session
+                 * Note: at this point the user has already been
+                 * authenticated in the AppController::beforeFilter function
+                 */
+                $getInfo = $this->Auth->User();
+                // if a user was retrieved...success
+                if ($getInfo != null) {
+                    // first check to see if the user is active
+                    if ((int)$getInfo['activation'] == 0) {
+                        // log the user out
+                        $this->Auth->logout();
+                        // user is not active
+                        echo "std";
+                        exit;
+                    } else if ((int)$getInfo['autopass'] == 1) { // if the user is active but might have reset their password
+                        // user is active but needs to change their password
+                        echo "auto";
+                        exit;
+                    } else {
+                        // if the user was deactivated, reactivate them
+                        if ((int)$getInfo['deactive'] == 1) {
+                            $this->User->id = $getInfo['id'];
+                            $this->User->saveField('deactive', 0);
+                        }
+                        // set the username to be used on the front end
+                        $this->set('username',$getInfo['username']);
+
+                        // if this was from the login page
+                        if (isset($_POST['loginMain'])) {
+                            echo "main";
+                            exit;
+                        }  else { // else this was from the login modal
+                            echo "yes";
+                            exit;
+                        }
+                    }
+                } else {   // finally it must be an invalid login
+                    echo "in-valid";
+                    exit;
+                }
+            } catch (Exception $e) {
+                $this->log("{UsersController#login} - An exception was thrown: " . $e->getMessage());
+                echo "in-valid";
                 exit;
             }
         } else { // page is initially loading
             $this->layout = "v2_no_login_header";
-        } 
+        }
     } // login
 
     /**
@@ -112,6 +123,8 @@ class UsersController extends AppController {
      * Handles the forgot password action.  This will verify that
      * the inputted user email exists, and will
      * reset the password for that user and send them an email.
+     * TODO: 8.3.12 - need to break this out into smaller atomic functions
+     *
      */
     public function forgotpassword() {
         $this->set('title_for_layout','Forgot Password');
@@ -122,81 +135,85 @@ class UsersController extends AppController {
             $this->redirect($this->Auth->redirect());
             exit();
         }
+        try {
+            // if there is form data, continue with the process
+            if (!empty($this->request->data)) {
+                // if the email was provided
+                if (!empty($this->request->data['User']['email'])) {
+                    $useremail = $this->request->data['User']['email'];
 
-        // if there is form data, continue with the process
-        if (!empty($this->request->data)) {
-            // if the email was provided
-            if (!empty($this->request->data['User']['email'])) {
-                $useremail = $this->request->data['User']['email'];
+                    // grab the user from the db based on the passed in email
+                    $user = $this->User->find('all', array('conditions' => 'User.email="' . $useremail . '"'));
 
-                // grab the user from the db based on the passed in email
-                $user = $this->User->find('all', array('conditions' => 'User.email="' . $useremail . '"'));
+                    // if a user was successfully retrieved
+                    if ($user != null) {
 
-                // if a user was successfully retrieved
-                if ($user != null) {      
+                        // grab a random string for the auto password
+                        $autopass = UsersController::getRandomString();
 
-                    // grab a random string for the auto password
-                    $autopass = UsersController::getRandomString();
+                        // set password and user information to be saved in db
+                        $this->request->data['User']['password2hashed'] = $this->Auth->password($autopass);
+                        $this->request->data['User']['password'] = $this->request->data['User']['password2hashed'];
+                        // remove the updated autopass from the user object so that it is not saved in the db
+                        unset($this->request->data['User']['password2hashed']);
 
-                    // set password and user information to be saved in db
-                    $this->request->data['User']['password2hashed'] = $this->Auth->password($autopass);
-                    $this->request->data['User']['password'] = $this->request->data['User']['password2hashed'];
-                    // remove the updated autopass from the user object so that it is not saved in the db
-                    unset($this->request->data['User']['password2hashed']);
+                        // set the user id, username, and autopass status to be saved
+                        $this->User->id = $user[0]['User']['id'];
+                        $this->request->data['User']['username'] = $user[0]['User']['username'];
+                        $this->request->data['User']['autopass'] = 1;
 
-                    // set the user id, username, and autopass status to be saved
-                    $this->User->id = $user[0]['User']['id'];
-                    $this->request->data['User']['username'] = $user[0]['User']['username'];
-                    $this->request->data['User']['autopass'] = 1;
+                        // if saving the user
+                        if ($this->User->save($this->request->data)) {
 
-                    // if saving the user
-                    if ($this->User->save($this->request->data)) {
-                        
-                        // create the email object
-                        $email = new CakeEmail('gmail');
-                        $email->to($useremail);
-                        $email->subject('Your uLink Temporary Password');
-                        $email->replyTo('noreply@theulink.com');
-                        $email->emailFormat('html');
-                        $email->template('forgotpassword');
-                        
-                        // set the variables that will be needed in the template
-                        $email->viewVars(array(
-                                               'username' => $user[0]['User']['username'],
-                                               'name' => $user[0]['User']['firstname']. ' ' .$user[0]['User']['lastname'],
-                                               'auto_pass' => $autopass
-                                               ));
-                        try {
-                            // if the email was sent successfully
-                            if ($email->send()) {
-                                $this->set('forgotError', 'false');
-                                $this->Session->setFlash('Your new password was sent to ' . $useremail . '.','default', array('class' => 'help-inline success'));
+                            // create the email object
+                            $email = new CakeEmail('gmail');
+                            $email->to($useremail);
+                            $email->subject('Your uLink Temporary Password');
+                            $email->replyTo('noreply@theulink.com');
+                            $email->emailFormat('html');
+                            $email->template('forgotpassword');
 
-                                // TODO: here have the same page just show a panel with a green check box 
-                                // saying the message above about the new password being sent
-                            } else {
+                            // set the variables that will be needed in the template
+                            $email->viewVars(array(
+                                                   'username' => $user[0]['User']['username'],
+                                                   'name' => $user[0]['User']['firstname']. ' ' .$user[0]['User']['lastname'],
+                                                   'auto_pass' => $autopass
+                                                   ));
+                            try {
+                                // if the email was sent successfully
+                                if ($email->send()) {
+                                    $this->set('forgotError', 'false');
+                                    $this->Session->setFlash('Your new password was sent to ' . $useremail . '.','default', array('class' => 'help-inline success'));
+
+                                    // TODO: here have the same page just show a panel with a green check box
+                                    // saying the message above about the new password being sent
+                                } else {
+                                    $this->set('forgotError', 'true');
+                                    $this->Session->setFlash('There was a problem sending the password email. Please try again later, or contact help@theulink.com', 'default', array('class' => 'help-inline error'));
+                                }
+                            } catch (Exception $e) {
                                 $this->set('forgotError', 'true');
+                                $this->log('{UsersController#forgotpassword} - An exception was thrown when attempting to send the forgot password email: ' . $e->getMessage());
                                 $this->Session->setFlash('There was a problem sending the password email. Please try again later, or contact help@theulink.com', 'default', array('class' => 'help-inline error'));
                             }
-                        } catch (Exception $e) {
-                            $this->log('An exception was thrown when attempting to send the forgot password email: ' . $e->getMessage());
-                            $this->Session->setFlash('There was a problem sending the password email. Please try again later, or contact help@theulink.com', 'default', array('class' => 'help-inline error'));
+                        } else {  // saving of the user failed
+                            $this->set('forgotError', 'true');
+                            $this->Session->setFlash('There was an issue with your account,  please try again later.');
+                            $this->request->data = null;
                         }
-                    } else {  // saving of the user failed
+                    } else {  // no user was retrieved for that specified email
                         $this->set('forgotError', 'true');
-                        $this->Session->setFlash('There was an issue with your account,  please try again later.');
-                        $this->request->data = null;
+                        $this->Session->setFlash('There is no uLink account associated with this email, please try another.', 'default', array('class' => 'help-inline error'));
                     }
-                } else {  // no user was retrieved for that specified email
+                } else {  // no email was provided for the user
                     $this->set('forgotError', 'true');
-                    $this->Session->setFlash('There is no uLink account associated with this email, please try another.', 'default', array('class' => 'help-inline error'));
+                    $this->Session->setFlash('Please enter your email address.',  'default', array('class' => 'help-inline error'));
                 }
-            } else {  // no email was provided for the user
-                $this->set('forgotError', 'true');
-                $this->Session->setFlash('Please enter your email address.',  'default', array('class' => 'help-inline error'));
+            } else { // this is just initial page load
+                $this->set('forgotError', 'init');
             }
-        } else { // this is just initial page load
-            $this->set('forgotError', 'init');
+        } catch (Exception $ee) {
+            $this->log("{UsersController#forgotpassword} - An exception was thrown: " . $ee->getMessage());
         }
     } // forgotpassword
 
@@ -205,121 +222,121 @@ class UsersController extends AppController {
      * to the site.  If an id is passed in, we know that this
      * is for facebook users.
      *
+     * TODO: 8.3.12 - need to break this out into smaller atomic functions, and
+     *  figure out what needs to be hard outs vs. continue on
+     *
      * @param null $id
      */
     public function register($id = null) {
         $this->set('title_for_layout','Sign up with uLink');
         $this->layout = "v2_no_login_header";
+        try {
+            /*
+             * If an id was passed in, it will be for fb.  Grab
+             * the first user that has the passed in fb id, and
+             * set it to be used in the view.
+             */
+            if (isset($id)) {
+                $user_record =
+                    $this->User->find('first', array(
+                        'conditions' => array('fbid' => $id),
+                        'fields' => array('User.id'),
+                    ));
+                $this->set('id', $user_record['User']['id']);
+            }
 
-        /*
-         * If an id was passed in, it will be for fb.  Grab
-         * the first user that has the passed in fb id, and
-         * set it to be used in the view.
-         */
-        if (isset($id)) {
-            $user_record =
-                $this->User->find('first', array(
-                    'conditions' => array('fbid' => $id),
-                    'fields' => array('User.id'),
-                ));
-            $this->set('id', $user_record['User']['id']);
-        }
+            // if there is data to be saved
+            if (!empty($this->request->data)) {
+                // check against the email here
+                if ($this->emailExists($this->request->data['User']['email'])) {
+                    $this->Session->setFlash('Email already exists in uLink.  Please try another email address.');
+                } else {
+                    // hash the user's password from the post
+                    $this->request->data['User']['password2hashed'] = AuthComponent::password($this->request->data['User']['password']);
+                    // set the hashed password on the new user
+                    $this->request->data['User']['password'] = $this->request->data['User']['password2hashed'];
+                    // remove the updated autopass from the user object so that it is not saved in the db
+                    unset($this->request->data['User']['password2hashed']);
+                    // create their activation key
+                    $this->request->data['User']['activation_key'] = String::uuid();
 
-        // if there is data to be saved
-        if (!empty($this->request->data)) {
-            // check against the email here
-            if ($this->emailExists($this->request->data['User']['email'])) {
-                $this->Session->setFlash('Email already exists in uLink.  Please try another email address.');
-            } else {
-                // hash the user's password from the post 
-                $this->request->data['User']['password2hashed'] = AuthComponent::password($this->request->data['User']['password']);
-                // set the hashed password on the new user 
-                $this->request->data['User']['password'] = $this->request->data['User']['password2hashed'];
-                // remove the updated autopass from the user object so that it is not saved in the db
-                unset($this->request->data['User']['password2hashed']);
-                // create their activation key
-                $this->request->data['User']['activation_key'] = String::uuid();
-                
-                // save the user
-                if ($this->User->save($this->request->data)) {
-                    // build an email to be sent to the user for account activation
-                    $email = new CakeEmail('gmail');
-                    $email->to($this->request->data['User']['email']);
-                    $email->subject( 'uLink Account Activation');
-                    $email->replyTo('noreply@theulink.com');
-                    $email->emailFormat('html');
-                    $email->template('confirmation');
-                    
-                    $userId = null;
-                    if (isset($this->request->data['User']['id'])) {
-                        $userId = $this->request->data['User']['id'];
-                    } else {
-                        $userId = $this->User->getLastInsertID();
-                    }
-                    
-                    // set the variables that will be needed in the template
-                    $email->viewVars(array(
-                           'name' => $this->request->data['User']['username'],
-                           'server_name' => $_SERVER['SERVER_NAME'],
-                           'code' => $this->request->data['User']['activation_key'],
-                           'id' =>  $userId             
-                     ));
-       
-                    $deleteUser = TRUE;
-                    try {
-                        // send off the email, and redirect to the successful signup page
-                        if ($email->send()) {
-                            $this->redirect(array('controller' => 'pages', 'action' => 'success'));
-                        } else {
-                            $this->User->delete($this->User->getLastInsertID());
-                            $deleteUser = FALSE;
+                    // save the user
+                    if ($this->User->save($this->request->data)) {
+                        $deleteUser = TRUE;
+                        try {
+                            // build an email to be sent to the user for account activation
+                            $email = new CakeEmail('gmail');
+                            $email->to($this->request->data['User']['email']);
+                            $email->subject( 'uLink Account Activation');
+                            $email->replyTo('noreply@theulink.com');
+                            $email->emailFormat('html');
+                            $email->template('confirmation');
+
+                            $userId = null;
+                            if (isset($this->request->data['User']['id'])) {
+                                $userId = $this->request->data['User']['id'];
+                            } else {
+                                $userId = $this->User->getLastInsertID();
+                            }
+
+                            // set the variables that will be needed in the template
+                            $email->viewVars(array(
+                                   'name' => $this->request->data['User']['username'],
+                                   'server_name' => $_SERVER['SERVER_NAME'],
+                                   'code' => $this->request->data['User']['activation_key'],
+                                   'id' =>  $userId
+                             ));
+
+                            // send off the email, and redirect to the successful signup page
+                            if ($email->send()) {
+                                $this->redirect(array('controller' => 'pages', 'action' => 'success'));
+                            } else {
+                                // if the email failed, let's delete the user
+                                $this->User->delete($this->User->getLastInsertID());
+                                $deleteUser = FALSE;
+                                $this->Session->setFlash('There was a problem sending the confirmation email. Please try again, or contact help@thelink.com.');
+                            }
+                        } catch (Exception $e) {
+                            if($deleteUser) {
+                                $this->User->delete($this->User->getLastInsertID());
+                            }
+                            $this->log('{UsersController#forgotpassword} - An exception was thrown when attempting to send the confirmation email: ' . $e->getMessage());
                             $this->Session->setFlash('There was a problem sending the confirmation email. Please try again, or contact help@thelink.com.');
-                        } 
-                    } catch (Exception $e) {
-                        if($deleteUser) {
-                            $this->User->delete($this->User->getLastInsertID());
                         }
-                        $this->log('An exception was thrown when attempting to send the confirmation email: ' . $e->getMessage());
-                        $this->Session->setFlash('There was a problem sending the confirmation email. Please try again, or contact help@thelink.com.');
-                    }
-                } else {  // there was an error when trying to save the user
-                    if($this->User->invalidFields() != null) {
-                        $errors = '';
-                        foreach($this->User->invalidFields() as $key => $value) {
-                            $errors .= $value . '<br />';
+                    } else {  // there was an error when trying to save the user
+                        if($this->User->invalidFields() != null) {
+                            $errors = '';
+                            foreach($this->User->invalidFields() as $key => $value) {
+                                $errors .= $value . '<br />';
+                            }
+                            $this->Session->setFlash($errors);
+                        } else {
+                            $this->Session->setFlash('There was a problem getting your account setup. Please try again, or contact help@theulink.com.');
                         }
-                        $this->Session->setFlash($errors);
-                    } else {
-                        $this->Session->setFlash('Opps, there was a problem getting your account setup. Please try again, or contact help@theulink.com.');
                     }
                 }
             }
+
+            $schools = array();
+
+            // grab all of the schools from the db
+            $data_schools = $this->School->find('all');
+
+            // use all the schools in the system  for the form
+            foreach ($data_schools as $school) {
+                $schools[$school['School']['id']] = $school['School']['name'];
+            }
+
+            // set various data to be used in the register view
+            $this->set('schools', $schools);
+        } catch (Exception $ee) {
+            $this->log('{UsersController#forgotpassword} - An exception was thrown: ' . $e->getMessage());
+            $this->Session->setFlash('There was a problem getting your account setup. Please try again, or contact help@theulink.com.');
         }
-
-        $schools = array();
-
-        // grab all of the schools from the db
-        $data_schools = $this->School->find('all');
-
-        // use all the schools in the system  for the form
-        foreach ($data_schools as $school) {
-            $schools[$school['School']['id']] = $school['School']['name'];
-        }
-
-        // set various data to be used in the register view
-        $this->set('schools', $schools);
     }  // register
 
     /**
-     *
-     */
-    function message() {
-        $this->autoRender = false;
-        $this->layout = null;
-    }
-
-    /**
-     * This function will activate the new user's account 
+     * This function will activate the new user's account
      * in the database.
      *
      * @param null $user_id
@@ -334,21 +351,26 @@ class UsersController extends AppController {
             $this->set('confirmed', 0);
             $this->render();
         }
-        
-        // grab the user based on the passed in code
-        $user = $this->User->find('first', array('conditions' => array('User.id' => $user_id, 'User.activation_key' => $code)));
-        
-        // if no user was found they are not activated
-        if (empty($user)) {
-            $this->set('confirmed', 0);
-        } else {
-            // activate the user in the database
-            $this->User->id = $user_id;
-            $this->User->saveField('activation', '1');
 
-            // setting it to blank so that key can be access only once
-            $this->User->saveField('activation_key', '');
-            $this->set('confirmed', 1); // represents success
+        try {
+            // grab the user based on the passed in code
+            $user = $this->User->find('first', array('conditions' => array('User.id' => $user_id, 'User.activation_key' => $code)));
+
+            // if no user was found they are not activated
+            if (empty($user)) {
+                $this->set('confirmed', 0);
+            } else {
+                // activate the user in the database
+                $this->User->id = $user_id;
+                $this->User->saveField('activation', '1');
+
+                // setting it to blank so that key can be access only once
+                $this->User->saveField('activation_key', '');
+                $this->set('confirmed', 1); // represents success
+            }
+        } catch (Exception $e) {
+            $this->log("{UsersController#confirm} - An exception was thrown: " . $e->getMessage());
+            $this->set('confirmed', 0);
         }
     }  // confirm
 
@@ -358,31 +380,35 @@ class UsersController extends AppController {
      *
      * @param null $image_url
      */
-    function removeImage($image_url = null) {
-        // grab the current logged in user
-        $sessVar = $this->Auth->user();
+    public function removeImage($image_url = null) {
+        try {
+            // grab the current logged in user
+            $sessVar = $this->Auth->user();
 
-        // create a data object with the user's info
-        $data = array(
-            'User' => array(
-                'id' => $sessVar['id'],
-                'username' => $sessVar['username'],
-                'image_url' => ""
-            )
-        );
+            // create a data object with the user's info
+            $data = array(
+                'User' => array(
+                    'id' => $sessVar['id'],
+                    'username' => $sessVar['username'],
+                    'image_url' => ""
+                )
+            );
 
-        // update the user's profile in the db
-        if ($this->User->save($data)) {
             Configure::write('debug', 0);
             $this->autoRender = false;
             $this->layout = null;
-            unlink("" . WWW_ROOT . "/img/files/users/" . $image_url);
-            echo "true";
-            exit;
-        } else {
-            Configure::write('debug', 0);
-            $this->autoRender = false;
-            $this->layout = null;
+
+            // update the user's profile in the db
+            if ($this->User->save($data)) {
+                unlink("" . WWW_ROOT . "/img/files/users/" . $image_url);
+                echo "true";
+                exit;
+            } else {
+                echo "false";
+                exit;
+            }
+        } catch (Exception $e) {
+            $this->log("{UsersController#removeImage} - An exception was thrown: " . $e->getMessage());
             echo "false";
             exit;
         }
@@ -390,9 +416,9 @@ class UsersController extends AppController {
 
     /**
      * Password page loader
-     * @param null change 
+     * @param null change
      */
-    function password($change=null) {
+    public function password($change=null) {
         // if the user is not logged in, make them
         if (!$this->Auth->user()) {
             $this->redirect(array('action' => 'login'));
@@ -400,8 +426,7 @@ class UsersController extends AppController {
         $this->layout = "v2";
         $this->set('title_for_layout','Change Password');
 
-
-        /* 
+        /*
         * If the user has an autogenerated password, we will
         * display a message for the user that they need to change
         * their password.
@@ -409,7 +434,7 @@ class UsersController extends AppController {
         if($change != null) {
             $this->set('change',$change);
         }
-    }
+    } // password
 
     /**
      * This function will be for the management of
@@ -422,28 +447,32 @@ class UsersController extends AppController {
         }
         $this->layout = "v2";
         $this->set('title_for_layout','Social Management');
-
-        // grab the current logged in user
-        $sessionUser = $this->Auth->user();
-        if(empty($this->data)) {
-            $this->data = $this->User->read('', $sessionUser['id']);
-        } else {
-            // create a data object with the user's info
-            $data = array(
-                'User' => array(
-                    'id' => $sessionUser['id'],
-                    'username' => $sessionUser['username'],
-                    'twitter_username' => $this->request->data['User']['twitter_username'],
-                    'twitter_enabled' => $this->request->data['User']['twitter_enabled']
-                )
-            );
-
-            // update the user's profile in the db
-            if ($this->User->save($data)) {
-                $this->Session->setFlash('<span class="profile-success">Your profile has been updated.</span>');
+        try {
+            // grab the current logged in user
+            $sessionUser = $this->Auth->user();
+            if(empty($this->data)) {
+                $this->data = $this->User->read('', $sessionUser['id']);
             } else {
-                $this->Session->setFlash("There was an issue saving your account information.  Please try again, or contact help@theulink.com");
+                // create a data object with the user's info
+                $data = array(
+                    'User' => array(
+                        'id' => $sessionUser['id'],
+                        'username' => $sessionUser['username'],
+                        'twitter_username' => $this->request->data['User']['twitter_username'],
+                        'twitter_enabled' => $this->request->data['User']['twitter_enabled']
+                    )
+                );
+
+                // update the user's profile in the db
+                if ($this->User->save($data)) {
+                    $this->Session->setFlash('<span class="profile-success">Your profile has been updated.</span>');
+                } else {
+                    $this->Session->setFlash("There was an issue saving your account information.  Please try again, or contact help@theulink.com");
+                }
             }
+        } catch (Exception $e) {
+            $this->log("{UsersController#social} - An exception was thrown: " . $e->getMessage());
+            $this->Session->setFlash("There was an issue saving your account information.  Please try again, or contact help@theulink.com");
         }
     }  // social
 
@@ -452,74 +481,80 @@ class UsersController extends AppController {
      * in the user's profile
      */
     public function updatePassword() {
-        $validateError = 0;
-        // if the user is changing their password, perform validation
-        if (!empty($this->request->data['User']['oldpass'])) {
-            
-            // if the user is changing their password make sure the confirm matches the new
-            if (!empty($this->request->data['User']['newpass'])) {
-                if ($this->request->data['User']['newpass'] != $this->request->data['User']['newconfirmpass']) {
-                    $this->User->invalidate('newconfirmpass', "The verify password does not match the new password.");
-                    $validateError++;
-                }
-                if (strlen($this->request->data['User']['newpass']) < 6) {
-                    $this->User->invalidate('newconfirmpass', "The new password must be at least six characters.");
-                    $validateError++;
-                }
-            }
-            
-            if($validateError == 0) {
-                $cuser = $this->User->find('first', array('conditions' => 'User.id=' . $this->Auth->user('id'),
-                    'fields' => array('User.password')));
-                $this->log($cuser);
-                if ($this->Auth->password($this->request->data['User']['oldpass']) == $cuser['User']['password']) {
-                    $this->request->data['User']['password'] = $this->Auth->password($this->request->data['User']['newconfirmpass']);
-                } else {
-                    $this->User->invalidate('oldpass', 'The current password entered was incorrect, please try again.');
-                    $validateError++;
-                }
-            }
-        } else {
-            $this->User->invalidate('oldpass', "Please enter your old password.");
-            $validateError++;
-        }
-
-        // grab the current logged in user
-        $sessVar = $this->Auth->user();
-
         Configure::write('debug', 0);
         $this->autoRender = false;
         $this->layout = null;
+        $validateError = 0;
+        try {
 
-        // check for validation errors
-        if($validateError > 0) {
-            if($this->User->invalidFields() != null) {
-                $errors = '';
-                foreach($this->User->invalidFields() as $value) {
-                    $errors .= $value[0] . '<br />';
+            // if the user is changing their password, perform validation
+            if (!empty($this->request->data['User']['oldpass'])) {
+
+                // if the user is changing their password make sure the confirm matches the new
+                if (!empty($this->request->data['User']['newpass'])) {
+                    if ($this->request->data['User']['newpass'] != $this->request->data['User']['newconfirmpass']) {
+                        $this->User->invalidate('newconfirmpass', "The verify password does not match the new password.");
+                        $validateError++;
+                    }
+                    if (strlen($this->request->data['User']['newpass']) < 6) {
+                        $this->User->invalidate('newconfirmpass', "The new password must be at least six characters.");
+                        $validateError++;
+                    }
+                }
+
+                if($validateError == 0) {
+                    $cuser = $this->User->find('first', array('conditions' => 'User.id=' . $this->Auth->user('id'),
+                        'fields' => array('User.password')));
+                    $this->log($cuser);
+                    if ($this->Auth->password($this->request->data['User']['oldpass']) == $cuser['User']['password']) {
+                        $this->request->data['User']['password'] = $this->Auth->password($this->request->data['User']['newconfirmpass']);
+                    } else {
+                        $this->User->invalidate('oldpass', 'The current password entered was incorrect, please try again.');
+                        $validateError++;
+                    }
+                }
+            } else {
+                $this->User->invalidate('oldpass', "Please enter your old password.");
+                $validateError++;
+            }
+
+            // grab the current logged in user
+            $sessVar = $this->Auth->user();
+
+            // check for validation errors
+            if($validateError > 0) {
+                if($this->User->invalidFields() != null) {
+                    $errors = '';
+                    foreach($this->User->invalidFields() as $value) {
+                        $errors .= $value[0] . '<br />';
+                    }
+                }
+                echo $errors;
+                exit;
+            }  else {
+                // create a data object with the user's info
+                $data = array(
+                  'User' => array(
+                      'id' => $sessVar['id'],
+                      'username' => $sessVar['username'],
+                      'password' => $this->request->data['User']['password'],
+                      'autopass' => 0
+                      )
+                  );
+
+                // update the user's profile in the db
+                if ($this->User->save($data)) {
+                    echo "true";
+                    exit;
+                } else {
+                    echo "There was an issue saving your password.  Please try again, or contact help@theulink.com";
+                    exit;
                 }
             }
-            echo $errors;
+        } catch (Exception $e) {
+            $this->log("{UsersController#updatePassword} - An exception was thrown: " . $e->getMessage());
+            echo "There was an issue saving your password.  Please try again, or contact help@theulink.com";
             exit;
-        }  else {
-            // create a data object with the user's info
-            $data = array(
-              'User' => array(
-                  'id' => $sessVar['id'],
-                  'username' => $sessVar['username'],
-                  'password' => $this->request->data['User']['password'],
-                  'autopass' => 0
-                  )
-              );
-
-            // update the user's profile in the db
-            if ($this->User->save($data)) {
-                echo "true";
-                exit;
-            } else {
-                echo "There was an issue saving your password.  Please try again, or contact help@theulink.com";
-                exit;
-            }
         }
 
     } // updatePassword
@@ -532,16 +567,20 @@ class UsersController extends AppController {
      */
     public function viewprofile($id = null) {
         $this->layout = null;
-        // if the user is not logged in, redirect them to the login screen
-        if (!$this->Auth->user()) {
-            $this->Session->setFlash('Please login to gain full access to uLink.');
-            $this->redirect(array('action' => 'login'));
+        try {
+            // if the user is not logged in, redirect them to the login screen
+            if (!$this->Auth->user()) {
+                $this->Session->setFlash('Please login to gain full access to uLink.');
+                $this->redirect(array('action' => 'login'));
+            }
+            $this->chkAutopass();
+            // grab the user from the db
+            $user = $this->User->find('first', array('conditions' => array('User.id' => $id)));
+            echo json_encode($user);
+            exit;
+        } catch (Exception $e) {
+            $this->log("{UsersController#viewprofile} - An exception was thrown: " . $e->getMessage());
         }
-        $this->chkAutopass();
-        // grab the user from the db
-        $user = $this->User->find('first', array('conditions' => array('User.id' => $id)));
-        echo json_encode($user);
-        exit;
     } // viewprofile
 
 
@@ -551,9 +590,14 @@ class UsersController extends AppController {
      * @return bool
      */
     private function emailExists($email) {
-        $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''));
+        $chkuserExist = null;
+        try {
+            $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''));
+        } catch (Exception $e) {
+            $this->log("{UsersController#emailExists} - An exception was thrown: " . $e->getMessage());
+        }
         return !empty($chkuserExist);
-    }
+    } // emailExists
 
     /**
      * This function will handle the user
@@ -567,126 +611,126 @@ class UsersController extends AppController {
         if (!$this->Auth->user()) {
             $this->redirect(array('action' => 'login'));
         }
-        
+
         $validateError = 0;
         // grab the user off the session
         $user = $this->Auth->user();
         // if their is no data set, the client is viewing the profile
         if (empty($this->request->data)) {
+            try {
+                // grab the user off the session
+                $this->request->data = $this->User->read('', $user['id']);
 
-            // grad the user off the session
-            $this->request->data = $this->User->read('', $user['id']);
+                // build up the schools data
+                $schools = array();
+                $data_schools = $this->School->find('all');
 
-            // build up the schools data
-            $schools = array();
-            $data_schools = $this->School->find('all');
+                foreach ($data_schools as $school) {
+                    $schools[$school['School']['id']] = $school['School']['name'];
+                }
 
-            foreach ($data_schools as $school) {
-                $schools[$school['School']['id']] = $school['School']['name'];
+                // grab the years starting from 1960
+                for ($i = 1960; $i <= date("Y") + 10; $i++) {
+                    $years[$i] = $i;
+                }
+
+                $this->set('schools_id', $user['school_id']);
+                $this->set('schools', $schools);
+                $this->set('years_id', $user['year']);
+                $this->set('years', $years);
+                $this->set('school_status', $user['school_status']);
+            } catch (Exception $e) {
+                $this->log("{UsersController#index} - An exception was thrown when loading the user: " . $e->getMessage());
             }
-
-            // grab the years starting from 1960
-            for ($i = 1960; $i <= date("Y") + 10; $i++) {
-                $years[$i] = $i;
-            }
-
-            $this->set('schools_id', $user['school_id']);
-            $this->set('schools', $schools);
-            $this->set('years_id', $user['year']);
-            $this->set('years', $years);
-            $this->set('school_status', $user['school_status']);
         } else { // user hit the "update" button
-            
-            // set the saved data on the user
-            $this->User->set($this->request->data);
-   
-            // validate the first name
-            if (empty($this->request->data['User']['firstname'])) {
-                $this->User->invalidate('firstname', 'Please enter your first name');
-                $validateError++;
-            }
-            
-            // validate teh last name
-            if (empty($this->request->data['User']['lastname'])) {
-                $this->User->invalidate('lastname', 'Please enter your last name');
-                $validateError++;
-            }
-            
-            // validate the graduation year
-            if (empty($this->request->data['User']['year'])) {
-                $this->User->invalidate('year', 'Please select your year of graduation');
-                $validateError++;
-            }
-            
-            // validate the school status
-            if (empty($this->request->data['User']['school_status'])) {
-                $this->User->invalidate('school_status', 'Please choose your school status');
-                $validateError++;
-            }
 
-            // validate the email
-            if (empty($this->request->data['User']['email'])) {
-                $this->User->invalidate('email', 'Email already exists in uLink.  Please submit another.');
-                $validateError++;
-            }
-            
-            // if there are no validation errors
-            if (empty($this->User->validationErrors)) {
-                // upload the users picture
-                $fileOK = $this->uploadFiles('img/files/users', $this->request->data['User']['file']);
+            try {
+                // set the saved data on the user
+                $this->User->set($this->request->data);
 
-                if (array_key_exists('urls', $fileOK)) {
-                    // save the url in the form data
-                    $this->request->data['User']['image_url'] = $fileOK['urls'][0];
+                // validate the first name
+                if (empty($this->request->data['User']['firstname'])) {
+                    $this->User->invalidate('firstname', 'Please enter your first name');
+                    $validateError++;
                 }
-                // update the user in the db
-                if ($this->User->save($this->request->data)) {
-                    // load the saved user back into the Auth component
-                    $user = $this->User->read(null, $this->Auth->user('id'));
-                    // update session and merge any differences
-                    $this->Session->write('Auth.User', array_merge($this->Auth->user(), $this->request->data['User']) );
 
-                    // $this->Auth->login($data);
-                    $this->Session->setFlash('<span class="profile-success">Your profile has been updated.</span>');
-                    // redirect back to the my profile page
-                    $this->redirect(array('action' => 'index'));
+                // validate teh last name
+                if (empty($this->request->data['User']['lastname'])) {
+                    $this->User->invalidate('lastname', 'Please enter your last name');
+                    $validateError++;
                 }
-            } else {
-                if($this->User->invalidFields() != null) {
-                    $errors = '';
-                    foreach($this->User->invalidFields() as $value) {
-                        $errors .= $value[0] . '<br />';
+
+                // validate the graduation year
+                if (empty($this->request->data['User']['year'])) {
+                    $this->User->invalidate('year', 'Please select your year of graduation');
+                    $validateError++;
+                }
+
+                // validate the school status
+                if (empty($this->request->data['User']['school_status'])) {
+                    $this->User->invalidate('school_status', 'Please choose your school status');
+                    $validateError++;
+                }
+
+                // validate the email
+                if (empty($this->request->data['User']['email'])) {
+                    $this->User->invalidate('email', 'Email already exists in uLink.  Please submit another.');
+                    $validateError++;
+                }
+
+                // if there are no validation errors
+                if (empty($this->User->validationErrors)) {
+                    // upload the users picture
+                    $fileOK = $this->uploadFiles('img/files/users', $this->request->data['User']['file']);
+
+                    if (array_key_exists('urls', $fileOK)) {
+                        // save the url in the form data
+                        $this->request->data['User']['image_url'] = $fileOK['urls'][0];
                     }
-                    $this->set('errors', $errors);
+                    // update the user in the db
+                    if ($this->User->save($this->request->data)) {
+                        // load the saved user back into the Auth component
+                        $user = $this->User->read(null, $this->Auth->user('id'));
+                        // update session and merge any differences
+                        $this->Session->write('Auth.User', array_merge($this->Auth->user(), $this->request->data['User']) );
+
+                        // $this->Auth->login($data);
+                        $this->Session->setFlash('<span class="profile-success">Your profile has been updated.</span>');
+                        // redirect back to the my profile page
+                        $this->redirect(array('action' => 'index'));
+                    }
+                } else {
+                    if($this->User->invalidFields() != null) {
+                        $errors = '';
+                        foreach($this->User->invalidFields() as $value) {
+                            $errors .= $value[0] . '<br />';
+                        }
+                        $this->set('errors', $errors);
+                    }
                 }
-            }
 
-            // grab the schools, and years for form display
-            $schools = array();
-            $data_schools = $this->School->find('all');
+                // grab the schools, and years for form display
+                $schools = array();
+                $data_schools = $this->School->find('all');
 
-            foreach ($data_schools as $school) {
-                $schools[$school['School']['id']] = $school['School']['name'];
-            }
+                foreach ($data_schools as $school) {
+                    $schools[$school['School']['id']] = $school['School']['name'];
+                }
 
-            for ($i = 1960; $i <= date("Y") + 10; $i++) {
-                $years[$i] = $i;
+                for ($i = 1960; $i <= date("Y") + 10; $i++) {
+                    $years[$i] = $i;
+                }
+                $this->log($user);
+                $this->set('schools_id', $user['school_id']);
+                $this->set('schools', $schools);
+                $this->set('years_id', $user['year']);
+                $this->set('years', $years);
+                $this->set('school_status', $user['school_status']);
+            } catch (Exception $e) {
+                $this->log("{UsersController#index} - An exception was thrown when updating the user: " . $e->getMessage());
             }
-            $this->log($user);
-            $this->set('schools_id', $user['school_id']);
-            $this->set('schools', $schools);
-            $this->set('years_id', $user['year']);
-            $this->set('years', $years);
-            $this->set('school_status', $user['school_status']);
         }
     } // index
-
-    /**
-     * logging..is this needed?
-     */
-    function log($msg, $type = LOG_ERROR) {
-        return parent::log($msg, $type);
-    } // log
 
     /**
      * Deactivate page loader
@@ -706,26 +750,151 @@ class UsersController extends AppController {
      * user's account
      */
     public function deactivateaccount() {
-        // grab the current logged in user
-        $sessVar = $this->Auth->user();
+        try {
+            // grab the current logged in user
+            $sessVar = $this->Auth->user();
 
-        // create a data object with the user's info
-        $data = array('User' => array('id' => $sessVar['id'], 'username' => $sessVar['username'], 'deactive' => 1));
+            // create a data object with the user's info
+            $data = array('User' => array('id' => $sessVar['id'], 'username' => $sessVar['username'], 'deactive' => 1));
 
-        Configure::write('debug', 0);
-        $this->autoRender = false;
-        $this->layout = null;
+            Configure::write('debug', 0);
+            $this->autoRender = false;
+            $this->layout = null;
 
-        // update the user's profile in the db
-        if ($this->User->save($data)) {
-            $this->Auth->logout();
-            echo "true";
-            exit;
-        } else {
+            // update the user's profile in the db
+            if ($this->User->save($data)) {
+                $this->Auth->logout();
+                echo "true";
+                exit;
+            } else {
+                echo "There was an issue deactivating your account.  Please try again, or contact help@theulink.com";
+                exit;
+            }
+        } catch (Exception $e) {
+            $this->log("{UsersController#deactivateaccount} - An exception was thrown: " . $e->getMessage());
             echo "There was an issue deactivating your account.  Please try again, or contact help@theulink.com";
             exit;
         }
     }  // deactivateaccount
+
+    /**
+     * This function will verify that the user has a matching
+     * email domain with the school
+     */
+    public function checkdomain() {
+        $this->layout = null;
+        $this->autoRender = false;
+        $status = 0;
+
+        try {
+            // grab the post data
+            $email = $_POST['data']['User']['email'];
+            $schoolSelect = $_POST['school_id'];
+            $schoolStatus = $_POST['school_status'];
+
+            /**
+             * If the user is not an Alumni, make
+             * sure they have an approved emails domain for the school
+             * in which they are registering.
+             */
+            if ($schoolStatus != 'Alumni') {
+                $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . $schoolSelect));
+
+                // grab all the valid domains for the school
+                $domains = explode(',', $chkuser[0]['School']['domain']);
+
+                // iterate over the domains, verifying the posted email's domain matchs one in the list
+                foreach ($domains as $val) {
+                    $lookdomain = explode('.', $lookdomain = $val);
+
+                    // break the loop if we find a match
+                    if ((eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@" . $lookdomain[0] . "." . $lookdomain[1] . "$", $email))) {
+                        $status = 1;
+                        break;
+                    } else {
+                        $status = 0;
+                    }
+                }
+
+                // domain matches, email is good for school
+                if ($status == 1) {
+                    echo "true";
+                    exit;
+                } else { // email is not good for the school
+                    echo "false";
+                    exit;
+                }
+            } else { // do NOT validate domain's if user is Alumni
+                echo "true";
+                exit;
+            }
+        } catch (Exception $e) {
+            $this->log("{UsersController#checkdomain} - An exception was thrown: " . $e->getMessage());
+            echo "false";
+            exit;
+        }
+    } // checkdomain
+
+    /**
+     * This function will check to see if the username
+     * already exists in the system.
+     */
+    public function checkUsername() {
+        $this->setLayout = null;
+        Configure::write('debug', 0);
+
+        try {
+            // grab the username from the post data
+            $username = $_POST['data']['User']['username'];
+
+            // attempt to retrieve a user with the same username
+            $userdetails = $this->User->find('count', array('conditions' => array('User.username' => $username)));
+
+            // if a user was found with the same username, throw error
+            if ($userdetails != null) {
+                echo "false";
+                exit();
+            } else { // else username is available
+                echo "true";
+                exit();
+            }
+        } catch (Exception $e) {
+            $this->log("{UsersController#checkUsername} - An exception was thrown: " . $e->getMessage());
+            echo "false";
+            exit();
+        }
+    } // checkUsername
+
+    /**
+     * This function checks to see if the user exists
+     * based on the passed in username.
+     * @param username
+     */
+    public function checkuser($username = null) {
+        $this->layout = null;
+        $this->autoRender = false;
+
+        try {
+            $chkuser = $this->User->find('all', array('conditions' => 'User.username=' . "'$username'" . ''));
+
+            if (count($chkuser) == 0) {
+                echo "1";
+                exit;
+            } else {
+                echo "0";
+                exit;
+            }
+        } catch (Exception $e) {
+            $this->log("{UsersController#checkuser} - An exception was thrown: " . $e->getMessage());
+            echo "0";
+            exit();
+        }
+    }
+
+    /**
+     * TODO: 8.4.12 - From this point on is uReview and Admin
+     * related functions.  This still needs to be refactored.
+     */
 
     /**
      * This function will show the user's information
@@ -813,7 +982,7 @@ class UsersController extends AppController {
 
     function admin_listing_ajax()
     {
-        $this->set_paginate_limit(); // Setting Paginate Limit 
+        $this->set_paginate_limit(); // Setting Paginate Limit
 
         $this->setLayout = null;
         Configure::write('debug', 0);
@@ -1142,28 +1311,6 @@ class UsersController extends AppController {
         }
     }
 
-//ef
-
-    function checkuser($username = null)
-    {
-        $this->layout = null;
-        $this->autoRender = false;
-
-        $chkuser = $this->User->find('all', array('conditions' => 'User.username=' . "'$username'" . ''
-            )
-        );
-
-        if (count($chkuser) == 0) {
-            echo "1";
-            exit;
-        } else {
-            echo "0";
-            exit;
-        }
-    }
-
-//ef
-
     function admin_checkuser($username = null)
     {
         $this->layout = null;
@@ -1183,90 +1330,6 @@ class UsersController extends AppController {
     }
 
 //ef
-    
-    /**
-     * This function will verify that the user has a matching
-     * email domain with the school
-     */
-    public function checkdomain() {
-        $this->layout = null;
-        $this->autoRender = false;
-        $status = 0;
-
-        // grab the post data
-        $email = $_POST['data']['User']['email'];
-        $schoolSelect = $_POST['school_id'];
-        $schoolStatus = $_POST['school_status'];
-
-
-        /*  $chkuserExist = $this->User->find('first', array('conditions' => 'User.email=' . "'$email'" . ''
-            )
-        );*/
-
-        /**
-         * If the user doesn't exist AND
-         * the user is not an Alumni, make
-         * sure they have an approved emails domain for the school
-         * in which they are registering.
-         */
-        // if (empty($chkuserExist)) {
-
-        if ($schoolStatus != 'Alumni') {
-            $chkuser = $this->School->find('all', array('conditions' => 'School.id=' . $schoolSelect));
-
-            // grab all the valid domains for the school
-            $domains = explode(',', $chkuser[0]['School']['domain']);
-            
-            // iterate over the domains, verifying the posted email's domain matchs one in the list
-            foreach ($domains as $val) { 
-                $lookdomain = explode('.', $lookdomain = $val);
-                
-                // break the loop if we find a match
-                if ((eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@" . $lookdomain[0] . "." . $lookdomain[1] . "$", $email))) {
-                    $status = 1;
-                    break;
-                } else {
-                    $status = 0;
-                }
-            }
-            
-            // domain matches, email is good for school
-            if ($status == 1) {
-                echo "true";
-                exit;
-            } else { // email is not good for the school
-                echo "false";
-                exit;
-            }
-        } else { // do NOT validate domain's if user is Alumni
-            echo "true";
-            exit;
-        }
-    } // checkdomain
-
-    /**
-     * This function will check to see if the username
-     * already exists in the system.
-     */
-    public function checkUsername() {
-        $this->setLayout = null;
-        Configure::write('debug', 0);
-        
-        // grab the username from the post data
-        $username = $_POST['data']['User']['username'];
-        
-        // attempt to retrieve a user with the same username
-        $userdetails = $this->User->find('count', array('conditions' => array('User.username' => $username)));
-
-        // if a user was found with the same username, throw error
-        if ($userdetails != null) {
-            echo "false";
-            exit();
-        } else { // else username is available
-            echo "true";
-            exit();
-        }
-    } // checkUsername
 
     function admin_checkdomain($email = null, $schoolSelect = null)
     {
@@ -1359,8 +1422,8 @@ class UsersController extends AppController {
         $this->layout = null;
     }
 
-// ef 
-    ########################################### to do ajax pagination  
+// ef
+    ########################################### to do ajax pagination
 
     function searchresults($page_no = '')
     {
@@ -1383,13 +1446,13 @@ class UsersController extends AppController {
         $this->set('currentPageHeading', 'Search Users');
     }
 
-// ef   
+// ef
 
     function search_ajax($search_srting = '')
     {
 
         $search_srting = str_replace("-", " ", $search_srting);
-        $this->set_paginate_limit_search($search_srting); // Setting Paginate Limit 
+        $this->set_paginate_limit_search($search_srting); // Setting Paginate Limit
 
         $this->layout = null;
         Configure::write('debug', 0);
@@ -1473,7 +1536,7 @@ class UsersController extends AppController {
     function admin_all_search_ajax($search_srting = '')
     {
 
-        $this->set_paginate_limit_front($search_srting); // Setting Paginate Limit 
+        $this->set_paginate_limit_front($search_srting); // Setting Paginate Limit
 
         $this->setLayout = null;
 

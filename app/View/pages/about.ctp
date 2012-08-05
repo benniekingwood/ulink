@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div id="about-content" class="well well-white">
         <div class="row-fluid">
-            <div class="span3">
+            <div class="span2">
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="#about" data-toggle="tab">About uLink</a></li>
                     <li><a href="#team" data-toggle="tab">Team</a></li>
                 </ul>
             </div>
-            <div class="span8">
+            <div class="span10">
                 <div class="tab-content">
                     <div class="tab-pane active" id="about">
                         <h2>The simplest, most effective way to find out what is happening on your campus.</h2>
@@ -21,7 +21,7 @@
                         <ul class="unstyled">
                             <li>
                                 <div class="row">
-                                    <div class="span2">
+                                    <div class="span2.5">
                                         <img src="/img/bennie.png" alt="benniepicture">
                                     </div>
                                     <div class="span2">
@@ -29,19 +29,19 @@
                                         <p>CEO | Co-Founder</p>
                                         <p>When Bennie is not coding in a dark corner, you can find him eating a bowl of ramen at Ikemen.</p>
                                     </div>
-                                    <div class="span2">
+                                    <div class="span2.5">
                                         <img src="/img/alfred.png" alt="alfredpicture">
                                     </div>
                                     <div class="span2">
                                         <h3>Alfred Macaraeg</h3>
                                         <p>CIO | Co-Founder</p>
-                                        <p>Love to bang bad bitches.  His numbers are unparalleled by all.  Sometimes he cries at night.</p>
+                                        <p>I practice living life the way it should be lived...one city at a time.</p>
                                     </div>
                                 </div>
                             </li>
                             <li>
                                 <div class="row">
-                                    <div class="span2">
+                                    <div class="span2.5">
                                         <img src="/img/james.png" alt="jamespicture">
                                     </div>
                                     <div class="span2">
@@ -49,13 +49,13 @@
                                         <p>CFO | Dragonkick</p>
                                         <p>I kick ass... take names, snowboard, river kayak, swim, bike, run!</p>
                                     </div>
-                                    <div class="span2">
+                                    <div class="span2.5">
                                         <img src="/img/kevin.png" alt="kevinpicture">
                                     </div>
                                     <div class="span2">
                                         <h3>Kevin Tindall</h3>
                                         <p>Developer | Timelord</p>
-                                        <p>When Kevin is not watching the Smurfs, he's out and about looking for that next chick he can hit and quit.</p>
+                                        <p>I always tell these guys, the strength is within my hands.</p>
                                     </div>
                                 </div>
                             </li>

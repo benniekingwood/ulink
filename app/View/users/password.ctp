@@ -41,7 +41,7 @@
                 <div class="control-group">
                     <label class="control-label" for="pass1">
                         New Password
-                        <div class="pull-right span2" id="pass-strength-result">&nbsp;</div>
+                        <div id="pass-strength-result">&nbsp;</div>
                     </label>
                     <div class="controls">
                         <?php echo $this->Form->input('User.newpass', array('class' => 'input-xlarge ulink-input-bigfont', 'type' => 'password', 'id' => 'pass1', 'maxlength' => '50', 'label' => false, 'div' => false)); ?>
@@ -77,4 +77,3 @@
     /* ]]> */
 </script>
 <?php echo $this->Html->script(array('ulink-password-strength.js', 'ulink-update-profile-pwd.js')); ?>
-

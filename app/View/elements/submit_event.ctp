@@ -1,8 +1,7 @@
-<script src="/js/jquery.min.js"></script>
 <!-- components section -->
 <div class="modal hide fade" id="submitEventComponent">
     <div class="modal-header">
-        <a class="close" data-dismiss="modal">x</a>
+        <!--<a class="close" data-dismiss="modal">x</a>-->
         <h3>Submit Your Event</h3>
     </div>
     <div class="modal-body">
@@ -61,7 +60,6 @@
         </div>
     </div>
 </div> <!-- /submitEventComponent-->
-<script src="/js/validate.js"></script>
 <script src="/js/jquery.timePicker.min.js"></script>
 <script src="/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" language="javascript">

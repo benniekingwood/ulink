@@ -111,3 +111,4 @@
 <!-- components -->
 <?php echo $this->element('submit_event'); ?>
 <!--  components -->
+<?php echo $this->Html->script(array('bootstrap-carousel.js'));?>

@@ -1,5 +1,11 @@
 <?php
-
+/*********************************************************************************
+ * Copyright (C) 2012 uLink, Inc. All Rights Reserved.
+ *
+ * Created On: Mar 22, 2012
+ * Description: This class is the parent of all Controller classes.  It contains
+ *              functions that will be used throughout the application
+ ********************************************************************************/
 //App::import('Vendor', 'facebook/facebook/facebook.php');
 //require_once("../vendors/facebook/facebook/facebook.php");   <-- 7/30/2012 - Bennie- removing FB for now --too slow
 require_once("../Lib/Twitter/tmhOAuth.php");
@@ -18,7 +24,7 @@ define('_ZIPS_SORT_BY_ZIP_DESC', 4);
 define('_M2KM_FACTOR', 1.609344);
 
 /**
- * Overriden 
+ * Overriden
  */
 class AppController extends Controller {
 
@@ -51,77 +57,78 @@ class AppController extends Controller {
      * This function is called before every controller action
      */
     public function beforeFilter() {
-        
         // to set the table to use with authentication
-        $this->Auth->userModel = 'User'; 
-        
+        $this->Auth->userModel = 'User';
+
         // set the fields to be used for authentication
         $this->Auth->fields = array('username' => 'username', 'password' => 'password');
 
         //check to see if user is signed in with facebook
-       // $this->__checkFBStatus();
-        
+        // $this->__checkFBStatus();
+
         // now check to see if this is admin site authentication
         if (isset($this->request->params['admin'])) {
             if ($this->request->params['admin'] == 1 && $this->request->action != 'admin_forgot_password') {
                 if ($this->request->action != 'admin_login' && $this->request->action != 'admin_logout') {
                     if (!$this->Session->read('admin_id')) {
-                        // $this->autoRender = false;						
                         $this->redirect(array('controller' => 'admins', 'action' => 'login'));
-                        //$this->redirect('login');
                     }
                 }
             }
         } else { // handle basic uLink authentication
-            
-            // disable automatic redirects
-            $this->Auth->autoRedirect = false;
-            
-            // set the cookie name to Ulink
-            $this->Cookie->name = 'Ulink';
-            
-            // if the username as password was posted, set in request on User
-            if (isset($_POST['username']) && isset($_POST['password'])) {
-                $this->request->data['User']['username'] = $_POST['username'];
-                $this->request->data['User']['password'] = $_POST['password'];
-                $this->Auth->login();
-            } 
-            
-            // set some variables that can be accessed in all views
-            $this->set('loggedInId', $this->Auth->user('id'));
-            $this->set('loggedInName', $this->Auth->user('firstname').' '.$this->Auth->user('lastname'));
-            $this->set('userSchoolId', $this->Auth->user('school_id'));
-            $this->set('loggedInUserName', $this->Auth->user('username'));
-            $this->set('loggedInFacebookId', $this->Auth->user('fbid'));
-            $this->set('profileImgURL', $this->Auth->user('image_url'));
 
-            // this section will load any reviews from the user
-            if ($this->Auth->user('id')) {         
-                $this->PermitModel = ClassRegistry::init("School");
-                $Shoolreview = $this->PermitModel->find('all', array('conditions' => array('School.id' => $this->Auth->user('school_id'))));
-                $this->set('Shoolreview', $Shoolreview);
-                $this->PermitModel = ClassRegistry::init("Review");
-                $usertextreview = $this->PermitModel->find('all', array('conditions' => array('Review.school_id' => $this->Auth->user('school_id'), 'Review.type' => 'text', 'Review.user_id' => $this->Auth->user('id'))));
+            try {
+                // disable automatic redirects
+                $this->Auth->autoRedirect = false;
 
-                foreach ($usertextreview as $userReview) {
-                    if ($userReview['Review']['status'] == 0) {
-                        $this->set('ApprovalPending', 1);
+                // set the cookie name to Ulink
+                $this->Cookie->name = 'Ulink';
+
+                // if the username as password was posted, set in request on User
+                if (isset($_POST['username']) && isset($_POST['password'])) {
+                    $this->request->data['User']['username'] = $_POST['username'];
+                    $this->request->data['User']['password'] = $_POST['password'];
+                    $this->Auth->login();
+                }
+
+                // set some variables that can be accessed in all views
+                $this->set('loggedInId', $this->Auth->user('id'));
+                $this->set('loggedInName', $this->Auth->user('firstname').' '.$this->Auth->user('lastname'));
+                $this->set('userSchoolId', $this->Auth->user('school_id'));
+                $this->set('loggedInUserName', $this->Auth->user('username'));
+                $this->set('loggedInFacebookId', $this->Auth->user('fbid'));
+                $this->set('profileImgURL', $this->Auth->user('image_url'));
+
+                // this section will load any reviews from the user
+                if ($this->Auth->user('id')) {
+                    $this->PermitModel = ClassRegistry::init("School");
+                    $Shoolreview = $this->PermitModel->find('all', array('conditions' => array('School.id' => $this->Auth->user('school_id'))));
+                    $this->set('Shoolreview', $Shoolreview);
+                    $this->PermitModel = ClassRegistry::init("Review");
+                    $usertextreview = $this->PermitModel->find('all', array('conditions' => array('Review.school_id' => $this->Auth->user('school_id'), 'Review.type' => 'text', 'Review.user_id' => $this->Auth->user('id'))));
+
+                    foreach ($usertextreview as $userReview) {
+                        if ($userReview['Review']['status'] == 0) {
+                            $this->set('ApprovalPending', 1);
+                        }
+                    }
+
+                    $this->set('usertextreview', $usertextreview);
+                    $randCaptcha = rand(10000, 20000);
+                    $this->set('RandCaptcha', $randCaptcha);
+                }
+
+                // login user from cookie if they are not logged in
+                if (!$this->Auth->user('id')) {
+                    $cookie = $this->Cookie->read('User');
+                    if ($cookie) {
+                        $this->Auth->login($cookie);
                     }
                 }
-
-                $this->set('usertextreview', $usertextreview);
-                $randCaptcha = rand(10000, 20000);
-                $this->set('RandCaptcha', $randCaptcha);
+            } catch (Exception $e) {
+                $this->log("{AppController#beforeFilter}-An exception was thrown: " . $e->getMessage());
             }
-
-            // login user from cookie if they are not logged in
-            if (!$this->Auth->user('id')) {          
-                $cookie = $this->Cookie->read('User');
-                if ($cookie) {
-                    $this->Auth->login($cookie);
-                }
-            }
-        }// end basic uLink auth	
+        } // end basic uLink auth
     } // beforefilter
 
     /**
@@ -160,7 +167,7 @@ class AppController extends Controller {
             $key .= $charset[(mt_rand(0, (strlen($charset) - 1)))];
         }
         return $key;
-    }
+    } // getRandomString
 
     /**
      * This function will set the error layout before
@@ -169,7 +176,7 @@ class AppController extends Controller {
     function beforeRender() {
         //to set the not found page
         $this->_setErrorLayout();
-    }
+    } // beforeRender
 
     /*
      * This function will set the not found layout and render it
@@ -178,42 +185,42 @@ class AppController extends Controller {
         if ($this->name == 'CakeError') {
             $this->layout = 'v2_not_found';
         }
-    }
+    } // _setErrorLayout
 
     /**
-     * uploads files to the server
-     * 		will return an array with the success of each file upload
+     * This function uploads files to the server and will return
+     * an array with the success of each file upload
+     * @param $folder
+     * @param $formdata
+     * @param $itemId
+     * @return array
      */
     protected function uploadFiles($folder, $formdata, $itemId = null) {
         // setup dir names absolute and relative
         $folder_url = WWW_ROOT . $folder;
         $rel_url = $folder;
 
-
-        //echo "<br>".print_r($formdata);
-        // create the folder if it does not exist
-        if (!is_dir($folder_url)) {
-            mkdir($folder_url);
-        }
-
-
-        // if itemId is set create an item folder
-        if ($itemId) {
-            // set new absolute folder
-            $folder_url = WWW_ROOT . $folder . '/' . $itemId;
-            // set new relative folder
-            $rel_url = $folder . '/' . $itemId;
-            // create directory
+        try {
+            // create the folder if it does not exist
             if (!is_dir($folder_url)) {
                 mkdir($folder_url);
             }
-        }
 
-        // list of permitted file types, this is only images but documents can be added
-        $permitted = array('image/gif', 'image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png');
+            // if itemId is set create an item folder
+            if ($itemId) {
+                // set new absolute folder
+                $folder_url = WWW_ROOT . $folder . '/' . $itemId;
+                // set new relative folder
+                $rel_url = $folder . '/' . $itemId;
+                // create directory
+                if (!is_dir($folder_url)) {
+                    mkdir($folder_url);
+                }
+            }
 
-        // loop through and deal with the files
-       // foreach ($formdata as $file) {
+            // list of permitted file types, this is only images but documents can be added
+            $permitted = array('image/gif', 'image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png');
+
             // replace spaces with underscores
             $filename = str_replace(' ', '_', $formdata['name']);
             // assume filetype is false
@@ -226,16 +233,15 @@ class AppController extends Controller {
                     break;
                 }
             }
+
             // if file type ok upload the file
-        if ($typeOK) {
+            if ($typeOK) {
                 // switch based on error code
                 switch ((int)$formdata['error']) {
                     case 0:
                         // check filename already exists
                         if (!file_exists($folder_url . '/' . $filename)) {
                             // create full filename
-
-
                             $full_url = $folder_url . '/' . $filename;
                             $url = $filename;
                             // upload the file
@@ -249,20 +255,20 @@ class AppController extends Controller {
                             $success = move_uploaded_file($formdata['tmp_name'], $full_url);
                         }
                         // if upload was successful
-                        if ($success) { 
+                        if ($success) {
                             // save the url of the file
                             $result['urls'][] = $url;
                         } else {
-                            $result['errors'][] = "Error uploaded $filename. Please try again.";
+                            $result['errors'][] = "There was a problem uploading $filename, please try again or contact help@theulink.com.";
                         }
                         break;
                     case 3:
                         // an error occured
-                        $result['errors'][] = "Error uploading $filename. Please try again.";
+                        $result['errors'][] = "There was a problem uploading $filename, please try again or contact help@theulink.com.";
                         break;
                     default:
                         // an error occured
-                        $result['errors'][] = "System error uploading $filename. Contact webmaster.";
+                        $result['errors'][] = "There was a problem uploading $filename, please try again or contact help@theulink.com.";
                         break;
                 }
             } else if ((int)$formdata['error'] == 4) {
@@ -272,78 +278,103 @@ class AppController extends Controller {
                 // unacceptable file type
                 $result['errors'][] = "$filename cannot be uploaded. Acceptable file types: gif, jpg, png.";
             }
-       // }
+        } catch (Exception $e) {
+            $this->log("{AppController#uploadFiles} - An exception was thrown: " . $e->getMessage());
+        }
         return $result;
     } // uploadFiles
-
-    /**
-     * This function will create cookies for the admin site.  
-     * Defaults to 72 hours
-     *
-     * @param $user_id
-     */
-    function createCookies($user_id) {
-        $this->Cookie->write('admin_id', $user_id, false, '72 hour');
-    }
-
-    /**
-     *
-     *
-     */
-    function get_distance($zip1Lat, $zip2Lat, $zip1Long, $zip2Long) {
-        $details1[0] = $zip1Lat;
-        $details2[0] = $zip2Lat;
-        $details1[1] = $zip1Long;
-        $details2[1] = $zip2Long;
-
-        $miles = AppController::calculate_mileage($details1[0], $details2[0], $details1[1], $details2[1]);
-
-        if ($this->units == "k")
-            return round($miles * (1.609344), $this->decimals);
-        else
-            return round($miles, $this->decimals);       // must be miles
-    } // get_distance
-
-
-    /**
-     *  This function will calculate the mileage between
-     *  to lat/long points.
-     */
-    function calculate_mileage($lat1, $lat2, $lon1, $lon2) {
-
-        // Convert lattitude/longitude (degrees) to radians for calculations
-        $lat1 = deg2rad($lat1);
-        $lon1 = deg2rad($lon1);
-        $lat2 = deg2rad($lat2);
-        $lon2 = deg2rad($lon2);
-
-        // Find the deltas
-        $delta_lat = $lat2 - $lat1;
-        $delta_lon = $lon2 - $lon1;
-
-        // Find the Great Circle distance 
-        $temp = pow(sin($delta_lat / 2.0), 2) + cos($lat1) * cos($lat2) * pow(sin($delta_lon / 2.0), 2);
-        $distance = 3956 * 2 * atan2(sqrt($temp), sqrt(1 - $temp));
-
-        return $distance;
-    } // calculate_mileage
 
     /**
      * This function will check to see if the user has an auto generated
      * password.
      */
     public function chkAutopass() {
-        // grab the user off the session
-        $sessVar = $this->Auth->User();
-        if($sessVar != null) {
-            $userDetails = ClassRegistry::init('User')->find('first', array('conditions' => array('User.id' => $sessVar['id'])));
-            
-            if ($userDetails['User']['autopass'] == 1) {
-                $this->redirect(array('controller' => 'users', 'action' => 'password', '1'));
+        try {
+            // grab the user off the session
+            $sessVar = $this->Auth->User();
+            if($sessVar != null) {
+                $userDetails = ClassRegistry::init('User')->find('first', array('conditions' => array('User.id' => $sessVar['id'])));
+    
+                if ($userDetails['User']['autopass'] == 1) {
+                    $this->redirect(array('controller' => 'users', 'action' => 'password', '1'));
+                }
             }
+        } catch (Exception $e) {
+            $this->log("{AppController#chkAutopass} - An exception was thrown: " . $e->getMessage());
         }
     } // chkAutopass
 
+    /**
+     * This function will create cookies for the admin site.
+     * Defaults to 72 hours
+     *
+     * @param $user_id
+     */
+    function createCookies($user_id) {
+        $this->Cookie->write('admin_id', $user_id, false, '72 hour');
+    } // createCookies
+
+    /**
+     *  This function is used to get the distance in miles
+     *  between two geographical points, converting it as necessary
+     *
+     *  @param $zip1Lat
+     *  @param $zip2Lat
+     *  @param $zip1Long
+     *  @param $zip2Long
+     *  @return int
+     */
+    function get_distance($zip1Lat, $zip2Lat, $zip1Long, $zip2Long) {
+        $retVal = null;
+        try {
+            // first calculate the mileage
+            $miles = AppController::calculate_mileage($$zip1Lat, $zip2Lat, $zip1Long, $zip2Long);
+
+            // if the system is returning km, convert
+            if ($this->units == "k") {
+                $retVal = round($miles * (1.609344), $this->decimals);
+            } else { // else return the miles
+                $retVal = round($miles, $this->decimals);
+            }
+        } catch (Exception $e) {
+            $this->log("{AppController#get_distance} - An exception was thrown: " . $e->getMessage());
+        }
+        return $retVal;
+    } // get_distance
+
+
+    /**
+     *  This helper function will calculate the mileage between
+     *  to lat/long points.
+     *
+     *  @param $lat1
+     *  @param $lat2
+     *  @param $lon1
+     *  @param $lon2
+     *  @return int
+     */
+    function calculate_mileage($lat1, $lat2, $lon1, $lon2) {
+        $distance = 0;
+        try {
+            // Convert lattitude/longitude (degrees) to radians for calculations
+            $lat1 = deg2rad($lat1);
+            $lon1 = deg2rad($lon1);
+            $lat2 = deg2rad($lat2);
+            $lon2 = deg2rad($lon2);
+
+            // Find the deltas
+            $delta_lat = $lat2 - $lat1;
+            $delta_lon = $lon2 - $lon1;
+
+            // Find the Great Circle distance
+            $temp = pow(sin($delta_lat / 2.0), 2) + cos($lat1) * cos($lat2) * pow(sin($delta_lon / 2.0), 2);
+            $distance = 3956 * 2 * atan2(sqrt($temp), sqrt(1 - $temp));
+
+        } catch (Exception $e) {
+            $this->log("{AppController#calculate_mileage} - An exception was thrown: " . $e->getMessage());
+        }
+        return $distance;
+    } // calculate_mileage
 
    /* private function __checkFBStatus() {
 
@@ -398,8 +429,8 @@ class AppController extends Controller {
                 $this->Auth->fields = array('username' => 'fbid', 'password' => 'password');
 
                 $this->Auth->login($user_record);
-                
-              
+
+
 
                 // redirect to the previous page, else forward to homepage
                 $redirect = $this->Session->read('Auth.redirect');

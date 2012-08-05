@@ -1,3 +1,9 @@
+/*********************************************************************************
+ * Copyright (C) 2012 uLink, Inc. All Rights Reserved.
+ *
+ * Created On: 5/15/12
+ * Description: This js file handles global ulink functions
+ ********************************************************************************/
 $(document).ready(function(){
     $("#ucampus-module").hover(
      function () {
@@ -38,4 +44,3 @@ $(document).ready(function(){
     // activates tooltips
     $("[rel=tooltip]").tooltip({placement : 'right'});
 });
-

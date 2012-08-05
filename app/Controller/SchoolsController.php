@@ -1,8 +1,10 @@
 <?php
-
-/**
- * The main controller for schools
- */
+/*********************************************************************************
+ * Copyright (C) 2012 uLink, Inc. All Rights Reserved.
+ *
+ * Created On: 5/15/12
+ * Description: This is the main controller for handling school actions
+ ********************************************************************************/
 class SchoolsController extends AppController {
 
     var $name = 'Schools';
@@ -15,6 +17,9 @@ class SchoolsController extends AppController {
     var $paginate_limit_admin = '20';
     var $paginate = "";
 
+    /**
+     * This function is called before any function is executed in this controller.
+     */
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('suggestion');
@@ -31,15 +36,23 @@ class SchoolsController extends AppController {
         $this->layout=null;
         $retVal = "false";
         if (!empty($this->request->data)) {
-            $this->request->data['Suggestion']['name'] = $this->request->data['School']['name'];
-            if ($this->Suggestion->save($this->request->data)) {
-                $retVal = "true";
+            try {
+                $this->request->data['Suggestion']['name'] = $this->request->data['School']['name'];
+                if ($this->Suggestion->save($this->request->data)) {
+                    $retVal = "true";
+                } else {
+                    $this->log("{SchoolsController#suggestion} - The suggestion with value: " . $this->request->data['School']['name'] . " did not save.");
+                }
+            } catch (Exception $e) {
+                $this->log("{SchoolsController#suggestion} - An exception was thrown when saving the suggestion: " . $e->getMessage());
             }
             Configure:: write('debug', 0);
             return $retVal;
             exit();
         }
-    }
+    } // suggestion
+
+    // TODO: 8.3.12 - from this point on the code needs to be cleaned up/refactored because it's terribly organized
 
     // listing o fsuggested schools
     function admin_school_index() {
@@ -123,7 +136,7 @@ class SchoolsController extends AppController {
 
 
         // prd(FULL_BASE_URL);
-        // to brint the particular video caps na dmake them to show in frontend 
+        // to brint the particular video caps na dmake them to show in frontend
         //  App::import('Vender', 'Zend/Loader.php');
         require_once('Zend/Loader.php'); // setting up the file required
         Zend_Loader::loadClass('Zend_Gdata_YouTube');
@@ -175,13 +188,13 @@ class SchoolsController extends AppController {
         return $caps;
     }
 
-//ef 
+//ef
 
     function admin_index() {
         $this->redirect(array('action' => 'school_index'));
     }
 
-//ef 	
+//ef
 
     function set_paginate_limit() {
         $this->paginate = array('limit' => $this->paginate_limit);
@@ -215,7 +228,7 @@ class SchoolsController extends AppController {
                 $this->redirect(array('action' => 'school_index'));
             }
         } else {
-            
+
         }
         $countries = array();
         $states = array();
@@ -487,7 +500,7 @@ class SchoolsController extends AppController {
     }
 
 // ef
-    //Recent added schools       
+    //Recent added schools
     function recentaddedschools() {
 
         $this->layout = null;
@@ -499,7 +512,7 @@ class SchoolsController extends AppController {
     }
 
 //ef
-    //Top rated schools       
+    //Top rated schools
     function topratedschools() {
         $this->layout = null;
         $topRatedSchool = $this->School->find('all', array('conditions' => 'School.rating > 0',

@@ -77,7 +77,7 @@ footer {
 	height: 60px;
 }
 
-footer > .container .row > div > a > i { 
+footer > .container .row > div > a > i {
 	position: relative;
 	top: -10px;
 }
@@ -323,11 +323,11 @@ footer .social > a:hover {
 	background-position: -5px -3px;
 }
 
-.ulink-icon-ucampus-white { 
+.ulink-icon-ucampus-white {
 	background-position: -33px -3px;
 }
 
-.ulink-icon-ucampus-active { 
+.ulink-icon-ucampus-active {
 	background-position: -60px -3px;
 }
 
@@ -409,8 +409,8 @@ footer .social > a:hover {
     font-size: .9em;
 }
 
-.trends-feed-container { 
-	height: 495px; 
+.trends-feed-container {
+	height: 495px;
 }
 
 .trends-well {
@@ -464,24 +464,24 @@ a.orange:hover {
 }
 
 #campus-events-container ul { height: 200px; width:100%; }
-#campus-events-container ul > li { 
+#campus-events-container ul > li {
 	padding-top: 10px;
 	border-bottom: 1px solid #eee;
   	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-} 
-#campus-events-container ul > li:hover > a { 
-	opacity: 1;
-	filter: alpha(opacity=1);	
 }
-#campus-events-container ul > li > span:hover+p:hover+a { 
+#campus-events-container ul > li:hover > a {
 	opacity: 1;
-	filter: alpha(opacity=1);	
+	filter: alpha(opacity=1);
+}
+#campus-events-container ul > li > span:hover+p:hover+a {
+	opacity: 1;
+	filter: alpha(opacity=1);
 }
 .campus-event-title, .my-event-title { font-weight: bold; }
 .campus-event-date { font-style: italic; font-size: 0.8em; }
 .view-event-link, .my-event-link {
 	opacity: .0;
-	filter: alpha(opacity=0);	
+	filter: alpha(opacity=0);
 	-webkit-transition: opacity .2s linear;
 	-moz-transition: opacity .2s linear;
 	transition: opacity .2s linear;
@@ -920,8 +920,8 @@ p.input-info {
 }
 
 #team ul li div div > img {
-    height: 150px;
-    width: 150px;
+    height: 130px;
+    width: 130px;
     -moz-border-radius: 5px;
     border-radius: 5px;
 }

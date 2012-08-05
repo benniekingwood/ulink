@@ -1,8 +1,11 @@
 <?php
-/**
- * This controller handles all basic main page 
+/*********************************************************************************
+ * Copyright (C) 2012 uLink, Inc. All Rights Reserved.
+ *
+ * Created On: 5/15/12
+ * Description: This controller handles all basic main page
  * navigation in uLink
- */
+ ********************************************************************************/
 class PagesController extends AppController {
 
     var $name = 'Pages';
@@ -10,31 +13,20 @@ class PagesController extends AppController {
     var $components = array('RequestHandler');
     var $helpers = array('Html', 'Form', 'Js');
 
+    /**
+     * This function is called before any action is executed
+     */
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow();
     }
-    
+
     /**
      * Home uLink homepage loader.
      */
     public function home() {
         $this->layout = 'v2';
         $this->set('title_for_layout','Your college everything.');
-    }
-
-    /**
-     *
-     */
-    function validate_data() {
-        if (isset($this->request->data)) {
-            if (!eregi('^[A-Za-z0-9_]+$', $this->request->data['Message']['url'])) {
-                echo "Please enter a valid url";
-            } else {
-                echo "done";
-            }
-            die('ss');
-        }
     }
 
     /**
@@ -76,7 +68,7 @@ class PagesController extends AppController {
         $this->layout = "v2_light";
         $this->set('title_for_layout',  'About Us');
     }
-    
+
     /**
      * UCampus home page loader
      */

@@ -12,13 +12,20 @@
             }
             // if valid submit the form
             if(valid) {
-                $('#btnForgotPassword').addClass("disabled");
                 return valid;
             } else {
+                // remove success if it's there
+                $('#forgot-form-container').removeClass('success');
                 $('#forgot-form-container').addClass('error');
                 $('#login-message').html('Please enter your email address');
                 return valid;
             }
+        });
+
+        // disable the submit button upon successful validation
+        $('#forgotPassswordForm').submit(function() {
+            $('#btnForgotPassword').attr("disabled", "disabled");
+            return true;
         });
     });
 </script>
@@ -48,10 +55,10 @@
         <?php echo $this->Form->end(); ?>
     </div>
 </div>
-<?php if($forgotError=='true') { ?>
+<?php if(isset($forgotError) && $forgotError=='true') { ?>
         <script>$('#forgot-form-container').addClass('error');
-        $('#forgot-form-container').removeClass('success');</script>
-<?php } else if($forgotError=='false'){  ?>
+        $('#forgot-form-container').removeClass('success');$('#btnForgotPassword').attr("disabled", false);</script>
+<?php } else if(isset($forgotError) &&$forgotError=='false'){  ?>
         <script>$('#forgot-form-container').removeClass('error');
-            $('#forgot-form-container').addClass('success');$('#email').val('');</script>
+            $('#forgot-form-container').addClass('success');$('#email').val('');$('#btnForgotPassword').attr("disabled", false);</script>
 <?php } ?>

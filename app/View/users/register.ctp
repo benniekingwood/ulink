@@ -44,6 +44,10 @@ $(document).ready(function () {
         $("#UserEmail").removeData("previousValue");
     });
     $("#UserRegisterForm").validate({
+        submitHandler: function(form) {
+           $(form).find(":submit").attr("disabled", "disabled");
+           form.submit();
+        },
         ignore: ':hidden',
         errorClass: "jerror",
         errorPlacement:function (error, element) {
@@ -55,6 +59,16 @@ $(document).ready(function () {
             }
         },
         rules:{
+            'elementToWatch': {
+                success: function(element) {
+                    if($("#UserRegisterForm").validate().element("#myselect")) {
+                        $('#btnCreateAccount:disabled').removeAttr('disabled');
+                    } else {
+                        $('#btnCreateAccount').attr('disabled','disabled');
+                    }
+                },
+                // etc...
+             },
             'data[User][username]':{
                 required:true,
                 remote:{

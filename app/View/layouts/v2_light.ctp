@@ -109,7 +109,7 @@
 <!-- /page content -->
 
 <!-- global components -->
-<?php echo $this->element('login'); echo $this->element('view_profile');?>
+<?php echo $this->element('login');?>
 <!-- /global components -->
 <footer>
     <div class="container">
@@ -137,7 +137,7 @@
 </footer> <!-- /footer -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<?php echo $this->Html->script(array('bootstrap.min.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
+<?php echo $this->Html->script(array('bootstrap.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
 
 <!-- facebook scripts
 <script type="text/javascript"
