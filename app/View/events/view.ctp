@@ -5,10 +5,10 @@
     <div class="event-picture thumbnail span4 well offset1">
         <?php echo "<img class='rounded' src='/events/getEventImage/" . $event['Event']['_id'] . "' alt='event picture'/>"; ?>
         <br />
-        <span>
+        <div class="caption">
             <a href="https://twitter.com/share" class="twitter-share-button" data-related="ulinkInc" data-dnt="true">Tweet</a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-        </span>
+        </div>
     </div>
     <div>
         <div class="well span4">

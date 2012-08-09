@@ -490,7 +490,7 @@ a.orange:hover {
 .scroll { overflow: auto; }
 
 .event-picture {
-	height: 350px;
+	min-height: 350px;
 	width: 350px;
 }
 .event-user-picture-container a img {

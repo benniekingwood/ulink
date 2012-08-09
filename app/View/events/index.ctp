@@ -12,6 +12,7 @@ foreach($events as $event)
 	echo "<b>Date and time:</b> " .  DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date'])->format('F d, Y'). "<br/>";
 	echo "<b>Active?:</b> " . $event["Event"]["active"] . "<br/>";
 	echo "<b>Featured?:</b> " . $event["Event"]["featured"] . "<br/>";
+	echo "<b>Username:</b> " . $event["Event"]["userName"] . "<br/>";
 	echo "<b>Details</b></br>";
 	echo $event["Event"]["eventInfo"] . "<br/>";
 	echo $this->Html->link('Delete Event', array('controller'=>'events', 'action'=>'delete', $event["Event"]["_id"])) . "<br/>";

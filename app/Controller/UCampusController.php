@@ -40,7 +40,7 @@ class UCampusController extends AppController {
             $activeUser = $this->Auth->User();
 
             // load the regular events for the logged in user's college
-            $events = $this->Event->find('all', array('fields' => array('collegeID', 'eventTitle', 'eventDate', '_id', 'eventInfo'), 'order' => array('Event.eventDate' => 'DESC'), 'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 0, 'active' => 1, 'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
+            $events = $this->Event->find('all', array('fields' => array('collegeID', 'eventTitle', 'eventDate', '_id', 'eventInfo', 'userID'), 'order' => array('Event.eventDate' => 'DESC'), 'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 0, 'active' => 1, 'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
             $this->set('events', $events);
 
 

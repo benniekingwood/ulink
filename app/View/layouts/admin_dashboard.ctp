@@ -41,19 +41,19 @@
         <?php echo $this->Html->script(array('wz_tooltip')); ?>
         <div id="mainContainer">
             <div id="header">
-                <div class="left"><?php echo $this->Html->image(('logouLinkv2.png', array('alt' => 'uLink Logo')); ?></div>
+                <div class="left"><?php echo $this->Html->image('logouLinkv2.png', array('alt' => 'uLink Logo')); ?></div>
 
                 <?php echo $this->element('admin_login_tab'); ?>
 
                 <div class="searchPanel">
                     <div class="left">
                         <a href="<?php echo($this->Html->url('/admin')); ?>">
-                            <?php echo $this->Html->image(('home-icon.gif', array('alt' => '')); ?>
+                            <?php echo $this->Html->image('home-icon.gif', array('alt' => '')); ?>
                         </a>
 
                     </div>
                     <div class="right">
-                        <?php echo $this->Html->image(('search-bar-right.gif', array('alt' => '')); ?>
+                        <?php echo $this->Html->image('search-bar-right.gif', array('alt' => '')); ?>
                     </div>
                     <div class="search">
 
@@ -65,20 +65,20 @@
 
             <div id="whiteContentBox">
                 <div class="top">
-                    <span class="left"><?php echo $this->Html->image(('white-box-top-left.gif', array('alt' => '')); ?></span>
-                    <span class="right"><?php echo $this->Html->image(('white-box-top-right.gif', array('alt' => '')); ?></span>
+                    <span class="left"><?php echo $this->Html->image('white-box-top-left.gif', array('alt' => '')); ?></span>
+                    <span class="right"><?php echo $this->Html->image('white-box-top-right.gif', array('alt' => '')); ?></span>
                     <div class="clear"></div>
                 </div>
                 <div class="content">
                     <div id="blueBox">
                         <div class="top">
-                            <span class="left"><?php echo $this->Html->image(('blue-border-box-top-left.gif', array('alt' => '')); ?></span>
-                            <span class="right"><?php echo $this->Html->image(('blue-border-box-top-right.gif', array('alt' => '')); ?></span>
+                            <span class="left"><?php echo $this->Html->image('blue-border-box-top-left.gif', array('alt' => '')); ?></span>
+                            <span class="right"><?php echo $this->Html->image('blue-border-box-top-right.gif', array('alt' => '')); ?></span>
                             <div class="clear"></div>
                         </div>
                         <div class="content">
-                            <div class="z">	
-                                <?php if (isset($_SESSION['admin_id'])) { ?>						
+                            <div class="z">
+                                <?php if (isset($_SESSION['admin_id'])) { ?>
                                     <?php echo $this->element('admin_left_panel'); ?>
                                 <?php } ?>
                             </div>
@@ -89,20 +89,20 @@
                             <div class="clear"></div>
                         </div>
                         <div class="bottom">
-                            <span class="left"><?php echo $this->Html->image(('blue-border-box-bottom-left.gif', array('alt' => '')); ?></span>
-                            <span class="right"><?php echo $this->Html->image(('blue-border-box-bottom-right.gif', array('alt' => '')); ?></span>
+                            <span class="left"><?php echo $this->Html->image('blue-border-box-bottom-left.gif', array('alt' => '')); ?></span>
+                            <span class="right"><?php echo $this->Html->image('blue-border-box-bottom-right.gif', array('alt' => '')); ?></span>
                             <div class="clear"></div>
                         </div>
                     </div>
                 </div>
                 <div class="bottom">
-                    <span class="left"><?php echo $this->Html->image(('white-box-bottom-left.gif', array('alt' => '')); ?></span>
-                    <span class="right"><?php echo $this->Html->image(('white-box-bottom-right.gif', array('alt' => '')); ?></span>
+                    <span class="left"><?php echo $this->Html->image('white-box-bottom-left.gif', array('alt' => '')); ?></span>
+                    <span class="right"><?php echo $this->Html->image('white-box-bottom-right.gif', array('alt' => '')); ?></span>
                     <div class="clear"></div>
                 </div>
             </div>
             <!--<div class="share">
-			<div class="left"><?php echo $this->Html->image(('find-us.gif', array('alt' => 'Find us on')); ?></div>
+			<div class="left"><?php echo $this->Html->image('find-us.gif', array('alt' => 'Find us on')); ?></div>
 			<a href="javascript:void(0)" class="facebook"></a>
 			<a href="javascript:void(0)" class="twitter"></a>
 			<a href="javascript:void(0)" class="stumble"></a>

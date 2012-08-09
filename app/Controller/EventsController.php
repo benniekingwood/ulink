@@ -61,6 +61,7 @@ class EventsController extends AppController {
 			$events = array();
 			$events = $this->Event->getAll();
 			$this->set('events', $events );
+			$this->set('user', $activeUser = $this->Auth->User());
 		} catch (Exception $e) {
 			$this->log("{EventsController#index} - An exception was thrown: " . $e->getMessage());
 		}
@@ -363,7 +364,9 @@ class EventsController extends AppController {
 			Controller::loadModel('School');
 			$schools = $this->School->find('list',array('fields' => array('id', 'name')));
 			$this->set('schools',$schools);
-
+			//Get user info to add to event data
+			$activeUser = $this->Auth->User();
+			$this->set('user', $activeUser);
 
 			if(!empty($this->data))
 			{
@@ -467,7 +470,7 @@ class EventsController extends AppController {
 		try {
 		// grab the logged in user off the session
 		$activeUser = $this->Auth->User();
-		$events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle', 'eventDate', '_id', 'eventInfo'),'order'=>array('Event.eventDate'=>'DESC'),'conditions' => array('userID' => $activeUser['id'])));
+		$events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle', 'eventDate', '_id', 'eventInfo', 'userID'),'order'=>array('Event.eventDate'=>'DESC'),'conditions' => array('userID' => $activeUser['id'])));
 		$this->set('events', $events);
 		}  catch (Exception $e) {
 		   $this->log("{EventsController#myevents} - An exception was thrown:" . $e->getMessage());

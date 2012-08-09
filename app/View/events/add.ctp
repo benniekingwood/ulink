@@ -10,6 +10,7 @@ echo $this->Form->input('eventInfo', array('type'=>'textarea','rows' => '3','col
 echo $this->Form->input('eventDate', array('type' => 'text','default' => 'MM/DD/YYYY'));
 echo $this->Form->file('image');
 echo $this->Form->input('_id', array('type' => 'hidden'));
+echo $this->Form->input('userID', array('type' => 'hidden', 'value' => $user['id']));
 echo $this->Form->end('Add Event');
 
 echo "</pre>";
