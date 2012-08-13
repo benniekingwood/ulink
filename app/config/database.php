@@ -82,22 +82,33 @@ class DATABASE_CONFIG {
 
     // default configuration for Production
     var $default = array(
-        'driver' => 'mysql',
+        'datasource' => 'Database/Mysql',
         'persistent' => false,
         'host' => 'localhost',
         'login' => 'ulink',
         'password' => 'ulink',
-        'database' => 'beta_ulink',
+        'database' => 'ulink_prod',
         'prefix' => '',
         'encoding' => 'utf8'
     );
 
+    var $mongo = array(
+        'datasource' => 'Mongodb.MongodbSource',
+        'database' => 'ulink_prod',
+        'host' => 'localhost',
+        'port' => 27017
+    );
+
+
     function DATABASE_CONFIG() {
         if (inDevMode()) {
+            // set the mysql db to hit development database
             $this->default['host'] = 'localhost';
-            $this->default['database'] = 'ulink';
+            $this->default['database'] = 'ulink_dev';
             $this->default['login'] = 'root';
             $this->default['password'] = 'root';
+            // set the mongodb to hit the development database
+            $this->mongo['database'] = 'ulink_dev';
         }
     }
 

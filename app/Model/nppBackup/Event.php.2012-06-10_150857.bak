@@ -1,0 +1,22 @@
+<?php
+class Event extends AppModel {
+        var $name = 'Event';
+        var $primaryKey = '_id';
+        var $useDbConfig = 'mongo';
+		//Relationships dont seem to work accross different datasource types... will be ugly until
+		//everything is moved over to mongoDB
+		//var $belongsTo = array('School' => array('className' => 'School', 'foreignKey' => 'collegeID'));
+
+         	 		 
+		 /*function schema() {
+        $this->_schema = array(
+            '_id' => array('type' => 'integer', 'primary' => true, 'length' => 40),
+            'firstName' => array('type' => 'string'),
+                        'lastName' => array('type' => 'string'),
+        );
+        return $this->_schema;
+    }*/
+
+
+}
+?>

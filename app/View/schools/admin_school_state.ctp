@@ -1,0 +1,1 @@
+<?php echo $this->Form->input('School.state_id',array('onchange'=>'getCity(this.value)','label'=>'State','empty'=>'Select States','options'=>$states,'type'=>'select'));?>

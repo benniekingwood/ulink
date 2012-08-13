@@ -1,1 +1,0 @@
-<?php echo $form->input('School.city_id',array('label'=>'City','empty'=>'Select Cities','options'=>$cities,'type'=>'select'));?>

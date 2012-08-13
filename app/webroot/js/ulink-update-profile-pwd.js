@@ -9,24 +9,25 @@ $(document).ready(function () {
     $('#btnUpdatePwd').click(function () {
         //organize the data properly
         var formData = $(this).parents('form').serialize();
-        var strURL = hostname + "users/updatePassword/";
+        var strURL =  hostname + 'users/updatePassword';       
         $.ajax({
             type:"POST",
             url:strURL,
             data:formData,
             beforeSend: function () {
-                if ($('#oldPass1').val() == "") {
+                if ($('#oldPass1').val() == "" || $('#oldPass1').val() == undefined) {
                     $('#profile-password-message').html('<div class="profile-error">Please enter your current password.<div>').show();
                     $('#oldPass1').focus();
                     return false;
                 }
             },
-            success:function (response) {
+               success:function (response) { 
                 // show respsonse message
                 if (response == 'true') {
                     $('#oldPass1').val('');
                     $('#pass1').val('');
                     $('#pass2').val('');
+                    $('#pass-strength-result').html("&nbsp;");
                     $('#profile-password-message').html("<p class='profile-success'>Your password has been updated</p>").show();
                 } else {
                     $('#profile-password-message').html('<div class="profile-error">' + response + '<div>').show();
