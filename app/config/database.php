@@ -108,7 +108,7 @@ class DATABASE_CONFIG {
             $this->default['login'] = 'root';
             $this->default['password'] = 'root';
             // set the mongodb to hit the development database
-            $this->mongo['database'] = 'ulink_dev';
+            $this->mongo['database'] = 'beta_ulink';
         }
     }
 
