@@ -94,7 +94,8 @@
     </div><!-- /well well-white -->
 </div><!--/container -->
 <script>
-    $('a[id$="help-question"]').click(function() {
-        $('#'+event.target.id+'-text').slideToggle("slow");
+    $('a[id$="help-question"]').click(function(event) {
+        $('#'+event.target.id+'-text').slideToggle("fast");
     });
+
 </script>

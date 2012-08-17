@@ -57,11 +57,10 @@
                     <a id="btnUpdatePwd" class="btn btn-primary btn-large">Save changes</a>
                 </div>
             </div>  <!-- /password-tab-content -->
-            <?php echo $this->Form->end(); ?>
         </div> <!-- /tab-content -->
     </div><!-- /row-fluid -->
+    <?php echo $this->Form->end(); ?>
 </div> <!-- /container-fluid -->
-<?php echo $this->Form->end(); ?>
 <script type="text/javascript">
     /* <![CDATA[ */
     try{convertEntities(commonL10n);}catch(e){};

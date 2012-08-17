@@ -8,7 +8,7 @@
             <div id="featuredEventsCarousel" class="carousel slide">
                 <div class="carousel-inner">
                     <?php
-                        if(isset($events) && count($events) == 0) { ?>
+                        if(isset($featureEvents) && count($featureEvents) == 0) { ?>
                             <div class="item active">
                                 <?php echo $this->Html->image('defaults/default_featured_event.png', array('alt' => 'featured event image'));?>
                                 <a href="#" alt="">

@@ -42,9 +42,7 @@
                     <?php echo $this->Form->button('Save changes', array('id'=>'btnSaveChanges', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large'));?>
                 </div>
             </div>  <!-- /password-tab-content -->
-            <?php echo $this->Form->end(); ?>
         </div> <!-- /tab-content -->
     </div><!-- /row-fluid -->
+    <?php echo $this->Form->end(); ?>
 </div> <!-- /container-fluid -->
-<?php echo $this->Form->end(); ?>
-

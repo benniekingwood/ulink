@@ -294,7 +294,7 @@ class AppController extends Controller {
             $sessVar = $this->Auth->User();
             if($sessVar != null) {
                 $userDetails = ClassRegistry::init('User')->find('first', array('conditions' => array('User.id' => $sessVar['id'])));
-    
+
                 if ($userDetails['User']['autopass'] == 1) {
                     $this->redirect(array('controller' => 'users', 'action' => 'password', '1'));
                 }

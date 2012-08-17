@@ -41,40 +41,40 @@
  *
  */
 class EmailConfig {
-    
+
     public $default = array(
                             'transport' => 'Mail',
                             'from' => 'you@localhost',
                             //'charset' => 'utf-8',
                             //'headerCharset' => 'utf-8',
                             );
-    
+
     /*
-     * Create the email configuration to work with gmail 
+     * Create the email configuration to work with gmail
      */
     public $gmail = array(
                           'host' => 'ssl://smtp.gmail.com',
                           'port' => 465,
-                          'username' => 'bennie.kingwood@theulink.com',
-                          'password' => 'iPhone1983',
+                          'username' => 'noreply@theulink.com',
+                          'password' => 'uL!nK2009',
                           'from' => array('noreply@theulink.com' => 'uLink, Inc.'),
                           'transport' => 'Smtp'
                           );
-    
+
     public $smtp = array(
                          'transport' => 'Smtp',
                          'from' => array('noreply@theulink.com' => 'uLink'),
                          'host' => 'mail.theulink.com',
                          'port' => 587,
                          'timeout' => 30,
-                         'username' => 'bennie.kingwood@theulink.com',
-                         'password' => 'iPhone1983',
+                         'username' => 'noreply@theulink.com',
+                         'password' => 'uL!nK2009',
                          'client' => null,
                          'log' => false,
                          //'charset' => 'utf-8',
                          //'headerCharset' => 'utf-8',
                          );
-    
+
     public $fast = array(
                          'from' => 'you@localhost',
                          'sender' => null,
@@ -105,5 +105,5 @@ class EmailConfig {
                          //'charset' => 'utf-8',
                          //'headerCharset' => 'utf-8',
                          );
-    
+
 }

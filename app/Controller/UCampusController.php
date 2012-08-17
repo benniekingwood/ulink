@@ -8,7 +8,7 @@
  ********************************************************************************/
 class UCampusController extends AppController {
 
-    var $name = 'UCampus';
+    var $name = 'Ucampus';
     var $uses = array('Event', 'Trend', 'User');
     var $components = array('RequestHandler');
     var $helpers = array('Html', 'Form', 'Js');
@@ -54,6 +54,14 @@ class UCampusController extends AppController {
 
             // grab the tweets for the school
             $tweets = $this->getTweetsBySchool($schoolName, $activeUser['school_id']);
+            // if the tweets are null, try one more time
+            if($tweets==null || count($tweets)==0) {
+                $this->log("{UCampusController#index}- The tweets loaded from Twitter are empty, retrying.");
+                $tweets = $this->getTweetsBySchool($schoolName, $activeUser['school_id']);
+                if($tweets==null || count($tweets)==0) {
+                    $this->log("{UCampusController#index}- On the second attempt, the tweets returned by Twitter were still empty.");
+                }
+            }
             $this->set('tweets', $tweets);
 
             // grab the trends based on the school's woeid

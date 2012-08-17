@@ -12,9 +12,11 @@
             <h1>Welcome to uLink.</h1>
             <p>Find out what's happening on your campus, right now.</p>
             <p>
+                <?php if (!isset($loggedInId)) { ?>
                 <a class="btn btn-warning btn-xlarge" href="<?php echo($this->Html->url('/users/register'));?>">
                     Sign up for uLink »
                 </a>
+                <?php } ?>
                 <a class="btn btn-warning btn-xlarge" href="<?php echo($this->Html->url('/pages/about'));?>">
                     Learn More »
                 </a>
