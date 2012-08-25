@@ -38763,3 +38763,732 @@ Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
 Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
 [main] - APP/webroot/index.php, line 92
 
+2012-08-13 14:22:17 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 186]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 186
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-13 14:22:27 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 186]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 186
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-13 14:22:43 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 186]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 186
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-13 14:31:14 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 186]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 186
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-13 14:42:31 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 186]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 186
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-13 14:42:58 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 186]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 186
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-13 15:47:38 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 186]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 186
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-14 19:35:10 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 186]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 186
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-14 20:43:08 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 186]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 186
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 00:17:49 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 186]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 186
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:07:14 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 195]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 195
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:07:19 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 195]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 195
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:07:19 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 195]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 195
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:07:47 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:07:47 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:08:46 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:08:46 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:09:37 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:09:37 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:09:39 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:09:39 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:10:07 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:10:08 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:10:23 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:10:23 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:11:45 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:11:45 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:11:48 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:11:48 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:13:49 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:13:50 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:14:56 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:15:09 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 196]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 196
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:25:04 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:25:06 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:25:42 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:25:49 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:26:00 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:26:08 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:26:44 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:27:01 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:27:04 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:27:42 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:27:46 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:29:01 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 229]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 229
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:30:04 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 229]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 229
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:30:04 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 229]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 229
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:32:25 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 229]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 229
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:32:25 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 229]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 229
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:32:43 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:32:43 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:32:46 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:33:26 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:33:26 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:33:51 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:33:51 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:35:07 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:40:40 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:40:43 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:43:47 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:43:58 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:43:58 Notice: Notice (8): Undefined index: imageType in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 236]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 236
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:00 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:00 Notice: Notice (8): Undefined index: imageType in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 236]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 236
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:13 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:22 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:22 Notice: Notice (8): Undefined index: imageType in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 236]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 236
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:22 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:22 Notice: Notice (8): Undefined index: imageType in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 236]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 236
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:24 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:24 Notice: Notice (8): Undefined index: imageType in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 236]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 236
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:30 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:30 Notice: Notice (8): Undefined index: imageType in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 236]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 236
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:32 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:44:32 Notice: Notice (8): Undefined index: imageType in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 236]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 236
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:45:26 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 228]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 228
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-21 23:45:26 Notice: Notice (8): Undefined index: imageType in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 236]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 236
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-22 00:10:30 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 229]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 229
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-22 00:10:30 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 229]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 229
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-22 00:10:30 Notice: Notice (8): Undefined index: imageType in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 237]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 237
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2012-08-25 13:19:20 Notice: Notice (8): Trying to get property of non-object in [/Applications/MAMP/htdocs/Websites/ulink/app/Controller/EventsController.php, line 229]
+Trace:
+EventsController::getEventImage() - APP/Controller/EventsController.php, line 229
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+

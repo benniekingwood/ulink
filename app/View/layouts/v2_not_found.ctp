@@ -76,11 +76,11 @@
                 <a href="<?php echo($this->Html->url('/pages/about')); ?>">About</a>&nbsp;
                 <a href="<?php echo($this->Html->url('/pages/help')); ?>">Help</a>&nbsp;
                 <a href="<?php echo($this->Html->url('/pages/terms')); ?>">Terms</a>&nbsp;
-                <a href="<?php echo($this->Html->url('/pages/advertise')); ?>">Advertise</a>
+                <!--<a href="<?php echo($this->Html->url('/pages/advertise')); ?>">Advertise</a>-->
             </div>
             <div class="social span7">
                 Find Us On:
-                <a href="#">
+                <a href="http://www.facebook.com/ulinkinc">
                     <i class="ulink-social-icon-fb"></i>
                 </a>
                 <a href="http://www.twitter.com/ulinkinc">

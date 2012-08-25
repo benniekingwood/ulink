@@ -56,12 +56,21 @@ class EventsController extends AppController {
 	 * events search page.
 	 */
 	public function index() {
+		/*
+		 * For now, we are only allowing admin users to
+		 * view this page
+		 */
+		$activeUser = $this->Auth->user();
+		if(!isset($activeUser['is_admin']) || $activeUser['is_admin'] == '0' || $activeUser['is_admin'] == null) {
+			$this->redirect(array('controller' => 'ucampus','action' => 'index'));
+		}
+
 		$this->layout = 'v2_ucampus';
 		try {
 			$events = array();
 			$events = $this->Event->getAll();
 			$this->set('events', $events );
-			$this->set('user', $activeUser = $this->Auth->User());
+			$this->set('user', $activeUser);
 		} catch (Exception $e) {
 			$this->log("{EventsController#index} - An exception was thrown: " . $e->getMessage());
 		}
@@ -98,6 +107,16 @@ class EventsController extends AppController {
 			}
 
 			$event = $this->Event->read(null, $eventID);
+
+			// make sure the user is not attempting to view a event that is not from their school
+			// grab the logged in user off the session
+			$activeUser = $this->Auth->User();
+			// validate the event to make sure the logged in user can delete the event
+			if($event['Event']['collegeID'] != $activeUser['school_id']) {
+			     $this->Session->setFlash("You can only view events from your school.");
+			     $this->redirect('/events/myevents');
+			}
+
 			// set the page title to be the school and the event
 			$this->set('title_for_layout', $event['Event']['collegeName'] . ' ' . $event['Event']['eventTitle']);
 
@@ -121,6 +140,14 @@ class EventsController extends AppController {
 	 */
        public function getEventByCollegeId($collegeID = NULL)
        {
+		/*
+			* For now, we are only allowing admin users to
+			* view this page
+			*/
+		       $activeUser = $this->Auth->user();
+		       if(!isset($activeUser['is_admin']) || $activeUser['is_admin'] == '0' || $activeUser['is_admin'] == null) {
+			       $this->redirect(array('controller' => 'ucampus','action' => 'index'));
+		       }
 		$this->layout = 'v2_ucampus';
 		try {
 			if($collegeID == NULL)
@@ -143,6 +170,14 @@ class EventsController extends AppController {
 	 */
        public function getFeaturedEventsByCollegeId($collegeID = NULL)
        {
+		/*
+			* For now, we are only allowing admin users to
+			* view this page
+			*/
+		       $activeUser = $this->Auth->user();
+		       if(!isset($activeUser['is_admin']) || $activeUser['is_admin'] == '0' || $activeUser['is_admin'] == null) {
+			       $this->redirect(array('controller' => 'ucampus','action' => 'index'));
+		       }
 		$this->layout = 'v2_ucampus';
 	     try {
 		       if($collegeID == NULL)
@@ -162,6 +197,14 @@ class EventsController extends AppController {
         */
        public function getAllFeaturedEvents()
        {
+		/*
+			* For now, we are only allowing admin users to
+			* view this page
+			*/
+		       $activeUser = $this->Auth->user();
+		       if(!isset($activeUser['is_admin']) || $activeUser['is_admin'] == '0' || $activeUser['is_admin'] == null) {
+			       $this->redirect(array('controller' => 'ucampus','action' => 'index'));
+		       }
 		$this->layout = 'v2_ucampus';
 		try {
 		$events = $this->Event->find('all', array('conditions' => array('featured' => 1, 'active' => 1)));
@@ -222,6 +265,16 @@ class EventsController extends AppController {
 		       $this->flash(__('Invalid Event', true), array('action'=>'myevents'));
 		}
 
+		$event = $this->Event->read(null, $eventID);
+		// grab the logged in user off the session
+		$activeUser = $this->Auth->User();
+
+		// validate the event to make sure the logged in user can delete the event
+		if($event['Event']['userID'] != $activeUser['id']) {
+		    $this->Session->setFlash("That was not your event to delete.");
+		    $this->redirect('/events/myevents');
+		}
+
 		if($this->Event->delete($eventID))
 		{
 		       $this->Session->setFlash("Your event was deleted.");
@@ -250,7 +303,8 @@ class EventsController extends AppController {
 			$activeUser = $this->Auth->User();
 			// validate the event to make sure the logged in user can edit it
 			if($event['Event']['userID'] != $activeUser['id']) {
-			    $this->flash(__('That was not your event to edit.', true), array('action'=>'myevents'));
+			    $this->Session->setFlash("That was not your event to edit.");
+				$this->redirect('/events/myevents');
 			}
 			Controller::loadModel('School');
 			$schools = $this->School->find('list',array('fields' => array('id', 'name')));
@@ -361,11 +415,19 @@ class EventsController extends AppController {
 		$this->layout = 'v2_ucampus';
 
 		try {
+			/*
+			* For now, we are only allowing admin users to
+			* view this page
+			*/
+		       $activeUser = $this->Auth->user();
+		       if(!isset($activeUser['is_admin']) || $activeUser['is_admin'] == '0' || $activeUser['is_admin'] == null) {
+			       $this->redirect(array('controller' => 'ucampus','action' => 'index'));
+		       }
+
 			Controller::loadModel('School');
 			$schools = $this->School->find('list',array('fields' => array('id', 'name')));
 			$this->set('schools',$schools);
 			//Get user info to add to event data
-			$activeUser = $this->Auth->User();
 			$this->set('user', $activeUser);
 
 			if(!empty($this->data))
@@ -396,6 +458,14 @@ class EventsController extends AppController {
 	 */
        public function toggleActive($eventID = NULL)
        {
+		/*
+			* For now, we are only allowing admin users to
+			* view this page
+			*/
+		       $activeUser = $this->Auth->user();
+		       if(!isset($activeUser['is_admin']) || $activeUser['is_admin'] == '0' || $activeUser['is_admin'] == null) {
+			       $this->redirect(array('controller' => 'ucampus','action' => 'index'));
+		       }
 		$this->layout = 'v2_ucampus';
 
 		if($eventID == NULL)
@@ -431,6 +501,14 @@ class EventsController extends AppController {
         */
        public function toggleFeatured($eventID = NULL)
        {
+				/*
+			* For now, we are only allowing admin users to
+			* view this page
+			*/
+		       $activeUser = $this->Auth->user();
+		       if(!isset($activeUser['is_admin']) || $activeUser['is_admin'] == '0' || $activeUser['is_admin'] == null) {
+			       $this->redirect(array('controller' => 'ucampus','action' => 'index'));
+		       }
 		$this->layout = 'v2_ucampus';
 
 
