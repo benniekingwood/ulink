@@ -250,8 +250,8 @@ class AppController extends Controller {
                             // create unique filename and upload file
                             ini_set('date.timezone', 'Europe/London');
                             $now = date('Y-m-d-His');
-                            $full_url = $folder_url . '/' . $now . $filename;
-                            $url = $now . $filename;
+                            $full_url = $folder_url . '/' . $now . '-' . $filename;
+                            $url = $now . '-'.$filename;
                             $success = move_uploaded_file($formdata['tmp_name'], $full_url);
                         }
                         // if upload was successful

@@ -13,7 +13,7 @@
     echo $this->Html->meta('author','uLink, Inc.');
 
     // print styles
-    echo $this->Html->css(array('bootstrap-light.css', 'ulink.css','bootstrap-responsive.css', 'kevin.css'));
+    echo $this->Html->css(array('bootstrap-light.css', 'ulink.css','bootstrap-responsive.css'));
     echo $this->Html->script(array('jquery.min.js','var.js', 'validate.js'));
     ?>
 
@@ -46,7 +46,7 @@
             <div class="nav-collapse">
                 <ul class="nav span3">
                     <li id="ucampus-module">
-                        <a class="module" href="<?php echo($this->Html->url('/pages/ucampus')); ?>">
+                        <a class="module" href="<?php echo($this->Html->url('/ucampus')); ?>">
                             <i class="ulink-icon-ucampus"></i>uCampus
                         </a>
                     </li>
@@ -104,9 +104,14 @@
     </div>
 </div><!-- /navbar -->
 
+<!-- additional subnav -->
+<?php echo $this->element('ucampus_subnav');?>
+<!-- /additional subnav -->
+<div id="page-content">
 <!-- page content -->
 <?php echo $content_for_layout; ?>
 <!-- /page content -->
+</div>
 
 <!-- global components -->
 <?php echo $this->element('login');?>
@@ -137,7 +142,7 @@
 </footer> <!-- /footer -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<?php echo $this->Html->script(array('bootstrap.js','jquery.form.js','ulink.js','form-submit.js','ajax.js'));?>
+<?php echo $this->Html->script(array('bootstrap.js','jquery.form.js','ulink.js','form-submit.js','ajax.js', 'jquery-ui.js'));?>
 
 <!-- facebook scripts
 <script type="text/javascript"

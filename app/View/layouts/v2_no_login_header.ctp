@@ -45,7 +45,7 @@
             <div class="nav-collapse">
                 <ul class="nav span3">
                     <li id="ucampus-module">
-                        <a class="module" href="<?php echo($this->Html->url('/pages/ucampus')); ?>">
+                        <a class="module" href="<?php echo($this->Html->url('/ucampus')); ?>">
                             <i class="ulink-icon-ucampus"></i>uCampus
                         </a>
                     </li>
@@ -55,9 +55,14 @@
     </div>
 </div><!-- /navbar -->
 
+<!-- additional subnav -->
+<?php echo $this->element('ucampus_subnav');?>
+<!-- /additional subnav -->
+<div id="page-content">
 <!-- page content -->
 <?php echo $content_for_layout; ?>
 <!-- /page content -->
+</div>
 
 <!-- global components -->
 <?php echo $this->element('login'); ?>
@@ -89,7 +94,7 @@
 
 <!-- Placed at the end of the document so the pages load faster -->
 
-<?php echo $this->Html->script(array('ulink.js','var.js','validate.js','form-submit.js','ajax.js'));?>
+<?php echo $this->Html->script(array('ulink.js','var.js','validate.js','form-submit.js','ajax.js', 'jquery-ui.js'));?>
 
 <!-- facebook scripts
 <script type="text/javascript"

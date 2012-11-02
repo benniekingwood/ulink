@@ -9,6 +9,7 @@
                     <li class="active"><a href="#"> <i class="icon-user"></i>Profile</a></li>
                     <li><a href="<?php echo($this->Html->url('/users/password'));?>"><i class="icon-lock"></i>Password</a></li>
                     <li><a href="<?php echo($this->Html->url('/events/myevents'));?>"><i class="icon-calendar"></i>Events</a></li>
+                    <li><a href="<?php echo($this->Html->url('/snapshots/mysnaps'));?>"><i class="icon-camera"></i>Snaps</a></li>
                     <li><a href="<?php echo($this->Html->url('/users/social'));?>"><i class="icon-globe"></i>Social</a></li>
                 </ul>
             </div>
@@ -76,7 +77,7 @@
                         <?php echo $this->Form->input('User.school_id', array('id'=>'school_id','class' => 'input-xlarge','type' => 'select','label'=>false, 'div'=>false, 'disabled' => 'true', 'options' => $schools, 'selected' => $schools_id)); ?>
                     </div>
                 </div>
-                
+
                 <div class="control-group">
                     <label class="control-label" for="school_status">School Status</label>
                     <div class="controls">
@@ -112,7 +113,7 @@
     $.validator.addMethod("noSpecialChars", function(value, element) {
       return this.optional(element) || /^[a-z0-9\_\s]+$/i.test(value);
     });
-    
+
     /*
      * value = value of the element (file name)
      * element = element to validate (<input>)
@@ -121,7 +122,7 @@
     $.validator.addMethod('filesize', function(value, element, param) {
       return this.optional(element) || (element.files[0].size <= param)
     });
-    
+
     $(document).ready(function(){
 
       $("#UserIndexForm").validate({
@@ -151,17 +152,17 @@
                    required: "Please enter your first name",
                    noSpecialChars: "Please on use letters for your first name"
                },
-               'data[User][lastname]' : { 
+               'data[User][lastname]' : {
                    required: "Please enter your last name",
                    noSpecialChars: "Please on use letters for your last name"
                },
                'data[User][year]' : {
                    required: "Please select your graduation year"
                },
-               'data[User][school_status]'	: { 
+               'data[User][school_status]'	: {
                    required: "Please select your school status"
                },
-               'data[User][file]' : { 
+               'data[User][file]' : {
                    accept: "Please use images of type jpg, png or gif",
                    filesize: "File size must be less than 700k"
                }

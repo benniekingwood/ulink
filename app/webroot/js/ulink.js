@@ -7,12 +7,20 @@
 $(document).ready(function(){
     $("#ucampus-module").hover(
      function () {
+        // show subnav
+        $('#ucampus-subnav ul').addClass("active", 200);
         var val = $("#ucampus-module").attr("class");
         if(val != 'active') {
             $("#ucampus-module > a > i").toggleClass("ulink-icon-ucampus-white");
         }
       }
     );
+
+    $('#page-content').on("mouseover", function() {
+        if($('#ucampus-subnav ul').hasClass("active")) {
+         $('#ucampus-subnav ul').removeClass("active", 200);
+        }
+    });
 
     // This adds 'placeholder' to the items listed in the jQuery .support object.
     jQuery(function() {

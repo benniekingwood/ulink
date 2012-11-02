@@ -5,7 +5,8 @@
                 <ul id="sidebar-nav" class="nav nav-tabs nav-stacked">
                     <li><a href="<?php echo($this->Html->url('/users/'));?>"> <i class="icon-user"></i>Profile</a></li>
                     <li><a href="<?php echo($this->Html->url('/users/password'));?>"><i class="icon-lock"></i>Password</a></li>
-                    <li  class="active"><a href="<?php echo($this->Html->url('/users/events'));?>"><i class="icon-calendar"></i>Events</a></li>
+                    <li class="active"><a href="#"><i class="icon-calendar"></i>Events</a></li>
+                    <li><a href="<?php echo($this->Html->url('/snapshots/mysnaps'));?>"><i class="icon-camera"></i>Snaps</a></li>
                     <li><a href="<?php echo($this->Html->url('/users/social'));?>"><i class="icon-globe"></i>Social</a></li>
                 </ul>
             </div>

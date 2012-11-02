@@ -21,31 +21,28 @@
         var id = $(this).attr('id').split("-")[2];
         // build the url
         var url = hostname + "users/viewprofile/" + id;
-        // grab the user
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.onreadystatechange = function () {
-            if (this.status == 200 && this.readyState == 4) {
-                var data = JSON.parse(this.responseText);
-                $('#vpUsername').html(data.User.username);
-                $('#vpImg').attr('src',hostname+"/img/files/users/"+data.User.image_url);
-                $('#vpFirstName').html(data.User.firstname);
-                $('#vpLastName').html(data.User.lastname);
-                $('#vpSchool').html(data.School.name);
-                $('#vpSchoolStatus').html(data.User.school_status);
-                $('#vpGradYear').html(data.User.year);
-                $('#vpBio').html(data.User.bio);
-            } else { // set back to defaults
-                $('#vpUsername').html('username');
-                $('#vpImg').attr('src',hostname+"/img/files/users/noImage.jpg/");
-                $('#vpFirstName').html('Firstname');
-                $('#vpLastName').html('Lastname');
-                $('#vpSchool').html('School Name');
-                $('#vpSchoolStatus').html('status');
-                $('#vpGradYear').html('YYYY');
-                $('#vpBio').html('BIO');
-            }
-        };
-        xhr.send(null);
+        // perform get request, jquery version is efficient
+        var jqxhr = $.get(url, function() {})
+        .success(function(responseText) {
+            var data = JSON.parse(responseText);
+            $('#vpUsername').html(data.User.username);
+            $('#vpImg').attr('src',hostname+"/img/files/users/"+data.User.image_url);
+            $('#vpFirstName').html(data.User.firstname);
+            $('#vpLastName').html(data.User.lastname);
+            $('#vpSchool').html(data.School.name);
+            $('#vpSchoolStatus').html(data.User.school_status);
+            $('#vpGradYear').html(data.User.year);
+            $('#vpBio').html(data.User.bio);
+        })
+        .error(function() {
+            $('#vpUsername').html('username');
+            $('#vpImg').attr('src',hostname+"/img/files/users/noImage.jpg/");
+            $('#vpFirstName').html('Firstname');
+            $('#vpLastName').html('Lastname');
+            $('#vpSchool').html('School Name');
+            $('#vpSchoolStatus').html('status');
+            $('#vpGradYear').html('YYYY');
+            $('#vpBio').html('BIO');
+        });
     });
 </script>
