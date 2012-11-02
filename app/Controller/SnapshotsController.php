@@ -251,7 +251,6 @@ class SnapshotsController extends AppController {
                 $fileTokens = explode("/", $oldImageURL);
                 $origFileName = $fileTokens[6];
                 $tokens = explode("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9]-", $fileTokens[6]);
-                $this->log($tokens);
                 if(count($tokens)>1) {
                     $fileName = $now . '-' . $tokens[4];
                 } else {
@@ -344,6 +343,7 @@ class SnapshotsController extends AppController {
             if($id == NULL) {
                 $retVal['result'] = "false";
                 $retVal['response'] = 'No id parameter was provided for this request.';
+                $this->log("{SnapshotController#delete_snap_comment} - No id parameter was provided for this request.");
                 echo json_encode($retVal);
                 exit;
             }
@@ -357,6 +357,7 @@ class SnapshotsController extends AppController {
 
             // validate the comment to make sure the user can delete the event
             if($comment['SnapshotComment']['userId'] != $activeUser['id']) {
+                $this->log("{SnapshotController#delete_snap_comment} - User id mismatch when deleting snap comment: supplied(". $activeUser['id']."), commentId(". $comment['SnapshotComment']['userId'].")");
                 $retVal['result'] = "false";
                 $retVal['response'] = 'That was not your comment to delete.';
                 echo json_encode($retVal);

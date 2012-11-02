@@ -173,6 +173,16 @@ footer .social > a:hover {
     padding-left: 20px;
     font-size:1.1em;
 }
+.loading-circle-blk {
+	background: url("../img/ajax-loader.gif");
+	width: 32px;
+	height: 32px;
+}
+.loading-circle-blue {
+	background: url("../img/loading-circle-blue.gif");
+	width: 32px;
+	height: 32px;
+}
 .profile-info {
     color: #3a87ad;
     padding-left: 20px;

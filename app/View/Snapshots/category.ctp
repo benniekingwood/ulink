@@ -162,12 +162,12 @@ a:hover {text-decoration:none; }
                                  <span style="margin-top: -19px;"><?php if(count($featuredSnap->comments) > 0) { echo count($featuredSnap->comments); } ?></span></p>
                             </a>
                         </div>
-                    <? } else { ?>
+                    <?php } else { ?>
                         <img src="/img/defaults/default_snap.png" alt=""/>
                         <div class="carousel-caption">
                             <div class="span1">&nbsp;</div>
                         </div>
-                    <? } ?>
+                    <?php } ?>
                   </div> <!-- /item active -->
                 </div>
             </div>

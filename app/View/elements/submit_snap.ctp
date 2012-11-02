@@ -72,6 +72,7 @@
                 <span id="counter"></span>
                 <a id="continue-snap-btn" class="btn btn-primary btn-large">Continue</a>
                 <a id="submit-snap-btn" class="btn btn-primary btn-large" style="display: none;">Submit</a>
+                <div class="loading-circle-blue" style="display: none;"></div>
                 <a id="reset-btn" class="btn btn-large" style="display: none;">Reset Filters</button>
             </div>
         </div>
@@ -206,6 +207,7 @@
                     error.appendTo(element.next("div"));
                     $('#submit-snap-form-container').addClass('error');
                 }
+                $('#continue-snap-btn').removeAttr("disabled");
             },
             rules: {
                 'data[Snapshot][image]' : { accept:"jpg|gif", filesize: 700000, filerequired: 0},
@@ -276,6 +278,7 @@
         });
 
         $('#continue-snap-btn').on("click", function () {
+            $('#continue-snap-btn').attr("disabled", "disabled");
             $('#submitSnapForm').submit();
         });
 
@@ -293,11 +296,16 @@
                 var strData = canvas.toDataURL("image/jpg");
                 $("#applyFilterForm").html('<input type="hidden" name="data[Snapshot][image]" value="'+strData+'"/><input type="hidden" name="data[Snapshot][imageURL]" value="'+imageURL+'"/>');
                 $("#applyFilterForm").submit();
+                // show loading gif, hide the submit button
+                $('.loading-circle-blue').show();
+                $('#submit-snap-btn').hide();
+                $('#reset-btn').hide();
             }
         });
 
          $('#applyFilterForm').ajaxForm({
             success:function (response) {
+                 $('.loading-circle-blue').hide();
                 var json = $.parseJSON(response);
                 if (json["response"] == "true") {
                     $('#snap-filter-container').hide();

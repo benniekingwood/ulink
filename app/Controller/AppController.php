@@ -8,8 +8,14 @@
  ********************************************************************************/
 //App::import('Vendor', 'facebook/facebook/facebook.php');
 //require_once("../vendors/facebook/facebook/facebook.php");   <-- 7/30/2012 - Bennie- removing FB for now --too slow
+
+// TEMP: Comment this is PROD
 require_once("../Lib/Twitter/tmhOAuth.php");
 require_once("../Lib/Twitter/tmhUtilities.php");
+
+// TEMP: Uncomment this is PROD
+// require_once("/var/www/vhosts/www/app/Lib/Twitter/tmhOAuth.php");
+// require_once("/var/www/vhosts/www/app/Lib/Twitter/tmhUtilities.php");
 
 define('_UNIT_MILES', 'm');
 define('_UNIT_KILOMETERS', 'k');
