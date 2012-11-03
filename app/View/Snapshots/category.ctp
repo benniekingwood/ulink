@@ -114,7 +114,7 @@
 .snap-comment { border-bottom: #dddddd 1px solid; margin: 3px 8px 0 0; }
 .span2 { width: 190px; }
 .snap-comment p { font-size: 0.8em; color: #bbbbbb; }
-.carousel-inner .item > img { height: 350px;margin: auto;}
+.carousel-inner .item > img { height: 100%; width: 100%; margin: auto;}
 .snap-comments-container h4 { margin-top: -10px;}
 .snap-comment-form-container textarea { width: 90%; }
 a:hover {text-decoration:none; }
@@ -156,7 +156,7 @@ a:hover {text-decoration:none; }
                                 <?php echo $this->Html->image('files/users/' . $featuredSnap->user->User->image_url . '', array('alt' => 'profile image', 'class'=>'profile-size-small'));?>
                                 </a>
                             </div>
-                            <p><?php echo $featuredSnap->caption;?></p>
+                            <p><?php echo htmlspecialchars_decode($featuredSnap->caption);?></p>
                             <a id="comment-link" href="#" class="pull-right">
                                  <p><i class="icon-comment icon-white"></i>
                                  <span style="margin-top: -19px;"><?php if(count($featuredSnap->comments) > 0) { echo count($featuredSnap->comments); } ?></span></p>
@@ -193,7 +193,7 @@ a:hover {text-decoration:none; }
                                 <p class="campus-event-date"><?php echo date('M j, Y', strtotime($comment->SnapshotComment->created)); //echo DateTime::createFromFormat('Y-m-d H:i:s',$comment->SnapshotComment->created)->format('F d, Y'); ?></p>
                             </div>
                             <div class="span2" style="float: right;">
-                                <?php echo $comment->SnapshotComment->comment; ?>
+                                <?php echo htmlspecialchars_decode($comment->SnapshotComment->comment); ?>
                             </div>
                         </div>
                 <?php }}} ?>
