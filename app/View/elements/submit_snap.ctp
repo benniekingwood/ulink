@@ -70,8 +70,8 @@
             <div class="submit-snap-button-sub-container">
                 <img style="display: none;" class="spinner" src="">
                 <span id="counter"></span>
-                <a id="continue-snap-btn" class="btn btn-primary btn-large">Continue</a>
-                <a id="submit-snap-btn" class="btn btn-primary btn-large" style="display: none;">Submit</a>
+                <button id="continue-snap-btn" class="btn btn-primary btn-large">Continue</button>
+                <button id="submit-snap-btn" class="btn btn-primary btn-large" style="display: none;">Submit</button>
                 <div class="loading-circle-blue" style="display: none;"></div>
                 <a id="reset-btn" class="btn btn-large" style="display: none;">Reset Filters</button>
             </div>
@@ -283,6 +283,7 @@
         });
 
         $('#submit-snap-btn').on("click", function () {
+            $('#submit-snap-btn').attr("disabled", "disabled");
             /*
              * if HTML5 canvas is not supported, then perform basic submit.
              * If the canvas is supported, we can assume the user provided
