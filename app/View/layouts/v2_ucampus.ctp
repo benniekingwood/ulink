@@ -14,7 +14,7 @@
 
         // print styles
         echo $this->Html->css(array('bootstrap.css', 'ulink.css','bootstrap-responsive.css'));
-        echo $this->Html->script(array('jquery.min.js','validate.js', 'var.js'));
+        echo $this->Html->script(array('jquery.min.js','validate.js', 'var.js', 'ulink-browser-check.js'));
     ?>
 
     <!--  HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -31,7 +31,7 @@
 
 <body>
 
-<div class="navbar navbar-fixed-top">
+<div id="ulink-nav" class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -111,7 +111,7 @@
 <!-- /page content -->
 </div>
 <!-- global components -->
-<?php echo $this->element('login'); echo $this->element('view_profile');?>
+<?php echo $this->element('login'); echo $this->element('view_profile'); echo $this->element('browser');?>
 <!-- /global components -->
 <footer>
     <div class="container">

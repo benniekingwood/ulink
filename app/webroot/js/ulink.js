@@ -5,6 +5,20 @@
  * Description: This js file handles global ulink functions
  ********************************************************************************/
 $(document).ready(function(){
+    // first check the browser type
+    switch(BrowserDetect.browser) {
+        case 'Explorer': {
+            if (BrowserDetect.version < 9) {
+                // hide page content container and show the browser version div
+                $('#ulink-nav').hide();
+                $('#ucampus-subnav').hide();
+                $('#page-content').hide();
+                $('#browser-container').show();
+            }
+        }
+        break;
+    }
+
     $("#ucampus-module").hover(
      function () {
         // show subnav
