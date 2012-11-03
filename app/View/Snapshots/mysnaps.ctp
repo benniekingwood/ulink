@@ -34,8 +34,8 @@
                                         echo($this->Html->url('/img/files/snaps/'.$snap['Snapshot']['imageURL']));
                                     } else { echo($this->Html->url('/img/defaults/default_featured_event.png')); } ?>" alt=""/>
                                  <p><?php if (strlen($snap['Snapshot']['caption']) > 50) {
-                                            echo substr($snap['Snapshot']['caption'], 0, 66) . '...';
-                                        } else { echo $snap['Snapshot']['caption']; } ?>
+                                            echo htmlspecialchars_decode(substr($snap['Snapshot']['caption'], 0, 56)) . '...';
+                                        } else { echo htmlspecialchars_decode($snap['Snapshot']['caption']); } ?>
                                 </p>
                             </div>
                         </li>
