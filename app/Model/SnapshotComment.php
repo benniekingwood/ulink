@@ -35,6 +35,8 @@ class SnapshotComment extends AppModel {
                     $user = $this->User->findById($snapComment["SnapshotComment"]["userId"]);
                     $snapComment["SnapshotComment"]["userImageURL"] = $user['User']['image_url'];
                     $snapComment['SnapshotComment']['created_short'] = date('M j, Y', strtotime($snapComment['SnapshotComment']['created']));
+                    // decode all html special chars
+		    $snapComment['SnapshotComment']['comment'] = htmlspecialchars_decode($snapComment['SnapshotComment']['comment'], ENT_QUOTES);
             }
             return $snapComments;
     }

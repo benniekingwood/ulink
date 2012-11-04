@@ -112,6 +112,9 @@ class Event extends AppModel {
 			{
 				$school = $this->School->findById($event["Event"]["collegeID"]);
 				$event["Event"]["collegeName"] = $school["School"]["name"];
+				// decode all html special chars
+				$event['Event']['eventTitle'] = htmlspecialchars_decode($event['Event']['eventTitle'], ENT_QUOTES);
+				$event['Event']['eventInfo'] = htmlspecialchars_decode($event['Event']['eventInfo'], ENT_QUOTES);
 			}
 
 			foreach($events as &$event)

@@ -36,6 +36,8 @@ class Snapshot extends AppModel {
                         $snap["Snapshot"]["user"] = $user;
                         $comments = $this->SnapshotComment->getSnapshotCommentBySnapId($snap["Snapshot"]["_id"]);
                         $snap["Snapshot"]["comments"] = $comments;
+			// decode all html special chars
+			$snap['Snapshot']['caption'] = htmlspecialchars_decode($snap['Snapshot']['caption'], ENT_QUOTES);
                 }
                 return $snaps;
         }
