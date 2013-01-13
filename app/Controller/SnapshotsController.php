@@ -311,8 +311,11 @@ class SnapshotsController extends AppController {
                 // update the snapshot based on the old image url with the new image url
                 $snap['Snapshot']['imageURL'] = $fileName;
                 $this->Snapshot->save($snap);
-                // delete the old image
-                unlink("" . WWW_ROOT . "/img/files/snaps/" . $origFileName);
+                $filePath = "" . WWW_ROOT . "img/files/snaps/" . $origFileName;
+                if(file_exists($filePath)) {
+                    // delete the old image
+                    unlink($filePath);
+                }
             } catch (Exception $e) {
                 $this->log("{SnapshotsController#apply_snap_filter} - An exception was thrown: " . $e->getMessage());
                 $retVal['response'] = "false";
@@ -484,8 +487,11 @@ class SnapshotsController extends AppController {
             }
 
             if($this->Snapshot->deleteSnapshot($id)) {
-                // delete the snapshot image from the server
-                unlink("" . WWW_ROOT . "/img/files/snaps/" . $snap['Snapshot']['imageURL']);
+                $filePath = "" . WWW_ROOT . "img/files/snaps/" . $snap['Snapshot']['imageURL'];
+                if(file_exists($filePath)) {
+                    // delete the snapshot image from the server
+                    unlink($filePath);
+                }
                 $retVal['result'] = 'true';
                 $retVal['response'] = 'Your snapshot was successfully deleted.';
                 return json_encode($retVal);

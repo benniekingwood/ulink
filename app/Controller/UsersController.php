@@ -611,8 +611,12 @@ class UsersController extends AppController {
 
                     if (array_key_exists('urls', $fileOK)) {
                         if( $this->request->data['User']['image_url']  != "" ||  $this->request->data['User']['image_url']  != null) {
-                            // delete the event image from the server if there was one
-                            unlink("" . WWW_ROOT . "/img/files/users/" . $this->request->data['User']['image_url']);
+                            $filePath = "" . WWW_ROOT . "/img/files/users/" . $this->request->data['User']['image_url'];
+                            if(file_exists($filePath)) {
+                                $this->log('file:'.$filePath);
+                                // delete the event image from the server if there was one
+                                unlink($filePath);
+                            } 
                         }
 
                         // save the url in the form data
@@ -827,7 +831,10 @@ class UsersController extends AppController {
 
             // update the user's profile in the db
             if ($this->User->save($data)) {
-                unlink("" . WWW_ROOT . "/img/files/users/" . $image_url);
+                $fullFilePath = "" . WWW_ROOT . "img/files/users/" . $image_url;
+                if(file_exists($fullFilePath)) {
+                    unlink($fullFilePath);
+                }
                 echo "true";
                 exit;
             } else {
@@ -1598,7 +1605,10 @@ class UsersController extends AppController {
             Configure::write('debug', 0);
             $this->autoRender = false;
             $this->layout = null;
-            unlink("" . WWW_ROOT . "/img/files/users/" . $image_url);
+            $filePath = "" . WWW_ROOT . "/img/files/users/" . $image_url;
+            if(file_exists($filePath)) {
+                unlink($filePath);
+            }
             echo "true";
         } else {
             Configure::write('debug', 0);
@@ -1625,7 +1635,10 @@ class UsersController extends AppController {
             Configure::write('debug', 0);
             $this->autoRender = false;
             $this->layout = null;
-            unlink("" . WWW_ROOT . "/img/files/users/" . $image_url);
+            $filePath = "" . WWW_ROOT . "/img/files/users/" . $image_url;
+            if(file_exists($filePath)) {
+                unlink($filePath);
+            }
             echo "true";
             exit;
         } else {

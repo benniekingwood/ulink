@@ -636,8 +636,11 @@ class EventsController extends AppController {
 
 			if (array_key_exists('urls', $fileOK)) {
 			    if( $event['Event']['imageURL'] != "" ||  $event['Event']['imageURL'] != null) {
-				// delete the event image from the server if there was one
-			        unlink("" . WWW_ROOT . "/img/files/events/" . $event['Event']['imageURL']);
+				$filePath = "" . WWW_ROOT . "img/files/events/" . $event['Event']['imageURL'];
+				if(file_exists($filePath)) {
+					// delete the event image from the server if there was one
+					unlink($filePath);
+				}
 			     }
 
 			    // save the url in the form data
@@ -714,8 +717,11 @@ class EventsController extends AppController {
                 $retVal['result'] = 'true';
                 $retVal['response'] = 'Your event was successfully deleted.';
 		if( $event['Event']['imageURL'] != "" ||  $event['Event']['imageURL'] != null) {
-			// delete the event image from the server if there was one
-			unlink("" . WWW_ROOT . "/img/files/events/" . $event['Event']['imageURL']);
+			$filePath = "" . WWW_ROOT . "img/files/events/" . $event['Event']['imageURL'];
+			if(file_exists($filePath)) {
+				// delete the event image from the server if there was one
+				unlink($filePath);
+			}
 		}
 
                 return json_encode($retVal);
