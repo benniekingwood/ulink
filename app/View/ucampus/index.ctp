@@ -27,7 +27,10 @@
                       <?php   } else {   ?>
                             <div class="item">
                       <?php  }  ?>
-                                <?php echo "<img src='/events/getEventImage/" . $fevent['Event']['_id'] . "' alt='featured event picture'/>"; ?>
+                                 <img src="<?php
+                                    if(isset($fevent['Event']['imageURL'])) {
+                                        echo($this->Html->url('/img/files/events/'.$fevent['Event']['imageURL']));
+                                    } else { echo($this->Html->url('/img/defaults/default_featured_event.png')); } ?>" alt="featured event image"/>
                                 <a href="<?php echo($this->Html->url('/events/view/'.$fevent['Event']['_id'])); ?>" alt="">
                                     <div class="carousel-caption">
                                         <h4><?php echo $fevent['Event']['eventTitle'] ?></h4>
@@ -91,14 +94,7 @@
                         <?php } else { echo $tweet['from_user'];} ?>
                     </div>
                     <div class="tweet-time-marker">
-                        <?php
-                            $tweetTime = strtotime($tweet['created_at']);
-                            $diff = time() - $tweetTime;
-                            if ($diff < 60*60)
-                                echo floor($diff/60) . 'm';
-                            elseif ($diff < 60*60*24)
-                                echo floor($diff/(60*60)) . 'h';
-                        ?>
+                        <?php echo $tweet['age'];?>
                     </div>
                     <div class="span3 pull-right">
                         <?php echo $tweet['text'] ?>

@@ -92,6 +92,7 @@ class AppController extends Controller {
 
                 // if the username as password was posted, set in request on User
                 if (isset($_POST['username']) && isset($_POST['password'])) {
+                    $this->Auth->logout(); // keep this here for mobile, we need to make sure this is a clean login
                     $this->request->data['User']['username'] = $_POST['username'];
                     $this->request->data['User']['password'] = $_POST['password'];
                     $this->Auth->login();

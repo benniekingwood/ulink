@@ -136,7 +136,7 @@ $(document).ready(function () {
                 email:"Please enter a valid email address",
                 selectSchool:"Please select a school first",
                 schoolStatusIsSelected:"Please select your school status first",
-                remote:"That email is not valid for the school selected"
+                remote:"The email provided is not valid for the school selected."
             }
         }
     });
@@ -209,7 +209,7 @@ $(document).ready(function () {
             </div>
         </div> <!-- school-info-form-fields -->
         <div class="alert alert-info">
-            By Pressing the "Create My Account" button you agree to the terms and conditions listed in the Terms section of this website.
+            By Pressing the "Create My Account" button you agree to the terms and conditions listed in the <a href="<?php echo($this->Html->url('/pages/terms')); ?>">Terms</a> section of this website.
         </div>
         <div class="span4">
             <?php echo $this->Form->button('Create My Account', array('id'=>'btnCreateAccount', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-xlarge-wide'));?>

@@ -18,20 +18,92 @@ class UCampusController extends AppController {
      */
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('index');
+        $this->Auth->allow('index', 'tweets', 'trends');
+        $this->Security->csrfCheck = false;
+        $this->Security->validatePost = false;
     }
+
+    /******************************************************/
+    /*          UCAMPUS API FUNCTIONS                    */
+    /******************************************************/
+    /**
+     * GET API function that will return the tweets based
+     * on the passed in school id
+     * @param $school_id
+     * @return json @retVal
+     */
+    public function tweets($school_id = null) {
+        $this->autoRender = false;
+        $this->layout = null;
+        Configure:: write('debug', 0);
+        $retVal = array();
+        $retVal['result'] = "false";
+        $retVal['response'] = "";
+        try {
+            // grab the school based on the passed in id
+            $school = $this->School->find('first', array('conditions' => array('School.id' => $school_id), 'fields' => array('woeid', 'name')));
+            $schoolName = "";
+            if ($school != null) {
+                $schoolName = $school['School']['name'];
+            }
+
+            // grab the tweets for the school
+            $tweets = $this->getTweetsBySchool($schoolName, $school_id);
+
+            // if the tweets are null, try one more time
+            if($tweets==null || count($tweets)==0) {
+                $this->log("{UCampusController#tweets}- The tweets loaded from Twitter are empty, retrying.");
+                $tweets = $this->getTweetsBySchool($schoolName, $school_id);
+                if($tweets==null || count($tweets)==0) {
+                    $this->log("{UCampusController#tweets}- On the second attempt, the tweets returned by Twitter were still empty.");
+                }
+            }
+            $retVal['schoolName'] = $schoolName;
+            $retVal['result'] = "true";
+            $retVal['response'] = $tweets;
+        } catch (Exception $e) {
+            $this->log("{UCampusController#trends}-An exception was thrown when loading the index page: " . $e->getMessage());
+        }
+        return json_encode($retVal);
+    } // tweets
+
+    /**
+     * GET API function that will return the trends based
+     * on the passed in school id
+     * @param $school_id
+     * @return json @retVal
+     */
+    public function trends($school_id = null) {
+        $this->autoRender = false;
+        $this->layout = null;
+        Configure:: write('debug', 0);
+        $retVal = array();
+        $retVal['result'] = "false";
+        $retVal['response'] = "";
+        try {
+            // grab the school based on the passed in id
+            $school = $this->School->find('first', array('conditions' => array('School.id' => $school_id), 'fields' => array('woeid', 'name')));
+            $trends = $this->getTrendsByWOEID($school['School']['woeid'], $school_id);
+            $retVal['result'] = "true";
+            $retVal['response'] = $trends;
+        } catch (Exception $e) {
+            $this->log("{UCampusController#trends}-An exception was thrown when loading the index page: " . $e->getMessage());
+        }
+        return json_encode($retVal);
+    } // trends
+
+    /******************************************************/
+    /*          END UCAMPUS API FUNCTIONS                 */
+    /******************************************************/
 
     /**
      * Handles the uCampus splash page load
      */
     public function index() {
-
         // check to see if the user is logged in, if not, redirect them to login page
         if (!$this->Auth->User()) {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
-        $this->layout = "v2_ucampus";
-        $this->set('title_for_layout', 'Your college everything.');
 
         try {
             $this->chkAutopass();
@@ -43,17 +115,17 @@ class UCampusController extends AppController {
             $events = $this->Event->find('all', array('fields' => array('collegeID', 'eventTitle', 'eventDate', '_id', 'eventInfo', 'userID'), 'order' => array('Event.eventDate' => 'ASC'), 'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 0, 'active' => 1, 'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
             $this->set('events', $events);
 
-
-            $schoolName = "";
-            // grab the user's school
+            // grab the tweets for the school
+             // grab the school based on the passed in id
             $school = $this->School->find('first', array('conditions' => array('School.id' => $activeUser['school_id']), 'fields' => array('woeid', 'name')));
+            $schoolName = "";
             if ($school != null) {
                 $schoolName = $school['School']['name'];
             }
-            $this->set('schoolName', $schoolName);
 
             // grab the tweets for the school
             $tweets = $this->getTweetsBySchool($schoolName, $activeUser['school_id']);
+
             // if the tweets are null, try one more time
             if($tweets==null || count($tweets)==0) {
                 $this->log("{UCampusController#index}- The tweets loaded from Twitter are empty, retrying.");
@@ -64,8 +136,9 @@ class UCampusController extends AppController {
             }
             $this->set('tweets', $tweets);
 
-            // grab the trends based on the school's woeid
-            $trends = $this->getTrendsByWOEID($school['School']['woeid'], $activeUser['school_id']);
+            $json = $this->trends($activeUser['school_id']);
+            $result = json_decode($json);
+            $trends = $result->response;
             if ($trends != null && (count($trends) > 0)) {
                 $this->set('trends', $trends);
             }
@@ -76,6 +149,10 @@ class UCampusController extends AppController {
         } catch (Exception $e) {
             $this->log("{UCampusController#index}-An exception was thrown when loading the index page: " . $e->getMessage());
         }
+
+        $this->layout = "v2_ucampus";
+        $this->set('title_for_layout', 'Your college everything.');
+        $this->autoRender = true;
     } // index
 
     /**
@@ -90,7 +167,6 @@ class UCampusController extends AppController {
         try {
             // first grab up to 100 Twitter enabled users from uLink
             $twitUsers = $this->User->find('all', array('conditions' => array('twitter_enabled' => 1, 'school_id' => $schoolID), 'fields' => array('twitter_username')));
-
             if($twitUsers != null) {
                 // mix up the users
                 shuffle($twitUsers);
@@ -192,6 +268,15 @@ class UCampusController extends AppController {
                     $tweet['ulinkname'] = $user['User']['username'];
                     $tweet['ulinkUserId'] = $user['User']['id'];
                     $tweet['ulinkImageURL'] = $user['User']['image_url'];
+                    $tweet['ulinkuser'] = $user['User'];
+                }
+                // create the short time based on the current time for the tweet (i.e. 2m)
+                $tweetTime = strtotime($tweet['created_at']);
+                $diff = time() - $tweetTime;
+                if ($diff < 60*60) {
+                    $tweet['age'] = floor($diff/60) . 'm';
+                } elseif ($diff < 60*60*24) {
+                    $tweet['age'] = floor($diff/(60*60)) . 'h';
                 }
                 array_push($retVal, $tweet);
             }
@@ -284,13 +369,14 @@ class UCampusController extends AppController {
     /**
      * This function will return the uLink user
      * based on the passed in Twitter name
+     * The user has to be enabled for tweets as well.
      * @param $twitName
      * @return User
      */
     private function getuLinkUserByTwitterName($twitName) {
         $user = null;
         try {
-            $user = $this->User->find('first', array('fields' => array('User.username', 'User.id', 'User.image_url'), 'conditions' => 'User.twitter_username="' . $twitName . '"'));
+            $user = $this->User->find('first', array('fields' => array('User.username', 'User.id', 'User.image_url', 'User.firstname', 'User.lastname', 'User.bio', 'User.school_status', 'User.year'), 'conditions' => array('User.twitter_username' => $twitName, 'User.twitter_enabled' => 1)));
         } catch (Exception $e) {
             $this->log("{UCampusController#getuLinkUserByTwitterName}-An exception was thrown:" . $e->getMessage());
         }

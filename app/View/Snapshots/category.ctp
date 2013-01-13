@@ -187,10 +187,10 @@ a:hover {text-decoration:none; }
                             <?php } ?>
                             <div class="comment-profile-img-container">
                                 <a id="view-profile-<?php echo $comment->SnapshotComment->userId; ?>" data-toggle="modal" href="#viewProfileComponent">
-                                    <?php echo $this->Html->image('files/users/' . $comment->SnapshotComment->userImageURL . '', array('alt' => 'profile image', 'class'=>'profile-size-small'));?>
+                                    <?php echo $this->Html->image('files/users/' . $comment->SnapshotComment->user_image_url . '', array('alt' => 'profile image', 'class'=>'profile-size-small'));?>
                                 </a>
                                 <br />
-                                <p class="campus-event-date"><?php echo date('M j, Y', strtotime($comment->SnapshotComment->created)); //echo DateTime::createFromFormat('Y-m-d H:i:s',$comment->SnapshotComment->created)->format('F d, Y'); ?></p>
+                                <p class="campus-event-date"><?php echo date('M j, Y', strtotime($comment->SnapshotComment->created)); ?></p>
                             </div>
                             <div class="span2" style="float: right;">
                                 <?php echo htmlspecialchars_decode($comment->SnapshotComment->comment); ?>

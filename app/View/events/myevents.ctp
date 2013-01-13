@@ -30,7 +30,10 @@
                         <li><a class="pull-right my-event-link" href="<?php echo($this->Html->url('/events/edit/'.$event['Event']['_id'])); ?>" alt=""><i class="icon-share-alt"></i>Edit</a>
                             <div class="row">
                                 <div class="span1">
-                                    <?php echo "<img class='my-events-img' src='/events/getEventImage/" . $event['Event']['_id'] . "' alt='my event picture'/>"; ?>
+                                     <img src="<?php
+                                    if(isset($event['Event']['imageURL'])) {
+                                        echo($this->Html->url('/img/files/events/'.$event['Event']['imageURL']));
+                                    } else { echo($this->Html->url('/img/defaults/default_campus_event.png')); } ?>" alt="my event image"/>
                                 </div>
                                 <div class="my-event-container">
                                     <span class="my-event-title"><?php echo $event['Event']['eventTitle'] ?></span>&nbsp;-&nbsp;<span class="campus-event-date"><?php echo DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date'])->format('F d, Y'); ?></span>

@@ -3,7 +3,10 @@
         <a class="orange" href="<?php echo($this->Html->url('/ucampus/')); ?>">< Back</a>
     </div>
     <div class="event-picture thumbnail span4 well offset1">
-        <?php echo "<img class='rounded' src='/events/getEventImage/" . $event['Event']['_id'] . "' alt='event picture'/>"; ?>
+        <img class="rounded" src="<?php
+                                    if(isset($event['Event']['imageURL'])) {
+                                        echo($this->Html->url('/img/files/events/'.$event['Event']['imageURL']));
+                                    } else { echo($this->Html->url('/img/defaults/default_campus_event.png')); } ?>" alt="event image"/>
         <br />
         <div class="caption">
             <!--<a href="https://twitter.com/share" class="twitter-share-button" data-related="ulinkInc" data-dnt="true">Tweet</a>

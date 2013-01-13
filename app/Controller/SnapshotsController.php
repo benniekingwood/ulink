@@ -18,7 +18,7 @@ class SnapshotsController extends AppController {
      */
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('index');
+        $this->Auth->allow('index', 'insert_snap_comment', 'insert_snap', 'delete_snap_comment', 'delete_snapshot', 'snap_categories');
         $this->Security->csrfCheck = false;
         $this->Security->validatePost = false;
     } // beforeFilter
@@ -71,8 +71,7 @@ class SnapshotsController extends AppController {
         }
         // grab the logged in user off the session
         $activeUser = $this->Auth->User();
-        $this->layout = "v2_ucampus";
-        $this->set('title_for_layout', 'Your college everything.');
+
 
         // grab the category name and set for UI
         $category = $this->SnapshotCategory->findById($id);
@@ -91,13 +90,16 @@ class SnapshotsController extends AppController {
             // grab a random snap from the list and remove it from list (pop)
             //set as featured snap
             if($snaps != null) {
-                $index = array_rand($snaps);
-                $fSnap = $snaps[$index];
-                unset($snaps[$index]);
+                $index = array_rand($snaps->response);
+                $fSnap = $snaps->response[$index];
+                unset($snaps->response[$index]);
                 $this->set('featuredSnap', $fSnap->Snapshot);
             }
         }
-        $this->set('snaps', $snaps);
+        $this->set('snaps', $snaps->response);
+        $this->autoRender = true;
+        $this->layout = "v2_ucampus";
+        $this->set('title_for_layout', 'Your college everything.');
     }  // category
 
     /**
@@ -123,9 +125,6 @@ class SnapshotsController extends AppController {
      * @param $id
      */
     public function deletesnap($id = null) {
-        $this->layout = 'v2';
-        $this->set('title_for_layout', 'My Snaps');
-
         try {
             $json = $this->delete_snapshot($id);
             $data = json_decode($json);
@@ -142,6 +141,8 @@ class SnapshotsController extends AppController {
         } catch (Exception $e) {
             $this->log("{SnapshotsController#delete} - An exception was thrown: " . $e->getMessage());
         }
+        $this->layout = 'v2';
+        $this->set('title_for_layout', 'My Snaps');
         $this->redirect('/snapshots/mysnaps');
     } // delete
 
@@ -149,6 +150,27 @@ class SnapshotsController extends AppController {
     /******************************************************/
     /*          SNAPSHOT API FUNCTIONS                    */
     /******************************************************/
+
+    /**
+     * GET API function that will return the snap categories
+     * @return json $retVal
+     */
+    public function snap_categories() {
+        Configure::write('debug', 0);
+        $this->autoRender = false;
+        $this->layout = null;
+        $retVal = array();
+        $retVal['result'] = "false";
+        $retVal['response'] = '';
+        try {
+            $retVal['response'] = $this->SnapshotCategory->getAll();
+            $retVal['result'] = "true";
+        } catch (Exception $e) {
+            $this->log("{SnapshotsController#snap_categories} - An exception was thrown: " . $e->getMessage());
+        }
+        return json_encode($retVal);
+    } // snap_categories
+
     /**
      * GET API function for returning snap category
      * images in a JSON array
@@ -158,8 +180,21 @@ class SnapshotsController extends AppController {
      * @return JSON array
      */
     public function snaps($schoolId=null, $categoryId=null, $limit=50) {
-        // load the snaps based on the school id and the category id, and limit
-        $retVal = $this->Snapshot->getSnapsBySchoolIdAndCategory($schoolId, $categoryId, $limit);
+        Configure::write('debug', 0);
+        $this->autoRender = false;
+        $this->layout = null;
+        $retVal = array();
+        $retVal['result'] = "false";
+        $retVal['response'] = '';
+
+        try {
+            // load the snaps based on the school id and the category id, and limit
+            $retVal['response']  = $this->Snapshot->getSnapsBySchoolIdAndCategory($schoolId, $categoryId, $limit);
+            $retVal['result'] = "true";
+        } catch (Exception $e) {
+            $this->log("{SnapshotsController#snaps} - An exception was thrown: " . $e->getMessage());
+        }
+
         // return as a JSON object array
         return json_encode($retVal);
     } // snaps
@@ -183,12 +218,20 @@ class SnapshotsController extends AppController {
         $this->autoRender = false;
         $this->layout = null;
         Configure:: write('debug', 0);
+	$mobileAuth = isset($this->data['mobile_auth']);
 
         /*
          * WEB - grab the logged in user off the session
-         * MOBILE - TODO: check auth token
+         * MOBILE - check auth token
          */
-        $activeUser = $this->Auth->User();
+        $activeUser = null;
+        if($mobileAuth != null) {
+           $activeUser = array();
+           $activeUser['id'] = $this->data['user_id'];
+           $activeUser['school_id'] = $this->data['school_id'];
+        } else {
+           $activeUser = $this->Auth->User();
+        }
 
         if(!empty($this->data)) {
             $snap = $this->data;
@@ -205,6 +248,10 @@ class SnapshotsController extends AppController {
                 throw new Exception('The snap image did not save correctly to the server.');
             }
             unset($snap['Snapshot']['image']);
+            // remove any unnecessary fields
+	    unset($snap['mobile_auth']);
+	    unset($snap['user_id']);
+	    unset($snap['school_id']);
             $this->data = $snap;
             try {
                 if($this->Snapshot->save($this->data)) {
@@ -285,18 +332,27 @@ class SnapshotsController extends AppController {
 
     /**
      * POST API Function used for submitting snap comments
-     * @return string
+     * @return json
      */
     public function insert_snap_comment() {
         $this->autoRender = false;
         $this->layout = null;
         Configure:: write('debug', 0);
+        $mobileAuth = isset($_POST['mobile_auth']);
 
         /*
          * WEB - grab the logged in user off the session
-         * MOBILE - TODO: check auth token
+         * MOBILE - check auth token
          */
-        $activeUser = $this->Auth->User();
+        $activeUser = null;
+        if($mobileAuth = isset($_POST['mobile_auth'])) {
+            $activeUser = array();
+            $activeUser['id'] = $this->data['userId'];
+            $activeUser['image_url'] = $this->data['image_url'];
+        } else {
+            $activeUser = $this->Auth->User();
+        }
+
 
         if(!empty($this->data)) {
             $comment = $this->data;
@@ -339,6 +395,7 @@ class SnapshotsController extends AppController {
         $this->layout = null;
         Configure:: write('debug', 0);
         $retVal = array();
+        $mobileAuth = isset($_POST['mobile_auth']);
         try {
             if($id == NULL) {
                 $retVal['result'] = "false";
@@ -351,9 +408,15 @@ class SnapshotsController extends AppController {
             $comment = $this->SnapshotComment->read(null, $id);
             /*
             * WEB - grab the logged in user off the session
-            * MOBILE - TODO: check auth token
+            * MOBILE - check auth token
             */
-            $activeUser = $this->Auth->User();
+            $activeUser = null;
+            if($mobileAuth = isset($_POST['mobile_auth'])) {
+                $activeUser = array();
+                $activeUser['id'] = $this->data['userId'];
+            } else {
+                $activeUser = $this->Auth->User();
+            }
 
             // validate the comment to make sure the user can delete the event
             if($comment['SnapshotComment']['userId'] != $activeUser['id']) {
@@ -384,7 +447,7 @@ class SnapshotsController extends AppController {
      * @param $id
      * @return json object
      */
-    public function delete_snapshot($id = null) {
+    public function delete_snapshot($id = null, $userId = null, $mobileAuth=null) {
         $this->autoRender = false;
         $this->layout = null;
         Configure:: write('debug', 0);
@@ -400,12 +463,17 @@ class SnapshotsController extends AppController {
 
             // grab the snapshot from the db
             $snap = $this->Snapshot->read(null, $id);
-
             /*
              * WEB - grab the logged in user off the session
-             * MOBILE - TODO: check auth token
+             * MOBILE - check auth token
              */
-            $activeUser = $this->Auth->User();
+            $activeUser = null;
+            if($mobileAuth != null) {
+                $activeUser = array();
+                $activeUser['id'] = $userId;
+            } else {
+                $activeUser = $this->Auth->User();
+            }
 
             // validate the comment to make sure the user can delete the event
             if($snap['Snapshot']['userId'] != $activeUser['id']) {
@@ -416,6 +484,8 @@ class SnapshotsController extends AppController {
             }
 
             if($this->Snapshot->deleteSnapshot($id)) {
+                // delete the snapshot image from the server
+                unlink("" . WWW_ROOT . "/img/files/snaps/" . $snap['Snapshot']['imageURL']);
                 $retVal['result'] = 'true';
                 $retVal['response'] = 'Your snapshot was successfully deleted.';
                 return json_encode($retVal);
@@ -428,5 +498,9 @@ class SnapshotsController extends AppController {
                 exit;
         }
     } // delete_snapshot
+
+    /******************************************************/
+    /*          END SNAPSHOT API FUNCTIONS                */
+    /******************************************************/
 }
 ?>

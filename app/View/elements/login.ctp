@@ -27,7 +27,7 @@
                                 //start fading the message box
                                 $("#loginForm-message").fadeTo(200,0.1,function() {
                                     //add message and change the class of the box and start fading
-                                    $(this).html('Your account is inactive, please contact help@theulink.com.').addClass('error').fadeTo(900,1);
+                                    $(this).html('Your account is inactive, please check your email to complete the activation process or contact help@theulink.com.').addClass('error').fadeTo(900,1);
                                 });
                                 break;
                              case 'auto':

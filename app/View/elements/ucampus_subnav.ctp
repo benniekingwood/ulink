@@ -14,7 +14,7 @@
                 <div>
                     <i class="icon-camera"></i>
                     <strong>Snapshots</strong>
-                    <p>Share your pictures across campus. Become infamous.</p>
+                    <p>Share your pictures across campus. Become famous.</p>
                 </div>
             </a>
         </li>

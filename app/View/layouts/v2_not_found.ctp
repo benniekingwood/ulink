@@ -94,7 +94,7 @@
                     <i class="ulink-social-icon-twitter"></i>
                 </a>
                 <span class="pull-right">
-                    &copy 2012 uLink, Inc. All rights reserved.
+                    &copy 2013 uLink, Inc. All rights reserved.
                 </span>
             </div>
         </div>

@@ -31,7 +31,7 @@ class EventsController extends AppController {
 	*/
 	public function beforeFilter() {
 	       parent::beforeFilter();
-	       $this->Auth->allow('add', 'delete', 'edit', 'view', 'toggleActive', 'toggleFeatured', 'insertEvent','myevents');
+	       $this->Auth->allow('events', 'insert_event', 'delete_event', 'update_event', 'add', 'delete', 'edit', 'view', 'toggleActive', 'toggleFeatured', 'insertEvent','myevents');
 	       $this->Security->validatePost = false;
 	       $this->Security->csrfCheck = false;
 	}
@@ -256,34 +256,12 @@ class EventsController extends AppController {
 	 *  This function will handle the deletion of events
 	 * @param eventID
 	 */
-       public function delete($eventID = NULL)
-       {
+       public function delete($eventID = NULL) {
+		$json = $this->delete_event($eventID, null, null);
+		$result = json_decode($json);
+		$this->Session->setFlash($result->response);
+		$this->redirect('/events/myevents');
 		$this->layout = 'v2_ucampus';
-		try {
-		if($eventID == NULL)
-		{
-		       $this->flash(__('Invalid Event', true), array('action'=>'myevents'));
-		}
-
-		$event = $this->Event->read(null, $eventID);
-		// grab the logged in user off the session
-		$activeUser = $this->Auth->User();
-
-		// validate the event to make sure the logged in user can delete the event
-		if($event['Event']['userID'] != $activeUser['id']) {
-		    $this->Session->setFlash("That was not your event to delete.");
-		    $this->redirect('/events/myevents');
-		}
-
-		if($this->Event->delete($eventID))
-		{
-		       $this->Session->setFlash("Your event was deleted.");
-		       $this->redirect('/events/myevents');
-		}
-		} catch (Exception $e) {
-			$this->log("{EventsController#delete} - An exception was thrown: " . $e->getMessage());
-
-		}
        } // delete
 
 	/**
@@ -328,40 +306,10 @@ class EventsController extends AppController {
 			}
 		}  else { // we are editing the event
 
-			try {
-			// first validate the event
-			$validateError = "";
-			if (empty($this->request->data['Event']['eventTitle'])) {
-			    $validateError .= "Please enter your event title.<br />";
-			}
-			if (empty($this->request->data['Event']['eventInfo'])) {
-			    $validateError .="Please enter some information about your event.<br />";
-			}
-			if (empty($this->request->data['Event']['eventDate'])) {
-			    $validateError .= "Please enter the date of your event.";
-			}
-
-			if(strlen($validateError) > 1) {
-			    $this->Session->setFlash($validateError);
-			}  else {
-			    $event = $this->data;
-			    // format the event date
-			    $event['Event']['eventDate']  = DateTime::createFromFormat('m/d/Y', $this->data['Event']['eventDate']);
-			    // deactivate the event again
-			   // $event['Event']['active'] = 0;
-			    $this->data = $event;
-			    if($this->Event->save($this->data)) {
-				$this->Session->setFlash('<span class="profile-success">Your event has been updated.</span>');
-			    } else {
-				$this->Session->setFlash("There was a problem updating your event, please try again later.");
-			    }
-			    $this->redirect('/events/edit/' . $this->data['Event']['_id']);
-			}
-			} catch (Exception $e) {
-				$this->log("{EventsController#edit} - An exception was thrown when editing the event: " . $e->getMessage());
-				$this->Session->setFlash("There was a problem updating your event, please try again later.");
-
-			}
+			$json = $this->update_event($this->request->data);
+			$result = json_decode($json);
+			$this->Session->setFlash($result->response->html);
+			$this->redirect('/events/edit/' . $this->data['Event']['_id']);
 		}
 
 	} // edit
@@ -371,40 +319,10 @@ class EventsController extends AppController {
 	 * @return string
 	 */
 	public function insertEvent() {
-		$this->autoRender = false;
-		$this->layout = null;
-	   Configure:: write('debug', 0);
-
-	   // grab the logged in user off the session
-	   $activeUser = $this->Auth->User();
-
-	   if(!empty($this->data)) {
-
-	       $event = $this->data;
-	       $event['Event']['eventAdded'] = date("F j, Y, g:i a");
-	       $event['Event']['collegeID'] = $activeUser['school_id'];
-	       $event['Event']['userID'] =  $activeUser['id'];
-	       // format the event date
-	       $event['Event']['eventDate']  = DateTime::createFromFormat('m/d/Y', $this->data['Event']['eventDate']);
-	       $this->data = $event;
-	       try {
-		   if($this->Event->save($this->data)) {
-		       echo "true";
-		       exit;
-		   } else {
-		       echo "false";
-		       exit;
-		   }
-	       } catch (Exception $e) {
-		   $this->log("{EventsController#insertEvent} - An exception was thrown:" . $e->getMessage());
-		   echo "false";
-		   exit;
-	       }
-	   } else {
-	       $this->log('{EventsController#insertEvent} - Empty data object.');
-	       echo "false";
-	       exit;
-	   }
+		$json = $this->insert_event($this->data);
+		$results = json_decode($json);
+		echo $results->result;
+		exit;
 	} // insertEvent
 
 	/**
@@ -548,11 +466,270 @@ class EventsController extends AppController {
 		try {
 		// grab the logged in user off the session
 		$activeUser = $this->Auth->User();
-		$events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle', 'eventDate', '_id', 'eventInfo', 'userID'),'order'=>array('Event.eventDate'=>'DESC'),'conditions' => array('userID' => $activeUser['id'])));
+		$events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle', 'eventDate', '_id', 'eventInfo', 'userID', 'imageURL'),'order'=>array('Event.eventDate'=>'DESC'),'conditions' => array('userID' => $activeUser['id'])));
 		$this->set('events', $events);
 		}  catch (Exception $e) {
 		   $this->log("{EventsController#myevents} - An exception was thrown:" . $e->getMessage());
 	       }
 	} // myevents
+
+    /******************************************************/
+    /*          EVENT API FUNCTIONS                       */
+    /******************************************************/
+	/**
+	 * POST API Function that will submit a new
+	 * event
+	 * @param array $data
+	 * @return array $retVal
+	 */
+	public function insert_event($data=null) {
+		$this->autoRender = false;
+		$this->layout = null;
+		Configure:: write('debug', 0);
+		$retVal = array();
+		$retVal['result'] = "false";
+		$retVal['response'] = '';
+		$mobileAuth = isset($this->data['mobile_auth']);
+
+		if($data != null) {
+			$this->data = $data;
+		}
+		/*
+		 * WEB - grab the logged in user off the session
+		 * MOBILE - check auth token
+		 */
+		$activeUser = null;
+		if($mobileAuth != null) {
+		   $activeUser = array();
+		   $activeUser['id'] = $this->data['user_id'];
+		   $activeUser['school_id'] = $this->data['school_id'];
+		} else {
+		   $activeUser = $this->Auth->User();
+		}
+
+		if(!empty($this->data)) {
+		    $event = $this->data;
+		    $event['Event']['eventAdded'] = date("F j, Y, g:i a");
+		    $event['Event']['collegeID'] = $activeUser['school_id'];
+		    $event['Event']['userID'] =  $activeUser['id'];
+		    // format the event date
+		    $event['Event']['eventDate']  = DateTime::createFromFormat('m/d/Y', $this->data['Event']['eventDate']);
+
+		    // if there is an event image, save it
+		    if(isset($this->data['Event']['image'])) {
+			$fileOK = $this->uploadFiles('img/files/events', $this->data['Event']['image']);
+			if (array_key_exists('urls', $fileOK)) {
+			    // save the url in the form data
+			    $event['Event']['imageURL'] = $fileOK['urls'][0];
+			} else {
+			    throw new Exception('The event image did not save correctly to the server.');
+			}
+			unset($event['Event']['image']);
+		    }
+		    // remove any unnecessary fields
+		    unset($event['mobile_auth']);
+		    unset($event['user_id']);
+		    unset($event['school_id']);
+		    $this->data = $event;
+		    try {
+			if($this->Event->save($event)) {
+			    $responseData = array();
+			    $eventData = array();
+			    /*
+			     * TODO: grab newly created _id and set in response
+			     * See if mongo returns the id after inserting a
+			     * new document
+			     */
+			    $eventData['_id'] = "";
+		            $eventData['imageURL'] = $this->data['Event']['imageURL'];
+			    $responseData['eventdata'] = $eventData;
+			    $retVal['response'] = $responseData;
+			    $retVal['result'] = "true";
+			}
+		    } catch (Exception $e) {
+			$this->log("{EventsController#insert_event} - An exception was thrown:" . $e->getMessage());
+		    }
+		} else {
+		    $this->log('{EventsController#insert_event} - Empty data object.');
+		}
+
+	   return json_encode($retVal);
+	} // insert_event
+
+	/**
+	 * GET API Function that will return the active events
+	 * based on the passed in school id
+	 *
+	 * @param string $schoolId
+	 * @param json $retVal
+	 */
+	public function events($schoolId = null, $userId = null) {
+		$this->autoRender = false;
+		$this->layout = null;
+		Configure:: write('debug', 0);
+		$retVal = array();
+		$retVal['result'] = "false";
+		$retVal['response'] = '';
+		/*
+		 * WEB - grab the logged in user off the session
+		 * MOBILE - check auth token
+		 */
+		$activeUser = null;
+		if($mobileAuth != null) {
+		   $activeUser = array();
+		   $activeUser['id'] = $userId;
+		} else {
+		   $activeUser = $this->Auth->User();
+		}
+
+		try {
+			$events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle','imageURL', 'eventTime', 'eventLocation', 'eventDate', '_id', 'eventInfo', 'userID', 'featured'), 'order' => array('Event.eventDate' => 'ASC'), 'conditions' => array('collegeID' => $schoolId, 'active' => 1, 'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
+			$retVal['result'] = "true";
+			$retVal['response'] = $events;
+		} catch (Exception $e) {
+			$this->log("{EventsController#events} - An exception was thrown: " . $e->getMessage());
+		}
+		return json_encode($retVal);
+	} // events
+
+    /**
+     * POST API Function that will update the event
+     * @return $retVal json
+     */
+    public function update_event($data = null) {
+	$this->autoRender = false;
+        $this->layout = null;
+        Configure:: write('debug', 0);
+        $retVal = array();
+	$retVal['result'] = "false";
+	$retVal['response'] = "";
+	if($data != null) {
+            $this->request->data = $data;
+        }
+
+	try {
+		// first validate the event
+		$validateError = "";
+		if (empty($this->request->data['Event']['eventTitle'])) {
+		    $validateError .= "Please enter your event title.<br />";
+		}
+		if (empty($this->request->data['Event']['eventInfo'])) {
+		    $validateError .="Please enter some information about your event.<br />";
+		}
+		if (empty($this->request->data['Event']['eventDate'])) {
+		    $validateError .= "Please enter the date of your event.";
+		}
+
+		if(strlen($validateError) > 1) {
+			$retVal['response'] = $validateError;
+		}  else {
+		    $event = $this->data;
+		    // format the event date
+		    $event['Event']['eventDate']  = DateTime::createFromFormat('m/d/Y', $this->data['Event']['eventDate']);
+		    // deactivate the event again
+		   // $event['Event']['active'] = 0;
+
+
+		    // if there is a new image, delete the old one and save the new one
+		    if(isset($this->data['Event']['image']['name']) && $this->data['Event']['image']['name'] != "") {
+			$fileOK = $this->uploadFiles('img/files/events', $this->data['Event']['image']);
+
+			if (array_key_exists('urls', $fileOK)) {
+			    if( $event['Event']['imageURL'] != "" ||  $event['Event']['imageURL'] != null) {
+				// delete the event image from the server if there was one
+			        unlink("" . WWW_ROOT . "/img/files/events/" . $event['Event']['imageURL']);
+			     }
+
+			    // save the url in the form data
+			    $event['Event']['imageURL'] = $fileOK['urls'][0];
+			} else {
+			    throw new Exception('The event image did not save correctly to the server.');
+			}
+			unset($event['Event']['image']);
+		    }
+
+		    $this->data = $event;
+
+		    if($this->Event->save($this->data)) {
+			$responseData = array();
+			$eventData = array();
+			$responseData['html'] = '<span class="profile-success">Your event has been updated.</span>';
+			$eventData['imageURL'] = $this->data['Event']['imageURL'];
+			$responseData['eventdata'] = $eventData;
+			$retVal['response'] = $responseData;
+			$retVal['result'] = "true";
+		    } else {
+			$retVal['response'] = "There was a problem updating your event, please try again later.";
+		    }
+		}
+	} catch (Exception $e) {
+		$this->log("{EventsController#update_event} - An exception was thrown when editing the event: " . $e->getMessage());
+		$retVal['response'] = "There was a problem updating your event, please try again later.";
+	}
+	return json_encode($retVal);
+    }
+
+    /**
+     * GET API function will handle the deletion of events
+     * @param $id
+     * @return json object
+     */
+    public function delete_event($id = null, $userId = null, $mobileAuth=null) {
+        $this->autoRender = false;
+        $this->layout = null;
+        Configure:: write('debug', 0);
+        $retVal = array();
+
+        try {
+            if($id == null) {
+                $retVal['result'] = 'false';
+                $retVal['response'] = 'No id parameter was provided for this request.';
+                return json_encode($retVal);
+                exit;
+            }
+
+            // grab the event from the db
+            $event = $this->Event->read(null, $id);
+            /*
+             * WEB - grab the logged in user off the session
+             * MOBILE - check auth token
+             */
+            $activeUser = null;
+            if($mobileAuth != null) {
+                $activeUser = array();
+                $activeUser['id'] = $userId;
+            } else {
+                $activeUser = $this->Auth->User();
+            }
+
+            // validate the comment to make sure the user can delete the event
+            if($event['Event']['userID'] != $activeUser['id']) {
+                $retVal['result'] = "false";
+                $retVal['response'] = 'That was not your event to delete.';
+                return json_encode($retVal);
+                exit;
+            }
+
+            if($this->Event->delete($id)) {
+                $retVal['result'] = 'true';
+                $retVal['response'] = 'Your event was successfully deleted.';
+		if( $event['Event']['imageURL'] != "" ||  $event['Event']['imageURL'] != null) {
+			// delete the event image from the server if there was one
+			unlink("" . WWW_ROOT . "/img/files/events/" . $event['Event']['imageURL']);
+		}
+
+                return json_encode($retVal);
+            }
+        } catch (Exception $e) {
+                $this->log("{EventsController#delete_event} - An exception was thrown: " . $e->getMessage());
+                $retVal['result'] = 'false';
+                $retVal['response'] = 'There was a problem deleting the event. Please try again later, or contact help@theulink.com';
+                return json_encode($retVal);
+                exit;
+        }
+    } // delete_event
+    /******************************************************/
+    /*          END EVENT API FUNCTIONS                   */
+    /******************************************************/
 }
 ?>

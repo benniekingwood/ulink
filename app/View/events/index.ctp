@@ -6,7 +6,14 @@ echo "<pre>";
 $this->Session->flash();
 foreach($events as $event)
 {
-	echo "<img width='100' height='100' src='/events/getEventImage/" . $event['Event']['_id'] . "'/><br/>";
+	$src = null;
+      if(isset($event['Event']['imageURL'])) {
+	  $src = $this->Html->url('/img/files/events/'.$event['Event']['imageURL']);
+      } else {
+	    $src = $this->Html->url('/img/defaults/default_campus_event.png');
+      }
+      	echo "<img width='100' height='100' src='" . $src. "'/><br/>";
+
 	echo "<b>School: </b>" . $event["Event"]["collegeName"] . "<br/>";
 	echo "<b>Title:</b> " . $event["Event"]["eventTitle"] . "<br/>";
 	echo "<b>Date and time:</b> " .  DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date'])->format('F d, Y'). "<br/>";

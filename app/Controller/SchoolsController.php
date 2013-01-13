@@ -22,16 +22,21 @@ class SchoolsController extends AppController {
      */
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('suggestion');
+        $this->Auth->allow('suggestion','school');
+        $this->Security->csrfCheck = false;
+        $this->Security->validatePost = false;
     }
 
+    /******************************************************/
+    /*          SCHOOL API FUNCTIONS                      */
+    /******************************************************/
     /**
-     * This function will add a school suggestion
+     * POST API function will add a school suggestion
      * to the database
      *
      * @param null $id
      */
-    function suggestion($id=NULL) {
+    public function suggestion($id=NULL) {
         $this->autoRender = false;
         $this->layout=null;
         $retVal = "false";
@@ -51,6 +56,38 @@ class SchoolsController extends AppController {
             exit();
         }
     } // suggestion
+
+    /**
+     * GET API function that will return an active
+     * school (if an $id is passed in), or all the
+     * schools if no $id is passed in
+     * @return array $retVal
+     */
+    public function school($id=null) {
+        $this->autoRender = false;
+        $this->layout = null;
+        Configure:: write('debug', 0);
+        $retVal = array();
+        $retVal['result'] = "true";
+        $retVal['response'] = null;
+        $schools = null;
+        // grab a school by the id if it was passed in
+        if($id != null) {
+            $schools = $this->School->find('list',array('fields' => array('id', 'name')));
+        } else { // else grab all the school
+            $schools = $this->School->find('list',array('fields' => array('id', 'name'),'order'=>array('School.name'=>'ASC')));
+        }
+
+        if($schools != null) {
+            $retVal['response'] = $schools;
+        }
+        return json_encode($retVal);
+    } // school
+
+
+    /******************************************************/
+    /*          END SCHOOL API FUNCTIONS                      */
+    /******************************************************/
 
     // TODO: 8.3.12 - from this point on the code needs to be cleaned up/refactored because it's terribly organized
 

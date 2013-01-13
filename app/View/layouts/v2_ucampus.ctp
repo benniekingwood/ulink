@@ -131,7 +131,7 @@
                     <i class="ulink-social-icon-twitter"></i>
                 </a>
                 <span class="pull-right">
-                    &copy 2012 uLink, Inc. All rights reserved.
+                    &copy 2013 uLink, Inc. All rights reserved.
                 </span>
             </div>
         </div>
@@ -147,6 +147,29 @@
 <script type="text/javascript">
     FB.init("<?php echo FACEBOOK_APP_ID; ?>", "<?php echo FACEBOOK_APP_URL; ?>");
 </script>    -->
+<!-- Quantcast Tag -->
+<script type="text/javascript">
+var _qevents = _qevents || [];
 
+(function() {
+var elem = document.createElement('script');
+elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+elem.async = true;
+elem.type = "text/javascript";
+var scpt = document.getElementsByTagName('script')[0];
+scpt.parentNode.insertBefore(elem, scpt);
+})();
+
+_qevents.push({
+qacct:"p-8Kz1_e3f51S6g"
+});
+</script>
+
+<noscript>
+<div style="display:none;">
+<img src="//pixel.quantserve.com/pixel/p-8Kz1_e3f51S6g.gif" border="0" height="1" width="1" alt="Quantcast"/>
+</div>
+</noscript>
+<!-- End Quantcast tag -->
 </body>
 </html>

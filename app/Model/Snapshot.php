@@ -33,6 +33,8 @@ class Snapshot extends AppModel {
 		// load the user and comments for each snap
                 foreach($snaps as &$snap) {
 			$user = $this->User->findById($snap["Snapshot"]["userId"]);
+			unset($user['User']['password']);
+			unset($user['School']);
                         $snap["Snapshot"]["user"] = $user;
                         $comments = $this->SnapshotComment->getSnapshotCommentBySnapId($snap["Snapshot"]["_id"]);
                         $snap["Snapshot"]["comments"] = $comments;

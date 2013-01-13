@@ -33,7 +33,19 @@ class SnapshotComment extends AppModel {
             // load the user and comments for each snap
             foreach($snapComments as &$snapComment) {
                     $user = $this->User->findById($snapComment["SnapshotComment"]["userId"]);
-                    $snapComment["SnapshotComment"]["userImageURL"] = $user['User']['image_url'];
+                    if(isset($user['User']['password'])) {
+                        unset($user['User']['password']);
+                    }
+                    if(isset($user['School'])) {
+                        unset($user['School']);
+                    }
+                    $snapComment["SnapshotComment"]["user_image_url"] = $user['User']['image_url'];
+                    $snapComment["SnapshotComment"]["user_username"] = $user['User']['username'];
+                    $snapComment["SnapshotComment"]["user_bio"] = $user['User']['bio'];
+                    $snapComment["SnapshotComment"]["user_year"] = $user['User']['year'];
+                    $snapComment["SnapshotComment"]["user_firstname"] = $user['User']['firstname'];
+                    $snapComment["SnapshotComment"]["user_lastname"] = $user['User']['lastname'];
+                    $snapComment["SnapshotComment"]["user_school_status"] = $user['User']['school_status'];
                     $snapComment['SnapshotComment']['created_short'] = date('M j, Y', strtotime($snapComment['SnapshotComment']['created']));
                     // decode all html special chars
 		    $snapComment['SnapshotComment']['comment'] = htmlspecialchars_decode($snapComment['SnapshotComment']['comment'], ENT_QUOTES);

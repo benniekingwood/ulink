@@ -25,7 +25,7 @@
                     <?php echo $this->Session->flash(); ?>
                 </div>
                 <div class="alert alert-info">
-                    Input your Twitter account username to have your tweets show up your school's uCampus homepage.  Stay tweeting my friends.
+                    Enter your Twitter account username and have your tweets show up on your school's uCampus homepage.  Stay tweeting my friends.
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="twitter_username">Twitter Username</label>

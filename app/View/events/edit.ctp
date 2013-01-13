@@ -23,7 +23,10 @@
                 </div>
                 <div class="row">
                     <div class="span3">
-                        <?php echo "<img src='/events/getEventImage/" . $event['Event']['_id'] . "'/>"; ?>
+                        <img src="<?php
+                                    if(isset($event['Event']['imageURL'])) {
+                                        echo($this->Html->url('/img/files/events/'.$event['Event']['imageURL']));
+                                    } else { echo($this->Html->url('/img/defaults/default_campus_event.png')); } ?>" alt="event image"/>
                     </div>
                     <div class="span3">
                         <?php echo $this->Form->input('Event.image', array('class' => 'profile-file-upload','type' => 'file', 'label' => false, 'div' => false)); ?>
@@ -66,6 +69,7 @@
                 <div class="modal-footer">
                    <?php echo $this->Form->button('Save changes', array('id'=>'btnSaveChanges', 'type' => 'submit', 'div' => false, 'class'=>'btn btn-primary btn-large')); ?>
                 </div>
+                 <?php echo($this->Form->input('Event.imageURL', array('type' => 'hidden'))); ?>
             </div> <!-- /profile-tab-content -->
         </div> <!-- /tab-content -->
     </div><!-- /row-fluid -->

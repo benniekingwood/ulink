@@ -47,7 +47,7 @@
                                     <div class="span2">
                                         <h3>James Wheatley</h3>
                                         <p>CFO | Dragonkick</p>
-                                        <p>I kick ass... take names, snowboard, river kayak, swim, bike, run!</p>
+                                        <p>Avid snowboarder, biker, marathon runner, kayaker...you get the point.</p>
                                     </div>
                                     <div class="span2.5">
                                         <img src="/img/kevin.png" alt="kevinpicture">
