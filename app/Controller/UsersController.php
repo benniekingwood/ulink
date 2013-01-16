@@ -460,7 +460,6 @@ class UsersController extends AppController {
                         // user is active but needs to change their password
                         if($isMobileRequest) {
                             $retVal['result'] = "auto";
-                            // TODO: grab the user's events and snapshots and set on user
                             $retVal['response'] = $getInfo;
                         } else {
                             echo "auto";
@@ -611,12 +610,11 @@ class UsersController extends AppController {
 
                     if (array_key_exists('urls', $fileOK)) {
                         if( $this->request->data['User']['image_url']  != "" ||  $this->request->data['User']['image_url']  != null) {
-                            $filePath = "" . WWW_ROOT . "/img/files/users/" . $this->request->data['User']['image_url'];
+                            $filePath = "" . WWW_ROOT . "img/files/users/" . $this->request->data['User']['image_url'];
                             if(file_exists($filePath)) {
-                                $this->log('file:'.$filePath);
                                 // delete the event image from the server if there was one
                                 unlink($filePath);
-                            } 
+                            }
                         }
 
                         // save the url in the form data
@@ -1605,7 +1603,7 @@ class UsersController extends AppController {
             Configure::write('debug', 0);
             $this->autoRender = false;
             $this->layout = null;
-            $filePath = "" . WWW_ROOT . "/img/files/users/" . $image_url;
+            $filePath = "" . WWW_ROOT . "img/files/users/" . $image_url;
             if(file_exists($filePath)) {
                 unlink($filePath);
             }
@@ -1635,7 +1633,7 @@ class UsersController extends AppController {
             Configure::write('debug', 0);
             $this->autoRender = false;
             $this->layout = null;
-            $filePath = "" . WWW_ROOT . "/img/files/users/" . $image_url;
+            $filePath = "" . WWW_ROOT . "img/files/users/" . $image_url;
             if(file_exists($filePath)) {
                 unlink($filePath);
             }
