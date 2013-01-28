@@ -121,11 +121,11 @@ class EventsController extends AppController {
 			$this->set('title_for_layout', $event['Event']['collegeName'] . ' ' . $event['Event']['eventTitle']);
 
 			// format the event so it's more readable
-			$date = DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date']);
+			$date = DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']);
 			$event['Event']['eventDate'] = $date->format('F d, Y');
 			$this->set('event', $event);
 
-			Controller::loadModel('User');
+			$this->loadModel('User');
 
 			// grab the event's user
 			$user = $this->User->find('first', array('conditions' => array('User.id' => $event['Event']['userID'])));
@@ -284,11 +284,14 @@ class EventsController extends AppController {
 			    $this->Session->setFlash("That was not your event to edit.");
 				$this->redirect('/events/myevents');
 			}
-			Controller::loadModel('School');
+			 // format the event so it's more readable
+			$date = DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']);
+			$event['Event']['eventDate'] = $date->format('m/d/Y');
+			$this->loadModel('School');
 			$schools = $this->School->find('list',array('fields' => array('id', 'name')));
 			$this->set('schools',$schools);
 			$this->set('event',$event);
-	       } catch (Exception $x) {
+	       } catch (Exception $e) {
 			$this->log("{EventsController#edit} - An exception was thrown when loading the event: " . $e->getMessage());
 
 	       }
@@ -296,16 +299,11 @@ class EventsController extends AppController {
 		if(empty($this->data))
 		{
 			try {
-		    // format the event so it's more readable
-		    $date = DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date']);
-		    $event['Event']['eventDate'] = $date->format('m/d/Y');
-			$this->data = $event;
+				$this->data = $event;
 			} catch (Exception $y) {
 				$this->log("{EventsController#edit} - An exception was thrown: " . $e->getMessage());
-
 			}
 		}  else { // we are editing the event
-
 			$json = $this->update_event($this->request->data);
 			$result = json_decode($json);
 			$this->Session->setFlash($result->response->html);
@@ -342,7 +340,7 @@ class EventsController extends AppController {
 			       $this->redirect(array('controller' => 'ucampus','action' => 'index'));
 		       }
 
-			Controller::loadModel('School');
+			$this->loadModel('School');
 			$schools = $this->School->find('list',array('fields' => array('id', 'name')));
 			$this->set('schools',$schools);
 			//Get user info to add to event data
@@ -392,7 +390,6 @@ class EventsController extends AppController {
 	       }
 		try {
 			$event = $this->Event->read(null, $eventID);
-
 			if($event['Event']['active'] == 0)
 			{
 				$event['Event']['active'] = 1;
@@ -509,11 +506,11 @@ class EventsController extends AppController {
 
 		if(!empty($this->data)) {
 		    $event = $this->data;
-		    $event['Event']['eventAdded'] = date("F j, Y, g:i a");
+		    $event['Event']['created'] = date("Y-m-d H:i:s");
 		    $event['Event']['collegeID'] = $activeUser['school_id'];
 		    $event['Event']['userID'] =  $activeUser['id'];
 		    // format the event date
-		    $event['Event']['eventDate']  = DateTime::createFromFormat('m/d/Y', $this->data['Event']['eventDate']);
+		    $event['Event']['eventDate']  = date('Y-m-d H:i:s', strtotime($this->data['Event']['eventDate'])+86340);
 
 		    // if there is an event image, save it
 		    if(isset($this->data['Event']['image'])) {
@@ -625,10 +622,10 @@ class EventsController extends AppController {
 		}  else {
 		    $event = $this->data;
 		    // format the event date
-		    $event['Event']['eventDate']  = DateTime::createFromFormat('m/d/Y', $this->data['Event']['eventDate']);
+		    //$event['Event']['eventDate']  = DateTime::createFromFormat('m/d/Y', $this->data['Event']['eventDate']);
+		    $event['Event']['eventDate'] = date('Y-m-d H:i:s', strtotime($this->data['Event']['eventDate'])+86340);
 		    // deactivate the event again
-		   // $event['Event']['active'] = 0;
-
+		    // $event['Event']['active'] = 0;
 
 		    // if there is a new image, delete the old one and save the new one
 		    if(isset($this->data['Event']['image']['name']) && $this->data['Event']['image']['name'] != "") {
@@ -641,6 +638,17 @@ class EventsController extends AppController {
 					// delete the event image from the server if there was one
 					unlink($filePath);
 				}
+				// remove the old thumb and medium images
+				$thumbsURL = "" . WWW_ROOT . "img/files/events/thumbs/" . $event['Event']['imageURL'];
+				if(file_exists($thumbsURL)) {
+				    // delete the old image
+				    unlink($thumbsURL);
+				}
+				 $mediumFilePath = "" . WWW_ROOT . "img/files/events/medium/" .$event['Event']['imageURL'];
+				if(file_exists($mediumFilePath)) {
+				    // delete the old image
+				    unlink($mediumFilePath);
+				}
 			     }
 
 			    // save the url in the form data
@@ -652,7 +660,6 @@ class EventsController extends AppController {
 		    }
 
 		    $this->data = $event;
-
 		    if($this->Event->save($this->data)) {
 			$responseData = array();
 			$eventData = array();
@@ -721,6 +728,17 @@ class EventsController extends AppController {
 			if(file_exists($filePath)) {
 				// delete the event image from the server if there was one
 				unlink($filePath);
+			}
+			// remove the old thumb and medium images
+			$thumbsURL = "" . WWW_ROOT . "img/files/events/thumbs/" . $event['Event']['imageURL'];
+			if(file_exists($thumbsURL)) {
+			    // delete the old image
+			    unlink($thumbsURL);
+			}
+			 $mediumFilePath = "" . WWW_ROOT . "img/files/events/medium/" .$event['Event']['imageURL'];
+			if(file_exists($mediumFilePath)) {
+			    // delete the old image
+			    unlink($mediumFilePath);
 			}
 		}
 

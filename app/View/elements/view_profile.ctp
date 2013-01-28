@@ -26,7 +26,7 @@
         .success(function(responseText) {
             var data = JSON.parse(responseText);
             $('#vpUsername').html(data.User.username);
-            $('#vpImg').attr('src',hostname+"/img/files/users/"+data.User.image_url);
+            $('#vpImg').attr('src',hostname+"/img/files/users/medium/"+data.User.image_url);
             $('#vpFirstName').html(data.User.firstname);
             $('#vpLastName').html(data.User.lastname);
             $('#vpSchool').html(data.School.name);

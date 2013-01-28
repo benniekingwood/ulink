@@ -10,13 +10,13 @@ class Snapshot extends AppModel {
 	var $name = 'Snapshot';
 	var $uses = array('Snapshot', 'SnapshotCategory', 'SnapshotComment', 'User');
 	var $primaryKey = '_id';
-	var $useDbConfig = 'mongo';
+	//var $useDbConfig = 'mongo';
 
 	/**
 	 * This function is called before cake validates the
 	 * model object.  This will sanitize the snap caption.
 	 */
-	public function beforeValidate() {
+	public function beforeValidate($options = array()) {
 		App::uses('Sanitize', 'Utility');
 		//Santize text from snap caption
 		$this->data['Snapshot']['caption'] = Sanitize::html(Sanitize::stripAll($this->data['Snapshot']['caption']),array('remove' => true));
@@ -27,16 +27,16 @@ class Snapshot extends AppModel {
 	 * After a snapshot(s) is retreived, we need to load
 	 * all associated data with the snaps
 	 */
-        public function afterFind($snaps) {
-		Controller::loadModel('User');
-		Controller::loadModel('SnapshotComment');
+        public function afterFind($snaps, $primary = FALSE) {
+		$User = ClassRegistry::init('User');
+		$SnapshotComment = ClassRegistry::init('SnapshotComment');
 		// load the user and comments for each snap
                 foreach($snaps as &$snap) {
-			$user = $this->User->findById($snap["Snapshot"]["userId"]);
+			$user = $User->findById($snap["Snapshot"]["userId"]);
 			unset($user['User']['password']);
 			unset($user['School']);
                         $snap["Snapshot"]["user"] = $user;
-                        $comments = $this->SnapshotComment->getSnapshotCommentBySnapId($snap["Snapshot"]["_id"]);
+                        $comments = $SnapshotComment->getSnapshotCommentBySnapId($snap["Snapshot"]["_id"]);
                         $snap["Snapshot"]["comments"] = $comments;
 			// decode all html special chars
 			$snap['Snapshot']['caption'] = htmlspecialchars_decode($snap['Snapshot']['caption'], ENT_QUOTES);
@@ -83,8 +83,8 @@ class Snapshot extends AppModel {
 	public function getSplashSnapsBySchoolId($schoolId) {
 		$retVal = array();
 		// grab the snap categories
-		Controller::loadModel('SnapshotCategory');
-		$snapCategories = $this->SnapshotCategory->getAll();
+		$SnapshotCategory = ClassRegistry::init('SnapshotCategory');
+		$snapCategories = $SnapshotCategory->getAll();
 		shuffle($snapCategories);
 		for($x=0;$x<count($snapCategories);$x++) {
 			// grab a random image from the category and put into return array
@@ -107,9 +107,9 @@ class Snapshot extends AppModel {
 	 * @return void
 	 */
 	public function deleteSnapshot($id) {
-		Controller::loadModel('SnapshotComment');
+		$SnapshotComment = ClassRegistry::init('SnapshotComment');
 		// first delete all Snapshot comments that have this snap id
-		$this->SnapshotComment->deleteAll(array('snapId' => $id));
+		$SnapshotComment->deleteAll(array('snapId' => $id));
 		// finally delete this Snapshot
 		return $this->delete($id);
 	}

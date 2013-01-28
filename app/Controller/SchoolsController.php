@@ -404,6 +404,8 @@ class SchoolsController extends AppController {
                     $msg = 'Your Item was successfully deleted';
                     Configure::write('debug', 0);
                     unlink("" . WWW_ROOT . "/img/files/schools/" . $img_old);
+                    unlink("" . WWW_ROOT . "/img/files/schools/thumbs/" . $img_old);
+                    unlink("" . WWW_ROOT . "/img/files/schools/medium/" . $img_old);
                     $this->autoRender = false;
                     $this->layout = null;
 
@@ -436,6 +438,8 @@ class SchoolsController extends AppController {
             $this->autoRender = false;
             $this->layout = null;
             unlink("" . WWW_ROOT . "/img/files/schools/" . $image_url);
+            unlink("" . WWW_ROOT . "/img/files/schools/thumbs/" . $image_url);
+            unlink("" . WWW_ROOT . "/img/files/schools/medium/" . $image_url);
             echo "true";
         } else {
             Configure::write('debug', 0);
@@ -453,6 +457,8 @@ class SchoolsController extends AppController {
             $this->autoRender = false;
             $this->layout = null;
             unlink("" . WWW_ROOT . "/img/files/test/" . $image_url);
+            unlink("" . WWW_ROOT . "/img/files/test/thumbs/" . $image_url);
+            unlink("" . WWW_ROOT . "/img/files/test/medium/" . $image_url);
             echo "true";
         } else {
             Configure::write('debug', 0);

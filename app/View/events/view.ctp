@@ -20,8 +20,8 @@
             <div class="row">
                 <div class="span1 event-user-picture-container">
                     <a href="#">
-                    <?php if ($eventUser['User']['image_url'] != '' && file_exists(WWW_ROOT . '/img/files/users/' . $eventUser['User']['image_url'])) {
-                           echo $this->Html->image('files/users/' . $eventUser['User']['image_url'] . '', array('class'=>'rounded', 'alt' =>'profileimage'));
+                    <?php if ($eventUser['User']['image_url'] != '' && file_exists(WWW_ROOT . '/img/files/users/medium/' . $eventUser['User']['image_url'])) {
+                           echo $this->Html->image('files/users/medium/' . $eventUser['User']['image_url'] . '', array('class'=>'rounded', 'alt' =>'profileimage'));
                     } else {
                      echo $this->Html->image('files/users/noImage.jpg', array('alt' => 'noimage', 'class'=>'rounded'));
                     }

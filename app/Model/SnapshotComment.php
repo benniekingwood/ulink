@@ -10,13 +10,13 @@ class SnapshotComment extends AppModel {
     var $name = 'SnapshotComment';
     var $uses = array('SnapshotComment');
     var $primaryKey = '_id';
-    var $useDbConfig = 'mongo';
+    //var $useDbConfig = 'mongo';
 
     /**
      * This function is called before cake validates the
      * model object.  This will sanitize the snap comment.
      */
-    public function beforeValidate() {
+    public function beforeValidate($options = array()) {
             App::uses('Sanitize', 'Utility');
             //Santize text from snap caption
             $this->data['SnapshotComment']['comment'] = Sanitize::html(Sanitize::stripAll($this->data['SnapshotComment']['comment']),array('remove' => true));
@@ -28,11 +28,11 @@ class SnapshotComment extends AppModel {
      * After a snapshot comment is retreived, we need to load
      * all associated data with the snaps
      */
-    public function afterFind($snapComments) {
-            Controller::loadModel('User');
+    public function afterFind($snapComments, $primary = FALSE) {
+            $User = ClassRegistry::init('User');
             // load the user and comments for each snap
             foreach($snapComments as &$snapComment) {
-                    $user = $this->User->findById($snapComment["SnapshotComment"]["userId"]);
+                    $user = $User->findById($snapComment["SnapshotComment"]["userId"]);
                     if(isset($user['User']['password'])) {
                         unset($user['User']['password']);
                     }

@@ -9,13 +9,17 @@
 //App::import('Vendor', 'facebook/facebook/facebook.php');
 //require_once("../vendors/facebook/facebook/facebook.php");   <-- 7/30/2012 - Bennie- removing FB for now --too slow
 
-// TEMP: Comment this is PROD
-require_once("../Lib/Twitter/tmhOAuth.php");
-require_once("../Lib/Twitter/tmhUtilities.php");
-
-// TEMP: Uncomment this is PROD
-// require_once("/var/www/vhosts/www/app/Lib/Twitter/tmhOAuth.php");
-// require_once("/var/www/vhosts/www/app/Lib/Twitter/tmhUtilities.php");
+if (inDevMode()) {
+    // TEMP: Comment this is PROD
+    require_once("../Lib/Twitter/tmhOAuth.php");
+    require_once("../Lib/Twitter/tmhUtilities.php");
+    require_once("../Lib//Wideimage/WideImage.php");
+} else {
+    // TEMP: Uncomment this is PROD
+    require_once("/var/www/vhosts/www/app/Lib/Twitter/tmhOAuth.php");
+    require_once("/var/www/vhosts/www/app/Lib/Twitter/tmhUtilities.php");
+    require_once("/var/www/vhosts/www/app/Lib/Wideimage/WideImage.php");
+}
 
 define('_UNIT_MILES', 'm');
 define('_UNIT_KILOMETERS', 'k');
@@ -195,6 +199,144 @@ class AppController extends Controller {
     } // _setErrorLayout
 
     /**
+     * Helper function that will read in the information
+     * from the image and determine if the orientation
+     * is not upright.  If the orientation has been
+     * changed from the original, it will then rotate
+     * it back to it's original orientation.  This
+     * is mainly for devices that tend to cause
+     * orientation issues.
+     * @param $sourceURL
+     * @param $image
+     * @return $retVal
+     */
+    private function maintainImageOrientation($sourceURL, $image) {
+        $exif = exif_read_data($sourceURL);
+        if(!empty($exif['Orientation'])) {
+            switch($exif['Orientation']) {
+                case 8:
+                    $image = $image->rotate(-90);
+                    break;
+                case 3:
+                    $image = $image->rotate(180);
+                    break;
+                case 6:
+                    $image = $image->rotate(90);
+                    break;
+            }
+        }
+        return $image;
+    }
+
+    /**
+     * This function will compress the image until the desired file
+     * size is reached.  This will mainly be used for the web images
+     * @param $sourceURL
+     * @param $destinationURL
+     * @param $quality
+     * @return string $destinationURL
+     */
+    protected function compressOriginalImage($sourceURL, $destinationURL, $quality) {
+        // load the image resource
+        $image = WideImage::load($sourceURL);
+        $info = getimagesize($sourceURL);
+        if ($info['mime'] == 'image/png') {
+            $image->saveToFile($destinationURL, 8, PNG_NO_FILTER);
+        } else {
+             /*
+              * check to see if the image needs to be rotated to preserve
+              * original orientation
+              */
+            $image = $this->maintainImageOrientation($sourceURL, $image);
+            $image->saveToFile($destinationURL, $quality);
+        }
+	return $destinationURL;
+    }
+
+    /**
+     * This function will compress/resize the image until the desired file
+     * size is reached.  This will be the "medium" sized image,
+     * with these specifications: 400x400, filesize ~25k.
+     * @param $sourceURL
+     * @param $destinationURL
+     * @return string $destinationURL
+     */
+    protected function createMediumImage($sourceURL, $destinationURL) {
+        $image = WideImage::load($sourceURL);
+        $resizedImage = $image->resize('450', '450', 'inside', 'any');
+
+        $info = getimagesize($sourceURL);
+        if ($info['mime'] == 'image/png') {
+            $resizedImage->saveToFile($destinationURL, 7, PNG_NO_FILTER);
+        } else {
+            $resizedImage->saveToFile($destinationURL, 70);
+        }
+	return $destinationURL;
+    }
+
+     /**
+     * This function will compress the image until the desired file
+     * size is reached.  This will be the "medium" sized image,
+     * with these specifications: 400x400, filesize ~25k.
+     * @param $sourceURL
+     * @param $destinationURL
+     * @return string $destinationURL
+     */
+    protected function createThumbImage($sourceURL, $destinationURL) {
+	/*$info = getimagesize($sourceURL);
+	if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/jpg') $image = imagecreatefromjpeg($sourceURL);
+	elseif ($info['mime'] == 'image/gif') $image = imagecreatefromgif($sourceURL);
+	elseif ($info['mime'] == 'image/png') $image = imagecreatefrompng($sourceURL);
+        $maxCompression = 10; // go as low as 10% image quality
+        $maxFileSize = 4000; // measured in bytes
+        $quality = 90;
+
+        $image = $this->resizeImage($image, 40);
+
+        // reduce the filesize of the new thumb image
+        while (filesize($sourceURL) > maxFileSize && $quality > maxCompression)
+        {
+            $quality -= 10;
+            imagejpeg($image, $destinationURL, $quality);
+        }
+        return $destinationURL;*/
+        $image = WideImage::load($sourceURL);
+        $resizedImage = $image->resize('80', '80', 'inside', 'any');
+
+        $info = getimagesize($sourceURL);
+        if ($info['mime'] == 'image/png') {
+            $resizedImage->saveToFile($destinationURL, 8, PNG_NO_FILTER);
+        } else {
+            $resizedImage->saveToFile($destinationURL, 80);
+        }
+	return $destinationURL;
+    }
+
+    /**
+     * This function will resize an image to the
+     * desired width.
+     * @param $image
+     * @param $newWidth
+     * @return $resizedImg
+     */
+    private function resizeImage($image, $newWidth) {
+        $width = imagesx( $image );
+        $height = imagesy( $image );
+
+        // calculate thumbnail size
+        $new_width = $newWidth;
+        $new_height = floor( $height * ( $newWidth / $width ) );
+
+        // create a new temporary image
+        $resizedImg = imagecreatetruecolor( $new_width, $new_height );
+
+        // copy and resize old image into new image
+        imagecopyresized($resizedImg, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
+
+        return $resizedImg;
+    }
+
+    /**
      * This function uploads files to the server and will return
      * an array with the success of each file upload
      * @param $folder
@@ -226,7 +368,7 @@ class AppController extends Controller {
             }
 
             // list of permitted file types, this is only images but documents can be added
-            $permitted = array('image/gif', 'image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png');
+            $permitted = array('image/gif', 'image/jpeg', 'image/jpg', 'image/png');
 
             // replace spaces with underscores
             $filename = str_replace(' ', '_', $formdata['name']);
@@ -250,19 +392,30 @@ class AppController extends Controller {
                         if (!file_exists($folder_url . '/' . $filename)) {
                             // create full filename
                             $full_url = $folder_url . '/' . $filename;
+                            // create medium and thumb urls
+                            $medium_url = $folder_url . '/medium/' . $filename;
+                            $thumb_url = $folder_url . '/thumbs/' . $filename;
                             $url = $filename;
                             // upload the file
-                            $success = move_uploaded_file($formdata['tmp_name'], $full_url);
+                          //  $success = move_uploaded_file($formdata['tmp_name'], $full_url);
+                             $this->compressOriginalImage($formdata['tmp_name'], $full_url, 80);
+                             $success = true;
                         } else {
                             // create unique filename and upload file
                             ini_set('date.timezone', 'Europe/London');
                             $now = date('Y-m-d-His');
                             $full_url = $folder_url . '/' . $now . '-' . $filename;
+                            $medium_url = $folder_url . '/medium/' . $now . '-' . $filename;
+                            $thumb_url = $folder_url . '/thumbs/' . $now . '-' . $filename;
                             $url = $now . '-'.$filename;
-                            $success = move_uploaded_file($formdata['tmp_name'], $full_url);
+                           // $success = move_uploaded_file($formdata['tmp_name'], $full_url);
+                            $this->compressOriginalImage($formdata['tmp_name'], $full_url, 80);
+                            $success = true;
                         }
                         // if upload was successful
                         if ($success) {
+                            $this->createMediumImage($full_url, $medium_url);
+                            $this->createThumbImage($full_url, $thumb_url);
                             // save the url of the file
                             $result['urls'][] = $url;
                         } else {

@@ -10,7 +10,7 @@
       var $name = 'Trend';
       var $uses = array('Trend');
       var $primaryKey = '_id';
-      var $useDbConfig = 'mongo';
+      //var $useDbConfig = 'mongo';
 
       /**
        * This function will return the Trend based on the school Id
@@ -20,7 +20,7 @@
       public function getTrendBySchoolID($schoolID = null) {
           $retVal = null;
           try {
-              $retVal = $this->find('all', array('conditions' => array('collegeID' => $schoolID)));
+              $retVal = $this->find('all', array('fields' => array('name', 'created')), array('conditions' => array('collegeID' => $schoolID)));
           } catch (Exception $e) {
               $this->log('{Trend#getTrendBySchoolID} - An exception was thrown: ' . $e->getMessage());
           }
@@ -33,7 +33,7 @@
        */
       public function deleteBySchoolID($schoolID = null) {
           try {
-              $this->delete('all', array('conditions' => array('collegeID' => $schoolID)));
+              $this->deleteAll(array('collegeID' => $schoolID));
           } catch (Exception $e) {
               $this->log('{Trend#deleteBySchoolID} - An exception was thrown: ' . $e->getMessage());
           }

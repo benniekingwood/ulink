@@ -55,7 +55,7 @@
                     else {
                         foreach( $events as $event ) {   ?>
                         <li><a class="pull-right view-event-link" href="<?php echo($this->Html->url('/events/view/'.$event['Event']['_id'])); ?>" alt=""><i class="icon-share-alt"></i>View</a>
-                        <span class="campus-event-title"><?php echo $event['Event']['eventTitle'] ?></span>&nbsp;-&nbsp;<span class="campus-event-date"><?php echo DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date'])->format('F d, Y'); ?></span>
+                        <span class="campus-event-title"><?php echo $event['Event']['eventTitle'] ?></span>&nbsp;-&nbsp;<span class="campus-event-date"><?php echo DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate'])->format('F d, Y'); ?></span>
                         <p><?php echo substr($event['Event']['eventInfo'], 0, 150) . '...'; ?></p>
                         </li>
                 <?php } }?>

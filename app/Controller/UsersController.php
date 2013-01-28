@@ -615,6 +615,17 @@ class UsersController extends AppController {
                                 // delete the event image from the server if there was one
                                 unlink($filePath);
                             }
+                            // remove the old thumb and medium images
+                            $thumbsURL = "" . WWW_ROOT . "img/files/users/thumbs/" . $this->request->data['User']['image_url'];
+                            if(file_exists($thumbsURL)) {
+                                // delete the old image
+                                unlink($thumbsURL);
+                            }
+                             $mediumFilePath = "" . WWW_ROOT . "img/files/users/medium/" .$this->request->data['User']['image_url'];
+                            if(file_exists($mediumFilePath)) {
+                                // delete the old image
+                                unlink($mediumFilePath);
+                            }
                         }
 
                         // save the url in the form data
@@ -832,6 +843,17 @@ class UsersController extends AppController {
                 $fullFilePath = "" . WWW_ROOT . "img/files/users/" . $image_url;
                 if(file_exists($fullFilePath)) {
                     unlink($fullFilePath);
+                }
+                // remove the old thumb and medium images
+                $thumbsURL = "" . WWW_ROOT . "img/files/users/thumbs/" . $image_url;
+                if(file_exists($thumbsURL)) {
+                    // delete the old image
+                    unlink($thumbsURL);
+                }
+                 $mediumFilePath = "" . WWW_ROOT . "img/files/users/medium/" .$image_url;
+                if(file_exists($mediumFilePath)) {
+                    // delete the old image
+                    unlink($mediumFilePath);
                 }
                 echo "true";
                 exit;
@@ -1607,6 +1629,17 @@ class UsersController extends AppController {
             if(file_exists($filePath)) {
                 unlink($filePath);
             }
+              // remove the old thumb and medium images
+            $thumbsURL = "" . WWW_ROOT . "img/files/users/thumbs/" . $image_url;
+            if(file_exists($thumbsURL)) {
+                // delete the old image
+                unlink($thumbsURL);
+            }
+             $mediumFilePath = "" . WWW_ROOT . "img/files/users/medium/" .$image_url;
+            if(file_exists($mediumFilePath)) {
+                // delete the old image
+                unlink($mediumFilePath);
+            }
             echo "true";
         } else {
             Configure::write('debug', 0);
@@ -1636,6 +1669,17 @@ class UsersController extends AppController {
             $filePath = "" . WWW_ROOT . "img/files/users/" . $image_url;
             if(file_exists($filePath)) {
                 unlink($filePath);
+            }
+            // remove the old thumb and medium images
+            $thumbsURL = "" . WWW_ROOT . "img/files/users/thumbs/" . $image_url;
+            if(file_exists($thumbsURL)) {
+                // delete the old image
+                unlink($thumbsURL);
+            }
+             $mediumFilePath = "" . WWW_ROOT . "img/files/users/medium/" .$image_url;
+            if(file_exists($mediumFilePath)) {
+                // delete the old image
+                unlink($mediumFilePath);
             }
             echo "true";
             exit;

@@ -87,7 +87,7 @@ class UCampusController extends AppController {
             $retVal['result'] = "true";
             $retVal['response'] = $trends;
         } catch (Exception $e) {
-            $this->log("{UCampusController#trends}-An exception was thrown when loading the index page: " . $e->getMessage());
+            $this->log("{UCampusController#trends}-An exception was thrown when loading the trends " . $e->getMessage());
         }
         return json_encode($retVal);
     } // trends
@@ -111,8 +111,11 @@ class UCampusController extends AppController {
             // grab the logged in user off the session
             $activeUser = $this->Auth->User();
 
+            // create a yesterday date for retrieving events
+            $yesterday = date('Y-m-d', time() - 60*60*24);
+
             // load the regular events for the logged in user's college
-            $events = $this->Event->find('all', array('fields' => array('collegeID', 'eventTitle', 'eventDate', '_id', 'eventInfo', 'userID'), 'order' => array('Event.eventDate' => 'ASC'), 'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 0, 'active' => 1, 'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
+            $events = $this->Event->find('all', array('fields' => array('collegeID', 'eventTitle', 'eventDate', '_id', 'eventInfo', 'userID'), 'order' => array('Event.eventDate' => 'ASC'), 'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 0, 'active' => 1, 'eventDate >' => $yesterday)));
             $this->set('events', $events);
 
             // grab the tweets for the school
@@ -144,7 +147,7 @@ class UCampusController extends AppController {
             }
 
             // load the featured events for the logged in user's college
-            $featureEvents = $this->Event->find('all', array('order' => array('Event.eventDate' => 'ASC'), 'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 1, 'active' => 1, 'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
+            $featureEvents = $this->Event->find('all', array('order' => array('Event.eventDate' => 'ASC'), 'conditions' => array('collegeID' => $activeUser['school_id'], 'featured' => 1, 'active' => 1, 'eventDate >' => $yesterday)));
             $this->set('featureEvents', $featureEvents);
         } catch (Exception $e) {
             $this->log("{UCampusController#index}-An exception was thrown when loading the index page: " . $e->getMessage());
@@ -296,19 +299,20 @@ class UCampusController extends AppController {
      * @return array
      */
     private function getTrendsByWOEID($woeid, $schoolID) {
-        $retVal = null;
-
+        $retVal = array();
         try {
             // First check the cache for Trends.
             $trends = $this->Trend->getTrendBySchoolID($schoolID);
-
             // if there are trends, check to see if they are stale
             if ($trends != null && $this->trendsAreNotStale($trends)) {
-                $retVal = $trends[0]['Trend']['trends'];
+                // grab all the trends for the school
+                foreach ($trends as $trend) {
+                    array_push($retVal, $trend['Trend']['name']);
+                }
             } else { // we can search for new trends
                 // first remove the stale trends from the cache if there were trends
                 if ($trends != null) {
-                    $this->Trend->delete($trends[0]['Trend']['_id']);
+                    $this->Trend->deleteBySchoolID($schoolID);
                 }
 
                 $tmhOAuth = new tmhOAuth(array());
@@ -332,18 +336,16 @@ class UCampusController extends AppController {
                     $this->log('There was an error getting the response back from twitter, response was:' . $tmhOAuth->response['response']);
                 }
 
-                // add the trends to the return array
-                $retVal = array();
-                foreach ($data[0]['trends'] as $trend) {
-                    array_push($retVal, $trend['name']);
+                for ($idx = 0; $idx < 5; $idx++) {
+                    array_push($retVal, $data[0]['trends'][$idx]['name']);
+                     // save the updated trends to the db
+                    $this->Trend->create();
+                    $schoolTrends =  array('Trend' => array());
+                    $schoolTrends['Trend']['created'] = date('Y-m-d H:i:s');
+                    $schoolTrends['Trend']['name'] = $data[0]['trends'][$idx]['name'];
+                    $schoolTrends['Trend']['collegeID'] = $schoolID;
+                    $this->Trend->save($schoolTrends);
                 }
-
-                // save the updated trends to the mongo cache
-                $schoolTrends = array();
-                $schoolTrends['created'] = date("F j, Y, g:i a");
-                $schoolTrends['trends'] = $retVal;
-                $schoolTrends['collegeID'] = $schoolID;
-                $this->Trend->save($schoolTrends);
             }
         } catch (Exception $e) {
             $this->log("{UCampusController#getTrendsByWOEID} - An exception was thrown: " . $e->getMessage());

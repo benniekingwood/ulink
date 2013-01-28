@@ -4,13 +4,13 @@
  *
  * Created On: 10/20/12
  * Description:  This class will hold the snapshot category
- *  Model attributes: _id, name, created
+ *  Model attributes: _id, name 
  ********************************************************************************/
 class SnapshotCategory extends AppModel {
     var $name = 'SnapshotCategory';
     var $uses = array('SnapshotCategory');
     var $primaryKey = '_id';
-    var $useDbConfig = 'mongo';
+    //var $useDbConfig = 'mongo';
 
     /**
      * Helper method to return the snapshot category by the id

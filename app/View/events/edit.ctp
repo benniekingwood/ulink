@@ -24,8 +24,8 @@
                 <div class="row">
                     <div class="span3">
                         <img src="<?php
-                                    if(isset($event['Event']['imageURL'])) {
-                                        echo($this->Html->url('/img/files/events/'.$event['Event']['imageURL']));
+                                    if(isset($event['Event']['imageURL']) && $event['Event']['imageURL'] != '') {
+                                        echo($this->Html->url('/img/files/events/medium/'.$event['Event']['imageURL']));
                                     } else { echo($this->Html->url('/img/defaults/default_campus_event.png')); } ?>" alt="event image"/>
                     </div>
                     <div class="span3">
@@ -44,7 +44,7 @@
                 <div class="control-group">
                     <label class="control-label" for="eventDate">Date</label>
                     <div class="controls">
-                        <?php echo $this->Form->input('Event.eventDate', array('id' => 'eventDate', 'data-date-format'=>'mm/dd/yy', 'class' => 'input-large ulink-input-bigfont','maxlength' => '10', 'label'=>false, 'div'=>false)); ?>
+                        <?php echo $this->Form->input('Event.eventDate', array('id' => 'eventDate', 'type' => 'text', 'data-date-format'=>'mm/dd/yy', 'class' => 'input-large ulink-input-bigfont','maxlength' => '10', 'label'=>false, 'div'=>false)); ?>
                     </div>
                 </div>
                 <div class="control-group">

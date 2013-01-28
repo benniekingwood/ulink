@@ -31,12 +31,12 @@
                             <div class="row">
                                 <div class="span1">
                                      <img src="<?php
-                                    if(isset($event['Event']['imageURL'])) {
-                                        echo($this->Html->url('/img/files/events/'.$event['Event']['imageURL']));
+                                    if(isset($event['Event']['imageURL']) && $event['Event']['imageURL'] != '') {
+                                        echo($this->Html->url('/img/files/events/medium/'.$event['Event']['imageURL']));
                                     } else { echo($this->Html->url('/img/defaults/default_campus_event.png')); } ?>" alt="my event image"/>
                                 </div>
                                 <div class="my-event-container">
-                                    <span class="my-event-title"><?php echo $event['Event']['eventTitle'] ?></span>&nbsp;-&nbsp;<span class="campus-event-date"><?php echo DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date'])->format('F d, Y'); ?></span>
+                                    <span class="my-event-title"><?php echo $event['Event']['eventTitle'] ?></span>&nbsp;-&nbsp;<span class="campus-event-date"><?php echo DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate'])->format('F d, Y'); ?></span>
                                     <p><?php if (strlen($event['Event']['eventInfo']) > 200) {
                                             echo substr($event['Event']['eventInfo'], 0, 250) . '...';
                                         } else { echo $event['Event']['eventInfo']; } ?></p>

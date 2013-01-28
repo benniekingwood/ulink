@@ -8,7 +8,7 @@ foreach($events as $event)
 {
 	$src = null;
       if(isset($event['Event']['imageURL'])) {
-	  $src = $this->Html->url('/img/files/events/'.$event['Event']['imageURL']);
+	  $src = $this->Html->url('/img/files/events/medium/'.$event['Event']['imageURL']);
       } else {
 	    $src = $this->Html->url('/img/defaults/default_campus_event.png');
       }
@@ -16,9 +16,13 @@ foreach($events as $event)
 
 	echo "<b>School: </b>" . $event["Event"]["collegeName"] . "<br/>";
 	echo "<b>Title:</b> " . $event["Event"]["eventTitle"] . "<br/>";
-	echo "<b>Date and time:</b> " .  DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate']['date'])->format('F d, Y'). "<br/>";
-	echo "<b>Active?:</b> " . $event["Event"]["active"] . "<br/>";
-	echo "<b>Featured?:</b> " . $event["Event"]["featured"] . "<br/>";
+	echo "<b>Date and time:</b> " .  DateTime::createFromFormat('Y-m-d H:i:s',$event['Event']['eventDate'])->format('F d, Y'). "<br/>";
+	echo "<b>Active?:</b> ";
+	echo ($event['Event']['active'] == 0 ) ? '0' : $event['Event']['active'];
+	echo "<br/>";
+	echo "<b>Featured?:</b> ";
+	echo ($event['Event']['featured'] == 0 ) ? '0' : $event['Event']['featured'];
+	echo "<br/>";
 	echo "<b>Username:</b> " . $event["Event"]["userName"] . "<br/>";
 	echo "<b>Details</b></br>";
 	echo $event["Event"]["eventInfo"] . "<br/>";
