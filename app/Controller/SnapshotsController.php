@@ -89,12 +89,12 @@ class SnapshotsController extends AppController {
         } else {
             // grab a random snap from the list and remove it from list (pop)
             //set as featured snap
-            if($snaps != null) {
+            if($snaps != null && count($snaps->response) > 0) {
                 $index = array_rand($snaps->response);
                 $fSnap = $snaps->response[$index];
                 unset($snaps->response[$index]);
                 $this->set('featuredSnap', $fSnap->Snapshot);
-            }
+            } 
         }
         $this->set('snaps', $snaps->response);
         $this->autoRender = true;
@@ -360,14 +360,14 @@ class SnapshotsController extends AppController {
         $this->autoRender = false;
         $this->layout = null;
         Configure:: write('debug', 0);
-        $mobileAuth = isset($_POST['mobile_auth']);
+        $mobileAuth = isset($this->data['mobile_auth']);
 
         /*
          * WEB - grab the logged in user off the session
          * MOBILE - check auth token
          */
         $activeUser = null;
-        if($mobileAuth = isset($_POST['mobile_auth'])) {
+        if($mobileAuth != null) {
             $activeUser = array();
             $activeUser['id'] = $this->data['userId'];
             $activeUser['image_url'] = $this->data['image_url'];
@@ -408,17 +408,28 @@ class SnapshotsController extends AppController {
     } // insert_snap_comment
 
     /**
-     * GET API function will handle the deletion of snap comments
+     * POST API function will handle the deletion of snap comments
      * @param $id
      * @return json object
      */
-    public function delete_snap_comment($id = null) {
+    public function delete_snap_comment($id = null, $userId = null, $mobileAuth=null) {
         $this->autoRender = false;
         $this->layout = null;
         Configure:: write('debug', 0);
         $retVal = array();
-        $mobileAuth = isset($_POST['mobile_auth']);
         try {
+           /*
+            * WEB - grab the logged in user off the session
+            * MOBILE - check auth token
+            */
+            $activeUser = null;
+            if($mobileAuth != null) {
+                $activeUser = array();
+                $activeUser['id'] = $userId; 
+            } else {
+                $activeUser = $this->Auth->User();
+            }
+
             if($id == NULL) {
                 $retVal['result'] = "false";
                 $retVal['response'] = 'No id parameter was provided for this request.';
@@ -428,17 +439,7 @@ class SnapshotsController extends AppController {
             }
             // grab the comment from the db
             $comment = $this->SnapshotComment->read(null, $id);
-            /*
-            * WEB - grab the logged in user off the session
-            * MOBILE - check auth token
-            */
-            $activeUser = null;
-            if($mobileAuth = isset($_POST['mobile_auth'])) {
-                $activeUser = array();
-                $activeUser['id'] = $this->data['userId'];
-            } else {
-                $activeUser = $this->Auth->User();
-            }
+          
 
             // validate the comment to make sure the user can delete the event
             if($comment['SnapshotComment']['userId'] != $activeUser['id']) {

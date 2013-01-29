@@ -176,11 +176,11 @@ a:hover {text-decoration:none; }
             <h4>Comments</h4>
             <div class="snap-comments-list">
                 <?php
-                     if(isset($featuredSnap) && isset($featuredSnap->comments) && count($featuredSnap->comments) == 0) {
+                     if(isset($featuredSnap)  && isset($featuredSnap->comments) && count($featuredSnap->comments) == 0) {
                        echo '<div id="snap-comments-alert" class="alert alert-warn">There are no comments for this snap.</div>';
                     } else {
                         echo '<div id="snap-comments-alert" class="alert alert-warn" style="display:none;"></div>';
-                        if(isset($featuredSnap) && isset($featuredSnap->comments)) { foreach($featuredSnap->comments as $comment) { ?>
+                        if(isset($featuredSnap)  && isset($featuredSnap->comments)) { foreach($featuredSnap->comments as $comment) { ?>
                         <div class="row snap-comment">
                             <?php if(isset($loggedInId) && isset($comment->SnapshotComment->userId) && $loggedInId == $comment->SnapshotComment->userId) { ?>
                             <a id="delete-snap-comment-<?php echo $comment->SnapshotComment->_id; ?>" class="pull-right delete-snap-comment-link" href="#" alt=""><i class="icon-remove-sign"></i></a>
@@ -200,11 +200,13 @@ a:hover {text-decoration:none; }
             </div>
             <div class="snap-comment-form-container">
                 <span id="submit-snap-comment-error"></span>
+                <?php if(isset($featuredSnap)) { ?>
                 <?php echo $this->Form->create(null, array('controller' => 'snapshots', 'action' => 'insert_snap_comment','id' => 'submitSnapCommentForm')); ?>
                 <?php echo $this->Form->input('SnapshotComment.comment', array('id' => 'snapshotComment', 'type'=>'textarea','rows' =>'1', 'maxlength' => '140', 'label'=>false, 'div'=>false, 'placeHolder' => 'comment'));?>
                 <?php echo $this->Form->input('SnapshotComment._id', array('type' => 'hidden')); ?>
                 <?php echo $this->Form->input('SnapshotComment.snapId', array('type' => 'hidden', 'value' => ''.$featuredSnap->_id.'')); ?>
                 <?php echo $this->Form->end(); ?>
+                <?php } ?>
                 <a id="submit-comment-btn" class="btn btn-primary pull-right" disabled="disabled">Post Comment</a>
             </div>
         </div>

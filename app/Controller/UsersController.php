@@ -534,9 +534,10 @@ class UsersController extends AppController {
         $retVal['response'] = '';
         try {
             if ($userId != null) {
+
                 // first grab the user
                 $user = $this->User->find('first', array('conditions' => 'User.id =' .  $userId));
-                $school = $this->School->find('School.id=' . $user['school_id']);
+                $school = $this->School->find('first', array('conditions' => 'School.id =' . $user['User']['school_id']));
                 if($school != null) {
                     $user['User']['school_name'] = $school['School']['name'];
                 }

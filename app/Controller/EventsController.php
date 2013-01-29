@@ -538,7 +538,9 @@ class EventsController extends AppController {
 			     * new document
 			     */
 			    $eventData['_id'] = "";
-		            $eventData['imageURL'] = $this->data['Event']['imageURL'];
+			    if (isset($this->data['Event']['imageURL'])) {
+		        	$eventData['imageURL'] = $this->data['Event']['imageURL'];
+		    	}
 			    $responseData['eventdata'] = $eventData;
 			    $retVal['response'] = $responseData;
 			    $retVal['result'] = "true";
@@ -567,6 +569,8 @@ class EventsController extends AppController {
 		$retVal = array();
 		$retVal['result'] = "false";
 		$retVal['response'] = '';
+		$mobileAuth = isset($this->data['mobile_auth']);
+		
 		/*
 		 * WEB - grab the logged in user off the session
 		 * MOBILE - check auth token
@@ -580,7 +584,9 @@ class EventsController extends AppController {
 		}
 
 		try {
-			$events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle','imageURL', 'eventTime', 'eventLocation', 'eventDate', '_id', 'eventInfo', 'userID', 'featured'), 'order' => array('Event.eventDate' => 'ASC'), 'conditions' => array('collegeID' => $schoolId, 'active' => 1, 'eventDate.date' => array('$gte' => date("Y-m-d h:m:s")))));
+			// create a yesterday date for retrieving events
+			$yesterday = date('Y-m-d', time() - 60*60*24);
+			$events = $this->Event->find('all', array('fields' => array('collegeID','eventTitle','imageURL', 'eventTime', 'eventLocation', 'eventDate', '_id', 'eventInfo', 'userID', 'featured'), 'order' => array('Event.eventDate' => 'ASC'), 'conditions' => array('collegeID' => $schoolId, 'active' => 1, 'eventDate >' => $yesterday)));
 			$retVal['result'] = "true";
 			$retVal['response'] = $events;
 		} catch (Exception $e) {

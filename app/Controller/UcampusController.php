@@ -125,6 +125,7 @@ class UCampusController extends AppController {
             if ($school != null) {
                 $schoolName = $school['School']['name'];
             }
+            $this->set('schoolName', $schoolName);
 
             // grab the tweets for the school
             $tweets = $this->getTweetsBySchool($schoolName, $activeUser['school_id']);
