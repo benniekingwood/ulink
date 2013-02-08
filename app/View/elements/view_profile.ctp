@@ -26,7 +26,11 @@
         .success(function(responseText) {
             var data = JSON.parse(responseText);
             $('#vpUsername').html(data.User.username);
-            $('#vpImg').attr('src',hostname+"/img/files/users/medium/"+data.User.image_url);
+            if(data.User.image_url != '' && data.User.image_url !== undefined && data.User.image_url != false && data.User.image_url) {
+                $('#vpImg').attr('src',hostname+"/img/files/users/medium/"+data.User.image_url);
+            } else {
+               $('#vpImg').attr('src',hostname+"/img/files/users/noImage.jpg/"); 
+            }
             $('#vpFirstName').html(data.User.firstname);
             $('#vpLastName').html(data.User.lastname);
             $('#vpSchool').html(data.School.name);

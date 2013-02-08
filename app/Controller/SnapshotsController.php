@@ -370,7 +370,7 @@ class SnapshotsController extends AppController {
         if($mobileAuth != null) {
             $activeUser = array();
             $activeUser['id'] = $this->data['userId'];
-            $activeUser['image_url'] = $this->data['image_url'];
+            $activeUser['image_url'] = (isset($this->data['image_url'])) ? $this->data['image_url']: "";
         } else {
             $activeUser = $this->Auth->User();
         }
@@ -384,8 +384,10 @@ class SnapshotsController extends AppController {
             $comment['SnapshotComment']['created_short'] = date('M j, Y', strtotime($comment['SnapshotComment']['created']));
             $this->data = $comment;
             try {
-                if($this->SnapshotComment->save($this->data)) {
+                if($newComment = $this->SnapshotComment->save($this->data)) {
                     $comment['response'] = "true";
+                    // return the new ID of the comment so the user delete right away if necessary
+                    $comment['_id'] = $newComment['SnapshotComment']['_id'];
                     echo json_encode($comment);
                     exit;
                 } else {
@@ -408,7 +410,7 @@ class SnapshotsController extends AppController {
     } // insert_snap_comment
 
     /**
-     * POST API function will handle the deletion of snap comments
+     * GET API function will handle the deletion of snap comments
      * @param $id
      * @return json object
      */

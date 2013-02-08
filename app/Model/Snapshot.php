@@ -28,20 +28,22 @@ class Snapshot extends AppModel {
 	 * all associated data with the snaps
 	 */
         public function afterFind($snaps, $primary = FALSE) {
-		$User = ClassRegistry::init('User');
-		$SnapshotComment = ClassRegistry::init('SnapshotComment');
-		// load the user and comments for each snap
-                foreach($snaps as &$snap) {
-			$user = $User->findById($snap["Snapshot"]["userId"]);
-			unset($user['User']['password']);
-			unset($user['School']);
-                        $snap["Snapshot"]["user"] = $user;
-                        $comments = $SnapshotComment->getSnapshotCommentBySnapId($snap["Snapshot"]["_id"]);
-                        $snap["Snapshot"]["comments"] = $comments;
-			// decode all html special chars
-			$snap['Snapshot']['caption'] = htmlspecialchars_decode($snap['Snapshot']['caption'], ENT_QUOTES);
-                }
-                return $snaps;
+			$User = ClassRegistry::init('User');
+			$SnapshotComment = ClassRegistry::init('SnapshotComment');
+			// load the user and comments for each snap
+            foreach($snaps as &$snap) {
+            	if(isset($snap["Snapshot"]["userId"])) {
+					$user = $User->findById($snap["Snapshot"]["userId"]);
+					unset($user['User']['password']);
+					unset($user['School']);
+		            $snap["Snapshot"]["user"] = $user;
+		            $comments = $SnapshotComment->getSnapshotCommentBySnapId($snap["Snapshot"]["_id"]);
+	                $snap["Snapshot"]["comments"] = $comments;
+					// decode all html special chars
+					$snap['Snapshot']['caption'] = htmlspecialchars_decode($snap['Snapshot']['caption'], ENT_QUOTES);
+				}
+            }
+            return $snaps;
         }
 
 	/**

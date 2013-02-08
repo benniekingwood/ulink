@@ -302,8 +302,19 @@ class UsersController extends AppController {
                 foreach ($domains as $val) {
                     $lookdomain = explode('.', $lookdomain = $val);
 
+                    $domain = '';
+                    $first = TRUE;
+                    foreach($lookdomain as $dom) {
+                        if($first) {
+                           $first = FALSE; 
+                           $domain .= $dom;
+                        } else {
+                            $domain .= ".".$dom;
+                        }
+                    }
+
                     // break the loop if we find a match
-                    if ((eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@" . $lookdomain[0] . "." . $lookdomain[1] . "$", $data['User']['email'] ))) {
+                    if ((eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@" . $domain. "$", $data['User']['email'] ))) {
                         $retVal['result'] = "true";
                         $retVal['response'] = '';
                         break;
@@ -330,6 +341,7 @@ class UsersController extends AppController {
         $retVal = array();
         $retVal['result'] = "false";
         $retVal['response'] = '';
+        $validateError = 0;
          if($data != null) {
             $this->request->data = $data;
         }
@@ -486,6 +498,9 @@ class UsersController extends AppController {
                                 $snaps = $this->Snapshot->find('all', array('order'=>array('Snapshot.created'=>'DESC'),'conditions' => array('userId' => $getInfo['id'])));
                                 $getInfo['Events'] = $events;
                                 $getInfo['Snaps'] = $snaps;
+                                // grab the top snapper
+                                $user = new User();
+                                $getInfo['TopSnapper'] = $user->getTopSnapperBySchoolID($getInfo['school_id']);
                                 $retVal['response'] = $getInfo;
                             } else {
                                 echo "yes";
@@ -578,7 +593,7 @@ class UsersController extends AppController {
 
             // set the saved data on the user
             $this->User->set($this->request->data);
-
+            $validateError = 0;
             // validate the first name
             if (empty($this->request->data['User']['firstname'])) {
                 $this->User->invalidate('firstname', 'Please enter your first name');

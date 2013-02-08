@@ -30,6 +30,8 @@
                 <li>University of Virginia</li>
                 <li>George Mason University</li>
                 <li>James Madison University</li>
+                <li>UCLA</li>
+                <li>Maryland</li>
             </ul>
             <p><i>Don't see your school?</i></p>
             <p><a class="btn btn-warning" data-toggle="modal" href="#suggestComponent">Suggest Here</a></p>

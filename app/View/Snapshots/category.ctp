@@ -187,7 +187,12 @@ a:hover {text-decoration:none; }
                             <?php } ?>
                             <div class="comment-profile-img-container">
                                 <a id="view-profile-<?php echo $comment->SnapshotComment->userId; ?>" data-toggle="modal" href="#viewProfileComponent">
-                                    <?php echo $this->Html->image('files/users/thumbs/' . $comment->SnapshotComment->user_image_url . '', array('alt' => 'profile image', 'class'=>'profile-size-small'));?>
+ <?php if ($comment->SnapshotComment->user_image_url != '' && file_exists(WWW_ROOT . '/img/files/users/thumbs/' . $comment->SnapshotComment->user_image_url)) {
+            echo $this->Html->image('files/users/thumbs/' . $comment->SnapshotComment->user_image_url . '', array('alt' => 'profile image', 'class'=>'profile-size-small'));
+                } else {
+                    echo $this->Html->image('files/users/noImage.jpg', array('alt' => 'noprofileimagg', 'class'=>'profile-size-small'));
+                }
+            ?>
                                 </a>
                                 <br />
                                 <p class="campus-event-date"><?php echo date('M j, Y', strtotime($comment->SnapshotComment->created)); ?></p>

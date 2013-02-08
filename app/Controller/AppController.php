@@ -241,7 +241,7 @@ class AppController extends Controller {
         $image = WideImage::load($sourceURL);
         $info = getimagesize($sourceURL);
         if ($info['mime'] == 'image/png') {
-            $image->saveToFile($destinationURL, 8, PNG_NO_FILTER);
+            $image->saveToFile($destinationURL, 9, PNG_NO_FILTER);
         } else {
              /*
               * check to see if the image needs to be rotated to preserve
@@ -267,9 +267,9 @@ class AppController extends Controller {
 
         $info = getimagesize($sourceURL);
         if ($info['mime'] == 'image/png') {
-            $resizedImage->saveToFile($destinationURL, 7, PNG_NO_FILTER);
+            $resizedImage->saveToFile($destinationURL, 8, PNG_NO_FILTER);
         } else {
-            $resizedImage->saveToFile($destinationURL, 70);
+            $resizedImage->saveToFile($destinationURL, 80);
         }
 	return $destinationURL;
     }
@@ -398,7 +398,7 @@ class AppController extends Controller {
                             $url = $filename;
                             // upload the file
                           //  $success = move_uploaded_file($formdata['tmp_name'], $full_url);
-                             $this->compressOriginalImage($formdata['tmp_name'], $full_url, 80);
+                             $this->compressOriginalImage($formdata['tmp_name'], $full_url, 95);
                              $success = true;
                         } else {
                             // create unique filename and upload file
@@ -409,7 +409,7 @@ class AppController extends Controller {
                             $thumb_url = $folder_url . '/thumbs/' . $now . '-' . $filename;
                             $url = $now . '-'.$filename;
                            // $success = move_uploaded_file($formdata['tmp_name'], $full_url);
-                            $this->compressOriginalImage($formdata['tmp_name'], $full_url, 80);
+                            $this->compressOriginalImage($formdata['tmp_name'], $full_url, 95);
                             $success = true;
                         }
                         // if upload was successful

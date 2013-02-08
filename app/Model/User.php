@@ -72,6 +72,23 @@ class User extends AppModel {
     );
 
     /**
+     * After a user(s) is retreived, we need to check to 
+     * see if the profile image exists, if not, we should 
+     * clear out the image_url
+     */
+    public function afterFind($users, $primary = FALSE) {
+        foreach($users as &$user) {
+            if(isset($user['User']['image_url'])) {
+                $filePath = "" . WWW_ROOT . "img/files/users/" . $user['User']['image_url'];
+                if(!file_exists($filePath)) {
+                    $user['User']['image_url'] = '';
+                }
+            }
+        }
+        return $users;
+     }
+
+    /**
      * This method verifies that the confirmation and
      * regular password fields are matching
      *
@@ -97,6 +114,41 @@ class User extends AppModel {
             $valid = $this->isUnique(array($fieldName => $data));
         }
         return $valid;
+    }
+
+    /**
+     * This helper function will return the user with the 
+     * most snapshots for the school based on the passed 
+     * in school id.
+     * @param $schoolId
+     * @return User $retVal
+     */
+    public function getTopSnapperBySchoolID($schoolId) {
+        $retVal = null;
+        try {
+            $Snapshot = ClassRegistry::init('Snapshot');
+            $data = $Snapshot->find('first', array(
+                'fields' => array(
+                    "userID",
+                    'COUNT(userID) snapshots'
+                ),
+                'conditions' => array('schoolId' => $schoolId),
+                'group' => 'userID',
+                'order' => array('snapshots' => 'desc'),
+                'limit' => 1
+            ));
+            $retVal = $this->findById($data['Snapshot']['userID']);
+            $retVal['Users']['School'] = $retVal['School'];
+            unset($retVal['School']);
+            unset($retVal['Users']['School']['description']);
+            unset($retVal['Users']['password']);
+            unset($retVal['Country']);
+            unset($retVal['State']);
+            unset($retVal['City']);
+        } catch (Exception $e) {
+            $this->log('{User#getTopSnapperBySchoolID} - An exception was thrown: ' . $e->getMessage());
+        }
+        return $retVal['Users'];
     }
 }
 ?>
