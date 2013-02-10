@@ -10,12 +10,12 @@
 //require_once("../vendors/facebook/facebook/facebook.php");   <-- 7/30/2012 - Bennie- removing FB for now --too slow
 
 if (inDevMode()) {
-    // TEMP: Comment this is PROD
+    // Dev Plugin library paths
     require_once("../Lib/Twitter/tmhOAuth.php");
     require_once("../Lib/Twitter/tmhUtilities.php");
     require_once("../Lib//Wideimage/WideImage.php");
 } else {
-    // TEMP: Uncomment this is PROD
+    // PROD Plugin library paths
     require_once("/var/www/vhosts/www/app/Lib/Twitter/tmhOAuth.php");
     require_once("/var/www/vhosts/www/app/Lib/Twitter/tmhUtilities.php");
     require_once("/var/www/vhosts/www/app/Lib/Wideimage/WideImage.php");
@@ -111,7 +111,7 @@ class AppController extends Controller {
                 $this->set('profileImgURL', $this->Auth->user('image_url'));
 
                 // this section will load any reviews from the user
-                if ($this->Auth->user('id')) {
+              /*  if ($this->Auth->user('id')) {
                     $this->PermitModel = ClassRegistry::init("School");
                     $Shoolreview = $this->PermitModel->find('all', array('conditions' => array('School.id' => $this->Auth->user('school_id'))));
                     $this->set('Shoolreview', $Shoolreview);
@@ -127,7 +127,7 @@ class AppController extends Controller {
                     $this->set('usertextreview', $usertextreview);
                     $randCaptcha = rand(10000, 20000);
                     $this->set('RandCaptcha', $randCaptcha);
-                }
+                }*/
 
                 // login user from cookie if they are not logged in
                 if (!$this->Auth->user('id')) {
@@ -137,7 +137,7 @@ class AppController extends Controller {
                     }
                 }
             } catch (Exception $e) {
-                $this->log("{AppController#beforeFilter}-An exception was thrown: " . $e->getMessage());
+                $this->log("{AppController#beforeFilter}-An exception was thrown: " . $e->getMessage() ."::STACKTRACE::".$e->getTraceAsString());
             }
         } // end basic uLink auth
     } // beforefilter

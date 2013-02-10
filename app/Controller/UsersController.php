@@ -438,7 +438,7 @@ class UsersController extends AppController {
                     unset($this->request->data['User']['remember_me']);
                 }
             } catch (Exception $e) {
-                $this->log("{UsersController#login} - An exception was thrown when setting the cookie: " . $e->getMessage());
+                $this->log("{UsersController#login} - An exception was thrown when setting the cookie: " . $e->getMessage()."::STACKTRACE::".$e->getTraceAsString());
             }
 
             try {
@@ -452,7 +452,7 @@ class UsersController extends AppController {
                 // if a user was retrieved...success
                 if ($getInfo != null) {
                     if($isMobileRequest) {
-                        $school = $this->School->find('first', array('conditions' => 'School.id=' . $getInfo['school_id'] ));
+                        $school = $this->School->findById($getInfo['school_id']);
                         if($school != null) {
                             $getInfo['school_name'] = $school['School']['name'];
                         }
@@ -490,7 +490,9 @@ class UsersController extends AppController {
                         if (isset($_POST['loginMain'])) {
                             echo "main";
                             exit;
-                        }  else { // else this was from the login modal
+                        }  
+                        else 
+                        { // else this was from the login modal
                             if($isMobileRequest) {
                                 $retVal['result'] = "yes";
                                 // grab the user's events and snapshots and set in object to be returned as json
@@ -508,7 +510,8 @@ class UsersController extends AppController {
                             }
                         }
                     }
-                } else {   // finally it must be an invalid login
+                } else {   
+                    // finally it must be an invalid login
                     if($isMobileRequest) {
                         $retVal['result'] = "in-valid";
                     } else {
@@ -517,7 +520,7 @@ class UsersController extends AppController {
                     }
                 }
             } catch (Exception $e) {
-                $this->log("{UsersController#login} - An exception was thrown: " . $e->getMessage());
+                $this->log("{UsersController#login} - An exception was thrown: " . $e->getMessage() ."::STACKTRACE::".$e->getTraceAsString());
                 if($isMobileRequest) {
                     $retVal['result'] = "in-valid";
                 } else {
