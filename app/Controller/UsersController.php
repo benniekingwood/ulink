@@ -567,6 +567,9 @@ class UsersController extends AppController {
                 $snaps = $this->Snapshot->find('all', array('order'=>array('Snapshot.created'=>'DESC'),'conditions' => array('userId' => $userId)));
                 $user['User']['Events'] = $events;
                 $user['User']['Snaps'] = $snaps;
+                // grab the top snapper
+                $newUser = new User();
+                $user['User']['TopSnapper'] = $newUser->getTopSnapperBySchoolID($user['User']['school_id']);
                 $retVal['response'] = $user['User'];
                 $retVal['result'] = "true";
             }
