@@ -2,7 +2,7 @@
     <div class="row">
         <!--<a class="close" data-dismiss="modal">x</a>-->
         <div class="span2">&nbsp;
-            <?php echo $this->Html->image('files/users/noImage.jpg', array('id'=>'vpImg', 'class'=>'rounded', 'alt' => 'profileImg')); ?>
+            <img alt="profile image" id="vpImg" class="rounded" src="<?php echo URL_DEFAULT_USER_IMAGE ?>"/>
         </div>
         <div class="span3">
             <h2><span id="vpFirstName">Firstname</span>&nbsp;<span id="vpLastName">Lastname</span></h2>
@@ -27,9 +27,9 @@
             var data = JSON.parse(responseText);
             $('#vpUsername').html(data.User.username);
             if(data.User.image_url != '' && data.User.image_url !== undefined && data.User.image_url != false && data.User.image_url) {
-                $('#vpImg').attr('src',hostname+"/img/files/users/medium/"+data.User.image_url);
+                $('#vpImg').attr('src',URL_IMAGES_S3+"/files/users/medium/"+data.User.image_url);
             } else {
-               $('#vpImg').attr('src',hostname+"/img/files/users/noImage.jpg/"); 
+               $('#vpImg').attr('src',URL_DEFAULT_USER_IMAGE); 
             }
             $('#vpFirstName').html(data.User.firstname);
             $('#vpLastName').html(data.User.lastname);
@@ -40,7 +40,7 @@
         })
         .error(function() {
             $('#vpUsername').html('username');
-            $('#vpImg').attr('src',hostname+"/img/files/users/noImage.jpg/");
+            $('#vpImg').attr('src',URL_DEFAULT_USER_IMAGE);
             $('#vpFirstName').html('Firstname');
             $('#vpLastName').html('Lastname');
             $('#vpSchool').html('School Name');

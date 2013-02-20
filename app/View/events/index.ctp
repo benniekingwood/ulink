@@ -8,9 +8,9 @@ foreach($events as $event)
 {
 	$src = null;
       if(isset($event['Event']['imageURL'])) {
-	  $src = $this->Html->url('/img/files/events/medium/'.$event['Event']['imageURL']);
+	  $src = URL_EVENT_IMAGE_MEDIUM.$event['Event']['imageURL'];
       } else {
-	    $src = $this->Html->url('/img/defaults/default_campus_event.png');
+	    $src = URL_DEFAULT_EVENT_IMAGE;
       }
       	echo "<img width='100' height='100' src='" . $src. "'/><br/>";
 

@@ -31,8 +31,8 @@
                             <div class="thumbnail snap-thumbnail">
                                 <img src="<?php
                                     if(isset($snap['Snapshot']['imageURL'])) {
-                                        echo($this->Html->url('/img/files/snaps/medium/'.$snap['Snapshot']['imageURL']));
-                                    } else { echo($this->Html->url('/img/defaults/default_featured_event.png')); } ?>" alt=""/>
+                                        echo(URL_SNAP_IMAGE_MEDIUM.$snap['Snapshot']['imageURL']);
+                                    } else { echo(URL_DEFAULT_SNAP_IMAGE); } ?>" alt=""/>
                                  <p><?php if (strlen($snap['Snapshot']['caption']) > 50) {
                                             echo htmlspecialchars_decode(substr($snap['Snapshot']['caption'], 0, 56)) . '...';
                                         } else { echo htmlspecialchars_decode($snap['Snapshot']['caption']); } ?>

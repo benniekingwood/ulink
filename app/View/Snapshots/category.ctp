@@ -148,12 +148,12 @@ a:hover {text-decoration:none; }
                 <h2>Featured Snap</h2>
                 <div class="carousel-inner">
                   <div class="item active">
-                    <?php if(isset($featuredSnap)) { ?><!-- TODO: change to image server URL -->
-                        <img src="<?php echo($this->Html->url('/img/files/snaps/'.$featuredSnap->imageURL)); ?>" alt=""/>
+                    <?php if(isset($featuredSnap)) { ?>
+                        <img src="<?php echo(URL_SNAP_IMAGE.$featuredSnap->imageURL); ?>" alt="featured snap image"/>
                         <div class="carousel-caption">
                             <div class="span1">
                                 <a id="view-profile-<?php echo $featuredSnap->user->User->id; ?>" data-toggle="modal" href="#viewProfileComponent">
-                                <?php echo $this->Html->image('files/users/thumbs/' . $featuredSnap->user->User->image_url . '', array('alt' => 'profile image', 'class'=>'profile-size-small'));?>
+                                <img class="profile-size-small" alt="snap user image" src="<?php echo URL_USER_IMAGE_THUMB.$featuredSnap->user->User->image_url ?>"/>
                                 </a>
                             </div>
                             <p><?php echo htmlspecialchars_decode($featuredSnap->caption);?></p>
@@ -163,7 +163,7 @@ a:hover {text-decoration:none; }
                             </a>
                         </div>
                     <?php } else { ?>
-                        <img src="/img/defaults/default_snap.png" alt=""/>
+                        <img src="<?php echo URL_DEFAULT_SNAP_IMAGE?>" alt=""/>
                         <div class="carousel-caption">
                             <div class="span1">&nbsp;</div>
                         </div>
@@ -187,12 +187,11 @@ a:hover {text-decoration:none; }
                             <?php } ?>
                             <div class="comment-profile-img-container">
                                 <a id="view-profile-<?php echo $comment->SnapshotComment->userId; ?>" data-toggle="modal" href="#viewProfileComponent">
- <?php if ($comment->SnapshotComment->user_image_url != '' && file_exists(WWW_ROOT . '/img/files/users/thumbs/' . $comment->SnapshotComment->user_image_url)) {
-            echo $this->Html->image('files/users/thumbs/' . $comment->SnapshotComment->user_image_url . '', array('alt' => 'profile image', 'class'=>'profile-size-small'));
-                } else {
-                    echo $this->Html->image('files/users/noImage.jpg', array('alt' => 'noprofileimagg', 'class'=>'profile-size-small'));
-                }
-            ?>
+ <?php if ($comment->SnapshotComment->user_image_url != '' && getimagesize(URL_USER_IMAGE_THUMB . $comment->SnapshotComment->user_image_url)) { ?>
+                    <img class="profile-size-small" alt="snap comment user image" src="<?php echo URL_USER_IMAGE_THUMB.$comment->SnapshotComment->user_image_url ?>"/>
+              <?php  } else { ?>
+                    <img src="<?php echo URL_DEFAULT_SNAP_IMAGE?>" alt="noprofileimag" class="profile-size-small"/>
+               <?php } ?>
                                 </a>
                                 <br />
                                 <p class="campus-event-date"><?php echo date('M j, Y', strtotime($comment->SnapshotComment->created)); ?></p>
@@ -224,7 +223,7 @@ a:hover {text-decoration:none; }
             foreach($snaps as $snap) {  ?>
                 <li>
                   <a href="<?php echo($this->Html->url('/snapshots/category/'.$snap->Snapshot->category.'/'.$snap->Snapshot->_id)); ?>">
-                    <img src="<?php echo($this->Html->url('/img/files/snaps/medium/'.$snap->Snapshot->imageURL)); ?>"/>
+                    <img src="<?php echo(URL_SNAP_IMAGE_MEDIUM.$snap->Snapshot->imageURL); ?>"/>
                   </a>
                 </li>
           <?php } ?>
@@ -277,7 +276,7 @@ a:hover {text-decoration:none; }
                     $('#snapshotComment').val('');
                     var html = '<div id="snap-comment-' + counter + '" style="display:none;"><div class="row snap-comment"><div class="pull-right" style="width:30px">&nbsp;</div><div class="comment-profile-img-container">';
                     //html += '<a id="view-profile-' + json.SnapshotComment.userId + '" data-toggle="modal" href="#viewProfileComponent">';
-                    html += '<img alt="profile image" class="profile-size-small" src="'+hostname+"/img/files/users/thumbs/"+json.SnapshotComment.userImageURL+'"/><br />';
+                    html += '<img alt="profile image" class="profile-size-small" src="'+URL_IMAGES_S3+"files/users/thumbs/"+json.SnapshotComment.userImageURL+'"/><br />';
                     html += '<p class="campus-event-date">' +json.SnapshotComment.created_short + '</p></div><div class="span2" style="float:right;">';
                     html += json.SnapshotComment.comment+'</div></div>';
                     $('#snap-comments-alert').hide('slow');

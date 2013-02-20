@@ -196,3 +196,69 @@ if (!defined('SUGGEST_A_SCHOOL')) {
 if (!defined('IPINFODB_KEY')) {
     define('IPINFODB_KEY', '361b0020ff924f4fbb90c25b9b3f07a604a89e9c0b0aa8bc304d1192bb26e96f');
 }
+// first define the base url for images
+if (!defined('URL_IMAGES')) {
+    if(inDevMode()) {
+        define('URL_IMAGES', 'http://localhost:8888/img/');
+    } else {
+        define('URL_IMAGES', 'http://www.theulink.com/img/');
+    }
+}
+if (!defined('URL_IMAGES_S3')) {
+    if(inDevMode()) {
+        define('URL_IMAGES_S3', 'http://localhost:8888/img/');
+    } else {  // TODO: change this once we get S3 up
+        define('URL_IMAGES_S3', 'http://www.theulink.com/img/'); 
+    }
+}
+
+// define the image urls for defaults
+if (!defined('URL_DEFAULT_USER_IMAGE')) {
+    define('URL_DEFAULT_USER_IMAGE', URL_IMAGES.'defaults/default_user.jpg');
+}
+if (!defined('URL_DEFAULT_SNAP_IMAGE')) {
+    define('URL_DEFAULT_SNAP_IMAGE', URL_IMAGES.'defaults/default_snap.png');
+}
+if (!defined('URL_DEFAULT_EVENT_IMAGE')) {
+    define('URL_DEFAULT_EVENT_IMAGE', URL_IMAGES.'defaults/default_campus_event.png');
+}
+if (!defined('URL_DEFAULT_FEATURED_EVENT_IMAGE')) {
+    define('URL_DEFAULT_FEATURED_EVENT_IMAGE', URL_IMAGES.'defaults/default_featured_event.png');
+}
+
+// define the user model image urls
+if (!defined('URL_USER_IMAGE')) {
+    define('URL_USER_IMAGE', URL_IMAGES_S3.'files/users/');
+}
+if (!defined('URL_USER_IMAGE_THUMB')) {
+    define('URL_USER_IMAGE_THUMB', URL_IMAGES_S3.'files/users/thumbs/');
+}
+if (!defined('URL_USER_IMAGE_MEDIUM')) {
+    define('URL_USER_IMAGE_MEDIUM', URL_IMAGES_S3.'files/users/medium/');
+}
+
+// define the event model image urls
+if (!defined('URL_EVENT_IMAGE')) {
+    define('URL_EVENT_IMAGE', URL_IMAGES_S3.'files/events/');
+}
+if (!defined('URL_EVENT_IMAGE_THUMB')) {
+    define('URL_EVENT_IMAGE_THUMB', URL_IMAGES_S3.'files/events/thumbs/');
+}
+if (!defined('URL_EVENT_IMAGE_MEDIUM')) {
+    define('URL_EVENT_IMAGE_MEDIUM', URL_IMAGES_S3.'files/events/medium/');
+}
+// define the snapshot model image urls
+if (!defined('URL_SNAP_IMAGE')) {
+    define('URL_SNAP_IMAGE', URL_IMAGES_S3.'files/snaps/');
+}
+if (!defined('URL_SNAP_IMAGE_THUMB')) {
+    define('URL_SNAP_IMAGE_THUMB', URL_IMAGES_S3.'files/snaps/thumbs/');
+}
+if (!defined('URL_SNAP_IMAGE_MEDIUM')) {
+    define('URL_SNAP_IMAGE_MEDIUM', URL_IMAGES_S3.'files/snaps/medium/');
+}
+
+// define the school model image urls
+if (!defined('URL_SCHOOL_IMAGE')) {
+    define('URL_SCHOOL_IMAGE', URL_IMAGES_S3.'files/schools/');
+}

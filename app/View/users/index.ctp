@@ -24,15 +24,15 @@
                 </div>
                 <div class="row">
                     <div class="span3">
-                        <?php if ($this->data['User']['image_url'] != '' && file_exists(WWW_ROOT . '/img/files/users/' . $this->data['User']['image_url'])) {?>
+                        <?php if ($this->data['User']['image_url'] != '' && getimagesize(URL_USER_IMAGE_MEDIUM . $this->data['User']['image_url'])) {?>
                             <div id="profile-image">
-                                <?php echo $this->Html->image('files/users/' . $this->data['User']['image_url'] . '', array('alt' => 'profile image')); ?>
+                                <img alt="profile image" src="<?php echo URL_USER_IMAGE_MEDIUM . $this->data['User']['image_url'];?>">
                                 <br />
                                 <?php echo $this->Html->link('Remove this image', array('action' => 'removeImage', $this->data['User']['image_url']), array('class' => 'remove-profile-image', 'id' => $this->data['User']['id'], 'image_url' => $this->data['User']['image_url'])); ?>
                             </div>
                         <?php } else { ?>
                             <div>
-                                <?php echo $this->Html->image('files/users/noImage.jpg', array('alt' => 'noprofileimagg')); ?>
+                                <?php echo $this->Html->image('files/users/noImage.jpg', array('alt' => 'noprofileimage')); ?>
                             </div>
                         <?php } ?>
                     </div>

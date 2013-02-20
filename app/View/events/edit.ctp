@@ -25,8 +25,8 @@
                     <div class="span3">
                         <img src="<?php
                                     if(isset($event['Event']['imageURL']) && $event['Event']['imageURL'] != '') {
-                                        echo($this->Html->url('/img/files/events/medium/'.$event['Event']['imageURL']));
-                                    } else { echo($this->Html->url('/img/defaults/default_campus_event.png')); } ?>" alt="event image"/>
+                                        echo(URL_EVENT_IMAGE_MEDIUM.$event['Event']['imageURL']);
+                                    } else { echo(URL_DEFAULT_EVENT_IMAGE); } ?>" alt="event image"/>
                     </div>
                     <div class="span3">
                         <?php echo $this->Form->input('Event.image', array('class' => 'profile-file-upload','type' => 'file', 'label' => false, 'div' => false)); ?>

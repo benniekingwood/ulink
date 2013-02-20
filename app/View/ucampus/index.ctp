@@ -10,7 +10,8 @@
                     <?php
                         if(isset($featureEvents) && count($featureEvents) == 0) { ?>
                             <div class="item active">
-                                <?php echo $this->Html->image('defaults/default_featured_event.png', array('alt' => 'featured event image'));?>
+                                <img alt="featured event images" src="<?php echo URL_DEFAULT_FEATURED_EVENT_IMAGE?>"/>
+                               
                                 <a href="#" alt="">
                                     <div class="carousel-caption">
                                         <h4>Featured Events</h4>
@@ -29,8 +30,8 @@
                       <?php  }  ?>
                                  <img src="<?php
                                     if(isset($fevent['Event']['imageURL'])) {
-                                        echo($this->Html->url('/img/files/events/'.$fevent['Event']['imageURL']));
-                                    } else { echo($this->Html->url('/img/defaults/default_featured_event.png')); } ?>" alt="featured event image"/>
+                                        echo($this->Html->url(URL_EVENT_IMAGE.$fevent['Event']['imageURL']));
+                                    } else { echo(URL_DEFAULT_FEATURED_EVENT_IMAGE); } ?>" alt="featured event image"/>
                                 <a href="<?php echo($this->Html->url('/events/view/'.$fevent['Event']['_id'])); ?>" alt="">
                                     <div class="carousel-caption">
                                         <h4><?php echo $fevent['Event']['eventTitle'] ?></h4>
@@ -79,9 +80,9 @@
                 <div class="row trends-feed">
                     <div class="span1">
                         <?php
-                            if (isset($tweet['ulinkImageURL']) && $tweet['ulinkImageURL'] != '' && file_exists(WWW_ROOT . '/img/files/users/' . $tweet['ulinkImageURL'])) {
-                                echo $this->Html->image('files/users/' . $tweet['ulinkImageURL'] . '', array('alt' => 'profile image'));
-                            } else {
+                            if (isset($tweet['ulinkImageURL']) && $tweet['ulinkImageURL'] != '' && getimagesize(URL_USER_IMAGE_THUMB . $tweet['ulinkImageURL'])) { ?>
+                                <img alt="profile image" src="<?php echo URL_USER_IMAGE_THUMB.$tweet['ulinkImageURL']?>"></img>
+                           <?php } else {
                                 echo $this->Html->image($tweet['profile_image_url'] , array('alt' => 'tweet profile image'));
                             } ?>
 

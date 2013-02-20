@@ -72,13 +72,12 @@
                             <li>
                                 <div class="span3">
                                     <?php
-                                            if ($profileImgURL != '' && file_exists(WWW_ROOT . '/img/files/users/' . $profileImgURL)) {
-                                                echo $this->Html->image('files/users/' . $profileImgURL . '', array('alt' =>
-                                    'profileimage'));
-                                    } else {
-                                    echo $this->Html->image('files/users/noImage.jpg', array('alt' => 'noimage'));
-                                    }
-                                    ?>
+                                            if ($profileImgURL != '' && getimagesize(URL_USER_IMAGE_MEDIUM . $profileImgURL)) { ?>
+                                            <img alt="profile image" src="<?php echo URL_USER_IMAGE_MEDIUM . $profileImgURL ?>"/>
+                                           <?php } else { ?>
+                                                <img alt="profile image" src="<?php echo URL_DEFAULT_USER_IMAGE ?>"/>
+                                            <?php }
+                                        ?>
                                     <span id="profile-mgmt-name"><?php echo $loggedInName?></span>
                                 </div>
                                 <a href="<?php echo($this->Html->url('/users/'));?>">Manage my profile</a>

@@ -5,8 +5,8 @@
     <div class="event-picture thumbnail span4 well offset1">
         <img class="rounded" src="<?php
                                     if(isset($event['Event']['imageURL'])) {
-                                        echo($this->Html->url('/img/files/events/'.$event['Event']['imageURL']));
-                                    } else { echo($this->Html->url('/img/defaults/default_campus_event.png')); } ?>" alt="event image"/>
+                                        echo(URL_EVENT_IMAGE.$event['Event']['imageURL']);
+                                    } else { echo(URL_DEFAULT_EVENT_IMAGE); } ?>" alt="event image"/>
         <br />
         <div class="caption">
             <!--<a href="https://twitter.com/share" class="twitter-share-button" data-related="ulinkInc" data-dnt="true">Tweet</a>
@@ -20,12 +20,11 @@
             <div class="row">
                 <div class="span1 event-user-picture-container">
                     <a href="#">
-                    <?php if ($eventUser['User']['image_url'] != '' && file_exists(WWW_ROOT . '/img/files/users/medium/' . $eventUser['User']['image_url'])) {
-                           echo $this->Html->image('files/users/medium/' . $eventUser['User']['image_url'] . '', array('class'=>'rounded', 'alt' =>'profileimage'));
-                    } else {
-                     echo $this->Html->image('files/users/noImage.jpg', array('alt' => 'noimage', 'class'=>'rounded'));
-                    }
-                    ?>
+                    <?php if ($eventUser['User']['image_url'] != '' && getimagesize(URL_USER_IMAGE_MEDIUM . $eventUser['User']['image_url'])) { ?>
+                           <img src="<?php echo URL_USER_IMAGE_MEDIUM . $eventUser['User']['image_url'] ?>" class="rounded" alt="user profile image" />
+                   <?php } else { ?>
+                     <img src="<?php echo URL_DEFAULT_USER_IMAGE ?>" class="rounded" alt="default user image" />
+                   <?php } ?>
                 </a>
                 </div>
                 <div class="span3 event-user-info">

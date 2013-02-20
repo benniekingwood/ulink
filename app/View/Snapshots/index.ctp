@@ -174,7 +174,7 @@ a.gray:hover {
 		  foreach($splashsnaps as $splashsnap) {  ?>
 		      <li>
 			<a href="<?php echo($this->Html->url('/snapshots/category/'.$splashsnap[0]['Snapshot']['category'].'/'.$splashsnap[0]['Snapshot']['_id'])); ?>">
-			  <img src="<?php echo($this->Html->url('/img/files/snaps/medium/'.$splashsnap[0]['Snapshot']['imageURL'])); ?>"/>
+			  <img src="<?php echo(URL_SNAP_IMAGE_MEDIUM.$splashsnap[0]['Snapshot']['imageURL']); ?>"/>
 			</a>
 		      </li>
 	    <?php } }?>
