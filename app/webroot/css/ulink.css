@@ -1267,7 +1267,7 @@ background-color: #faa732;
 	text-align: center;
 	margin: auto 0;
 }
-#snap-filter-canvas {
+#snap-filter-canvas, #snap-picture-canvas {
 	width: inherit;
 	height: inherit;
 	position: relative;

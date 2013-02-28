@@ -27,7 +27,7 @@
             var data = JSON.parse(responseText);
             $('#vpUsername').html(data.User.username);
             if(data.User.image_url != '' && data.User.image_url !== undefined && data.User.image_url != false && data.User.image_url) {
-                $('#vpImg').attr('src',URL_IMAGES_S3+"/files/users/medium/"+data.User.image_url);
+                $('#vpImg').attr('src',URL_IMAGES_S3+"files/users/medium/"+data.User.image_url);
             } else {
                $('#vpImg').attr('src',URL_DEFAULT_USER_IMAGE); 
             }

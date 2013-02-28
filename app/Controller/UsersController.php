@@ -27,6 +27,30 @@ class UsersController extends AppController {
         $this->Security->validatePost = false;
     }
 
+    /**
+     * Helper function to remove all the images based on
+     * the passed in image URL
+     * @param $imageURL
+     */
+    private function deleteImagesForUser($imageURL=FALSE) {
+        if($imageURL) {
+                $basePath = "" . WWW_ROOT;
+                // delete the original sized image
+                $relPath = "img/files/users/" . $imageURL;
+                $localServerPath = $basePath. $relPath; 
+                $this->deleteImage($localServerPath, $relPath);
+                // delete the thumbs sized image
+                $thumbsPath = "img/files/users/thumbs/" . $imageURL;
+                $localServerPath = $basePath. $thumbsPath; 
+                $this->deleteImage($localServerPath, $thumbsPath);
+
+                // delete the medium sized image
+                $mediumFilePath = "img/files/users/medium/" .$imageURL;
+                $localServerPath = $basePath. $mediumFilePath;
+                $this->deleteImage($localServerPath, $mediumFilePath);
+        }
+    }
+
     /******************************************************/
     /*          USER API FUNCTIONS                         */
     /******************************************************/
@@ -623,33 +647,15 @@ class UsersController extends AppController {
                 $this->User->invalidate('school_status', 'Please choose your school status');
                 $validateError++;
             }
-
             // if there are no validation errors
             if (empty($this->User->validationErrors)) {
                 // if there is a new image, delete the old one and save the new one
                 if(isset($this->request->data['User']['file']['name']) && $this->request->data['User']['file']['name'] != "") {
                     $fileOK = $this->uploadFiles('img/files/users', $this->request->data['User']['file']);
-
                     if (array_key_exists('urls', $fileOK)) {
-                        if( $this->request->data['User']['image_url']  != "" ||  $this->request->data['User']['image_url']  != null) {
-                            $filePath = "" . WWW_ROOT . "img/files/users/" . $this->request->data['User']['image_url'];
-                            if(file_exists($filePath)) {
-                                // delete the event image from the server if there was one
-                                unlink($filePath);
-                            }
-                            // remove the old thumb and medium images
-                            $thumbsURL = "" . WWW_ROOT . "img/files/users/thumbs/" . $this->request->data['User']['image_url'];
-                            if(file_exists($thumbsURL)) {
-                                // delete the old image
-                                unlink($thumbsURL);
-                            }
-                             $mediumFilePath = "" . WWW_ROOT . "img/files/users/medium/" .$this->request->data['User']['image_url'];
-                            if(file_exists($mediumFilePath)) {
-                                // delete the old image
-                                unlink($mediumFilePath);
-                            }
+                        if($this->request->data['User']['image_url']  != "" ||  $this->request->data['User']['image_url']  != null) {
+                          $this->deleteImagesForUser($this->request->data['User']['image_url']);
                         }
-
                         // save the url in the form data
                         $this->request->data['User']['image_url'] = $fileOK['urls'][0];
                     } else {
@@ -862,21 +868,7 @@ class UsersController extends AppController {
 
             // update the user's profile in the db
             if ($this->User->save($data)) {
-                $fullFilePath = "" . WWW_ROOT . "img/files/users/" . $image_url;
-                if(file_exists($fullFilePath)) {
-                    unlink($fullFilePath);
-                }
-                // remove the old thumb and medium images
-                $thumbsURL = "" . WWW_ROOT . "img/files/users/thumbs/" . $image_url;
-                if(file_exists($thumbsURL)) {
-                    // delete the old image
-                    unlink($thumbsURL);
-                }
-                 $mediumFilePath = "" . WWW_ROOT . "img/files/users/medium/" .$image_url;
-                if(file_exists($mediumFilePath)) {
-                    // delete the old image
-                    unlink($mediumFilePath);
-                }
+                $this->deleteImagesForUser($image_url);
                 echo "true";
                 exit;
             } else {
@@ -1091,7 +1083,6 @@ class UsersController extends AppController {
             try {
                 // grab the user off the session
                 $this->request->data = $this->User->read('', $user['id']);
-
                 // build up the schools data
                 $schools = array();
                 $data_schools = $this->School->find('all');
@@ -1647,21 +1638,7 @@ class UsersController extends AppController {
             Configure::write('debug', 0);
             $this->autoRender = false;
             $this->layout = null;
-            $filePath = "" . WWW_ROOT . "img/files/users/" . $image_url;
-            if(file_exists($filePath)) {
-                unlink($filePath);
-            }
-              // remove the old thumb and medium images
-            $thumbsURL = "" . WWW_ROOT . "img/files/users/thumbs/" . $image_url;
-            if(file_exists($thumbsURL)) {
-                // delete the old image
-                unlink($thumbsURL);
-            }
-             $mediumFilePath = "" . WWW_ROOT . "img/files/users/medium/" .$image_url;
-            if(file_exists($mediumFilePath)) {
-                // delete the old image
-                unlink($mediumFilePath);
-            }
+            $this->deleteImagesForUser($image_url);
             echo "true";
         } else {
             Configure::write('debug', 0);
@@ -1688,21 +1665,7 @@ class UsersController extends AppController {
             Configure::write('debug', 0);
             $this->autoRender = false;
             $this->layout = null;
-            $filePath = "" . WWW_ROOT . "img/files/users/" . $image_url;
-            if(file_exists($filePath)) {
-                unlink($filePath);
-            }
-            // remove the old thumb and medium images
-            $thumbsURL = "" . WWW_ROOT . "img/files/users/thumbs/" . $image_url;
-            if(file_exists($thumbsURL)) {
-                // delete the old image
-                unlink($thumbsURL);
-            }
-             $mediumFilePath = "" . WWW_ROOT . "img/files/users/medium/" .$image_url;
-            if(file_exists($mediumFilePath)) {
-                // delete the old image
-                unlink($mediumFilePath);
-            }
+            $this->deleteImagesForUser($image_url);
             echo "true";
             exit;
         } else {

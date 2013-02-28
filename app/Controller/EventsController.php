@@ -50,6 +50,32 @@ class EventsController extends AppController {
 		}
 	}
 
+
+    /**
+     * Helper function to remove all the images based on
+     * the passed in image URL
+     * @param $imageURL
+     */
+    private function deleteImagesForEvent($imageURL=FALSE) {
+        if($imageURL) {
+               $basePath = "" . WWW_ROOT;
+                // delete the original sized image
+                $relPath = "img/files/events/" . $imageURL;
+                $localServerPath = $basePath. $relPath; 
+                $this->deleteImage($localServerPath, $relPath);
+                // delete the thumbs sized image
+                $thumbsPath = "img/files/events/thumbs/" . $imageURL;
+                $localServerPath = $basePath. $thumbsPath; 
+                $this->deleteImage($localServerPath, $thumbsPath);
+
+                // delete the medium sized image
+                $mediumFilePath = "img/files/events/medium/" .$imageURL;
+                $localServerPath = $basePath. $mediumFilePath;
+                $this->deleteImage($localServerPath, $mediumFilePath);
+        }
+    }
+
+
 	/**
 	 * This function will load the index view of the event controller.
 	 * TODO: 8.4.12 - This function will eventually serve as our
@@ -639,23 +665,8 @@ class EventsController extends AppController {
 
 			if (array_key_exists('urls', $fileOK)) {
 			    if( $event['Event']['imageURL'] != "" ||  $event['Event']['imageURL'] != null) {
-				$filePath = "" . WWW_ROOT . "img/files/events/" . $event['Event']['imageURL'];
-				if(file_exists($filePath)) {
-					// delete the event image from the server if there was one
-					unlink($filePath);
-				}
-				// remove the old thumb and medium images
-				$thumbsURL = "" . WWW_ROOT . "img/files/events/thumbs/" . $event['Event']['imageURL'];
-				if(file_exists($thumbsURL)) {
-				    // delete the old image
-				    unlink($thumbsURL);
-				}
-				 $mediumFilePath = "" . WWW_ROOT . "img/files/events/medium/" .$event['Event']['imageURL'];
-				if(file_exists($mediumFilePath)) {
-				    // delete the old image
-				    unlink($mediumFilePath);
-				}
-			     }
+					$this->deleteImagesForEvent($event['Event']['imageURL']);
+			    }
 
 			    // save the url in the form data
 			    $event['Event']['imageURL'] = $fileOK['urls'][0];
@@ -729,24 +740,9 @@ class EventsController extends AppController {
             if($this->Event->delete($id)) {
                 $retVal['result'] = 'true';
                 $retVal['response'] = 'Your event was successfully deleted.';
-		if( $event['Event']['imageURL'] != "" ||  $event['Event']['imageURL'] != null) {
-			$filePath = "" . WWW_ROOT . "img/files/events/" . $event['Event']['imageURL'];
-			if(file_exists($filePath)) {
-				// delete the event image from the server if there was one
-				unlink($filePath);
-			}
-			// remove the old thumb and medium images
-			$thumbsURL = "" . WWW_ROOT . "img/files/events/thumbs/" . $event['Event']['imageURL'];
-			if(file_exists($thumbsURL)) {
-			    // delete the old image
-			    unlink($thumbsURL);
-			}
-			 $mediumFilePath = "" . WWW_ROOT . "img/files/events/medium/" .$event['Event']['imageURL'];
-			if(file_exists($mediumFilePath)) {
-			    // delete the old image
-			    unlink($mediumFilePath);
-			}
-		}
+				if( $event['Event']['imageURL'] != "" ||  $event['Event']['imageURL'] != null) {
+					$this->deleteImagesForEvent($event['Event']['imageURL']);
+				}
 
                 return json_encode($retVal);
             }

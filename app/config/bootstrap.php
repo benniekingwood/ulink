@@ -196,6 +196,18 @@ if (!defined('SUGGEST_A_SCHOOL')) {
 if (!defined('IPINFODB_KEY')) {
     define('IPINFODB_KEY', '361b0020ff924f4fbb90c25b9b3f07a604a89e9c0b0aa8bc304d1192bb26e96f');
 }
+
+// S3 Uploader Auth keys
+if(!defined('AWS_ACCESS_KEY')) {
+    define('AWS_ACCESS_KEY', 'AKIAIWNS6CENCJVPALBA');
+}
+if(!defined('AWS_SECRET_KEY')) {
+    define('AWS_SECRET_KEY', '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');
+}
+if(!defined('S3_IMAGE_BUCKET')) {
+    define('S3_IMAGE_BUCKET', 'ulink_images');
+}
+
 // first define the base url for images
 if (!defined('URL_IMAGES')) {
     if(inDevMode()) {
@@ -207,8 +219,8 @@ if (!defined('URL_IMAGES')) {
 if (!defined('URL_IMAGES_S3')) {
     if(inDevMode()) {
         define('URL_IMAGES_S3', 'http://localhost:8888/img/');
-    } else {  // TODO: change this once we get S3 up
-        define('URL_IMAGES_S3', 'http://www.theulink.com/img/'); 
+    } else {  
+        define('URL_IMAGES_S3', 'https://s3.amazonaws.com/ulink_images/img/'); 
     }
 }
 

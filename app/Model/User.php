@@ -79,10 +79,9 @@ class User extends AppModel {
     public function afterFind($users, $primary = FALSE) {
         foreach($users as &$user) {
             if(isset($user['User']['image_url'])) {
-                $filePath = "" . WWW_ROOT . "img/files/users/" . $user['User']['image_url'];
-                if(!file_exists($filePath)) {
+                if(getimagesize(URL_USER_IMAGE . $user['User']['image_url']) <= 0) {
                     $user['User']['image_url'] = '';
-                }
+                } 
             }
         }
         return $users;

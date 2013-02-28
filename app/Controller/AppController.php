@@ -13,12 +13,14 @@ if (inDevMode()) {
     // Dev Plugin library paths
     require_once("../Lib/Twitter/tmhOAuth.php");
     require_once("../Lib/Twitter/tmhUtilities.php");
-    require_once("../Lib//Wideimage/WideImage.php");
+    require_once("../Lib/Wideimage/WideImage.php");
+    require_once("../Lib/S3/S3.php");
 } else {
     // PROD Plugin library paths
     require_once("/var/www/vhosts/www/app/Lib/Twitter/tmhOAuth.php");
     require_once("/var/www/vhosts/www/app/Lib/Twitter/tmhUtilities.php");
     require_once("/var/www/vhosts/www/app/Lib/Wideimage/WideImage.php");
+    require_once("/var/www/vhosts/www/app/Lib/S3/S3.php");
 }
 
 define('_UNIT_MILES', 'm');
@@ -51,7 +53,6 @@ class AppController extends Controller {
     var $youtube_username = YOUTUBE_USERNAME;
     var $youtube_password = YOUTUBE_PASSWORD;
     var $emailCheckExpression = '/^\s*[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9}\s*$/';
-
     /**
      * Default constructor, will instantiate a facebook client
      */
@@ -61,6 +62,7 @@ class AppController extends Controller {
         $GLOBALS['facebook_config']['debug'] = NULL;
         // Create a Facebook client API object.
         //$this->facebook = new Facebook($this->__fbApiKey, $this->__fbSecret);  <-- 7/30/2012 - Bennie- removing FB for now --too slow
+        S3::setAuth(AWS_ACCESS_KEY, AWS_SECRET_KEY);
     }
 
     /**
@@ -229,6 +231,34 @@ class AppController extends Controller {
     }
 
     /**
+     * This function will search a string for a specific
+     * model name.  If that model name is found it will 
+     * return the string name of the model.  This is mainly
+     * used to build an upload name for the S3 cloud.
+     * @param $originalFilePath
+     * @param $sliceType
+     * @return string $retVal
+     */
+    private function getS3UploadName($originalFilePath, $sliceType) {
+        $retVal = 'img/files/';
+        $tokens = explode(DIRECTORY_SEPARATOR, $originalFilePath);
+        if(strpos($originalFilePath, 'users') !== FALSE) {
+            $retVal .= 'users/';
+        } else if(strpos($originalFilePath, 'snaps') !== FALSE) {
+            $retVal .= 'snaps/';
+        } else if (strpos($originalFilePath, 'events') !== FALSE) {
+            $retVal .= 'events/';
+        } else if (strpos($originalFilePath, 'schools') !== FALSE) {
+            $retVal .= 'schools/';
+        }
+        if($sliceType == 'thumbs' || $sliceType == 'medium') {
+            $retVal .= $sliceType .'/';
+        } 
+        $retVal .= basename($originalFilePath);
+        return $retVal;
+    }
+
+    /**
      * This function will compress the image until the desired file
      * size is reached.  This will mainly be used for the web images
      * @param $sourceURL
@@ -250,7 +280,7 @@ class AppController extends Controller {
             $image = $this->maintainImageOrientation($sourceURL, $image);
             $image->saveToFile($destinationURL, $quality);
         }
-	return $destinationURL;
+	   return $destinationURL;
     }
 
     /**
@@ -259,19 +289,35 @@ class AppController extends Controller {
      * with these specifications: 400x400, filesize ~25k.
      * @param $sourceURL
      * @param $destinationURL
+     * @param $quality
      * @return string $destinationURL
      */
-    protected function createMediumImage($sourceURL, $destinationURL) {
+    protected function createMediumImage($sourceURL, $destinationURL, $quality=8) {
         $image = WideImage::load($sourceURL);
         $resizedImage = $image->resize('450', '450', 'inside', 'any');
 
         $info = getimagesize($sourceURL);
         if ($info['mime'] == 'image/png') {
-            $resizedImage->saveToFile($destinationURL, 8, PNG_NO_FILTER);
+            $resizedImage->saveToFile($destinationURL, $quality, PNG_NO_FILTER);
         } else {
-            $resizedImage->saveToFile($destinationURL, 80);
+            $resizedImage->saveToFile($destinationURL, $quality*10);
+        } 
+       
+        // upload the thumb image to s3 if NOT in DEV MODE
+        if(!inDevMode()) {
+            // get the upload name
+            $uploadName = $this->getS3UploadName($destinationURL, 'medium');
+            // upload the file to S3
+            if (S3::putObjectFile($destinationURL, S3_IMAGE_BUCKET, $uploadName, S3::ACL_PUBLIC_READ)) {
+                if(file_exists($destinationURL)) {
+                    // delete the medium image on the local server
+                    unlink($destinationURL);
+                }
+            } else {
+                 $this->log("{AppController#index} - S3 Failed to upload medium image with URL: ". $uploadName.".  You need to manually upload it to S3.");
+            }
         }
-	return $destinationURL;
+	   return $destinationURL;
     }
 
      /**
@@ -280,36 +326,68 @@ class AppController extends Controller {
      * with these specifications: 400x400, filesize ~25k.
      * @param $sourceURL
      * @param $destinationURL
+     * @param $quality
      * @return string $destinationURL
      */
-    protected function createThumbImage($sourceURL, $destinationURL) {
-	/*$info = getimagesize($sourceURL);
-	if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/jpg') $image = imagecreatefromjpeg($sourceURL);
-	elseif ($info['mime'] == 'image/gif') $image = imagecreatefromgif($sourceURL);
-	elseif ($info['mime'] == 'image/png') $image = imagecreatefrompng($sourceURL);
-        $maxCompression = 10; // go as low as 10% image quality
-        $maxFileSize = 4000; // measured in bytes
-        $quality = 90;
-
-        $image = $this->resizeImage($image, 40);
-
-        // reduce the filesize of the new thumb image
-        while (filesize($sourceURL) > maxFileSize && $quality > maxCompression)
-        {
-            $quality -= 10;
-            imagejpeg($image, $destinationURL, $quality);
-        }
-        return $destinationURL;*/
+    protected function createThumbImage($sourceURL, $destinationURL, $quality=8) {
         $image = WideImage::load($sourceURL);
         $resizedImage = $image->resize('80', '80', 'inside', 'any');
 
         $info = getimagesize($sourceURL);
         if ($info['mime'] == 'image/png') {
-            $resizedImage->saveToFile($destinationURL, 8, PNG_NO_FILTER);
+            $resizedImage->saveToFile($destinationURL, $quality, PNG_NO_FILTER);
         } else {
-            $resizedImage->saveToFile($destinationURL, 80);
+            $resizedImage->saveToFile($destinationURL, $quality*10);
         }
-	return $destinationURL;
+
+        // upload the thumb image to s3 if NOT in DEV MODE
+        if(!inDevMode()) {
+            // get the upload name
+            $uploadName = $this->getS3UploadName($destinationURL, 'thumbs');
+            // upload the file to S3
+            if (S3::putObjectFile($destinationURL, S3_IMAGE_BUCKET, $uploadName, S3::ACL_PUBLIC_READ)) {
+                if(file_exists($destinationURL)) {
+                    // delete the thumbs image on the local server
+                    unlink($destinationURL);
+                }
+            } else {
+                 $this->log("{AppController#index} - S3 Failed to upload thumbs image with URL: ". $uploadName.".  You need to manually upload it to S3.");
+            }
+            // upload the original image
+            // get the upload name
+            $uploadName = $this->getS3UploadName($sourceURL, FALSE);
+            // upload the file to S3
+            if (S3::putObjectFile($sourceURL, S3_IMAGE_BUCKET, $uploadName, S3::ACL_PUBLIC_READ)) {
+                if(file_exists($sourceURL)) {
+                // delete the original image on the local server
+                    unlink($sourceURL);
+                }
+            } else {
+                 $this->log("{AppController#index} - S3 Failed to upload original image with URL: ". $uploadName.".  You need to manually upload it to S3.");
+            }
+        }
+	   return $destinationURL;
+    }
+
+    /**
+     * This function will delete an image from either the
+     * local server (IF DEV MODE) or the S3 server (PROD)
+     * @param $serverPath
+     * @param $s3Path
+     */
+    protected function deleteImage($serverPath, $s3Path) {
+        if(inDevMode()) {
+            if(file_exists($serverPath)) {
+                // delete the image from the server if there was one
+                unlink($serverPath);
+            } else {
+                $this->log("{AppController#index} - Failed to delete the image with URL: ". $serverPath.".  You need to manually delete it on your local server.");
+            }
+        } else { 
+            if (!S3::deleteObject(S3_IMAGE_BUCKET, $s3Path)) {
+                $this->log("{AppController#index} - S3 Failed to delete the image with URL: ". $s3Path.".  You need to manually delete it on S3.");
+            }
+        }
     }
 
     /**
@@ -402,7 +480,7 @@ class AppController extends Controller {
                              $success = true;
                         } else {
                             // create unique filename and upload file
-                            ini_set('date.timezone', 'Europe/London');
+                            ini_set('date.timezone', 'America/New_York');
                             $now = date('Y-m-d-His');
                             $full_url = $folder_url . '/' . $now . '-' . $filename;
                             $medium_url = $folder_url . '/medium/' . $now . '-' . $filename;
@@ -415,7 +493,7 @@ class AppController extends Controller {
                         // if upload was successful
                         if ($success) {
                             $this->createMediumImage($full_url, $medium_url);
-                            $this->createThumbImage($full_url, $thumb_url);
+                            $this->createThumbImage($full_url, $thumb_url);                            
                             // save the url of the file
                             $result['urls'][] = $url;
                         } else {

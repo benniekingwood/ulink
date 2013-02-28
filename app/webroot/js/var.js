@@ -16,6 +16,10 @@ if (document.location.hostname == "localhost") {
 } else {
 	hostname="http://www.theulink.com/";
 	URL_IMAGES = "http://www.theulink.com/img/";
-	URL_IMAGES_S3 = "http://www.theulink.com/img/"
+	URL_IMAGES_S3 = "https://s3.amazonaws.com/ulink_images/img/"
 	URL_DEFAULT_USER_IMAGE = "http://www.theulink.com/img/defaults/default_user.jpg";
 }
+
+// Aviary KEYS
+var AVIARY_KEY = 'uFvQFX75BkainhVJjRop6Q';
+var AVIARY_SECRET = 'PKdz5NHRcUCrlzkyKajnrA';

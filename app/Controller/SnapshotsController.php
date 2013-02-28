@@ -24,6 +24,30 @@ class SnapshotsController extends AppController {
     } // beforeFilter
 
     /**
+     * Helper function to remove all the images based on
+     * the passed in image URL
+     * @param $imageURL
+     */
+    private function deleteImagesForSnap($imageURL=FALSE) {
+        if($imageURL) {
+               $basePath = "" . WWW_ROOT;
+                // delete the original sized image
+                $relPath = "img/files/snaps/" . $imageURL;
+                $localServerPath = $basePath. $relPath; 
+                $this->deleteImage($localServerPath, $relPath);
+                // delete the thumbs sized image
+                $thumbsPath = "img/files/snaps/thumbs/" . $imageURL;
+                $localServerPath = $basePath. $thumbsPath; 
+                $this->deleteImage($localServerPath, $thumbsPath);
+
+                // delete the medium sized image
+                $mediumFilePath = "img/files/snaps/medium/" .$imageURL;
+                $localServerPath = $basePath. $mediumFilePath;
+                $this->deleteImage($localServerPath, $mediumFilePath);
+        }
+    }
+
+    /**
      * Handles the Snapshots splash page load
      */
     public function index() {
@@ -255,6 +279,8 @@ class SnapshotsController extends AppController {
             $this->data = $snap;
             try {
                 if($this->Snapshot->save($this->data)) {
+                    
+                    $snap = $this->Snapshot->find('first', array('conditions' => array('imageURL'=>$snap['Snapshot']['imageURL'])));
                     $snap['response'] = "true";
                     echo json_encode($snap);
                     exit;
@@ -294,49 +320,36 @@ class SnapshotsController extends AppController {
                 $mediumURL = WWW_ROOT . "img/files/snaps/medium/";
                 // save the filteered image to the server
                 $oldImageURL = $this->data['Snapshot']['imageURL'];
-                $imageData = $this->data['Snapshot']['image'];
-                $filteredData=substr($imageData, strpos($imageData, ",")+1);
-                $unencodedData=base64_decode($filteredData);
+                $newImageURL = $this->data['Snapshot']['imageURLFiltered'];
+                $_id = $this->data['Snapshot']['_id'];
+         
+                $unencodedData = file_get_contents($newImageURL);
+                // build up the new file name
                 $now = date('Y-m-d-His');
-                $fileTokens = explode("/", $oldImageURL);
-                $origFileName = $fileTokens[6];
-                $tokens = explode("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9]-", $fileTokens[6]);
-                if(count($tokens)>1) {
-                    $fileName = $now . '-' . $tokens[4];
-                } else {
-                    $fileName = $now . '-' . $tokens[0];
-                }
+                $origFileName = basename($oldImageURL);
+                $newFileName = basename($newImageURL);
+          
+                $fileName = $now .'-' . $newFileName;
+
                 $fp = fopen( $fullURL . $fileName, 'wb' );
                 fwrite( $fp, $unencodedData);
                 fclose( $fp );
 
+          
+
                 // grab the snap with the old image URL
-                $snap = $this->Snapshot->find('first', array('conditions' => array('imageURL' => $origFileName)));
+                $snap = $this->Snapshot->findById($_id);
                 // update the snapshot based on the old image url with the new image url
                 $snap['Snapshot']['imageURL'] = $fileName;
+            
                 $this->Snapshot->save($snap);
 
                 // save the new thumb and medium files
-                $this->createMediumImage($fullURL.$fileName, $mediumURL.$fileName);
-                $this->createThumbImage($fullURL.$fileName, $thumbsURL.$fileName);
-                $filePath = $fullURL . $origFileName;
-                if(file_exists($filePath)) {
-                    // delete the old image
-                    unlink($filePath);
-                }
-                // remove the old thumb and medium images
-                $thumbFilePath = $thumbsURL . $origFileName;
-                if(file_exists($thumbFilePath)) {
-                    // delete the old image
-                    unlink($thumbFilePath);
-                }
-                $mediumFilePath = $mediumURL . $origFileName;
-                if(file_exists($mediumFilePath)) {
-                    // delete the old image
-                    unlink($mediumFilePath);
-                }
+                $this->createMediumImage($fullURL.$fileName, $mediumURL.$fileName, 9);
+                $this->createThumbImage($fullURL.$fileName, $thumbsURL.$fileName, 9);
+                $this->deleteImagesForSnap($origFileName);
             } catch (Exception $e) {
-                $this->log("{SnapshotsController#apply_snap_filter} - An exception was thrown: " . $e->getMessage());
+                $this->log("{SnapshotsController#apply_snap_filter} - An exception was thrown: " . $e->getMessage()."::STACKTRACE::".$e->getTraceAsString());
                 $retVal['response'] = "false";
                 echo json_encode($retVal);
                 exit;
@@ -509,22 +522,7 @@ class SnapshotsController extends AppController {
             }
 
             if($this->Snapshot->deleteSnapshot($id)) {
-                $filePath = "" . WWW_ROOT . "img/files/snaps/" . $snap['Snapshot']['imageURL'];
-                if(file_exists($filePath)) {
-                    // delete the snapshot image from the server
-                    unlink($filePath);
-                }
-                 // remove the old thumb and medium images
-                $thumbsURL = "" . WWW_ROOT . "img/files/snaps/thumbs/" . $snap['Snapshot']['imageURL'];
-                if(file_exists($thumbsURL)) {
-                    // delete the old image
-                    unlink($thumbsURL);
-                }
-                 $mediumFilePath = "" . WWW_ROOT . "img/files/snaps/medium/" . $snap['Snapshot']['imageURL'];
-                if(file_exists($mediumFilePath)) {
-                    // delete the old image
-                    unlink($mediumFilePath);
-                }
+                $this->deleteImagesForSnap($snap['Snapshot']['imageURL']);
                 $retVal['result'] = 'true';
                 $retVal['response'] = 'Your snapshot was successfully deleted.';
                 return json_encode($retVal);
