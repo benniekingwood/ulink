@@ -39,6 +39,12 @@ class UCampusController extends AppController {
         $retVal = array();
         $retVal['result'] = "false";
         $retVal['response'] = "";
+
+        // if null attempt to grab from querystring
+        if($school_id == null) {
+            $school_id = $this->request->query['school_id'];   
+        }
+
         try {
             // grab the school based on the passed in id
             $school = $this->School->find('first', array('conditions' => array('School.id' => $school_id), 'fields' => array('woeid', 'name')));
@@ -80,6 +86,12 @@ class UCampusController extends AppController {
         $retVal = array();
         $retVal['result'] = "false";
         $retVal['response'] = "";
+
+        // if null attempt to grab from querystring
+        if($school_id == null) {
+            $school_id = $this->request->query['school_id'];   
+        }
+
         try {
             // grab the school based on the passed in id
             $school = $this->School->find('first', array('conditions' => array('School.id' => $school_id), 'fields' => array('woeid', 'name')));

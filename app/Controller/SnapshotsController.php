@@ -18,7 +18,7 @@ class SnapshotsController extends AppController {
      */
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('index', 'insert_snap_comment', 'insert_snap', 'delete_snap_comment', 'delete_snapshot', 'snap_categories');
+        $this->Auth->allow('index', 'insert_snap_comment', 'insert_snap', 'delete_snap_comment', 'delete_snapshot', 'snap_categories', 'snaps');
         $this->Security->csrfCheck = false;
         $this->Security->validatePost = false;
     } // beforeFilter
@@ -210,6 +210,14 @@ class SnapshotsController extends AppController {
         $retVal = array();
         $retVal['result'] = "false";
         $retVal['response'] = '';
+
+        // if null attempt to grab from querystring
+        if($schoolId == null) {
+            $schoolId =$this->request->query['school_id'];   
+        }
+        if($categoryId == null) {
+            $categoryId = $this->request->query['category_id'];   
+        }
 
         try {
             // load the snaps based on the school id and the category id, and limit
