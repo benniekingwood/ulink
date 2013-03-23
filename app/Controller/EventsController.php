@@ -539,15 +539,15 @@ class EventsController extends AppController {
 		    $event['Event']['eventDate']  = date('Y-m-d H:i:s', strtotime($this->data['Event']['eventDate'])+86340);
 
 		    // if there is an event image, save it
-		    if(isset($this->data['Event']['image'])) {
-			$fileOK = $this->uploadFiles('img/files/events', $this->data['Event']['image']);
-			if (array_key_exists('urls', $fileOK)) {
-			    // save the url in the form data
-			    $event['Event']['imageURL'] = $fileOK['urls'][0];
-			} else {
-			    throw new Exception('The event image did not save correctly to the server.');
-			}
-			unset($event['Event']['image']);
+		    if(isset($this->data['Event']['image']) && $this->data['Event']['image'] != "") {
+                $fileOK = $this->uploadFiles('img/files/events', $this->data['Event']['image']);
+                if (array_key_exists('urls', $fileOK)) {
+                    // save the url in the form data
+                    $event['Event']['imageURL'] = $fileOK['urls'][0];
+                } else {
+                    throw new Exception('The event image did not save correctly to the server.');
+                }
+                unset($event['Event']['image']);
 		    }
 		    // remove any unnecessary fields
 		    unset($event['mobile_auth']);

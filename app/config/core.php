@@ -256,7 +256,7 @@ if (extension_loaded('apc') && function_exists('apc_dec') && (php_sapi_name() !=
 }
 
 // In development mode, caches should expire quickly.
-$duration = '+999 days';
+$duration = '+ 1 days';
 if (Configure::read('debug') >= 1) {
 	$duration = '+10 seconds';
 }
