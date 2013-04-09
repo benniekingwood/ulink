@@ -56,19 +56,19 @@ class EmailConfig {
                           'host' => 'ssl://smtp.gmail.com',
                           'port' => 465,
                           'username' => 'noreply@theulink.com',
-                          'password' => 'uL!nK2009',
+                          'password' => 'Drag1on!',
                           'from' => array('noreply@theulink.com' => 'uLink, Inc.'),
                           'transport' => 'Smtp'
                           );
 
     public $smtp = array(
                          'transport' => 'Smtp',
-                         'from' => array('noreply@theulink.com' => 'uLink'),
+                         'from' => array('noreply@theulink.com' => 'uLink, Inc.'),
                          'host' => 'mail.theulink.com',
                          'port' => 587,
                          'timeout' => 30,
                          'username' => 'noreply@theulink.com',
-                         'password' => 'uL!nK2009',
+                         'password' => 'Drag1on!',
                          'client' => null,
                          'log' => false,
                          //'charset' => 'utf-8',
