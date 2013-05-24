@@ -479,6 +479,7 @@ class UsersController extends AppController {
                         $school = $this->School->findById($getInfo['school_id']);
                         if($school != null) {
                             $getInfo['school_name'] = $school['School']['name'];
+                            $getInfo['school_short_name'] =  $school['School']['short_name'];
                         }
                     }
                     // first check to see if the user is active

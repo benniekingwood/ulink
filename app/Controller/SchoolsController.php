@@ -73,9 +73,9 @@ class SchoolsController extends AppController {
         $schools = null;
         // grab a school by the id if it was passed in
         if($id != null) {
-            $schools = $this->School->find('list',array('fields' => array('id', 'name')));
+            $schools = $this->School->findById($id);
         } else { // else grab all the school
-            $schools = $this->School->find('list',array('fields' => array('id', 'name'),'order'=>array('School.name'=>'ASC')));
+            $schools = $this->School->find('list',array('fields' => array('short_name', 'name', 'id'),'order'=>array('School.name'=>'ASC')));
         }
 
         if($schools != null) {
