@@ -61,6 +61,7 @@ class SchoolsController extends AppController {
      * GET API function that will return an active
      * school (if an $id is passed in), or all the
      * schools if no $id is passed in
+     * @param $id
      * @return array $retVal
      */
     public function school($id=null) {
@@ -75,11 +76,12 @@ class SchoolsController extends AppController {
         if($id != null) {
             $schools = $this->School->findById($id);
         } else { // else grab all the school
-            $schools = $this->School->find('list',array('fields' => array('short_name', 'name', 'id'),'order'=>array('School.name'=>'ASC')));
+            $schools = $this->School->find('all',array('fields' => array('id', 'short_name', 'name', 'latitude','longitude', 'image_url', 'short_description'),'order'=>array('School.name'=>'ASC')));
         }
-
         if($schools != null) {
-            $retVal['response'] = $schools;
+            foreach($schools as $school) {
+                $retVal['response'][] = $school['School'];
+            }
         }
         return json_encode($retVal);
     } // school
