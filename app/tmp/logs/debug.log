@@ -1,0 +1,480 @@
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 1 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 1 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 2 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 2 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 3 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 3 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 4 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 4 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:34:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:12 Notice: Notice (8): Uninitialized string offset: 1 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:12 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 1 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 2 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 2 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 3 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 3 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 4 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 4 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:35:13 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 1 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 1 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 2 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 2 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 3 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 3 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 4 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 353]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 353
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 4 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+
+2013-12-14 22:36:44 Notice: Notice (8): Uninitialized string offset: 0 in [/Users/benniekingwood/Documents/uLink/dev/web/ulink/app/Controller/UcampusController.php, line 358]
+Trace:
+UCampusController::getTrendsByWOEID() - APP/Controller/UcampusController.php, line 358
+UCampusController::trends() - APP/Controller/UcampusController.php, line 98
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 103
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 85
+[main] - APP/webroot/index.php, line 92
+

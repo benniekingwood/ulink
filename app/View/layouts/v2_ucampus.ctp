@@ -124,10 +124,10 @@
             <div class="social span7">
                 Find Us On:
                 <a href="http://www.facebook.com/ulinkinc">
-                    <i class="ulink-social-icon-fb"></i>
+                    <div class="uicon-facebook"></i>
                 </a>
                 <a href="http://www.twitter.com/ulinkinc">
-                    <i class="ulink-social-icon-twitter"></i>
+                    <div class="uicon-twitter"></i>
                 </a>
                 <span class="pull-right">
                     &copy 2013 uLink, Inc. All rights reserved.
